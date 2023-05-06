@@ -12,24 +12,40 @@ import net.minecraft.core.particles.SimpleParticleType;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 
 public class EndParticles {
-    public static final SimpleParticleType GLOWING_SPHERE = register("glowing_sphere");
-    public static final SimpleParticleType PORTAL_SPHERE = register("portal_sphere");
-    public static final ParticleType<InfusionParticleType> INFUSION = register(
-            "infusion",
-            InfusionParticleType.PARAMETERS_FACTORY,
-            InfusionParticleType.CODEC
-    );
-    public static final SimpleParticleType SULPHUR_PARTICLE = register("sulphur_particle");
-    public static final SimpleParticleType GEYSER_PARTICLE = registerFar("geyser_particle");
-    public static final SimpleParticleType SNOWFLAKE = register("snowflake");
-    public static final SimpleParticleType AMBER_SPHERE = register("amber_sphere");
-    public static final SimpleParticleType BLACK_SPORE = register("black_spore");
-    public static final SimpleParticleType TENANEA_PETAL = register("tenanea_petal");
-    public static final SimpleParticleType JUNGLE_SPORE = register("jungle_spore");
-    public static final SimpleParticleType FIREFLY = register("firefly");
-    public static final SimpleParticleType SMARAGDANT = register("smaragdant_particle");
+    public static SimpleParticleType GLOWING_SPHERE;
+    public static SimpleParticleType PORTAL_SPHERE;
+    public static ParticleType<InfusionParticleType> INFUSION;
+    public static SimpleParticleType SULPHUR_PARTICLE;
+    public static SimpleParticleType GEYSER_PARTICLE;
+    public static SimpleParticleType SNOWFLAKE;
+    public static SimpleParticleType AMBER_SPHERE;
+    public static SimpleParticleType BLACK_SPORE;
+    public static SimpleParticleType TENANEA_PETAL;
+    public static SimpleParticleType JUNGLE_SPORE;
+    public static SimpleParticleType FIREFLY;
+    public static SimpleParticleType SMARAGDANT;
+
+    public static void init() {
+        GLOWING_SPHERE = register("glowing_sphere");
+        PORTAL_SPHERE = register("portal_sphere");
+        INFUSION = register(
+                "infusion",
+                InfusionParticleType.PARAMETERS_FACTORY,
+                InfusionParticleType.CODEC
+        );
+        SULPHUR_PARTICLE = register("sulphur_particle");
+        GEYSER_PARTICLE = registerFar("geyser_particle");
+        SNOWFLAKE = register("snowflake");
+        AMBER_SPHERE = register("amber_sphere");
+        BLACK_SPORE = register("black_spore");
+        TENANEA_PETAL = register("tenanea_petal");
+        JUNGLE_SPORE = register("jungle_spore");
+        FIREFLY = register("firefly");
+        SMARAGDANT = register("smaragdant_particle");
+    }
 
     public static void register() {
+        init();
         ParticleFactoryRegistry.getInstance().register(GLOWING_SPHERE, ParticleGlowingSphere.FactoryGlowingSphere::new);
         ParticleFactoryRegistry.getInstance().register(PORTAL_SPHERE, PaticlePortalSphere.FactoryPortalSphere::new);
         ParticleFactoryRegistry.getInstance().register(INFUSION, InfusionParticle.InfusionFactory::new);
