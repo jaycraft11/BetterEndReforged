@@ -982,7 +982,7 @@
   "itemGroup.betterend.blocks": "更好的末地：方块",
   "itemGroup.betterend.items": "更好的末地：物品",
   "itemGroup.betterend.nature": "更好的末地：植物",
-  "message.betterend.anvil_damage": "§c已损耗",
+  "message.betterend.anvil_damage": "§c已损坏",
   "message.betterend.fail_spawn": "§c§l你需要6个琥珀宝石来设置重生点",
   "message.betterend.set_spawn": "§b§l重生点已设置",
   "tag.betterend.alloying_copper": "铜矿石",
