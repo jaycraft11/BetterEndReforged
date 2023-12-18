@@ -84,7 +84,7 @@ dependencies {
     mappings loom.officialMojangMappings()
     modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
-    modImplementation "net.fabricmc.fabric-api:fabric-api-deprecated:${project.fabric_version}"
+//    modImplementation "net.fabricmc.fabric-api:fabric-api-deprecated:${project.fabric_version}"
 
     //1.19.3 modApi "vazkii.patchouli:Patchouli:${project.patchouli_version}"
     println "Using local BCLib: ${local_bclib}"
@@ -93,15 +93,15 @@ dependencies {
     } else {
         modImplementation "com.github.quiqueck:BCLib:${project.bclib_version}"
     }
-    modCompileOnly "me.shedaniel:RoughlyEnoughItems-fabric:${project.rei_version}"
-    modCompileOnly "me.shedaniel:RoughlyEnoughItems-api-fabric:${project.rei_version}"
+//    modCompileOnly "me.shedaniel:RoughlyEnoughItems-fabric:${project.rei_version}"
+//    modCompileOnly "me.shedaniel:RoughlyEnoughItems-api-fabric:${project.rei_version}"
 
     //needed for trinkets, otherwise BetterEnd would require users to install trinkets
-    modApi "dev.onyxstudios.cardinal-components-api:cardinal-components-base:${project.cca_version}"
-    modCompileOnly "dev.emi:trinkets:${project.trinkets_version}"
-
-    modCompileOnly "dev.emi:emi-fabric:${emi_version}:api"
-    modLocalRuntime "dev.emi:emi-fabric:${emi_version}"
+//    modApi "dev.onyxstudios.cardinal-components-api:cardinal-components-base:${project.cca_version}"
+//    modCompileOnly "dev.emi:trinkets:${project.trinkets_version}"
+//
+//    modCompileOnly "dev.emi:emi-fabric:${emi_version}:api"
+//    modLocalRuntime "dev.emi:emi-fabric:${emi_version}"
 
     if (local_wunderlib) {
         println "Using local WunderLib"
@@ -130,7 +130,7 @@ javadoc {
 }
 
 task javadocJar(type: Jar, dependsOn: javadoc) {
-    classifier = 'javadoc'
+    archiveClassifier = 'javadoc'
     from javadoc.destinationDir
 }
 
@@ -138,7 +138,7 @@ task javadocJar(type: Jar, dependsOn: javadoc) {
 // if it is present.
 // If you remove this task, sources will not be generated.
 task sourcesJar(type: Jar, dependsOn: classes) {
-    classifier = 'sources'
+    archiveClassifier = 'sources'
     from sourceSets.main.allSource
 }
 
