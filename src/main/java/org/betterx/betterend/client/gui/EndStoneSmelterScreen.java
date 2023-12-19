@@ -5,6 +5,7 @@ import org.betterx.betterend.BetterEnd;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.ImageButton;
+import net.minecraft.client.gui.components.WidgetSprites;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.recipebook.RecipeBookComponent;
 import net.minecraft.client.gui.screens.recipebook.RecipeUpdateListener;
@@ -21,6 +22,10 @@ import net.fabricmc.api.Environment;
 public class EndStoneSmelterScreen extends AbstractContainerScreen<EndStoneSmelterMenu> implements RecipeUpdateListener {
 
     private final static ResourceLocation RECIPE_BUTTON_TEXTURE = new ResourceLocation("textures/gui/recipe_button.png");
+    public static final WidgetSprites RECIPE_BUTTON_WIDGET = new WidgetSprites(
+            new ResourceLocation("recipe_book/button"),
+            new ResourceLocation("recipe_book/button_highlighted")
+    );
     private final static ResourceLocation BACKGROUND_TEXTURE = BetterEnd.makeID("textures/gui/smelter_gui.png");
 
     public final EndStoneSmelterRecipeBookScreen recipeBook;
@@ -41,15 +46,12 @@ public class EndStoneSmelterScreen extends AbstractContainerScreen<EndStoneSmelt
                 height / 2 - 49,
                 20,
                 18,
-                0,
-                0,
-                19,
-                RECIPE_BUTTON_TEXTURE,
+                RECIPE_BUTTON_WIDGET,
                 (buttonWidget) -> {
                     recipeBook.initVisuals();
                     recipeBook.toggleVisibility();
                     leftPos = recipeBook.updateScreenPosition(width, imageWidth);
-                    ((ImageButton) buttonWidget).setPosition(leftPos + 20, height / 2 - 49);
+                    buttonWidget.setPosition(leftPos + 20, height / 2 - 49);
                 }
         ));
         titleLabelX = (imageWidth - font.width(title)) / 2;
