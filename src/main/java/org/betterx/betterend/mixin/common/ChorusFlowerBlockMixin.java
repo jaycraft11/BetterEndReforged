@@ -44,7 +44,7 @@ public abstract class ChorusFlowerBlockMixin extends Block {
 
     @Final
     @Shadow
-    private ChorusPlantBlock plant;
+    private Block plant;
 
     @Inject(method = "canSurvive", at = @At("HEAD"), cancellable = true)
     private void be_canSurvive(
