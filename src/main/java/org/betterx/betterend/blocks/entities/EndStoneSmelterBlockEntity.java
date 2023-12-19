@@ -22,13 +22,14 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.StackedContents;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
-import net.minecraft.world.inventory.RecipeHolder;
+import net.minecraft.world.inventory.RecipeCraftingHolder;
 import net.minecraft.world.inventory.StackedContentsCompatible;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.BlastingRecipe;
 import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.Level;
@@ -47,8 +48,9 @@ import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import org.jetbrains.annotations.NotNull;
 
-public class EndStoneSmelterBlockEntity extends BaseContainerBlockEntity implements WorldlyContainer, RecipeHolder, StackedContentsCompatible {
+public class EndStoneSmelterBlockEntity extends BaseContainerBlockEntity implements WorldlyContainer, RecipeCraftingHolder, StackedContentsCompatible {
     private static final int[] TOP_SLOTS = new int[]{
             EndStoneSmelterMenu.INGREDIENT_SLOT_A,
             EndStoneSmelterMenu.INGREDIENT_SLOT_B
@@ -62,7 +64,7 @@ public class EndStoneSmelterBlockEntity extends BaseContainerBlockEntity impleme
     private final Object2IntOpenHashMap<ResourceLocation> recipesUsed;
     protected NonNullList<ItemStack> inventory;
     protected final ContainerData propertyDelegate;
-    private Recipe<?> lastRecipe;
+    private RecipeHolder<?> lastRecipe;
     private int smeltTimeTotal;
     private int smeltTime;
     private int burnTime;
@@ -122,17 +124,17 @@ public class EndStoneSmelterBlockEntity extends BaseContainerBlockEntity impleme
     }
 
     @Override
-    public ItemStack getItem(int slot) {
+    public @NotNull ItemStack getItem(int slot) {
         return inventory.get(slot);
     }
 
     @Override
-    public ItemStack removeItem(int slot, int amount) {
+    public @NotNull ItemStack removeItem(int slot, int amount) {
         return ContainerHelper.removeItem(inventory, slot, amount);
     }
 
     @Override
-    public ItemStack removeItemNoUpdate(int slot) {
+    public @NotNull ItemStack removeItemNoUpdate(int slot) {
         return ContainerHelper.takeItem(inventory, slot);
     }
 
@@ -157,28 +159,28 @@ public class EndStoneSmelterBlockEntity extends BaseContainerBlockEntity impleme
         if (level == null) return 200;
         int smeltTime = level.getRecipeManager()
                              .getRecipeFor(AlloyingRecipe.TYPE, this, level)
-                             .map(AlloyingRecipe::getSmeltTime)
+                             .map(holder -> holder.value().getSmeltTime())
                              .orElse(0);
         if (smeltTime == 0) {
             smeltTime = level.getRecipeManager()
                              .getRecipeFor(RecipeType.BLASTING, this, level)
-                             .map(BlastingRecipe::getCookingTime)
+                             .map(holder -> holder.value().getCookingTime())
                              .orElse(200);
-            smeltTime /= 1.5;
+            smeltTime = (int) (smeltTime / 1.5);
         }
         return smeltTime;
     }
 
     public void dropExperience(Player player) {
         if (level == null) return;
-        List<Recipe<?>> list = Lists.newArrayList();
+        List<RecipeHolder<?>> list = Lists.newArrayList();
         for (Entry<ResourceLocation> entry : recipesUsed.object2IntEntrySet()) {
             level.getRecipeManager().byKey(entry.getKey()).ifPresent((recipe) -> {
                 list.add(recipe);
-                if (recipe instanceof AlloyingRecipe alloying) {
+                final Recipe<?> r = recipe.value();
+                if (r instanceof AlloyingRecipe alloying) {
                     dropExperience(player.level(), player.position(), entry.getIntValue(), alloying.getExperience());
-                } else {
-                    BlastingRecipe blasting = (BlastingRecipe) recipe;
+                } else if (r instanceof BlastingRecipe blasting) {
                     dropExperience(player.level(), player.position(), entry.getIntValue(), blasting.getExperience());
                 }
             });
@@ -219,12 +221,12 @@ public class EndStoneSmelterBlockEntity extends BaseContainerBlockEntity impleme
     }
 
     @Override
-    protected Component getDefaultName() {
+    protected @NotNull Component getDefaultName() {
         return Component.translatable(String.format("block.%s.%s", BetterEnd.MOD_ID, EndStoneSmelter.ID));
     }
 
     @Override
-    protected AbstractContainerMenu createMenu(int syncId, Inventory playerInventory) {
+    protected @NotNull AbstractContainerMenu createMenu(int syncId, Inventory playerInventory) {
         return new EndStoneSmelterMenu(syncId, playerInventory, this, propertyDelegate);
     }
 
@@ -252,9 +254,9 @@ public class EndStoneSmelterBlockEntity extends BaseContainerBlockEntity impleme
                     blockEntity.smeltTime = Mth.clamp(blockEntity.smeltTime - 2, 0, blockEntity.smeltTimeTotal);
                 }
             } else {
-                Recipe<?> recipe = tickLevel.getRecipeManager()
-                                            .getRecipeFor(AlloyingRecipe.TYPE, blockEntity, tickLevel)
-                                            .orElse(null);
+                RecipeHolder<?> recipe = tickLevel.getRecipeManager()
+                                                  .getRecipeFor(AlloyingRecipe.TYPE, blockEntity, tickLevel)
+                                                  .orElse(null);
                 if (recipe == null) {
                     recipe = tickLevel.getRecipeManager()
                                       .getRecipeFor(RecipeType.BLASTING, blockEntity, tickLevel)
@@ -301,9 +303,10 @@ public class EndStoneSmelterBlockEntity extends BaseContainerBlockEntity impleme
         }
     }
 
-    protected boolean canAcceptRecipeOutput(Recipe<?> recipe, RegistryAccess acc) {
-        if (recipe == null) return false;
+    protected boolean canAcceptRecipeOutput(RecipeHolder<?> recipeHolder, RegistryAccess acc) {
+        if (recipeHolder == null) return false;
         boolean validInput;
+        Recipe<?> recipe = recipeHolder.value();
         if (recipe instanceof AlloyingRecipe) {
             validInput = !inventory.get(EndStoneSmelterMenu.INGREDIENT_SLOT_A).isEmpty()
                     && !inventory.get(EndStoneSmelterMenu.INGREDIENT_SLOT_B).isEmpty();
@@ -333,10 +336,10 @@ public class EndStoneSmelterBlockEntity extends BaseContainerBlockEntity impleme
         return false;
     }
 
-    private void craftRecipe(Recipe<?> recipe, RegistryAccess acc) {
+    private void craftRecipe(RecipeHolder<?> recipe, RegistryAccess acc) {
         if (recipe == null || !canAcceptRecipeOutput(recipe, acc)) return;
 
-        ItemStack result = recipe.getResultItem(acc);
+        ItemStack result = recipe.value().getResultItem(acc);
         ItemStack output = inventory.get(EndStoneSmelterMenu.RESULT_SLOT);
         if (output.isEmpty()) {
             inventory.set(EndStoneSmelterMenu.RESULT_SLOT, result.copy());
@@ -349,7 +352,7 @@ public class EndStoneSmelterBlockEntity extends BaseContainerBlockEntity impleme
             setRecipeUsed(recipe);
         }
 
-        if (recipe instanceof AlloyingRecipe) {
+        if (recipe.value() instanceof AlloyingRecipe) {
             inventory.get(EndStoneSmelterMenu.INGREDIENT_SLOT_A).shrink(1);
             inventory.get(EndStoneSmelterMenu.INGREDIENT_SLOT_B).shrink(1);
         } else {
@@ -369,23 +372,21 @@ public class EndStoneSmelterBlockEntity extends BaseContainerBlockEntity impleme
     }
 
     @Override
-    public void setRecipeUsed(Recipe<?> recipe) {
+    public void setRecipeUsed(RecipeHolder<?> recipe) {
         if (recipe != null) {
-            ResourceLocation recipeId = recipe.getId();
+            ResourceLocation recipeId = recipe.id();
             recipesUsed.addTo(recipeId, 1);
             lastRecipe = recipe;
         }
     }
 
     @Override
-    public Recipe<?> getRecipeUsed() {
+    public RecipeHolder<?> getRecipeUsed() {
         return this.lastRecipe;
     }
 
     @Override
-    public int[] getSlotsForFace(Direction side) {
-//        var facing = getBlockState().getValue(EndStoneSmelter.FACING);
-//        if (side == facing) return JUST_A;
+    public int @NotNull [] getSlotsForFace(Direction side) {
         return switch (side) {
             case DOWN -> BOTTOM_SLOTS;
             case UP -> TOP_SLOTS;
