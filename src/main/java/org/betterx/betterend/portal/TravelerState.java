@@ -170,6 +170,20 @@ public final class TravelerState {
         return null;
     }
 
+    private static CommonPlayerSpawnInfo newCommonPlayerSpawnInfo(ServerPlayer traveler, ServerLevel serverLevel) {
+        return new CommonPlayerSpawnInfo(
+                serverLevel.dimensionTypeId(),
+                serverLevel.dimension(),
+                BiomeManager.obfuscateSeed(serverLevel.getSeed()),
+                traveler.gameMode.getGameModeForPlayer(),
+                traveler.gameMode.getPreviousGameModeForPlayer(),
+                serverLevel.isDebug(),
+                serverLevel.isFlat(),
+                traveler.getLastDeathLocation(),
+                traveler.getPortalCooldown()
+        );
+    }
+
     public static Entity travelToDimension(
             ServerPlayer traveler,
             ServerLevel serverLevel,
@@ -183,16 +197,8 @@ public final class TravelerState {
         traveler.unRide();
 
         traveler.connection.send(new ClientboundRespawnPacket(
-                serverLevel.dimensionTypeId(),
-                serverLevel.dimension(),
-                BiomeManager.obfuscateSeed(serverLevel.getSeed()),
-                traveler.gameMode.getGameModeForPlayer(),
-                traveler.gameMode.getPreviousGameModeForPlayer(),
-                serverLevel.isDebug(),
-                serverLevel.isFlat(),
-                ClientboundRespawnPacket.KEEP_ALL_DATA,
-                traveler.getLastDeathLocation(),
-                traveler.getPortalCooldown()
+                newCommonPlayerSpawnInfo(traveler, serverLevel),
+                ClientboundRespawnPacket.KEEP_ALL_DATA
         ));
         traveler.connection.send(new ClientboundChangeDifficultyPacket(
                 levelData.getDifficulty(),
