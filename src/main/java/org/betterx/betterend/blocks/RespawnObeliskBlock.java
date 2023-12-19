@@ -46,6 +46,7 @@ import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import com.google.common.collect.Lists;
 
 import java.util.List;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class RespawnObeliskBlock extends BaseBlock.Stone implements CustomColorProvider, RenderLayerProvider {
@@ -75,7 +76,7 @@ public class RespawnObeliskBlock extends BaseBlock.Stone implements CustomColorP
     @SuppressWarnings("deprecation")
     public boolean canSurvive(BlockState state, LevelReader world, BlockPos pos) {
         for (int i = 0; i < 3; i++) {
-            if (!world.getBlockState(pos.above(i)).canBeReplaced()){
+            if (!world.getBlockState(pos.above(i)).canBeReplaced()) {
                 return false;
             }
         }
@@ -129,7 +130,7 @@ public class RespawnObeliskBlock extends BaseBlock.Stone implements CustomColorP
     }
 
     @Override
-    public void playerWillDestroy(Level world, BlockPos pos, BlockState state, Player player) {
+    public @NotNull BlockState playerWillDestroy(Level world, BlockPos pos, BlockState state, Player player) {
         if (player.isCreative()) {
             TripleShape shape = state.getValue(SHAPE);
             if (shape == TripleShape.MIDDLE) {
@@ -138,7 +139,7 @@ public class RespawnObeliskBlock extends BaseBlock.Stone implements CustomColorP
                 BlocksHelper.setWithUpdate(world, pos.below(2), Blocks.AIR);
             }
         }
-        super.playerWillDestroy(world, pos, state, player);
+        return super.playerWillDestroy(world, pos, state, player);
     }
 
     @Override

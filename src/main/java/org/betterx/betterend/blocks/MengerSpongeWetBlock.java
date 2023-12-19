@@ -29,6 +29,8 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 
+import org.jetbrains.annotations.NotNull;
+
 @SuppressWarnings("deprecation")
 public class MengerSpongeWetBlock extends BaseBlockNotFull implements RenderLayerProvider {
     public MengerSpongeWetBlock() {
@@ -91,7 +93,7 @@ public class MengerSpongeWetBlock extends BaseBlockNotFull implements RenderLaye
     }
 
     @Override
-    public void playerWillDestroy(Level world, BlockPos pos, BlockState state, Player player) {
+    public @NotNull BlockState playerWillDestroy(Level world, BlockPos pos, BlockState state, Player player) {
         BlocksHelper.setWithUpdate(world, pos, Blocks.AIR);
         if (!world.isClientSide()) {
             world.levelEvent(2001, pos, getId(state));
@@ -106,6 +108,8 @@ public class MengerSpongeWetBlock extends BaseBlockNotFull implements RenderLaye
             );
             world.addFreshEntity(drop);
         }
+
+        return state;
     }
 
     @Override

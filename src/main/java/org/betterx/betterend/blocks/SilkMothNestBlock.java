@@ -45,6 +45,7 @@ import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 
 import java.util.Collections;
 import java.util.List;
+import org.jetbrains.annotations.NotNull;
 
 public class SilkMothNestBlock extends BaseBlock implements RenderLayerProvider, AddMineableShears {
     public static final BooleanProperty ACTIVE = EndBlockProperties.ACTIVE;
@@ -124,7 +125,7 @@ public class SilkMothNestBlock extends BaseBlock implements RenderLayerProvider,
     }
 
     @Override
-    public void playerWillDestroy(Level world, BlockPos pos, BlockState state, Player player) {
+    public @NotNull BlockState playerWillDestroy(Level world, BlockPos pos, BlockState state, Player player) {
         if (!state.getValue(ACTIVE) && player.isCreative()) {
             BlocksHelper.setWithUpdate(world, pos.below(), Blocks.AIR);
         }
@@ -132,7 +133,7 @@ public class SilkMothNestBlock extends BaseBlock implements RenderLayerProvider,
         if (up.is(this) && !up.getValue(ACTIVE)) {
             BlocksHelper.setWithUpdate(world, pos.above(), Blocks.AIR);
         }
-        super.playerWillDestroy(world, pos, state, player);
+        return super.playerWillDestroy(world, pos, state, player);
     }
 
     @Override
