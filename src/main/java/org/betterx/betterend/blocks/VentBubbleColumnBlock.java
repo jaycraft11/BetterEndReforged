@@ -33,6 +33,7 @@ import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class VentBubbleColumnBlock extends Block implements BucketPickup, LiquidBlockContainer {
@@ -41,14 +42,14 @@ public class VentBubbleColumnBlock extends Block implements BucketPickup, Liquid
     }
 
     @Override
-    public ItemStack pickupBlock(LevelAccessor world, BlockPos pos, BlockState state) {
+    public @NotNull ItemStack pickupBlock(Player player, LevelAccessor world, BlockPos pos, BlockState state) {
         world.setBlock(pos, Blocks.AIR.defaultBlockState(), 11);
         return new ItemStack(Items.WATER_BUCKET);
     }
 
     @Override
     @SuppressWarnings("deprecation")
-    public RenderShape getRenderShape(BlockState state) {
+    public @NotNull RenderShape getRenderShape(BlockState state) {
         return RenderShape.INVISIBLE;
     }
 
@@ -61,13 +62,13 @@ public class VentBubbleColumnBlock extends Block implements BucketPickup, Liquid
 
     @Override
     @SuppressWarnings("deprecation")
-    public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
+    public @NotNull VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
         return Shapes.empty();
     }
 
     @Override
     @SuppressWarnings("deprecation")
-    public BlockState updateShape(
+    public @NotNull BlockState updateShape(
             BlockState state,
             Direction direction,
             BlockState newState,
@@ -166,13 +167,13 @@ public class VentBubbleColumnBlock extends Block implements BucketPickup, Liquid
 
     @Override
     @SuppressWarnings("deprecation")
-    public FluidState getFluidState(BlockState state) {
+    public @NotNull FluidState getFluidState(BlockState state) {
         return Fluids.WATER.getSource(false);
     }
 
 
     @Override
-    public Optional<SoundEvent> getPickupSound() {
+    public @NotNull Optional<SoundEvent> getPickupSound() {
         return Fluids.WATER.getPickupSound();
     }
 }
