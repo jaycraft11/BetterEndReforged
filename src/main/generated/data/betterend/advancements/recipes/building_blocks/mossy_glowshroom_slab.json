@@ -22,14 +22,13 @@
   },
   "requirements": [
     [
-      "has_mossy_glowshroom_planks",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_mossy_glowshroom_planks"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:mossy_glowshroom_slab"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

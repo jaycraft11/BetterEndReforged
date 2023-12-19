@@ -22,14 +22,13 @@
   },
   "requirements": [
     [
-      "has_blue_vine_seed",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_blue_vine_seed"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:blue_vine_seed_dye"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

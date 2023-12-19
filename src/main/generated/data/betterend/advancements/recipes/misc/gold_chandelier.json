@@ -34,15 +34,14 @@
   },
   "requirements": [
     [
+      "has_the_recipe",
       "has_gold_ingot",
-      "has_lumecorn_rod",
-      "has_the_recipe"
+      "has_lumecorn_rod"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:gold_chandelier"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

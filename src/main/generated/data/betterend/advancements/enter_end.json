@@ -9,16 +9,12 @@
     }
   },
   "display": {
-    "announce_to_chat": true,
     "description": {
       "translate": "advancements.betterend.enter_end.description"
     },
-    "frame": "task",
-    "hidden": false,
     "icon": {
       "item": "betterend:cave_moss"
     },
-    "show_toast": true,
     "title": {
       "translate": "advancements.betterend.enter_end.title"
     }
@@ -27,6 +23,5 @@
     [
       "entered_end"
     ]
-  ],
-  "sends_telemetry_event": false
+  ]
 }

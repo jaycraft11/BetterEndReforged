@@ -19,16 +19,13 @@
     }
   },
   "display": {
-    "announce_to_chat": true,
     "description": {
       "translate": "advancements.betterend.portal.description"
     },
     "frame": "goal",
-    "hidden": false,
     "icon": {
       "item": "betterend:eternal_pedestal"
     },
-    "show_toast": true,
     "title": {
       "translate": "advancements.betterend.portal.title"
     }
@@ -37,6 +34,5 @@
     [
       "eternal_portal"
     ]
-  ],
-  "sends_telemetry_event": false
+  ]
 }

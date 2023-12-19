@@ -34,15 +34,14 @@
   },
   "requirements": [
     [
+      "has_the_recipe",
       "has_hydralux_petal_block",
-      "has_blue_dye",
-      "has_the_recipe"
+      "has_blue_dye"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:hydralux_petal_block_blue"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

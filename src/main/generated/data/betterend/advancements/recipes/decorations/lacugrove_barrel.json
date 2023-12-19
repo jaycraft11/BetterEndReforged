@@ -34,15 +34,14 @@
   },
   "requirements": [
     [
+      "has_the_recipe",
       "has_lacugrove_planks",
-      "has_lacugrove_slab",
-      "has_the_recipe"
+      "has_lacugrove_slab"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:lacugrove_barrel"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

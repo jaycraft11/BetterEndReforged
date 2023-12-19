@@ -22,14 +22,13 @@
   },
   "requirements": [
     [
-      "has_virid_jadestone",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_virid_jadestone"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:virid_jadestone_stairs"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

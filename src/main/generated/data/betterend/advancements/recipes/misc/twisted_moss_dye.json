@@ -22,14 +22,13 @@
   },
   "requirements": [
     [
-      "has_twisted_moss",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_twisted_moss"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:twisted_moss_dye"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

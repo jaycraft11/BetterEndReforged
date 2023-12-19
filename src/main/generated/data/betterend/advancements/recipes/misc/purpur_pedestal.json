@@ -34,15 +34,14 @@
   },
   "requirements": [
     [
+      "has_the_recipe",
       "has_purpur_slab",
-      "has_purpur_pillar",
-      "has_the_recipe"
+      "has_purpur_pillar"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:purpur_pedestal"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

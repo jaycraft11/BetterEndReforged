@@ -22,14 +22,13 @@
   },
   "requirements": [
     [
-      "has_sandy_jadestone_bricks",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_sandy_jadestone_bricks"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:sandy_jadestone_polished"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

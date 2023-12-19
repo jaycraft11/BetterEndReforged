@@ -15,16 +15,12 @@
     }
   },
   "display": {
-    "announce_to_chat": true,
     "description": {
       "translate": "advancements.betterend.infusion.description"
     },
-    "frame": "task",
-    "hidden": false,
     "icon": {
       "item": "betterend:infusion_pedestal"
     },
-    "show_toast": true,
     "title": {
       "translate": "advancements.betterend.infusion.title"
     }
@@ -33,6 +29,5 @@
     [
       "infusion_pedestal"
     ]
-  ],
-  "sends_telemetry_event": false
+  ]
 }

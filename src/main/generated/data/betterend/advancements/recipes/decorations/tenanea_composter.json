@@ -22,14 +22,13 @@
   },
   "requirements": [
     [
-      "has_tenanea_slab",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_tenanea_slab"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:tenanea_composter"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

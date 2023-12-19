@@ -22,14 +22,13 @@
   },
   "requirements": [
     [
-      "has_leather_stripe",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_leather_stripe"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:stripes_to_leather"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

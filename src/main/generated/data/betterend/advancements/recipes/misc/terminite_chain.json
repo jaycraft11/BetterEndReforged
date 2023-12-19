@@ -34,15 +34,14 @@
   },
   "requirements": [
     [
+      "has_the_recipe",
       "has_terminite_ingot",
-      "has_terminite_nugget",
-      "has_the_recipe"
+      "has_terminite_nugget"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:terminite_chain"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

@@ -39,15 +39,14 @@
   },
   "requirements": [
     [
+      "has_the_recipe",
       "has_terminite_block_terminite_tile",
-      "has_terminite_ingot",
-      "has_the_recipe"
+      "has_terminite_ingot"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:terminite_anvil"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

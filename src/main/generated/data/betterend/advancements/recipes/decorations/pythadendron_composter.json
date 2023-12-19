@@ -22,14 +22,13 @@
   },
   "requirements": [
     [
-      "has_pythadendron_slab",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_pythadendron_slab"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:pythadendron_composter"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

@@ -22,14 +22,13 @@
   },
   "requirements": [
     [
-      "has_azure_jadestone",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_azure_jadestone"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:azure_jadestone_bricks"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

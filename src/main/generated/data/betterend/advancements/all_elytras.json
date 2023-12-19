@@ -39,17 +39,14 @@
     }
   },
   "display": {
-    "announce_to_chat": true,
     "description": {
       "translate": "advancements.betterend.all_elytras.description"
     },
     "frame": "goal",
-    "hidden": false,
     "icon": {
       "item": "betterend:elytra_crystalite",
       "nbt": "{Damage:0}"
     },
-    "show_toast": true,
     "title": {
       "translate": "advancements.betterend.all_elytras.title"
     }
@@ -64,6 +61,5 @@
     [
       "armored"
     ]
-  ],
-  "sends_telemetry_event": false
+  ]
 }

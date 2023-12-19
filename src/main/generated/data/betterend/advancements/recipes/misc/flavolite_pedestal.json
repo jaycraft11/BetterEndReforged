@@ -34,15 +34,14 @@
   },
   "requirements": [
     [
+      "has_the_recipe",
       "has_flavolite_pillar",
-      "has_flavolite_slab",
-      "has_the_recipe"
+      "has_flavolite_slab"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:flavolite_pedestal"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

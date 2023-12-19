@@ -22,14 +22,13 @@
   },
   "requirements": [
     [
-      "has_helix_tree_stripped_log",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_helix_tree_stripped_log"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:helix_tree_stripped_bark"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

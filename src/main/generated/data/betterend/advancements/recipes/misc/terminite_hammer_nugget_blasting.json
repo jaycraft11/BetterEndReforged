@@ -22,14 +22,13 @@
   },
   "requirements": [
     [
-      "has_item.betterend.terminite_hammer",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_item.betterend.terminite_hammer"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:terminite_hammer_nugget_blasting"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

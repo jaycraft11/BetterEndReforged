@@ -22,14 +22,13 @@
   },
   "requirements": [
     [
-      "has_block.betterend.thallasium_block",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_block.betterend.thallasium_block"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:thallasium_hammer"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

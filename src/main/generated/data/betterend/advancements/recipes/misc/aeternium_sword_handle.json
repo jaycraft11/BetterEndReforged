@@ -22,14 +22,13 @@
   },
   "requirements": [
     [
-      "has_item.betterend.leather_wrapped_stick",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_item.betterend.leather_wrapped_stick"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:aeternium_sword_handle"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

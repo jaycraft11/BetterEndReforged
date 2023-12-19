@@ -22,14 +22,13 @@
   },
   "requirements": [
     [
-      "has_item.betterend.terminite_leggings",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_item.betterend.terminite_leggings"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:aeternium_leggings"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

@@ -22,14 +22,13 @@
   },
   "requirements": [
     [
-      "has_lacugrove_stripped_bark",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_lacugrove_stripped_bark"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:lacugrove_stripped_log"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

@@ -22,14 +22,13 @@
   },
   "requirements": [
     [
-      "has_mossy_glowshroom_slab",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_mossy_glowshroom_slab"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:mossy_glowshroom_composter"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

@@ -34,15 +34,14 @@
   },
   "requirements": [
     [
+      "has_the_recipe",
       "has_dragon_tree_planks",
-      "has_dragon_tree_fence",
-      "has_the_recipe"
+      "has_dragon_tree_fence"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:dragon_tree_wall"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

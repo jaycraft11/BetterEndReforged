@@ -39,15 +39,14 @@
   },
   "requirements": [
     [
+      "has_the_recipe",
       "has_thallasium_ingot",
-      "has_thallasium_block_thallasium_tile",
-      "has_the_recipe"
+      "has_thallasium_block_thallasium_tile"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:thallasium_anvil"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

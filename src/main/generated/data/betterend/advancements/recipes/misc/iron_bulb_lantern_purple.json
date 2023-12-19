@@ -34,15 +34,14 @@
   },
   "requirements": [
     [
+      "has_the_recipe",
       "has_iron_bulb_lantern",
-      "has_purple_dye",
-      "has_the_recipe"
+      "has_purple_dye"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:iron_bulb_lantern_purple"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

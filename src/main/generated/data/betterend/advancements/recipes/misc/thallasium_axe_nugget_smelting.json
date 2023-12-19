@@ -22,14 +22,13 @@
   },
   "requirements": [
     [
-      "has_item.betterend.thallasium_axe",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_item.betterend.thallasium_axe"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:thallasium_axe_nugget_smelting"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

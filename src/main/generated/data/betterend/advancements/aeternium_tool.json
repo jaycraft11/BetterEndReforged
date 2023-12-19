@@ -63,17 +63,14 @@
     }
   },
   "display": {
-    "announce_to_chat": true,
     "description": {
       "translate": "advancements.betterend.aeternium_tool.description"
     },
     "frame": "challenge",
-    "hidden": false,
     "icon": {
       "item": "betterend:aeternium_pickaxe",
       "nbt": "{Damage:0}"
     },
-    "show_toast": true,
     "title": {
       "translate": "advancements.betterend.aeternium_tool.title"
     }
@@ -97,6 +94,5 @@
   ],
   "rewards": {
     "experience": 500
-  },
-  "sends_telemetry_event": false
+  }
 }

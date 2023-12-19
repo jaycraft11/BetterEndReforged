@@ -39,15 +39,14 @@
   },
   "requirements": [
     [
+      "has_the_recipe",
       "has_crystal_shards",
-      "has_virid_jadestone_slab_virid_jadestone_b",
-      "has_the_recipe"
+      "has_virid_jadestone_slab_virid_jadestone_b"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:virid_jadestone_lantern"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

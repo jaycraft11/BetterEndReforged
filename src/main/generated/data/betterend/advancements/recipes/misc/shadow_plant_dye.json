@@ -22,14 +22,13 @@
   },
   "requirements": [
     [
-      "has_shadow_plant",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_shadow_plant"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:shadow_plant_dye"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

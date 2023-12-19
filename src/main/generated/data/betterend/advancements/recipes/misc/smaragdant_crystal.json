@@ -22,14 +22,13 @@
   },
   "requirements": [
     [
-      "has_smaragdant_crystal_shard",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_smaragdant_crystal_shard"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:smaragdant_crystal"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

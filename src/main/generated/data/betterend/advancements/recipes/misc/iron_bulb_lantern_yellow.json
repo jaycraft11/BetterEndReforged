@@ -34,15 +34,14 @@
   },
   "requirements": [
     [
+      "has_the_recipe",
       "has_iron_bulb_lantern",
-      "has_yellow_dye",
-      "has_the_recipe"
+      "has_yellow_dye"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:iron_bulb_lantern_yellow"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

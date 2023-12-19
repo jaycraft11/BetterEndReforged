@@ -34,15 +34,14 @@
   },
   "requirements": [
     [
+      "has_the_recipe",
       "has_thallasium_ingot",
-      "has_thallasium_nugget",
-      "has_the_recipe"
+      "has_thallasium_nugget"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:thallasium_chain"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

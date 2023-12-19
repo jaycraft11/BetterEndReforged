@@ -22,14 +22,13 @@
   },
   "requirements": [
     [
-      "has_item.betterend.aeternium_pickaxe_head",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_item.betterend.aeternium_pickaxe_head"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:aeternium_pickaxe"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

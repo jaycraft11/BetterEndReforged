@@ -58,17 +58,16 @@
   },
   "requirements": [
     [
+      "has_the_recipe",
       "has_sugar",
       "has_sweet_berries",
       "has_potion",
-      "has_gelatine",
-      "has_the_recipe"
+      "has_gelatine"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:sweet_berry_jelly_potion"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

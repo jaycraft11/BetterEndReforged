@@ -37,14 +37,13 @@
   },
   "requirements": [
     [
-      "has_helix_tree_log_helix_tree_bark_helix_t",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_helix_tree_log_helix_tree_bark_helix_t"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:helix_tree_planks"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

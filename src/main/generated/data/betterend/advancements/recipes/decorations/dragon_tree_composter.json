@@ -22,14 +22,13 @@
   },
   "requirements": [
     [
-      "has_dragon_tree_slab",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_dragon_tree_slab"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:dragon_tree_composter"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

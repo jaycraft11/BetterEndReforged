@@ -22,14 +22,13 @@
   },
   "requirements": [
     [
-      "has_item.betterend.aeternium_shovel_head",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_item.betterend.aeternium_shovel_head"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:aeternium_shovel"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

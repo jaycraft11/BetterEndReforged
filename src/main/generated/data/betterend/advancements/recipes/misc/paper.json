@@ -22,14 +22,13 @@
   },
   "requirements": [
     [
-      "has_end_lily_leaf_dried",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_end_lily_leaf_dried"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:paper"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

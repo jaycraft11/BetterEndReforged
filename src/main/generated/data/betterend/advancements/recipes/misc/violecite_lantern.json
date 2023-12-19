@@ -39,15 +39,14 @@
   },
   "requirements": [
     [
+      "has_the_recipe",
       "has_violecite_slab_violecite_bricks_slab",
-      "has_crystal_shards",
-      "has_the_recipe"
+      "has_crystal_shards"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:violecite_lantern"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

@@ -34,15 +34,14 @@
   },
   "requirements": [
     [
+      "has_the_recipe",
       "has_stick",
-      "has_mossy_glowshroom_planks",
-      "has_the_recipe"
+      "has_mossy_glowshroom_planks"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:mossy_glowshroom_ladder"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

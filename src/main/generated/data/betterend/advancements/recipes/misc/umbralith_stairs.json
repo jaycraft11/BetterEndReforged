@@ -22,14 +22,13 @@
   },
   "requirements": [
     [
-      "has_umbralith",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_umbralith"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:umbralith_stairs"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

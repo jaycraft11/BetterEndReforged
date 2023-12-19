@@ -22,14 +22,13 @@
   },
   "requirements": [
     [
-      "has_hydralux_petal",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_hydralux_petal"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:petal_block"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

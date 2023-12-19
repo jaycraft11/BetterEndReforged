@@ -22,14 +22,13 @@
   },
   "requirements": [
     [
-      "has_sulphuric_rock",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_sulphuric_rock"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:sulphuric_rock_bricks"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

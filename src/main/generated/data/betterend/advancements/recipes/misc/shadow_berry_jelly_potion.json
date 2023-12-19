@@ -58,17 +58,16 @@
   },
   "requirements": [
     [
+      "has_the_recipe",
       "has_sugar",
       "has_potion",
       "has_shadow_berry_cooked",
-      "has_gelatine",
-      "has_the_recipe"
+      "has_gelatine"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:shadow_berry_jelly_potion"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

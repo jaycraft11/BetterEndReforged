@@ -22,14 +22,13 @@
   },
   "requirements": [
     [
-      "has_needlegrass",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_needlegrass"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:needlegrass_stick"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

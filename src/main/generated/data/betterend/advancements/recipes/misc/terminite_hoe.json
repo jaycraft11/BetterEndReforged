@@ -22,14 +22,13 @@
   },
   "requirements": [
     [
-      "has_item.betterend.terminite_hoe_head",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_item.betterend.terminite_hoe_head"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:terminite_hoe"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

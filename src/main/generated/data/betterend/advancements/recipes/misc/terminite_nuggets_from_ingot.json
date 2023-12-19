@@ -22,14 +22,13 @@
   },
   "requirements": [
     [
-      "has_terminite_ingot",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_terminite_ingot"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:terminite_nuggets_from_ingot"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

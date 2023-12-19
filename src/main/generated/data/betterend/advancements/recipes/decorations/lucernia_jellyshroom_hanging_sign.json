@@ -46,16 +46,15 @@
   },
   "requirements": [
     [
+      "has_the_recipe",
       "has_lucernia_stripped_log",
       "has_chain",
-      "has_jellyshroom_log",
-      "has_the_recipe"
+      "has_jellyshroom_log"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:lucernia_jellyshroom_hanging_sign"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

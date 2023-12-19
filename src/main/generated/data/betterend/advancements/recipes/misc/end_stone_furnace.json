@@ -22,14 +22,13 @@
   },
   "requirements": [
     [
-      "has_end_stone",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_end_stone"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:end_stone_furnace"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

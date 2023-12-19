@@ -34,15 +34,14 @@
   },
   "requirements": [
     [
+      "has_the_recipe",
       "has_smaragdant_crystal_shard",
-      "has_glass",
-      "has_the_recipe"
+      "has_glass"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:tined_glass_from_smaragdant"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

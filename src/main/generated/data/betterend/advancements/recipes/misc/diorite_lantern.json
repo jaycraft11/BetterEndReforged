@@ -34,15 +34,14 @@
   },
   "requirements": [
     [
+      "has_the_recipe",
       "has_crystal_shards",
-      "has_diorite_slab",
-      "has_the_recipe"
+      "has_diorite_slab"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:diorite_lantern"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

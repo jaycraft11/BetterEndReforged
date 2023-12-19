@@ -37,14 +37,13 @@
   },
   "requirements": [
     [
-      "has_mossy_glowshroom_log_mossy_glowshroom_",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_mossy_glowshroom_log_mossy_glowshroom_"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:mossy_glowshroom_planks"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

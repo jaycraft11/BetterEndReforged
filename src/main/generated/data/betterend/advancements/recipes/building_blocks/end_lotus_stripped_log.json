@@ -22,14 +22,13 @@
   },
   "requirements": [
     [
-      "has_end_lotus_stripped_bark",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_end_lotus_stripped_bark"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:end_lotus_stripped_log"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

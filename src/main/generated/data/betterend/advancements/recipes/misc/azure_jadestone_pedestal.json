@@ -34,15 +34,14 @@
   },
   "requirements": [
     [
+      "has_the_recipe",
       "has_azure_jadestone_slab",
-      "has_azure_jadestone_pillar",
-      "has_the_recipe"
+      "has_azure_jadestone_pillar"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:azure_jadestone_pedestal"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

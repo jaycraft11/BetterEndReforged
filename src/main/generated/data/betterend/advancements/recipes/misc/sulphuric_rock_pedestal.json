@@ -34,15 +34,14 @@
   },
   "requirements": [
     [
+      "has_the_recipe",
       "has_sulphuric_rock_slab",
-      "has_sulphuric_rock_pillar",
-      "has_the_recipe"
+      "has_sulphuric_rock_pillar"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:sulphuric_rock_pedestal"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

@@ -99,16 +99,13 @@
     }
   },
   "display": {
-    "announce_to_chat": true,
     "description": {
       "translate": "advancements.betterend.all_the_templates.description"
     },
     "frame": "challenge",
-    "hidden": false,
     "icon": {
       "item": "betterend:tool_assembly_smithing_template"
     },
-    "show_toast": true,
     "title": {
       "translate": "advancements.betterend.all_the_templates.title"
     }
@@ -141,6 +138,5 @@
   ],
   "rewards": {
     "experience": 500
-  },
-  "sends_telemetry_event": false
+  }
 }

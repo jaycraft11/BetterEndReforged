@@ -46,16 +46,15 @@
   },
   "requirements": [
     [
+      "has_the_recipe",
       "has_thallasium_upgrade_smithing_template",
       "has_thallasium_ingot",
-      "has_stick",
-      "has_the_recipe"
+      "has_stick"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:copy_thallasium_upgrade"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

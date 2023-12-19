@@ -22,14 +22,13 @@
   },
   "requirements": [
     [
-      "has_tenanea_log",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_tenanea_log"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:tenanea_bark"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

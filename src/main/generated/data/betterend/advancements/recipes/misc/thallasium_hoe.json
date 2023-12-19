@@ -22,14 +22,13 @@
   },
   "requirements": [
     [
-      "has_item.betterend.thallasium_hoe_head",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_item.betterend.thallasium_hoe_head"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:thallasium_hoe"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

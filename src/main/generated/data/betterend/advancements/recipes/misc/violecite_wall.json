@@ -22,14 +22,13 @@
   },
   "requirements": [
     [
-      "has_violecite",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_violecite"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:violecite_wall"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

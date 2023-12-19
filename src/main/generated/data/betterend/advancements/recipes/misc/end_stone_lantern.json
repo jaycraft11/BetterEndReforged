@@ -34,15 +34,14 @@
   },
   "requirements": [
     [
+      "has_the_recipe",
       "has_end_stone_brick_slab",
-      "has_crystal_shards",
-      "has_the_recipe"
+      "has_crystal_shards"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:end_stone_lantern"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

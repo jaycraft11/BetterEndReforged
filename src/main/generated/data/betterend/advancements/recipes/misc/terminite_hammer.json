@@ -22,14 +22,13 @@
   },
   "requirements": [
     [
-      "has_block.betterend.terminite_block",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_block.betterend.terminite_block"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:terminite_hammer"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

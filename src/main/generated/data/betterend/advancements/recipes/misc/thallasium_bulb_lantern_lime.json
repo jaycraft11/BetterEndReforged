@@ -34,15 +34,14 @@
   },
   "requirements": [
     [
+      "has_the_recipe",
       "has_lime_dye",
-      "has_thallasium_bulb_lantern",
-      "has_the_recipe"
+      "has_thallasium_bulb_lantern"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:thallasium_bulb_lantern_lime"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

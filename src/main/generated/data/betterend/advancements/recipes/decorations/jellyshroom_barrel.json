@@ -34,15 +34,14 @@
   },
   "requirements": [
     [
+      "has_the_recipe",
       "has_jellyshroom_planks",
-      "has_jellyshroom_slab",
-      "has_the_recipe"
+      "has_jellyshroom_slab"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:jellyshroom_barrel"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

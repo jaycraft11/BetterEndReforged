@@ -37,14 +37,13 @@
   },
   "requirements": [
     [
-      "has_umbrella_tree_log_umbrella_tree_bark_u",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_umbrella_tree_log_umbrella_tree_bark_u"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:umbrella_tree_planks"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

@@ -22,14 +22,13 @@
   },
   "requirements": [
     [
-      "has_item.betterend.terminite_sword",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_item.betterend.terminite_sword"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:terminite_sword_nugget_smelting"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

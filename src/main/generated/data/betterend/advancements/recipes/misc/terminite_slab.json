@@ -27,14 +27,13 @@
   },
   "requirements": [
     [
-      "has_terminite_block_terminite_tile",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_terminite_block_terminite_tile"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:terminite_slab"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

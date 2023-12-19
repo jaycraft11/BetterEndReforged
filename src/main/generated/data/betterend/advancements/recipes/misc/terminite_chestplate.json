@@ -22,14 +22,13 @@
   },
   "requirements": [
     [
-      "has_terminite_forged_plate",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_terminite_forged_plate"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:terminite_chestplate"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

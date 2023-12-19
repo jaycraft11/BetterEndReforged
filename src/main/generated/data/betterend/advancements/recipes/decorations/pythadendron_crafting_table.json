@@ -22,14 +22,13 @@
   },
   "requirements": [
     [
-      "has_pythadendron_planks",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_pythadendron_planks"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:pythadendron_crafting_table"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

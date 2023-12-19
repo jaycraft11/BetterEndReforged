@@ -39,15 +39,14 @@
   },
   "requirements": [
     [
+      "has_the_recipe",
       "has_flavolite_slab_flavolite_bricks_slab",
-      "has_crystal_shards",
-      "has_the_recipe"
+      "has_crystal_shards"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:flavolite_lantern"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

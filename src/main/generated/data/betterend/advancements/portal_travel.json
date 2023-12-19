@@ -2,21 +2,17 @@
   "parent": "betterend:portal_on",
   "criteria": {
     "travel": {
-      "conditions": {},
       "trigger": "betterend:portal_travel"
     }
   },
   "display": {
-    "announce_to_chat": true,
     "description": {
       "translate": "advancements.betterend.portal_travel.description"
     },
     "frame": "challenge",
-    "hidden": false,
     "icon": {
       "item": "minecraft:grass_block"
     },
-    "show_toast": true,
     "title": {
       "translate": "advancements.betterend.portal_travel.title"
     }
@@ -25,6 +21,5 @@
     [
       "travel"
     ]
-  ],
-  "sends_telemetry_event": false
+  ]
 }

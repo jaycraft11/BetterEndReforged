@@ -37,14 +37,13 @@
   },
   "requirements": [
     [
-      "has_jellyshroom_log_jellyshroom_bark_jelly",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_jellyshroom_log_jellyshroom_bark_jelly"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:jellyshroom_planks"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

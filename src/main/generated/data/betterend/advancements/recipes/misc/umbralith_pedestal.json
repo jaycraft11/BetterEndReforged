@@ -34,15 +34,14 @@
   },
   "requirements": [
     [
+      "has_the_recipe",
       "has_umbralith_pillar",
-      "has_umbralith_slab",
-      "has_the_recipe"
+      "has_umbralith_slab"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:umbralith_pedestal"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

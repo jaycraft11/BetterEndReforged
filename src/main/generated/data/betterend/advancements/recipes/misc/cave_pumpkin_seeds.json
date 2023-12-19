@@ -22,14 +22,13 @@
   },
   "requirements": [
     [
-      "has_cave_pumpkin",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_cave_pumpkin"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:cave_pumpkin_seeds"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

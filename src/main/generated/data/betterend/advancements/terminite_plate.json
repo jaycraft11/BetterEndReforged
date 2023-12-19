@@ -15,16 +15,12 @@
     }
   },
   "display": {
-    "announce_to_chat": true,
     "description": {
       "translate": "advancements.betterend.terminite_plate.description"
     },
-    "frame": "task",
-    "hidden": false,
     "icon": {
       "item": "betterend:terminite_forged_plate"
     },
-    "show_toast": true,
     "title": {
       "translate": "advancements.betterend.terminite_plate.title"
     }
@@ -33,6 +29,5 @@
     [
       "got_erminite_plate"
     ]
-  ],
-  "sends_telemetry_event": false
+  ]
 }

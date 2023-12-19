@@ -22,14 +22,13 @@
   },
   "requirements": [
     [
-      "has_flavolite",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_flavolite"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:flavolite_furnace"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

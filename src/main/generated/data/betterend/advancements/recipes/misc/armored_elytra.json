@@ -22,14 +22,13 @@
   },
   "requirements": [
     [
-      "has_item.minecraft.elytra",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_item.minecraft.elytra"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:armored_elytra"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

@@ -22,14 +22,13 @@
   },
   "requirements": [
     [
-      "has_flavolite_bricks",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_flavolite_bricks"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:flavolite_bricks_slab"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

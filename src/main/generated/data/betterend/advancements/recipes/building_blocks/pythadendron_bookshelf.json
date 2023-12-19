@@ -34,15 +34,14 @@
   },
   "requirements": [
     [
+      "has_the_recipe",
       "has_book",
-      "has_pythadendron_planks",
-      "has_the_recipe"
+      "has_pythadendron_planks"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:pythadendron_bookshelf"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

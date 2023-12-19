@@ -15,16 +15,12 @@
     }
   },
   "display": {
-    "announce_to_chat": true,
     "description": {
       "translate": "advancements.betterend.thallasium_anvil.description"
     },
-    "frame": "task",
-    "hidden": false,
     "icon": {
       "item": "betterend:thallasium_anvil"
     },
-    "show_toast": true,
     "title": {
       "translate": "advancements.betterend.thallasium_anvil.title"
     }
@@ -33,6 +29,5 @@
     [
       "got_thallasium_anvil"
     ]
-  ],
-  "sends_telemetry_event": false
+  ]
 }

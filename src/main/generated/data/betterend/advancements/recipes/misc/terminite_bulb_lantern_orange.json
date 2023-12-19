@@ -34,15 +34,14 @@
   },
   "requirements": [
     [
+      "has_the_recipe",
       "has_terminite_bulb_lantern",
-      "has_orange_dye",
-      "has_the_recipe"
+      "has_orange_dye"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:terminite_bulb_lantern_orange"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

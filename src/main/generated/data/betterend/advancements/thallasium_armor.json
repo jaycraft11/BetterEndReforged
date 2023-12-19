@@ -51,17 +51,13 @@
     }
   },
   "display": {
-    "announce_to_chat": true,
     "description": {
       "translate": "advancements.betterend.thallasium_armor.description"
     },
-    "frame": "task",
-    "hidden": false,
     "icon": {
       "item": "betterend:thallasium_chestplate",
       "nbt": "{Damage:0}"
     },
-    "show_toast": true,
     "title": {
       "translate": "advancements.betterend.thallasium_armor.title"
     }
@@ -73,6 +69,5 @@
       "got_thallasium_leggings",
       "got_thallasium_boots"
     ]
-  ],
-  "sends_telemetry_event": false
+  ]
 }

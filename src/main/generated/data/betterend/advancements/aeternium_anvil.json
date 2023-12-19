@@ -15,16 +15,13 @@
     }
   },
   "display": {
-    "announce_to_chat": true,
     "description": {
       "translate": "advancements.betterend.aeternium_anvil.description"
     },
     "frame": "challenge",
-    "hidden": false,
     "icon": {
       "item": "betterend:aeternium_anvil"
     },
-    "show_toast": true,
     "title": {
       "translate": "advancements.betterend.aeternium_anvil.title"
     }
@@ -36,6 +33,5 @@
   ],
   "rewards": {
     "experience": 500
-  },
-  "sends_telemetry_event": false
+  }
 }

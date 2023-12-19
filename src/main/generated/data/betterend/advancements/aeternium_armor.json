@@ -51,17 +51,14 @@
     }
   },
   "display": {
-    "announce_to_chat": true,
     "description": {
       "translate": "advancements.betterend.aeternium_armor.description"
     },
     "frame": "challenge",
-    "hidden": false,
     "icon": {
       "item": "betterend:aeternium_chestplate",
       "nbt": "{Damage:0}"
     },
-    "show_toast": true,
     "title": {
       "translate": "advancements.betterend.aeternium_armor.title"
     }
@@ -82,6 +79,5 @@
   ],
   "rewards": {
     "experience": 500
-  },
-  "sends_telemetry_event": false
+  }
 }

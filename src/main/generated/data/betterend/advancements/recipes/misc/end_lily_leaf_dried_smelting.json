@@ -22,14 +22,13 @@
   },
   "requirements": [
     [
-      "has_item.betterend.end_lily_leaf",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_item.betterend.end_lily_leaf"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:end_lily_leaf_dried_smelting"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

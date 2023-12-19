@@ -22,14 +22,13 @@
   },
   "requirements": [
     [
-      "has_item.betterend.chorus_mushroom_raw",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_item.betterend.chorus_mushroom_raw"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:chorus_mushroom_campfire"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

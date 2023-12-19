@@ -22,14 +22,13 @@
   },
   "requirements": [
     [
-      "has_block.betterend.flavolite",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_block.betterend.flavolite"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:flavolite_slab_stonecutting"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

@@ -34,15 +34,14 @@
   },
   "requirements": [
     [
+      "has_the_recipe",
       "has_dragon_breath",
-      "has_bone_block",
-      "has_the_recipe"
+      "has_bone_block"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:dragon_bone_block"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

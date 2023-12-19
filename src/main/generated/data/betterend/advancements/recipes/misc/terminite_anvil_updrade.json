@@ -22,14 +22,13 @@
   },
   "requirements": [
     [
-      "has_block.betterend.terminite_anvil",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_block.betterend.terminite_anvil"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:terminite_anvil_updrade"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

@@ -22,14 +22,13 @@
   },
   "requirements": [
     [
-      "has_umbrella_moss",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_umbrella_moss"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:umbrella_moss_dye"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

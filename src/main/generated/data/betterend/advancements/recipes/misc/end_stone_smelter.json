@@ -44,16 +44,15 @@
   },
   "requirements": [
     [
+      "has_the_recipe",
       "has_tag_c_furnaces",
       "has_thallasium_ingot",
-      "has_end_stone_bricks",
-      "has_the_recipe"
+      "has_end_stone_bricks"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:end_stone_smelter"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

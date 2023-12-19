@@ -22,14 +22,13 @@
   },
   "requirements": [
     [
-      "has_dragon_tree_bark",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_dragon_tree_bark"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:dragon_tree_log"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

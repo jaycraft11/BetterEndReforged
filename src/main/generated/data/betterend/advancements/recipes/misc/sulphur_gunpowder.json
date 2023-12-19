@@ -51,16 +51,15 @@
   },
   "requirements": [
     [
+      "has_the_recipe",
       "has_crystalline_sulphur",
       "has_coal_charcoal",
-      "has_bone_meal",
-      "has_the_recipe"
+      "has_bone_meal"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:sulphur_gunpowder"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

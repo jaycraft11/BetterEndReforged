@@ -34,15 +34,14 @@
   },
   "requirements": [
     [
+      "has_the_recipe",
       "has_book",
-      "has_tenanea_planks",
-      "has_the_recipe"
+      "has_tenanea_planks"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:tenanea_bookshelf"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

@@ -63,17 +63,13 @@
     }
   },
   "display": {
-    "announce_to_chat": true,
     "description": {
       "translate": "advancements.betterend.thallasium_tool.description"
     },
-    "frame": "task",
-    "hidden": false,
     "icon": {
       "item": "betterend:thallasium_pickaxe",
       "nbt": "{Damage:0}"
     },
-    "show_toast": true,
     "title": {
       "translate": "advancements.betterend.thallasium_tool.title"
     }
@@ -86,6 +82,5 @@
       "got_thallasium_shovel",
       "got_thallasium_sword"
     ]
-  ],
-  "sends_telemetry_event": false
+  ]
 }

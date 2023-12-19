@@ -37,14 +37,13 @@
   },
   "requirements": [
     [
-      "has_pythadendron_log_pythadendron_bark_pyt",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_pythadendron_log_pythadendron_bark_pyt"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:pythadendron_planks"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

@@ -22,14 +22,13 @@
   },
   "requirements": [
     [
-      "has_jellyshroom_slab",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_jellyshroom_slab"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:jellyshroom_composter"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

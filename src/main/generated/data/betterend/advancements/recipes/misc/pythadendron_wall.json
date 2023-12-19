@@ -34,15 +34,14 @@
   },
   "requirements": [
     [
+      "has_the_recipe",
       "has_pythadendron_planks",
-      "has_pythadendron_fence",
-      "has_the_recipe"
+      "has_pythadendron_fence"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:pythadendron_wall"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

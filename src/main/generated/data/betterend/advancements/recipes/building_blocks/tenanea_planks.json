@@ -37,14 +37,13 @@
   },
   "requirements": [
     [
-      "has_tenanea_log_tenanea_bark_tenanea_strip",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_tenanea_log_tenanea_bark_tenanea_strip"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:tenanea_planks"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

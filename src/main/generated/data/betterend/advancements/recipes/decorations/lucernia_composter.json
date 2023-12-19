@@ -22,14 +22,13 @@
   },
   "requirements": [
     [
-      "has_lucernia_slab",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_lucernia_slab"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:lucernia_composter"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

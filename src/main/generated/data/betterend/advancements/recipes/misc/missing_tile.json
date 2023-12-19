@@ -44,15 +44,14 @@
   },
   "requirements": [
     [
+      "has_the_recipe",
       "has_violecite_violecite_bricks_violecite_t",
-      "has_purpur_block",
-      "has_the_recipe"
+      "has_purpur_block"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:missing_tile"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

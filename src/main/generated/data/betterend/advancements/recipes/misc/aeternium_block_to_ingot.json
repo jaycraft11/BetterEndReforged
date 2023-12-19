@@ -22,14 +22,13 @@
   },
   "requirements": [
     [
-      "has_aeternium_block",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_aeternium_block"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:aeternium_block_to_ingot"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

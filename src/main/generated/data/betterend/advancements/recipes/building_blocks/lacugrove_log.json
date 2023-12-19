@@ -22,14 +22,13 @@
   },
   "requirements": [
     [
-      "has_lacugrove_bark",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_lacugrove_bark"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:lacugrove_log"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

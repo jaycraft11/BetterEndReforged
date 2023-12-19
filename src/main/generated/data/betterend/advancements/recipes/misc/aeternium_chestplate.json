@@ -22,14 +22,13 @@
   },
   "requirements": [
     [
-      "has_item.betterend.terminite_chestplate",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_item.betterend.terminite_chestplate"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:aeternium_chestplate"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

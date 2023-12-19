@@ -19,16 +19,13 @@
     }
   },
   "display": {
-    "announce_to_chat": true,
     "description": {
       "translate": "advancements.betterend.village.description"
     },
     "frame": "goal",
-    "hidden": false,
     "icon": {
       "item": "betterend:tenanea_door"
     },
-    "show_toast": true,
     "title": {
       "translate": "advancements.betterend.village.title"
     }
@@ -37,6 +34,5 @@
     [
       "end_village"
     ]
-  ],
-  "sends_telemetry_event": false
+  ]
 }

@@ -39,17 +39,13 @@
     }
   },
   "display": {
-    "announce_to_chat": true,
     "description": {
       "translate": "advancements.betterend.hammer.description"
     },
-    "frame": "task",
-    "hidden": false,
     "icon": {
       "item": "betterend:diamond_hammer",
       "nbt": "{Damage:0}"
     },
-    "show_toast": true,
     "title": {
       "translate": "advancements.betterend.hammer.title"
     }
@@ -60,6 +56,5 @@
       "got_thallasium_hammer",
       "got_terminite_hammer"
     ]
-  ],
-  "sends_telemetry_event": false
+  ]
 }

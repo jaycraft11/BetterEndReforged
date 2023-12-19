@@ -34,15 +34,14 @@
   },
   "requirements": [
     [
+      "has_the_recipe",
       "has_end_stone_bricks",
-      "has_vine",
-      "has_the_recipe"
+      "has_vine"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:end_stone_brick_weathered_from_vine"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

@@ -22,14 +22,13 @@
   },
   "requirements": [
     [
-      "has_charnia_red",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_charnia_red"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:charnia_red_dye"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

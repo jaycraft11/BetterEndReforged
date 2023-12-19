@@ -22,14 +22,13 @@
   },
   "requirements": [
     [
-      "has_umbrella_tree_bark",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_umbrella_tree_bark"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:umbrella_tree_log"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

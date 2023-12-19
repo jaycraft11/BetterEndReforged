@@ -34,15 +34,14 @@
   },
   "requirements": [
     [
+      "has_the_recipe",
       "has_smaragdant_crystal_slab",
-      "has_smaragdant_crystal_pillar",
-      "has_the_recipe"
+      "has_smaragdant_crystal_pillar"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:smaragdant_crystal_pedestal"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

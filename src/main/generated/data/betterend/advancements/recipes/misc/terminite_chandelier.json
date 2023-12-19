@@ -34,15 +34,14 @@
   },
   "requirements": [
     [
+      "has_the_recipe",
       "has_terminite_ingot",
-      "has_lumecorn_rod",
-      "has_the_recipe"
+      "has_lumecorn_rod"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:terminite_chandelier"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

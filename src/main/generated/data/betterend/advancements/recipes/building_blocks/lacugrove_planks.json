@@ -37,14 +37,13 @@
   },
   "requirements": [
     [
-      "has_lacugrove_log_lacugrove_bark_lacugrove",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_lacugrove_log_lacugrove_bark_lacugrove"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:lacugrove_planks"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

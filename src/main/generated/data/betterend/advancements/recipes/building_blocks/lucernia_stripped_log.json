@@ -22,14 +22,13 @@
   },
   "requirements": [
     [
-      "has_lucernia_stripped_bark",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_lucernia_stripped_bark"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:lucernia_stripped_log"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

@@ -22,14 +22,13 @@
   },
   "requirements": [
     [
-      "has_thallasium_ingot",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_thallasium_ingot"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:thallasium_trapdoor"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

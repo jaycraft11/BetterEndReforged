@@ -46,16 +46,15 @@
   },
   "requirements": [
     [
+      "has_the_recipe",
       "has_ender_eye",
       "has_ender_pearl",
-      "has_obsidian",
-      "has_the_recipe"
+      "has_obsidian"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:infusion_pedestal"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

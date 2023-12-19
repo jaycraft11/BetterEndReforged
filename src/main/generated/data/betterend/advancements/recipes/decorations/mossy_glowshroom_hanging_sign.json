@@ -34,15 +34,14 @@
   },
   "requirements": [
     [
+      "has_the_recipe",
       "has_mossy_glowshroom_stripped_log",
-      "has_chain",
-      "has_the_recipe"
+      "has_chain"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:mossy_glowshroom_hanging_sign"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

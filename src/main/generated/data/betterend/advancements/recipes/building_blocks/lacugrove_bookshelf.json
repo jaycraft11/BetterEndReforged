@@ -34,15 +34,14 @@
   },
   "requirements": [
     [
+      "has_the_recipe",
       "has_book",
-      "has_lacugrove_planks",
-      "has_the_recipe"
+      "has_lacugrove_planks"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:lacugrove_bookshelf"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

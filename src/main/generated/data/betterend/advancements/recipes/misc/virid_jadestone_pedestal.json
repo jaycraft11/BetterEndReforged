@@ -34,15 +34,14 @@
   },
   "requirements": [
     [
+      "has_the_recipe",
       "has_virid_jadestone_pillar",
-      "has_virid_jadestone_slab",
-      "has_the_recipe"
+      "has_virid_jadestone_slab"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:virid_jadestone_pedestal"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

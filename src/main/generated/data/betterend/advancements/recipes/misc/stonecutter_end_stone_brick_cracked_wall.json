@@ -22,14 +22,13 @@
   },
   "requirements": [
     [
-      "has_block.betterend.end_stone_brick_cracked",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_block.betterend.end_stone_brick_cracked"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:stonecutter_end_stone_brick_cracked_wall"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

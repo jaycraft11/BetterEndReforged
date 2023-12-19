@@ -22,14 +22,13 @@
   },
   "requirements": [
     [
-      "has_pythadendron_bark",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_pythadendron_bark"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:pythadendron_log"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

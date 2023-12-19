@@ -34,15 +34,14 @@
   },
   "requirements": [
     [
+      "has_the_recipe",
       "has_polished_diorite",
-      "has_polished_diorite_slab",
-      "has_the_recipe"
+      "has_polished_diorite_slab"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:diorite_pedestal"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

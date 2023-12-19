@@ -22,14 +22,13 @@
   },
   "requirements": [
     [
-      "has_tail_moss",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_tail_moss"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:tail_moss_dye"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

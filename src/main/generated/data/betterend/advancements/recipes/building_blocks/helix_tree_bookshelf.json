@@ -34,15 +34,14 @@
   },
   "requirements": [
     [
+      "has_the_recipe",
       "has_book",
-      "has_helix_tree_planks",
-      "has_the_recipe"
+      "has_helix_tree_planks"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:helix_tree_bookshelf"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

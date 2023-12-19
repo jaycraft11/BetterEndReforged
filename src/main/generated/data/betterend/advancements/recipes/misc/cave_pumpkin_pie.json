@@ -51,16 +51,15 @@
   },
   "requirements": [
     [
+      "has_the_recipe",
       "has_sugar",
       "has_blossom_berry_shadow_berry_raw",
-      "has_cave_pumpkin",
-      "has_the_recipe"
+      "has_cave_pumpkin"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:cave_pumpkin_pie"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

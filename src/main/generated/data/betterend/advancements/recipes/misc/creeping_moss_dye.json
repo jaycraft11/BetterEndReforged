@@ -22,14 +22,13 @@
   },
   "requirements": [
     [
-      "has_creeping_moss",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_creeping_moss"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:creeping_moss_dye"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

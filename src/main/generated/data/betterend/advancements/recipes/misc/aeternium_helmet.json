@@ -22,14 +22,13 @@
   },
   "requirements": [
     [
-      "has_item.betterend.terminite_helmet",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_item.betterend.terminite_helmet"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:aeternium_helmet"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

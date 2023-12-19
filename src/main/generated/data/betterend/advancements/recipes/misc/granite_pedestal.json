@@ -34,15 +34,14 @@
   },
   "requirements": [
     [
+      "has_the_recipe",
       "has_polished_granite_slab",
-      "has_polished_granite",
-      "has_the_recipe"
+      "has_polished_granite"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:granite_pedestal"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

@@ -22,14 +22,13 @@
   },
   "requirements": [
     [
-      "has_bushy_grass",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_bushy_grass"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:byshy_grass_dye"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

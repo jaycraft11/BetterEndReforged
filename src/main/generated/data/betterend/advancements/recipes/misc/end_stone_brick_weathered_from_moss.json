@@ -34,15 +34,14 @@
   },
   "requirements": [
     [
+      "has_the_recipe",
       "has_moss_block",
-      "has_end_stone_bricks",
-      "has_the_recipe"
+      "has_end_stone_bricks"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:end_stone_brick_weathered_from_moss"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

@@ -34,15 +34,14 @@
   },
   "requirements": [
     [
+      "has_the_recipe",
       "has_polished_andesite_slab",
-      "has_polished_andesite",
-      "has_the_recipe"
+      "has_polished_andesite"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:andesite_pedestal"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

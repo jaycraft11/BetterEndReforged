@@ -34,15 +34,14 @@
   },
   "requirements": [
     [
+      "has_the_recipe",
       "has_pythadendron_planks",
-      "has_pythadendron_slab",
-      "has_the_recipe"
+      "has_pythadendron_slab"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:pythadendron_barrel"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

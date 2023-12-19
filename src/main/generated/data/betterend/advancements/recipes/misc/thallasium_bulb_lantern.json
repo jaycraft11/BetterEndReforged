@@ -46,16 +46,15 @@
   },
   "requirements": [
     [
+      "has_the_recipe",
       "has_glowing_bulb",
       "has_thallasium_ingot",
-      "has_thallasium_chain",
-      "has_the_recipe"
+      "has_thallasium_chain"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:thallasium_bulb_lantern"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

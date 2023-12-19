@@ -22,14 +22,13 @@
   },
   "requirements": [
     [
-      "has_lacugrove_slab",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_lacugrove_slab"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:lacugrove_composter"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

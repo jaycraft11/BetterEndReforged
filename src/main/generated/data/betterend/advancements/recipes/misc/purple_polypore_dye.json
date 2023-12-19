@@ -22,14 +22,13 @@
   },
   "requirements": [
     [
-      "has_purple_polypore",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_purple_polypore"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:purple_polypore_dye"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

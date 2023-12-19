@@ -403,57 +403,69 @@
     }
   },
   "display": {
-    "announce_to_chat": true,
     "description": {
       "translate": "advancements.betterend.all_the_biomes.description"
     },
     "frame": "challenge",
-    "hidden": false,
     "icon": {
       "item": "betterend:aeternium_boots",
       "nbt": "{Damage:0}"
     },
-    "show_toast": true,
     "title": {
       "translate": "advancements.betterend.all_the_biomes.title"
     }
   },
   "requirements": [
     [
-      "betterend:dry_shrubland"
+      "betterend:neon_oasis"
+    ],
+    [
+      "betterend:shadow_forest"
     ],
     [
       "betterend:megalake"
     ],
     [
-      "betterend:lantern_woods"
+      "betterend:empty_end_cave"
     ],
     [
-      "betterend:empty_end_cave"
+      "betterend:glowing_grasslands"
+    ],
+    [
+      "betterend:lush_aurora_cave"
+    ],
+    [
+      "betterend:crystal_mountains"
+    ],
+    [
+      "betterend:jade_cave"
     ],
     [
       "betterend:painted_mountains"
     ],
     [
+      "betterend:dry_shrubland"
+    ],
+    [
       "betterend:amber_land"
     ],
     [
-      "betterend:neon_oasis"
-    ],
-    [
-      "betterend:dragon_graveyards"
-    ],
-    [
-      "betterend:blossoming_spires"
+      "betterend:megalake_grove"
     ],
     [
       "betterend:empty_aurora_cave"
     ],
     [
-      "betterend:umbra_valley"
+      "betterend:blossoming_spires"
     ],
     [
-      "betterend:megalake_grove"
+      "betterend:chorus_forest"
+    ],
+    [
+      "betterend:dragon_graveyards"
+    ],
+    [
+      "betterend:umbrella_jungle"
     ],
     [
       "betterend:foggy_mushroomland"
@@ -462,41 +474,25 @@
       "betterend:ice_starfield"
     ],
     [
-      "betterend:umbrella_jungle"
-    ],
-    [
-      "betterend:jade_cave"
-    ],
-    [
-      "betterend:lush_aurora_cave"
-    ],
-    [
       "betterend:empty_smaragdant_cave"
+    ],
+    [
+      "betterend:lantern_woods"
     ],
     [
       "betterend:sulphur_springs"
     ],
     [
-      "betterend:crystal_mountains"
-    ],
-    [
       "betterend:dust_wastelands"
     ],
     [
-      "betterend:glowing_grasslands"
-    ],
-    [
-      "betterend:shadow_forest"
+      "betterend:umbra_valley"
     ],
     [
       "betterend:lush_smaragdant_cave"
-    ],
-    [
-      "betterend:chorus_forest"
     ]
   ],
   "rewards": {
     "experience": 500
-  },
-  "sends_telemetry_event": false
+  }
 }

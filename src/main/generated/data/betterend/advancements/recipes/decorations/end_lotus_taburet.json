@@ -34,15 +34,14 @@
   },
   "requirements": [
     [
+      "has_the_recipe",
       "has_end_lotus_slab",
-      "has_stick",
-      "has_the_recipe"
+      "has_stick"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:end_lotus_taburet"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

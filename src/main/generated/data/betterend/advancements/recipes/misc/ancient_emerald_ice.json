@@ -22,14 +22,13 @@
   },
   "requirements": [
     [
-      "has_dense_emerald_ice",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_dense_emerald_ice"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:ancient_emerald_ice"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

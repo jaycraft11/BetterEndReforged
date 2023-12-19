@@ -22,14 +22,13 @@
   },
   "requirements": [
     [
-      "has_filalux",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_filalux"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:filalux_lantern"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

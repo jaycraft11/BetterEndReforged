@@ -37,14 +37,13 @@
   },
   "requirements": [
     [
-      "has_dragon_tree_log_dragon_tree_bark_drago",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_dragon_tree_log_dragon_tree_bark_drago"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:dragon_tree_planks"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

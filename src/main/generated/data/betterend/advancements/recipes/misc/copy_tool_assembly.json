@@ -46,16 +46,15 @@
   },
   "requirements": [
     [
+      "has_the_recipe",
       "has_stick",
       "has_tool_assembly_smithing_template",
-      "has_iron_block",
-      "has_the_recipe"
+      "has_iron_block"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:copy_tool_assembly"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

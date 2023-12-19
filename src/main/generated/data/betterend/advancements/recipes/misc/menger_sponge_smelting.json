@@ -22,14 +22,13 @@
   },
   "requirements": [
     [
-      "has_block.betterend.menger_sponge_wet",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_block.betterend.menger_sponge_wet"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:menger_sponge_smelting"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

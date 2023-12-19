@@ -22,14 +22,13 @@
   },
   "requirements": [
     [
-      "has_item.betterend.aeternium_sword_blade",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_item.betterend.aeternium_sword_blade"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:aeternium_sword"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

@@ -56,17 +56,16 @@
   },
   "requirements": [
     [
+      "has_the_recipe",
       "has_sugar",
       "has_gelatine",
       "has_blossom_berry",
-      "has_tag_c_water_bottles",
-      "has_the_recipe"
+      "has_tag_c_water_bottles"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:blossom_berry_jelly"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

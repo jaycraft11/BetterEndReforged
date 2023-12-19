@@ -22,14 +22,13 @@
   },
   "requirements": [
     [
-      "has_twisted_umbrella_moss_tall",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_twisted_umbrella_moss_tall"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:twisted_umbrella_moss_dye_tall"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

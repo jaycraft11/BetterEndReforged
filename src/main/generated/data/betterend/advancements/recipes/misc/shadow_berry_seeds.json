@@ -22,14 +22,13 @@
   },
   "requirements": [
     [
-      "has_shadow_berry_raw",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_shadow_berry_raw"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:shadow_berry_seeds"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

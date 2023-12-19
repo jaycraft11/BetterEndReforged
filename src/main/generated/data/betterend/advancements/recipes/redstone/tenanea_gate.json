@@ -34,15 +34,14 @@
   },
   "requirements": [
     [
+      "has_the_recipe",
       "has_stick",
-      "has_tenanea_planks",
-      "has_the_recipe"
+      "has_tenanea_planks"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:tenanea_gate"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

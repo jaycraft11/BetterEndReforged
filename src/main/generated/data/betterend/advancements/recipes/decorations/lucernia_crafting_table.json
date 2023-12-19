@@ -22,14 +22,13 @@
   },
   "requirements": [
     [
-      "has_lucernia_planks",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_lucernia_planks"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:lucernia_crafting_table"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

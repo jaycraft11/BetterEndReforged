@@ -37,14 +37,13 @@
   },
   "requirements": [
     [
-      "has_lucernia_log_lucernia_bark_lucernia_st",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_lucernia_log_lucernia_bark_lucernia_st"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:lucernia_planks"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

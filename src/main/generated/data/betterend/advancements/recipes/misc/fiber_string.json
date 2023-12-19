@@ -22,14 +22,13 @@
   },
   "requirements": [
     [
-      "has_silk_fiber",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_silk_fiber"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:fiber_string"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

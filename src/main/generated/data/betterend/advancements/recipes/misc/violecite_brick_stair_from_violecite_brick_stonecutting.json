@@ -22,14 +22,13 @@
   },
   "requirements": [
     [
-      "has_block.betterend.violecite_bricks",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_block.betterend.violecite_bricks"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:violecite_brick_stair_from_violecite_brick_stonecutting"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

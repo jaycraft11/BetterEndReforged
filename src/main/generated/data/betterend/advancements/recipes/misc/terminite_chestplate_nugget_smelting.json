@@ -22,14 +22,13 @@
   },
   "requirements": [
     [
-      "has_item.betterend.terminite_chestplate",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_item.betterend.terminite_chestplate"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:terminite_chestplate_nugget_smelting"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

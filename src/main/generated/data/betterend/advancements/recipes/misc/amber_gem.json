@@ -22,14 +22,13 @@
   },
   "requirements": [
     [
-      "has_raw_amber",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_raw_amber"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:amber_gem"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

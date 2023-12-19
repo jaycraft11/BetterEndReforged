@@ -46,16 +46,15 @@
   },
   "requirements": [
     [
+      "has_the_recipe",
       "has_amber_block",
       "has_aurora_crystal",
-      "has_eternal_crystal",
-      "has_the_recipe"
+      "has_eternal_crystal"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:respawn_obelisk"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

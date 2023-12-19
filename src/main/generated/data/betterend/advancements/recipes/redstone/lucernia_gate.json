@@ -34,15 +34,14 @@
   },
   "requirements": [
     [
+      "has_the_recipe",
       "has_stick",
-      "has_lucernia_planks",
-      "has_the_recipe"
+      "has_lucernia_planks"
     ]
   ],
   "rewards": {
     "recipes": [
       "betterend:lucernia_gate"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }
