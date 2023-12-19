@@ -35,8 +35,7 @@ public class EndstoneDustBlock extends FallingBlock implements TagProvider, Beha
     protected MapCodec<? extends EndstoneDustBlock> codec() {
         return CODEC;
     }
-
-    @Environment(EnvType.CLIENT)
+    
     private static final int COLOR = ColorUtil.color(226, 239, 168);
 
     public EndstoneDustBlock() {

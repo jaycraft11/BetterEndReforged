@@ -6,9 +6,6 @@ import org.betterx.bclib.config.IdConfig;
 import org.betterx.bclib.config.PathConfig;
 import org.betterx.betterend.BetterEnd;
 
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
-
 public class Configs {
     public static final PathConfig ENTITY_CONFIG = new PathConfig(BetterEnd.MOD_ID, "entities");
     public static final PathConfig BLOCK_CONFIG = new PathConfig(BetterEnd.MOD_ID, "blocks");
@@ -18,7 +15,6 @@ public class Configs {
     public static final PathConfig RECIPE_CONFIG = new PathConfig(BetterEnd.MOD_ID, "recipes");
     public static final PathConfig ENCHANTMENT_CONFIG = new PathConfig(BetterEnd.MOD_ID, "enchantments");
 
-    @Environment(value = EnvType.CLIENT)
     public static final PathConfig CLENT_CONFIG = new PathConfig(BetterEnd.MOD_ID, "client", false);
 
     public static void saveConfigs() {
