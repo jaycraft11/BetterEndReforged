@@ -4,7 +4,7 @@ import org.betterx.betterend.recipe.builders.InfusionRecipe;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeHolder;
 
 import me.shedaniel.rei.api.common.category.CategoryIdentifier;
 import me.shedaniel.rei.api.common.display.SimpleGridMenuDisplay;
@@ -17,16 +17,20 @@ import org.jetbrains.annotations.NotNull;
 
 public class REIInfusionDisplay extends BasicDisplay implements SimpleGridMenuDisplay {
 
-    private final InfusionRecipe recipe;
+    private final RecipeHolder<InfusionRecipe> recipe;
     private final int time;
 
-    public REIInfusionDisplay(InfusionRecipe recipe) {
+    public REIInfusionDisplay(RecipeHolder<InfusionRecipe> recipe) {
         super(
-                EntryIngredients.ofIngredients(recipe.getIngredients()),
-                Collections.singletonList(EntryIngredients.of(recipe.getResultItem(Minecraft.getInstance().level.registryAccess())))
+                EntryIngredients.ofIngredients(recipe.value().getIngredients()),
+                Collections.singletonList(
+                        EntryIngredients.of(
+                                recipe.value().getResultItem(Minecraft.getInstance().level.registryAccess())
+                        )
+                )
         );
         this.recipe = recipe;
-        this.time = recipe.getInfusionTime();
+        this.time = recipe.value().getInfusionTime();
     }
 
     public int getInfusionTime() {
@@ -35,7 +39,7 @@ public class REIInfusionDisplay extends BasicDisplay implements SimpleGridMenuDi
 
     @Override
     public @NotNull Optional<ResourceLocation> getDisplayLocation() {
-        return Optional.ofNullable(recipe).map(Recipe::getId);
+        return Optional.ofNullable(recipe).map(RecipeHolder::id);
     }
 
     @Override

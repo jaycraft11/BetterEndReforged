@@ -10,6 +10,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeHolder;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -17,6 +18,7 @@ import net.fabricmc.api.Environment;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import org.jetbrains.annotations.NotNull;
 
 @Environment(EnvType.CLIENT)
 public class EndStoneSmelterRecipeBookScreen extends BlastingRecipeBookComponent {
@@ -24,7 +26,7 @@ public class EndStoneSmelterRecipeBookScreen extends BlastingRecipeBookComponent
     private Slot fuelSlot;
 
     @Override
-    protected Set<Item> getFuelItems() {
+    protected @NotNull Set<Item> getFuelItems() {
         return EndStoneSmelterBlockEntity.availableFuels().keySet();
     }
 
@@ -37,10 +39,12 @@ public class EndStoneSmelterRecipeBookScreen extends BlastingRecipeBookComponent
     }
 
     @Override
-    public void setupGhostRecipe(Recipe<?> recipe, List<Slot> slots) {
+    public void setupGhostRecipe(RecipeHolder<?> recipeHolder, List<Slot> slots) {
+        if (Minecraft.getInstance().level == null) return;
         this.ghostRecipe.clear();
+        final Recipe<?> recipe = recipeHolder.value();
         ItemStack result = recipe.getResultItem(Minecraft.getInstance().level.registryAccess());
-        this.ghostRecipe.setRecipe(recipe);
+        this.ghostRecipe.setRecipe(recipeHolder);
         this.ghostRecipe.addIngredient(Ingredient.of(result), (slots.get(3)).x, (slots.get(3)).y);
         NonNullList<Ingredient> inputs = recipe.getIngredients();
 

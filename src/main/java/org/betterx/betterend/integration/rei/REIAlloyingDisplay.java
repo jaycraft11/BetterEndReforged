@@ -8,7 +8,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeHolder;
 
 import me.shedaniel.rei.api.common.category.CategoryIdentifier;
 import me.shedaniel.rei.api.common.display.SimpleGridMenuDisplay;
@@ -25,21 +25,27 @@ import org.jetbrains.annotations.NotNull;
 
 public class REIAlloyingDisplay extends BasicDisplay implements SimpleGridMenuDisplay {
 
-    private static final List<EntryStack> fuel;
+    private static final List<EntryStack<?>> fuel;
 
-    private final Recipe<?> recipe;
+    private final RecipeHolder<?> recipe;
     private final float xp;
     private final double smeltTime;
 
 
-    public REIAlloyingDisplay(AlloyingRecipe recipe) {
-        this(recipe, recipe.getExperience(), recipe.getSmeltTime());
+    public REIAlloyingDisplay(RecipeHolder<AlloyingRecipe> recipe) {
+        this(recipe, recipe.value().getExperience(), recipe.value().getSmeltTime());
     }
 
-    protected REIAlloyingDisplay(Recipe<?> recipe, float xp, double smeltTime) {
+    protected REIAlloyingDisplay(RecipeHolder<?> recipe, float xp, double smeltTime) {
         super(
-                EntryIngredients.ofIngredients(recipe.getIngredients()),
-                Collections.singletonList(EntryIngredients.of(recipe.getResultItem(Minecraft.getInstance().level.registryAccess())))
+                EntryIngredients.ofIngredients(recipe.value().getIngredients()),
+                Collections.singletonList(
+                        EntryIngredients.of(
+                                recipe
+                                        .value()
+                                        .getResultItem(Minecraft.getInstance().level.registryAccess())
+                        )
+                )
         );
         this.recipe = recipe;
         this.xp = xp;
@@ -47,13 +53,13 @@ public class REIAlloyingDisplay extends BasicDisplay implements SimpleGridMenuDi
     }
 
 
-    public static List<EntryStack> getFuel() {
+    public static List<EntryStack<?>> getFuel() {
         return fuel;
     }
 
     @Override
     public @NotNull Optional<ResourceLocation> getDisplayLocation() {
-        return Optional.ofNullable(recipe).map(Recipe::getId);
+        return Optional.ofNullable(recipe).map(RecipeHolder::id);
     }
 
     @Override
@@ -72,10 +78,6 @@ public class REIAlloyingDisplay extends BasicDisplay implements SimpleGridMenuDi
 
     public double getSmeltTime() {
         return this.smeltTime;
-    }
-
-    public Optional<Recipe<?>> getOptionalRecipe() {
-        return Optional.ofNullable(recipe);
     }
 
     @Override

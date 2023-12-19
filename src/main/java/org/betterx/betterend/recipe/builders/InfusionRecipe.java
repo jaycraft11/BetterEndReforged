@@ -8,12 +8,14 @@ import org.betterx.bclib.util.ItemUtil;
 import org.betterx.betterend.BetterEnd;
 import org.betterx.betterend.rituals.InfusionRitual;
 
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
-import net.minecraft.util.GsonHelper;
+import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.item.EnchantedBookItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -30,12 +32,35 @@ import net.minecraft.world.level.Level;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-
 import java.util.Arrays;
+import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 public class InfusionRecipe implements Recipe<InfusionRitual>, UnknownReceipBookCategory {
+    public static final Codec<Ingredient[]> CODEC_CATALYSTS = RecordCodecBuilder.create(instance -> instance
+            .group(
+                    Builder.catalyst(Catalysts.NORTH),
+                    Builder.catalyst(Catalysts.NORTH_EAST),
+                    Builder.catalyst(Catalysts.EAST),
+                    Builder.catalyst(Catalysts.SOUTH_EAST),
+                    Builder.catalyst(Catalysts.SOUTH),
+                    Builder.catalyst(Catalysts.SOUTH_WEST),
+                    Builder.catalyst(Catalysts.WEST),
+                    Builder.catalyst(Catalysts.NORTH_WEST)
+            ).apply(instance, Builder::fromCodec)
+    );
+
+    public static final Codec<InfusionRecipe> CODEC = RecordCodecBuilder.create(instance -> instance
+            .group(
+                    ItemUtil.CODEC_INGREDIENT_WITH_NBT.fieldOf("input").forGetter(i -> i.input),
+                    ItemUtil.CODEC_ITEM_STACK_WITH_NBT.fieldOf("result").forGetter(i -> i.output),
+                    Codec.INT.optionalFieldOf("time", 1).forGetter(InfusionRecipe::getInfusionTime),
+                    CODEC_CATALYSTS.fieldOf("catalysts").forGetter(i -> i.catalysts),
+                    ExtraCodecs.strictOptionalField(Codec.STRING, "group")
+                               .forGetter(i -> Optional.ofNullable(i.group))
+            ).apply(instance, InfusionRecipe::new)
+
+    );
     public final static String GROUP = "infusion";
     public final static RecipeType<InfusionRecipe> TYPE = BCLRecipeManager.registerType(BetterEnd.MOD_ID, GROUP);
     public final static Serializer SERIALIZER = BCLRecipeManager.registerSerializer(
@@ -44,25 +69,39 @@ public class InfusionRecipe implements Recipe<InfusionRitual>, UnknownReceipBook
             new Serializer()
     );
 
-    private final ResourceLocation id;
     private final Ingredient[] catalysts;
     private Ingredient input;
     private ItemStack output;
-    private int time = 1;
+    private int time;
     private String group;
 
-    private InfusionRecipe(ResourceLocation id) {
-        this(id, null, null);
+    private InfusionRecipe() {
+        this(null, null);
     }
 
-    private InfusionRecipe(ResourceLocation id, Ingredient input, ItemStack output) {
-        this.id = id;
-        this.input = input;
-        this.output = output;
-        this.catalysts = new Ingredient[]{
+    private InfusionRecipe(Ingredient input, ItemStack output) {
+        this(input, output, 1, new Ingredient[]{
                 Ingredient.EMPTY, Ingredient.EMPTY, Ingredient.EMPTY, Ingredient.EMPTY,
                 Ingredient.EMPTY, Ingredient.EMPTY, Ingredient.EMPTY, Ingredient.EMPTY
-        };
+        }, (String) null);
+    }
+
+    private InfusionRecipe(
+            Ingredient input,
+            ItemStack output,
+            int time,
+            Ingredient[] catalysts,
+            Optional<String> group
+    ) {
+        this(input, output, time, catalysts, group.orElse(null));
+    }
+
+    private InfusionRecipe(Ingredient input, ItemStack output, int time, Ingredient[] catalysts, String group) {
+        this.input = input;
+        this.output = output;
+        this.catalysts = catalysts;
+        this.time = time;
+        this.group = group;
     }
 
     public static Builder create(String id, ItemLike output) {
@@ -110,7 +149,7 @@ public class InfusionRecipe implements Recipe<InfusionRitual>, UnknownReceipBook
     }
 
     @Override
-    public ItemStack assemble(InfusionRitual ritual, RegistryAccess acc) {
+    public @NotNull ItemStack assemble(InfusionRitual ritual, RegistryAccess acc) {
         return output.copy();
     }
 
@@ -120,7 +159,7 @@ public class InfusionRecipe implements Recipe<InfusionRitual>, UnknownReceipBook
     }
 
     @Override
-    public NonNullList<Ingredient> getIngredients() {
+    public @NotNull NonNullList<Ingredient> getIngredients() {
         NonNullList<Ingredient> defaultedList = NonNullList.create();
         defaultedList.add(input);
         defaultedList.addAll(Arrays.asList(catalysts));
@@ -128,32 +167,60 @@ public class InfusionRecipe implements Recipe<InfusionRitual>, UnknownReceipBook
     }
 
     @Override
-    public ItemStack getResultItem(RegistryAccess acc) {
+    public @NotNull ItemStack getResultItem(RegistryAccess acc) {
         return this.output;
     }
 
-    @Override
-    public ResourceLocation getId() {
-        return this.id;
-    }
 
     @Override
     @Environment(EnvType.CLIENT)
-    public String getGroup() {
+    public @NotNull String getGroup() {
         return this.group;
     }
 
     @Override
-    public RecipeSerializer<?> getSerializer() {
+    public @NotNull RecipeSerializer<?> getSerializer() {
         return SERIALIZER;
     }
 
     @Override
-    public RecipeType<?> getType() {
+    public @NotNull RecipeType<?> getType() {
         return TYPE;
     }
 
     public static class Builder extends AbstractSingleInputRecipeBuilder<Builder, InfusionRecipe> {
+        @NotNull
+        private static RecordCodecBuilder<Ingredient[], Optional<Ingredient>> catalyst(Catalysts slot) {
+            return ExtraCodecs.strictOptionalField(ItemUtil.CODEC_INGREDIENT_WITH_NBT, slot.key)
+                              .forGetter(builder ->
+                                      builder[slot.index] == null || builder[slot.index].isEmpty()
+                                              ? Optional.empty()
+                                              : Optional.of(builder[slot.index])
+                              );
+        }
+
+        private static Ingredient[] fromCodec(
+                Optional<Ingredient> north,
+                Optional<Ingredient> north_east,
+                Optional<Ingredient> east,
+                Optional<Ingredient> south_east,
+                Optional<Ingredient> south,
+                Optional<Ingredient> south_west,
+                Optional<Ingredient> west,
+                Optional<Ingredient> north_west
+        ) {
+            Ingredient[] result = new Ingredient[8];
+            result[Catalysts.NORTH.index] = north.orElse(null);
+            result[Catalysts.NORTH_EAST.index] = north_east.orElse(null);
+            result[Catalysts.EAST.index] = east.orElse(null);
+            result[Catalysts.SOUTH_EAST.index] = south_east.orElse(null);
+            result[Catalysts.SOUTH.index] = south.orElse(null);
+            result[Catalysts.SOUTH_WEST.index] = south_west.orElse(null);
+            result[Catalysts.WEST.index] = west.orElse(null);
+            result[Catalysts.NORTH_WEST.index] = north_west.orElse(null);
+            return result;
+        }
+
         private final Ingredient[] catalysts;
         private int time;
 
@@ -171,13 +238,19 @@ public class InfusionRecipe implements Recipe<InfusionRitual>, UnknownReceipBook
         }
 
         @Override
+        protected InfusionRecipe createRecipe(ResourceLocation id) {
+            checkRecipe();
+            return new InfusionRecipe(this.primaryInput, this.output, this.time, this.catalysts, this.group);
+        }
+
+        @Override
         public Builder setGroup(String group) {
             return super.setGroup(group);
         }
 
         /**
-         * @param input
-         * @return
+         * @param input -
+         * @return -
          * @deprecated use {@link #setPrimaryInput(ItemLike...)}
          */
         @Deprecated(forRemoval = true)
@@ -219,23 +292,6 @@ public class InfusionRecipe implements Recipe<InfusionRitual>, UnknownReceipBook
         }
 
         @Override
-        protected void serializeRecipeData(JsonObject root) {
-            super.serializeRecipeData(root);
-
-            if (time != 1) {
-                root.addProperty("time", time);
-            }
-
-            JsonObject catalystObject = new JsonObject();
-            for (var cat : Catalysts.values()) {
-                if (catalysts[cat.index] != null && !catalysts[cat.index].isEmpty()) {
-                    catalystObject.add(cat.key, ItemUtil.toJsonIngredientWithNBT(catalysts[cat.index]));
-                }
-            }
-            root.add("catalysts", catalystObject);
-        }
-
-        @Override
         protected RecipeSerializer<InfusionRecipe> getSerializer() {
             return SERIALIZER;
         }
@@ -261,64 +317,14 @@ public class InfusionRecipe implements Recipe<InfusionRitual>, UnknownReceipBook
     }
 
     public static class Serializer implements RecipeSerializer<InfusionRecipe> {
-        private Ingredient readIngredient(JsonObject obj, String key) {
-            if (obj.has(key)) {
-                JsonElement el = obj.get(key);
-                if (el.isJsonObject()) {
-                    JsonObject o = el.getAsJsonObject();
-                    //directly read as ingredient
-                    if (o.has("tag")) {
-                        final Ingredient res = ItemUtil.fromJsonIngredientWithNBT(o);
-                        if (res == null) return Ingredient.EMPTY;
-                        return res;
-                    } else {
-                        final Ingredient res = Ingredient.of(ItemUtil.fromJsonRecipeWithNBT(o));
-                        if (res == null) return Ingredient.EMPTY;
-                        return res;
-                    }
-                } else if (el.isJsonArray()) {
-                    //this is an Ingredient-Array, so read as such
-                    final Ingredient res = Ingredient.fromJson(el);
-                    if (res == null) return Ingredient.EMPTY;
-                    return res;
-                } else if (obj.isJsonPrimitive()) {
-                    String s = GsonHelper.getAsString(obj, key, "");
-                    ItemStack catalyst = ItemUtil.fromStackString(s);
-                    return (catalyst != null && !catalyst.isEmpty())
-                            ? Ingredient.of(catalyst.getItem())
-                            : Ingredient.EMPTY;
-                } else {
-                    throw new IllegalStateException("Invalid catalyst ingredient for " + key + ": " + el.toString());
-                }
-            }
-            return Ingredient.EMPTY;
+        @Override
+        public @NotNull Codec<InfusionRecipe> codec() {
+            return InfusionRecipe.CODEC;
         }
 
         @Override
-        public InfusionRecipe fromJson(ResourceLocation id, JsonObject json) {
-            InfusionRecipe recipe = new InfusionRecipe(id);
-            JsonObject inputObject = GsonHelper.getAsJsonObject(json, "input");
-            recipe.input = ItemUtil.fromJsonIngredientWithNBT(inputObject);
-
-            JsonObject result = GsonHelper.getAsJsonObject(json, "result");
-            recipe.output = ItemUtil.fromJsonRecipeWithNBT(result);
-            if (recipe.output == null) {
-                throw new IllegalStateException("Output item does not exists!");
-            }
-            recipe.group = GsonHelper.getAsString(json, "group", GROUP);
-            recipe.time = GsonHelper.getAsInt(json, "time", 1);
-
-            JsonObject catalysts = GsonHelper.getAsJsonObject(json, "catalysts");
-            for (var cat : Catalysts.values()) {
-                recipe.catalysts[cat.index] = readIngredient(catalysts, cat.key);
-            }
-
-            return recipe;
-        }
-
-        @Override
-        public InfusionRecipe fromNetwork(ResourceLocation id, FriendlyByteBuf buffer) {
-            InfusionRecipe recipe = new InfusionRecipe(id);
+        public @NotNull InfusionRecipe fromNetwork(FriendlyByteBuf buffer) {
+            InfusionRecipe recipe = new InfusionRecipe();
             recipe.input = Ingredient.fromNetwork(buffer);
             recipe.output = buffer.readItem();
             recipe.group = buffer.readUtf();
