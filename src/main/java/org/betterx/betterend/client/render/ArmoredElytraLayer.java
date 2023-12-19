@@ -16,6 +16,7 @@ import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.ElytraLayer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.client.resources.PlayerSkin;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -48,13 +49,12 @@ public class ArmoredElytraLayer<T extends LivingEntity, M extends EntityModel<T>
 
         if (itemStack != null && itemStack.getItem() instanceof BCLElytraItem) {
             ResourceLocation wingsTexture = ((BCLElytraItem) itemStack.getItem()).getModelTexture();
-            if (livingEntity instanceof AbstractClientPlayer) {
-                AbstractClientPlayer abstractClientPlayer = (AbstractClientPlayer) livingEntity;
-                if (abstractClientPlayer.isElytraLoaded() && abstractClientPlayer.getElytraTextureLocation() != null) {
-                    wingsTexture = abstractClientPlayer.getElytraTextureLocation();
-                } else if (abstractClientPlayer.isCapeLoaded() && abstractClientPlayer.getCloakTextureLocation() != null && abstractClientPlayer
-                        .isModelPartShown(PlayerModelPart.CAPE)) {
-                    wingsTexture = abstractClientPlayer.getCloakTextureLocation();
+            if (livingEntity instanceof AbstractClientPlayer abstractClientPlayer) {
+                final PlayerSkin playerSkin = abstractClientPlayer.getSkin();
+                if (playerSkin.elytraTexture() != null) {
+                    wingsTexture = playerSkin.elytraTexture();
+                } else if (playerSkin.capeTexture() != null && abstractClientPlayer.isModelPartShown(PlayerModelPart.CAPE)) {
+                    wingsTexture = playerSkin.capeTexture();
                 }
             }
 
