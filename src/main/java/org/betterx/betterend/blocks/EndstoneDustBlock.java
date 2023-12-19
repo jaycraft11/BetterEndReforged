@@ -5,6 +5,7 @@ import org.betterx.bclib.interfaces.TagProvider;
 import org.betterx.ui.ColorUtil;
 import org.betterx.worlds.together.tag.v3.CommonBlockTags;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
@@ -24,6 +25,17 @@ import java.util.Collections;
 import java.util.List;
 
 public class EndstoneDustBlock extends FallingBlock implements TagProvider, BehaviourSand {
+    public static final MapCodec<EndstoneDustBlock> CODEC = simpleCodec(EndstoneDustBlock::new);
+
+    private EndstoneDustBlock(Properties settings) {
+        super(settings);
+    }
+
+    @Override
+    protected MapCodec<? extends EndstoneDustBlock> codec() {
+        return CODEC;
+    }
+
     @Environment(EnvType.CLIENT)
     private static final int COLOR = ColorUtil.color(226, 239, 168);
 

@@ -6,6 +6,7 @@ import org.betterx.bclib.client.render.BCLRenderLayer;
 import org.betterx.bclib.interfaces.RenderLayerProvider;
 import org.betterx.betterend.registry.EndBlocks;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -25,6 +26,17 @@ import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.material.MapColor;
 
 public class CrystalMossCoverBlock extends MultifaceBlock implements BonemealableBlock, SimpleWaterloggedBlock, RenderLayerProvider, BehaviourShearablePlant {
+    public static final MapCodec<CrystalMossCoverBlock> CODEC = simpleCodec(CrystalMossCoverBlock::new);
+
+    private CrystalMossCoverBlock(Properties settings) {
+        super(settings);
+    }
+
+    @Override
+    protected MapCodec<? extends CrystalMossCoverBlock> codec() {
+        return CODEC;
+    }
+
     private static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
     private final MultifaceSpreader spreader = new MultifaceSpreader(this);
 
