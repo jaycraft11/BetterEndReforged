@@ -5,6 +5,7 @@ import org.betterx.betterend.registry.EndItems;
 
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.player.AbstractClientPlayer;
+import net.minecraft.client.resources.PlayerSkin;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -54,7 +55,7 @@ public class CrystaliteArmorRenderer extends HumanoidArmorRenderer {
         if (slot == EquipmentSlot.LEGS) return LEGGINGS_MODEL;
         if (slot == EquipmentSlot.FEET) return BOOTS_MODEL;
         if (slot == EquipmentSlot.CHEST) {
-            if (entity instanceof AbstractClientPlayer acp && acp.getModelName().equals("slim")) {
+            if (entity instanceof AbstractClientPlayer acp && acp.getSkin().model() == PlayerSkin.Model.SLIM) {
                 return CHEST_MODEL_SLIM;
             } else {
                 return CHEST_MODEL;
