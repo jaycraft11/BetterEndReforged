@@ -10,13 +10,13 @@ import org.betterx.worlds.together.tag.v3.CommonBlockTags;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
-import net.minecraft.core.Direction;
 import net.minecraft.world.level.material.Fluids;
 
 public class SmaragdantCrystalFeature extends DefaultFeature {
@@ -56,10 +56,17 @@ public class SmaragdantCrystalFeature extends DefaultFeature {
                                 BlockState sideState = world.getBlockState(sidePos);
                                 if (BuddingSmaragdantCrystalBlock.canShardGrowAtState(sideState)) {
                                     if (random.nextBoolean()) {
-                                        BlockState attachedShard = EndBlocks.SMARAGDANT_CRYSTAL_SHARD.defaultBlockState()
-                                                .setValue(SmaragdantCrystalShardBlock.WATERLOGGED,
-                                                        sideState.getFluidState().getType() == Fluids.WATER)
-                                                .setValue(SmaragdantCrystalShardBlock.FACING, k);
+                                        BlockState attachedShard = EndBlocks.SMARAGDANT_CRYSTAL_SHARD
+                                                .defaultBlockState()
+                                                .setValue(
+                                                        SmaragdantCrystalShardBlock.WATERLOGGED,
+                                                        sideState.getFluidState()
+                                                                 .getType() == Fluids.WATER
+                                                )
+                                                .setValue(
+                                                        SmaragdantCrystalShardBlock.FACING,
+                                                        k
+                                                );
                                         BlocksHelper.setWithoutUpdate(world, sidePos, attachedShard);
                                     }
                                 }

@@ -63,7 +63,7 @@ public class SulphurHillFeature extends DefaultFeature {
                 int d = x2 + z2;
                 mut.setY(pos.getY());
                 BlockState state = world.getBlockState(mut);
-                if (state.canBeReplaced() || state.is(EndBlocks.HYDROTHERMAL_VENT)){
+                if (state.canBeReplaced() || state.is(EndBlocks.HYDROTHERMAL_VENT)) {
                     if (d < r2 * r2) {
                         BlocksHelper.setWithoutUpdate(world, mut, Blocks.WATER);
                         mut.move(Direction.DOWN);
@@ -76,7 +76,7 @@ public class SulphurHillFeature extends DefaultFeature {
                         state = world.getBlockState(mut);
                         int maxIt = MHelper.floor(10 - Math.sqrt(d)) + random.nextInt(1);
                         for (int i = 0; i < maxIt && state.canBeReplaced();
-                        i++){
+                             i++) {
                             BlocksHelper.setWithoutUpdate(world, mut, rock);
                             mut.move(Direction.DOWN);
                         }
@@ -86,7 +86,7 @@ public class SulphurHillFeature extends DefaultFeature {
                         state = world.getBlockState(mut);
                         int maxIt = MHelper.floor(10 - Math.sqrt(d)) + random.nextInt(1);
                         for (int i = 0; i < maxIt && state.canBeReplaced();
-                        i++){
+                             i++) {
                             BlocksHelper.setWithoutUpdate(world, mut, rock);
                             mut.move(Direction.DOWN);
                         }

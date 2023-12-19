@@ -1,6 +1,5 @@
 package org.betterx.betterend.client;
 
-import org.betterx.betterend.BetterEnd;
 import org.betterx.betterend.client.render.BetterEndSkyRenderer;
 import org.betterx.betterend.events.ItemTooltipCallback;
 import org.betterx.betterend.interfaces.MultiModelItem;
