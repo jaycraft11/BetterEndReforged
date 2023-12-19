@@ -77,7 +77,7 @@ public class MengerSpongeBlock extends BaseBlockNotFull implements RenderLayerPr
                 if (fluidState.is(FluidTags.WATER)) {
                     if (blockState.getBlock() instanceof BucketPickup
                             && !((BucketPickup) blockState.getBlock())
-                            .pickupBlock(world, blockPos2, blockState)
+                            .pickupBlock(null, world, blockPos2, blockState)
                             .isEmpty()
                     ) {
                         ++i;
