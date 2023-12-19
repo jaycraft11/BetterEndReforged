@@ -28,7 +28,7 @@ public class Integrations {
 
             PlayerAdvancementsCallback.PLAYER_ADVANCEMENT_COMPLETE.register((player, advancement, criterionName) -> {
                 ResourceLocation advId = new ResourceLocation("minecraft:end/enter_end_gateway");
-                if (advId.equals(advancement.getId())) {
+                if (advId.equals(advancement.id())) {
                     player.addItem(new ItemStack(GuideBookItem.GUIDE_BOOK));
                 }
             });

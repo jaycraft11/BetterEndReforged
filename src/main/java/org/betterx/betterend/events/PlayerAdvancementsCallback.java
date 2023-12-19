@@ -1,6 +1,6 @@
 package org.betterx.betterend.events;
 
-import net.minecraft.advancements.Advancement;
+import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.server.level.ServerPlayer;
 
 import net.fabricmc.fabric.api.event.Event;
@@ -17,5 +17,5 @@ public interface PlayerAdvancementsCallback {
             }
     );
 
-    void onAdvancementComplete(ServerPlayer player, Advancement advancement, String criterionName);
+    void onAdvancementComplete(ServerPlayer player, AdvancementHolder advancement, String criterionName);
 }
