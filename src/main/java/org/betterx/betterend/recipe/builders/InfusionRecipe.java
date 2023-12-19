@@ -52,12 +52,14 @@ public class InfusionRecipe implements Recipe<InfusionRitual>, UnknownReceipBook
 
     public static final Codec<InfusionRecipe> CODEC = RecordCodecBuilder.create(instance -> instance
             .group(
-                    ItemUtil.CODEC_INGREDIENT_WITH_NBT.fieldOf("input").forGetter(i -> i.input),
+                    ItemUtil.CODEC_INGREDIENT_WITH_NBT_NOT_EMPTY.fieldOf("input").forGetter(i -> i.input),
                     ItemUtil.CODEC_ITEM_STACK_WITH_NBT.fieldOf("result").forGetter(i -> i.output),
                     Codec.INT.optionalFieldOf("time", 1).forGetter(InfusionRecipe::getInfusionTime),
                     CODEC_CATALYSTS.fieldOf("catalysts").forGetter(i -> i.catalysts),
                     ExtraCodecs.strictOptionalField(Codec.STRING, "group")
-                               .forGetter(i -> Optional.ofNullable(i.group))
+                               .forGetter(i -> i.group == null || i.group.isEmpty()
+                                       ? Optional.empty()
+                                       : Optional.ofNullable(i.group))
             ).apply(instance, InfusionRecipe::new)
 
     );
