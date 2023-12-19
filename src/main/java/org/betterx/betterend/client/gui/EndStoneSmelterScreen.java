@@ -64,7 +64,7 @@ public class EndStoneSmelterScreen extends AbstractContainerScreen<EndStoneSmelt
 
     @Override
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float delta) {
-        renderBackground(guiGraphics);
+        renderBackground(guiGraphics, mouseX, mouseY, delta);
         if (recipeBook.isVisible() && narrow) {
             renderBg(guiGraphics, delta, mouseX, mouseY);
             recipeBook.render(guiGraphics, mouseX, mouseY, delta);
