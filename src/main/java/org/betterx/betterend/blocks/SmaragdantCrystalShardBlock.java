@@ -8,6 +8,7 @@ import org.betterx.bclib.interfaces.tools.AddMineablePickaxe;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.LevelAccessor;
@@ -31,6 +32,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import com.google.common.collect.Maps;
 
 import java.util.EnumMap;
+import org.jetbrains.annotations.Nullable;
 
 @SuppressWarnings("deprecation")
 public class SmaragdantCrystalShardBlock extends BaseAttachedBlock implements AddMineablePickaxe, RenderLayerProvider, SimpleWaterloggedBlock, LiquidBlockContainer {
@@ -58,7 +60,13 @@ public class SmaragdantCrystalShardBlock extends BaseAttachedBlock implements Ad
     }
 
     @Override
-    public boolean canPlaceLiquid(BlockGetter world, BlockPos pos, BlockState state, Fluid fluid) {
+    public boolean canPlaceLiquid(
+            @Nullable Player player,
+            BlockGetter world,
+            BlockPos pos,
+            BlockState state,
+            Fluid fluid
+    ) {
         return !state.getValue(WATERLOGGED);
     }
 

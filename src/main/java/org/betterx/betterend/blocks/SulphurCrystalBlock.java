@@ -10,6 +10,7 @@ import org.betterx.betterend.registry.EndItems;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
@@ -42,6 +43,7 @@ import com.google.common.collect.Maps;
 import java.util.Collections;
 import java.util.EnumMap;
 import java.util.List;
+import org.jetbrains.annotations.Nullable;
 
 @SuppressWarnings("deprecation")
 public class SulphurCrystalBlock extends BaseAttachedBlock.Glass implements RenderLayerProvider, SimpleWaterloggedBlock, LiquidBlockContainer, SurvivesOnBrimstone {
@@ -103,7 +105,13 @@ public class SulphurCrystalBlock extends BaseAttachedBlock.Glass implements Rend
     }
 
     @Override
-    public boolean canPlaceLiquid(BlockGetter world, BlockPos pos, BlockState state, Fluid fluid) {
+    public boolean canPlaceLiquid(
+            @Nullable Player player,
+            BlockGetter world,
+            BlockPos pos,
+            BlockState state,
+            Fluid fluid
+    ) {
         return !state.getValue(WATERLOGGED);
     }
 
