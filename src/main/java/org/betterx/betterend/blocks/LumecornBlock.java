@@ -107,7 +107,7 @@ public class LumecornBlock extends BaseBlockNotFull.Wood implements RenderLayerP
 
     @Override
     @Environment(EnvType.CLIENT)
-    public ItemStack getCloneItemStack(BlockGetter world, BlockPos pos, BlockState state) {
+    public ItemStack getCloneItemStack(LevelReader world, BlockPos pos, BlockState state) {
         EndBlockProperties.LumecornShape shape = state.getValue(SHAPE);
         if (shape == EndBlockProperties.LumecornShape.BOTTOM_BIG || shape == EndBlockProperties.LumecornShape.BOTTOM_SMALL || shape == EndBlockProperties.LumecornShape.MIDDLE) {
             return new ItemStack(EndBlocks.LUMECORN_SEED);

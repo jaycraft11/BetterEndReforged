@@ -13,7 +13,6 @@ import org.betterx.worlds.together.tag.v3.CommonBlockTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
@@ -77,7 +76,7 @@ public class HydraluxBlock extends UnderwaterPlantBlock implements BehaviourWate
 
     @Override
     @Environment(EnvType.CLIENT)
-    public ItemStack getCloneItemStack(BlockGetter world, BlockPos pos, BlockState state) {
+    public ItemStack getCloneItemStack(LevelReader world, BlockPos pos, BlockState state) {
         return new ItemStack(EndBlocks.HYDRALUX_SAPLING);
     }
 

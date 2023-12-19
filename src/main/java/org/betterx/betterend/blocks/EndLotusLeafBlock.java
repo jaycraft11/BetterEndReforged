@@ -77,7 +77,7 @@ public class EndLotusLeafBlock extends BaseBlockNotFull implements RenderLayerPr
 
     @Override
     @Environment(EnvType.CLIENT)
-    public ItemStack getCloneItemStack(BlockGetter world, BlockPos pos, BlockState state) {
+    public ItemStack getCloneItemStack(LevelReader world, BlockPos pos, BlockState state) {
         return new ItemStack(EndBlocks.END_LOTUS_SEED);
     }
 }

@@ -113,7 +113,7 @@ public class EndLilyBlock extends EndUnderwaterPlantBlock implements BehaviourWa
 
     @Override
     @Environment(EnvType.CLIENT)
-    public ItemStack getCloneItemStack(BlockGetter world, BlockPos pos, BlockState state) {
+    public ItemStack getCloneItemStack(LevelReader world, BlockPos pos, BlockState state) {
         return new ItemStack(EndBlocks.END_LILY_SEED);
     }
 
