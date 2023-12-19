@@ -83,7 +83,7 @@ public class InfusionRecipe implements Recipe<InfusionRitual>, UnknownReceipBook
         this(input, output, 1, new Ingredient[]{
                 Ingredient.EMPTY, Ingredient.EMPTY, Ingredient.EMPTY, Ingredient.EMPTY,
                 Ingredient.EMPTY, Ingredient.EMPTY, Ingredient.EMPTY, Ingredient.EMPTY
-        }, (String) null);
+        }, "");
     }
 
     private InfusionRecipe(
@@ -93,7 +93,7 @@ public class InfusionRecipe implements Recipe<InfusionRitual>, UnknownReceipBook
             Ingredient[] catalysts,
             Optional<String> group
     ) {
-        this(input, output, time, catalysts, group.orElse(null));
+        this(input, output, time, catalysts, group.orElse(""));
     }
 
     private InfusionRecipe(Ingredient input, ItemStack output, int time, Ingredient[] catalysts, String group) {
@@ -210,14 +210,14 @@ public class InfusionRecipe implements Recipe<InfusionRitual>, UnknownReceipBook
                 Optional<Ingredient> north_west
         ) {
             Ingredient[] result = new Ingredient[8];
-            result[Catalysts.NORTH.index] = north.orElse(null);
-            result[Catalysts.NORTH_EAST.index] = north_east.orElse(null);
-            result[Catalysts.EAST.index] = east.orElse(null);
-            result[Catalysts.SOUTH_EAST.index] = south_east.orElse(null);
-            result[Catalysts.SOUTH.index] = south.orElse(null);
-            result[Catalysts.SOUTH_WEST.index] = south_west.orElse(null);
-            result[Catalysts.WEST.index] = west.orElse(null);
-            result[Catalysts.NORTH_WEST.index] = north_west.orElse(null);
+            result[Catalysts.NORTH.index] = north.orElse(Ingredient.EMPTY);
+            result[Catalysts.NORTH_EAST.index] = north_east.orElse(Ingredient.EMPTY);
+            result[Catalysts.EAST.index] = east.orElse(Ingredient.EMPTY);
+            result[Catalysts.SOUTH_EAST.index] = south_east.orElse(Ingredient.EMPTY);
+            result[Catalysts.SOUTH.index] = south.orElse(Ingredient.EMPTY);
+            result[Catalysts.SOUTH_WEST.index] = south_west.orElse(Ingredient.EMPTY);
+            result[Catalysts.WEST.index] = west.orElse(Ingredient.EMPTY);
+            result[Catalysts.NORTH_WEST.index] = north_west.orElse(Ingredient.EMPTY);
             return result;
         }
 
@@ -240,7 +240,13 @@ public class InfusionRecipe implements Recipe<InfusionRitual>, UnknownReceipBook
         @Override
         protected InfusionRecipe createRecipe(ResourceLocation id) {
             checkRecipe();
-            return new InfusionRecipe(this.primaryInput, this.output, this.time, this.catalysts, this.group);
+            return new InfusionRecipe(
+                    this.primaryInput,
+                    this.output,
+                    this.time,
+                    this.catalysts,
+                    this.group == null ? "" : this.group
+            );
         }
 
         @Override
