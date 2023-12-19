@@ -48,7 +48,7 @@ public class BubbleCoralBlock extends EndUnderwaterPlantBlock implements Behavio
     }
 
     @Override
-    public boolean isValidBonemealTarget(LevelReader world, BlockPos pos, BlockState state, boolean isClient) {
+    public boolean isValidBonemealTarget(LevelReader world, BlockPos pos, BlockState state) {
         return false;
     }
 

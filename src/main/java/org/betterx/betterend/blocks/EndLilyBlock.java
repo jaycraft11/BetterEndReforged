@@ -118,7 +118,7 @@ public class EndLilyBlock extends EndUnderwaterPlantBlock implements BehaviourWa
     }
 
     @Override
-    public boolean isValidBonemealTarget(LevelReader world, BlockPos pos, BlockState state, boolean isClient) {
+    public boolean isValidBonemealTarget(LevelReader world, BlockPos pos, BlockState state) {
         return false;
     }
 

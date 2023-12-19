@@ -67,8 +67,7 @@ public class CrystalMossCoverBlock extends MultifaceBlock implements Bonemealabl
     public boolean isValidBonemealTarget(
             LevelReader blockGetter,
             BlockPos blockPos,
-            BlockState blockState,
-            boolean bl
+            BlockState blockState
     ) {
         return Direction.stream()
                         .anyMatch(direction -> this.spreader.canSpreadInAnyDirection(
