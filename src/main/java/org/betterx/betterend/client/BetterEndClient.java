@@ -49,9 +49,10 @@ public class BetterEndClient implements ClientModInitializer {
         if (ClientOptions.isCustomSky()) {
             DimensionRenderingRegistry.registerSkyRenderer(Level.END, new BetterEndSkyRenderer());
         }
-        if (BetterEnd.RUNS_TRINKETS) {
-            org.betterx.betterend.integration.trinkets.ElytraClient.register();
-        }
+        //TODO: Trinkets
+//        if (BetterEnd.RUNS_TRINKETS) {
+//            org.betterx.betterend.integration.trinkets.ElytraClient.register();
+//        }
     }
 
     public static void registerTooltips() {

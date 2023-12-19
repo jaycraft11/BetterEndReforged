@@ -33,9 +33,6 @@
     ],
     "rei_client": [
       "org.betterx.betterend.integration.rei.REIPlugin"
-    ],
-    "emi": [
-      "org.betterx.betterend.integration.emi.EMIPlugin"
     ]
   },
   "accessWidener": "betterend.accesswidener",

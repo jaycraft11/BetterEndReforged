@@ -9,7 +9,6 @@ import org.betterx.betterend.commands.CommandRegistry;
 import org.betterx.betterend.config.Configs;
 import org.betterx.betterend.effects.EndPotions;
 import org.betterx.betterend.integration.Integrations;
-import org.betterx.betterend.integration.trinkets.Elytra;
 import org.betterx.betterend.network.RitualUpdate;
 import org.betterx.betterend.recipe.builders.InfusionRecipe;
 import org.betterx.betterend.registry.*;
@@ -88,10 +87,10 @@ public class BetterEnd implements ModInitializer {
         DataExchangeAPI.registerDescriptors(List.of(
                 RitualUpdate.DESCRIPTOR
         ));
-
-        if (RUNS_TRINKETS) {
-            Elytra.register();
-        }
+//TODO: Trinkets
+//        if (RUNS_TRINKETS) {
+//            Elytra.register();
+//        }
     }
 
     public static ResourceLocation makeID(String path) {
