@@ -5,9 +5,11 @@ import org.betterx.betterend.interfaces.BETargetChecker;
 import net.minecraft.world.level.levelgen.NoiseGeneratorSettings;
 
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 
 @Mixin(NoiseGeneratorSettings.class)
 public class NoiseGeneratorSettingsMixin implements BETargetChecker {
+    @Unique
     private boolean be_isTargetGenerator;
 
     @Override

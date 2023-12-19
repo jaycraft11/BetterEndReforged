@@ -17,6 +17,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
@@ -29,7 +30,8 @@ public abstract class PlayerMixin extends LivingEntity {
         super(entityType, level);
     }
 
-    private static Direction[] horizontal;
+    @Unique
+    private static Direction[] be_horizontal;
 
     @Inject(method = "findRespawnPositionAndUseSpawnBlock", at = @At(value = "HEAD"), cancellable = true)
     private static void be_findRespawnPositionAndUseSpawnBlock(
@@ -47,17 +49,18 @@ public abstract class PlayerMixin extends LivingEntity {
         }
     }
 
+    @Unique
     private static Optional<Vec3> be_obeliskRespawnPosition(ServerLevel world, BlockPos pos, BlockState state) {
         if (state.getValue(BlockProperties.TRIPLE_SHAPE) == TripleShape.TOP) {
             pos = pos.below(2);
         } else if (state.getValue(BlockProperties.TRIPLE_SHAPE) == TripleShape.MIDDLE) {
             pos = pos.below();
         }
-        if (horizontal == null) {
-            horizontal = BlocksHelper.makeHorizontal();
+        if (be_horizontal == null) {
+            be_horizontal = BlocksHelper.makeHorizontal();
         }
-        MHelper.shuffle(horizontal, world.getRandom());
-        for (Direction dir : horizontal) {
+        MHelper.shuffle(be_horizontal, world.getRandom());
+        for (Direction dir : be_horizontal) {
             BlockPos p = pos.relative(dir);
             BlockState state2 = world.getBlockState(p);
             if (!state2.blocksMotion() && state2.getCollisionShape(world, pos).isEmpty()) {

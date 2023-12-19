@@ -10,6 +10,7 @@ import net.minecraft.world.level.levelgen.blending.Blender;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -18,6 +19,7 @@ import java.util.List;
 
 @Mixin(NoiseChunk.class)
 public class NoiseChunkMixin implements BETargetChecker {
+    @Unique
     private boolean be_isEndGenerator;
 
     @Inject(method = "<init>*", at = @At("TAIL"))
@@ -50,7 +52,7 @@ public class NoiseChunkMixin implements BETargetChecker {
 
     @Shadow
     @Final
-    private List<NoiseChunk.NoiseInterpolator> interpolators;
+    List<NoiseChunk.NoiseInterpolator> interpolators;
 
     @Inject(method = "fillSlice", at = @At("HEAD"), cancellable = true)
     private void be_fillSlice(boolean primarySlice, int x, CallbackInfo info) {

@@ -23,15 +23,20 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import org.jetbrains.annotations.NotNull;
+
 @Mixin(value = ChorusFlowerBlock.class, priority = 100)
 public abstract class ChorusFlowerBlockMixin extends Block {
-    private static final VoxelShape SHAPE_FULL = Block.box(0, 0, 0, 16, 16, 16);
-    private static final VoxelShape SHAPE_HALF = Block.box(0, 0, 0, 16, 4, 16);
+    @Unique
+    private static final VoxelShape BE_SHAPE_FULL = Block.box(0, 0, 0, 16, 16, 16);
+    @Unique
+    private static final VoxelShape BE_SHAPE_HALF = Block.box(0, 0, 0, 16, 4, 16);
 
     public ChorusFlowerBlockMixin(Properties settings) {
         super(settings);
@@ -87,9 +92,9 @@ public abstract class ChorusFlowerBlockMixin extends Block {
 
     @Override
     @SuppressWarnings("deprecation")
-    public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
+    public @NotNull VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
         if (GeneratorOptions.changeChorusPlant()) {
-            return state.getValue(ChorusFlowerBlock.AGE) == 5 ? SHAPE_HALF : SHAPE_FULL;
+            return state.getValue(ChorusFlowerBlock.AGE) == 5 ? BE_SHAPE_HALF : BE_SHAPE_FULL;
         } else {
             return super.getShape(state, world, pos, context);
         }

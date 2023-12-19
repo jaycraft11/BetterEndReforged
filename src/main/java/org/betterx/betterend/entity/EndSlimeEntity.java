@@ -170,7 +170,7 @@ public class EndSlimeEntity extends Slime {
             }
         }
 
-        ((ISlime) this).entityRemove(reason);
+        ((ISlime) this).be_entityRemove(reason);
     }
 
     @Override

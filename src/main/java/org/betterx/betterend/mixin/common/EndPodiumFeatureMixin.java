@@ -21,6 +21,7 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemp
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
@@ -30,6 +31,7 @@ import java.util.Optional;
 
 @Mixin(EndPodiumFeature.class)
 public class EndPodiumFeatureMixin {
+    @Unique
     private static BlockPos be_portalPosition;
 
     @Final
@@ -59,11 +61,11 @@ public class EndPodiumFeatureMixin {
         }
     }
 
-    @ModifyVariable(method = "place", ordinal = 0, at = @At("HEAD"))
+    @ModifyVariable(method = "place", ordinal = 0, at = @At("HEAD"), argsOnly = true)
     private FeaturePlaceContext<NoneFeatureConfiguration> be_setPosOnGround(FeaturePlaceContext<NoneFeatureConfiguration> featurePlaceContext) {
         WorldGenLevel world = featurePlaceContext.level();
         BlockPos pos = be_updatePortalPos(world);
-        return new FeaturePlaceContext<NoneFeatureConfiguration>(
+        return new FeaturePlaceContext<>(
                 Optional.empty(),
                 world,
                 featurePlaceContext.chunkGenerator(),
@@ -73,6 +75,7 @@ public class EndPodiumFeatureMixin {
         );
     }
 
+    @Unique
     private BlockPos be_updatePortalPos(WorldGenLevel world) {
         CompoundTag compound = WorldConfig.getRootTag(BetterEnd.MOD_ID).getCompound("portal");
         be_portalPosition = NbtUtils.readBlockPos(compound);

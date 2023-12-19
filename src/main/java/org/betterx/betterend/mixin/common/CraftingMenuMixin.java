@@ -20,9 +20,7 @@ public abstract class CraftingMenuMixin {
 
     @Inject(method = "stillValid", at = @At("HEAD"), cancellable = true)
     private void be_stillValid(Player player, CallbackInfoReturnable<Boolean> info) {
-        if (access.evaluate((world, pos) -> {
-            return world.getBlockState(pos).getBlock() instanceof CraftingTableBlock;
-        }, true)) {
+        if (access.evaluate((world, pos) -> world.getBlockState(pos).getBlock() instanceof CraftingTableBlock, true)) {
             info.setReturnValue(true);
         }
     }

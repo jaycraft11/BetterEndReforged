@@ -27,7 +27,7 @@ public abstract class ChorusPlantBlockMixin extends Block {
         super(settings);
     }
 
-    @Inject(method = "getStateForPlacement(Lnet/minecraft/world/item/context/BlockPlaceContext;)Lnet/minecraft/world/level/block/state/BlockState;", at = @At("RETURN"), cancellable = true)
+    @Inject(method = "getStateForPlacement", at = @At("RETURN"), cancellable = true)
     private void be_getStateForPlacement(BlockPlaceContext ctx, CallbackInfoReturnable<BlockState> info) {
         BlockPos pos = ctx.getClickedPos();
         Level world = ctx.getLevel();
@@ -38,16 +38,14 @@ public abstract class ChorusPlantBlockMixin extends Block {
         }
     }
 
-    @Inject(method = "Lnet/minecraft/world/level/block/ChorusPlantBlock;getStateForPlacement" + "(Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;)" + "Lnet/minecraft/world/level/block/state/BlockState;", at = @At("RETURN"), cancellable = true)
-    private void be_getStateForPlacement(
-            BlockGetter blockGetter,
-            BlockPos blockPos,
-            CallbackInfoReturnable<BlockState> info
+    @Inject(method = "getStateWithConnections", at = @At("RETURN"), cancellable = true)
+    private static void be_getStateWithConnections(
+            BlockGetter blockGetter, BlockPos blockPos, BlockState blockState, CallbackInfoReturnable<BlockState> cir
     ) {
-        BlockState plant = info.getReturnValue();
+        BlockState plant = cir.getReturnValue();
         if (plant.is(Blocks.CHORUS_PLANT) && blockGetter.getBlockState(blockPos.below())
                                                         .is(CommonBlockTags.END_STONES)) {
-            info.setReturnValue(plant.setValue(BlockStateProperties.DOWN, true));
+            cir.setReturnValue(plant.setValue(BlockStateProperties.DOWN, true));
         }
     }
 

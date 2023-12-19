@@ -5,5 +5,5 @@ import net.minecraft.world.entity.Entity;
 public interface ISlime {
     void be_setSlimeSize(int size, boolean heal);
 
-    void entityRemove(Entity.RemovalReason removalReason);
+    void be_entityRemove(Entity.RemovalReason removalReason);
 }

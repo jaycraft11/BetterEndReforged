@@ -16,6 +16,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.progress.ChunkProgressListener;
 import net.minecraft.util.profiling.ProfilerFiller;
 import net.minecraft.world.RandomSequences;
+import net.minecraft.world.level.CustomSpawner;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
@@ -38,13 +39,6 @@ import java.util.function.Supplier;
 
 @Mixin(ServerLevel.class)
 public abstract class ServerLevelMixin extends Level {
-
-    private final static List<ResourceKey<DimensionType>> BE_TEST_DIMENSIONS = List.of(
-            BuiltinDimensionTypes.OVERWORLD,
-            BuiltinDimensionTypes.OVERWORLD_CAVES,
-            BuiltinDimensionTypes.NETHER
-    );
-
     protected ServerLevelMixin(
             WritableLevelData writableLevelData,
             ResourceKey<Level> resourceKey,
@@ -74,12 +68,12 @@ public abstract class ServerLevelMixin extends Level {
             Executor executor,
             LevelStorageAccess levelStorageAccess,
             ServerLevelData serverLevelData,
-            ResourceKey resourceKey,
+            ResourceKey<Level> resourceKey,
             LevelStem levelStem,
             ChunkProgressListener chunkProgressListener,
             boolean bl,
             long seed,
-            List list,
+            List<CustomSpawner> list,
             boolean bl2,
             RandomSequences randomSequences,
             CallbackInfo ci
@@ -93,7 +87,7 @@ public abstract class ServerLevelMixin extends Level {
         TerrainGenerator.makeObsidianPlatform(serverLevel, info);
     }
 
-    @ModifyArg(method = "tickChunk", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/level/ServerLevel;setBlockAndUpdate(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;)Z"))
+    @ModifyArg(method = "tickPrecipitation", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/level/ServerLevel;setBlockAndUpdate(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;)Z"))
     private BlockState be_modifyTickState(BlockPos pos, BlockState state) {
         if (state.is(Blocks.ICE)) {
             ResourceLocation biome = BiomeAPI.getBiomeID(getBiome(pos));

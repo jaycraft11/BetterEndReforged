@@ -21,6 +21,7 @@ import net.minecraft.world.level.Level;
 
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
@@ -40,9 +41,10 @@ public abstract class LivingEntityMixin extends Entity {
     @Shadow
     public abstract AttributeMap getAttributes();
 
-    private Entity lastAttacker;
+    @Unique
+    private Entity be_lastAttacker;
 
-    @Inject(method = "createLivingAttributes", at = @At("RETURN"), cancellable = true)
+    @Inject(method = "createLivingAttributes", at = @At("RETURN"))
     private static void be_addLivingAttributes(CallbackInfoReturnable<AttributeSupplier.Builder> info) {
         EndAttributes.addLivingEntityAttributes(info.getReturnValue());
     }
@@ -75,23 +77,23 @@ public abstract class LivingEntityMixin extends Entity {
 
     @Inject(method = "hurt", at = @At("HEAD"))
     public void be_hurt(DamageSource source, float amount, CallbackInfoReturnable<Boolean> info) {
-        this.lastAttacker = source.getEntity();
+        this.be_lastAttacker = source.getEntity();
     }
 
     @ModifyArg(method = "hurt", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;knockback(DDD)V"), index = 0)
     private double be_increaseKnockback(double value, double x, double z) {
-        if (lastAttacker != null && lastAttacker instanceof LivingEntity) {
-            LivingEntity attacker = (LivingEntity) lastAttacker;
+        if (be_lastAttacker != null && be_lastAttacker instanceof LivingEntity attacker) {
             value += this.be_getKnockback(attacker.getMainHandItem().getItem());
         }
         return value;
     }
 
+    @Unique
     private double be_getKnockback(Item tool) {
         if (tool == null) return 0.0D;
         Collection<AttributeModifier> modifiers = tool.getDefaultAttributeModifiers(EquipmentSlot.MAINHAND)
                                                       .get(Attributes.ATTACK_KNOCKBACK);
-        if (modifiers.size() > 0) {
+        if (!modifiers.isEmpty()) {
             return modifiers.iterator().next().getAmount();
         }
         return 0.0D;

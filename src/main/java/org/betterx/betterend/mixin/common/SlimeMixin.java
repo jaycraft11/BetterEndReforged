@@ -26,7 +26,7 @@ public abstract class SlimeMixin extends Entity implements ISlime {
     }
 
     @Override
-    public void entityRemove(Entity.RemovalReason removalReason) {
+    public void be_entityRemove(Entity.RemovalReason removalReason) {
         super.remove(removalReason);
     }
 }

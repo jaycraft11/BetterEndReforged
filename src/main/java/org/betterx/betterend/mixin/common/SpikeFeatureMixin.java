@@ -26,6 +26,7 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlac
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -106,7 +107,7 @@ public class SpikeFeatureMixin {
                     if (x2 + z2 <= r2) {
                         for (int py = minY; py < maxY; py++) {
                             mut.setY(py);
-                            if (world.getBlockState(mut).canBeReplaced()){
+                            if (world.getBlockState(mut).canBeReplaced()) {
                                 if ((px == radius || px == -radius || pz == radius || pz == -radius) && random.nextInt(
                                         24) == 0) {
                                     BlocksHelper.setWithoutUpdate(world, mut, Blocks.CRYING_OBSIDIAN);
@@ -131,7 +132,7 @@ public class SpikeFeatureMixin {
                     if (x2 + z2 <= r2) {
                         for (int py = minY; py < maxY; py++) {
                             mut.setY(py);
-                            if (world.getBlockState(mut).canBeReplaced()){
+                            if (world.getBlockState(mut).canBeReplaced()) {
                                 BlocksHelper.setWithoutUpdate(world, mut, Blocks.OBSIDIAN);
                             }
                         }
@@ -186,6 +187,7 @@ public class SpikeFeatureMixin {
         info.cancel();
     }
 
+    @Unique
     private boolean be_radiusInRange(int radius) {
         return radius > 1 && radius < 6;
     }
