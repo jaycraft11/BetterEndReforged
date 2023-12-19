@@ -41,7 +41,7 @@ public class EndAdvancementDataProvider extends AdvancementDataProvider {
                 .endDisplay()
                 .addCriterion(
                         "welcome",
-                        PlayerTrigger.TriggerInstance.located(LocationPredicate.ANY)
+                        PlayerTrigger.TriggerInstance.located(LocationPredicate.Builder.location())
                 )
                 .requireOne()
                 .build();
