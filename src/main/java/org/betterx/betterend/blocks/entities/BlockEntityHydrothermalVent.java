@@ -72,7 +72,11 @@ public class BlockEntityHydrothermalVent extends BlockEntity {
         boolean active = state.getValue(HydrothermalVentBlock.ACTIVATED);
         POS.set(worldPosition).move(Direction.UP);
         int height = active ? 85 : 25;
-        AABB box = new AABB(POS.offset(-1, 0, -1), POS.offset(1, height, 1));
+        AABB box = new AABB(
+                new Vec3(POS.getX() - 1, POS.getY(), POS.getZ() - 1),
+                new Vec3(POS.getX() + 1, POS.getY() + height, POS.getZ() + 1)
+        );
+
         List<LivingEntity> entities = level.getEntitiesOfClass(LivingEntity.class, box);
         if (entities.size() > 0) {
             while (POS.getY() < box.maxY) {

@@ -17,10 +17,12 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
 
 import org.joml.Vector3f;
 
@@ -76,8 +78,8 @@ public class HelixTreeFeature extends DefaultFeature {
                    world,
                    pos,
                    new AABB(
-                           pos.offset((int) -dx, (int) dy1, (int) -dx),
-                           pos.offset((int) dx, (int) dy2, (int) dx)
+                           new Vec3(pos.getX() - dx, pos.getY() + dy1, pos.getZ() - dx),
+                           new Vec3(pos.getX() + dx, pos.getY() + dy2, pos.getZ() + dx)
                    )
            );
         SplineHelper.scale(spline, scale);
@@ -86,7 +88,7 @@ public class HelixTreeFeature extends DefaultFeature {
                 world,
                 EndBlocks.HELIX_TREE.getBark().defaultBlockState(),
                 pos,
-                (state) -> state.canBeReplaced()
+                BlockBehaviour.BlockStateBase::canBeReplaced
         );
         SplineHelper.rotateSpline(spline, (float) Math.PI);
         SplineHelper.fillSplineForce(
@@ -94,7 +96,7 @@ public class HelixTreeFeature extends DefaultFeature {
                 world,
                 EndBlocks.HELIX_TREE.getBark().defaultBlockState(),
                 pos,
-                (state) -> state.canBeReplaced()
+                BlockBehaviour.BlockStateBase::canBeReplaced
         );
         SplineHelper.scale(spline2, scale);
         BlockPos leafStart = pos.offset(
@@ -107,7 +109,7 @@ public class HelixTreeFeature extends DefaultFeature {
                 world,
                 EndBlocks.HELIX_TREE.getLog().defaultBlockState(),
                 leafStart,
-                (state) -> state.canBeReplaced()
+                BlockBehaviour.BlockStateBase::canBeReplaced
         );
 
         spline.clear();
@@ -197,7 +199,7 @@ public class HelixTreeFeature extends DefaultFeature {
             bPos.set(x + pos.getX(), y + pos.getY(), z + pos.getZ());
             int color = MHelper.floor((float) i / (float) count * 7F + 0.5F) + offset;
             color = Mth.clamp(color, 0, 7);
-            if (world.getBlockState(bPos).canBeReplaced()){
+            if (world.getBlockState(bPos).canBeReplaced()) {
                 BlocksHelper.setWithoutUpdate(world, bPos, state.setValue(HelixTreeLeavesBlock.COLOR, color));
             }
             x += dx;
@@ -205,7 +207,7 @@ public class HelixTreeFeature extends DefaultFeature {
             z += dz;
         }
         bPos.set(end.x() + pos.getX(), end.y() + pos.getY(), end.z() + pos.getZ());
-        if (world.getBlockState(bPos).canBeReplaced()){
+        if (world.getBlockState(bPos).canBeReplaced()) {
             BlocksHelper.setWithoutUpdate(world, bPos, state.setValue(HelixTreeLeavesBlock.COLOR, 7));
         }
     }

@@ -12,6 +12,7 @@ import net.minecraft.world.level.block.state.pattern.BlockPattern;
 import net.minecraft.world.level.dimension.end.DragonRespawnAnimation;
 import net.minecraft.world.level.dimension.end.EndDragonFight;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
 
 import com.google.common.collect.Lists;
 import org.slf4j.Logger;
@@ -72,7 +73,10 @@ public class EndDragonFightMixin {
                 BlockPos central = BlockPos.ZERO.relative(dir, 4);
                 List<EndCrystal> crystalList = level.getEntitiesOfClass(
                         EndCrystal.class,
-                        new AABB(central.below(255).south().west(), central.above(255).north().east())
+                        new AABB(
+                                new Vec3(central.getX() - 1, central.getY() - 255, central.getZ() + 1),
+                                new Vec3(central.getX() - 1, central.getY() + 255, central.getZ() + 1)
+                        )
                 );
 
                 int count = crystalList.size();
