@@ -19,7 +19,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.block.AbstractGlassBlock;
+import net.minecraft.world.level.block.TransparentBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
@@ -29,8 +29,9 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import com.google.common.collect.Lists;
 
 import java.util.List;
+import org.jetbrains.annotations.NotNull;
 
-public class AuroraCrystalBlock extends AbstractGlassBlock implements RenderLayerProvider, CustomColorProvider, AddMineablePickaxe, AddMineableHammer {
+public class AuroraCrystalBlock extends TransparentBlock implements RenderLayerProvider, CustomColorProvider, AddMineablePickaxe, AddMineableHammer {
     public static final Vec3i[] COLORS;
     private static final int MIN_DROP = 1;
     private static final int MAX_DROP = 4;
@@ -45,7 +46,7 @@ public class AuroraCrystalBlock extends AbstractGlassBlock implements RenderLaye
 
     @Override
     @Deprecated
-    public VoxelShape getVisualShape(
+    public @NotNull VoxelShape getVisualShape(
             BlockState blockState,
             BlockGetter blockGetter,
             BlockPos blockPos,
@@ -81,9 +82,7 @@ public class AuroraCrystalBlock extends AbstractGlassBlock implements RenderLaye
 
     @Override
     public ItemColor getItemProvider() {
-        return (stack, tintIndex) -> {
-            return ColorUtil.color(COLORS[3].getX(), COLORS[3].getY(), COLORS[3].getZ());
-        };
+        return (stack, tintIndex) -> ColorUtil.color(COLORS[3].getX(), COLORS[3].getY(), COLORS[3].getZ());
     }
 
     @Override
@@ -93,7 +92,7 @@ public class AuroraCrystalBlock extends AbstractGlassBlock implements RenderLaye
 
     @Override
     @SuppressWarnings("deprecation")
-    public List<ItemStack> getDrops(BlockState state, LootParams.Builder builder) {
+    public @NotNull List<ItemStack> getDrops(BlockState state, LootParams.Builder builder) {
         ItemStack tool = builder.getParameter(LootContextParams.TOOL);
         if (tool != null && tool.isCorrectToolForDrops(state)) {
             int count = 0;
