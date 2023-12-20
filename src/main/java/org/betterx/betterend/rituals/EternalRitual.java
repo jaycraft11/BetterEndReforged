@@ -488,6 +488,7 @@ public class EternalRitual {
     }
 
     public CompoundTag toTag(CompoundTag tag) {
+        if (this.center == null || this.axis == null || this.exit == null) return null;
         tag.put("center", NbtUtils.writeBlockPos(center));
         tag.putString("axis", axis.getName());
         tag.putBoolean("active", active);
