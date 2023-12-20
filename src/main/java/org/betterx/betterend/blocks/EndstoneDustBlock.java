@@ -16,15 +16,12 @@ import net.minecraft.world.level.block.FallingBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootContext;
 
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 
 import java.util.Collections;
 import java.util.List;
 
 public class EndstoneDustBlock extends FallingBlock implements TagProvider, AddMineableShovel {
-    @Environment(EnvType.CLIENT)
     private static final int COLOR = ColorUtil.color(226, 239, 168);
 
     public EndstoneDustBlock() {
@@ -40,7 +37,6 @@ public class EndstoneDustBlock extends FallingBlock implements TagProvider, AddM
         return Collections.singletonList(new ItemStack(this));
     }
 
-    @Environment(EnvType.CLIENT)
     public int getDustColor(BlockState state, BlockGetter world, BlockPos pos) {
         return COLOR;
     }
