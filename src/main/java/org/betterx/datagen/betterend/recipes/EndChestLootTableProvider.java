@@ -6,6 +6,7 @@ import org.betterx.betterend.registry.EndItems;
 import org.betterx.betterend.registry.EndTemplates;
 import org.betterx.betterend.util.LootTableUtil;
 
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
@@ -15,6 +16,7 @@ import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.functions.EnchantWithLevelsFunction;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.functions.SetItemDamageFunction;
+import net.minecraft.world.level.storage.loot.functions.SetNbtFunction;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceCondition;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
@@ -26,11 +28,15 @@ import net.fabricmc.fabric.api.datagen.v1.provider.SimpleFabricLootTableProvider
 import java.util.function.BiConsumer;
 
 public class EndChestLootTableProvider extends SimpleFabricLootTableProvider {
+    private final CompoundTag FIREWORK_ROCKET_TAG = new CompoundTag();
 
     public EndChestLootTableProvider(
             FabricDataOutput output
     ) {
         super(output, LootContextParamSets.CHEST);
+        CompoundTag FIREWORKS_TAG = new CompoundTag();
+        FIREWORK_ROCKET_TAG.put("Fireworks", FIREWORKS_TAG);
+        FIREWORKS_TAG.putByte("Flight", (byte) 3);
     }
 
 
@@ -316,7 +322,9 @@ public class EndChestLootTableProvider extends SimpleFabricLootTableProvider {
                 ).add(LootItem
                         .lootTableItem(Items.FIREWORK_ROCKET)
                         .setWeight(8)
-                        .apply(SetItemCountFunction.setCount(UniformGenerator.between(4, 8)))
+                        .apply(SetNbtFunction.setTag(FIREWORK_ROCKET_TAG))
+                        .apply(SetItemCountFunction
+                                .setCount(UniformGenerator.between(4, 8)))
                 )
                 .when(LootItemRandomChanceCondition.randomChance(chance));
     }
