@@ -38,7 +38,10 @@ public class EternalPedestalEntity extends PedestalBlockEntity {
     @Override
     public void saveAdditional(CompoundTag tag) {
         if (hasRitual()) {
-            tag.put("ritual", linkedRitual.toTag(new CompoundTag()));
+            final CompoundTag ritualTag = linkedRitual.toTag(new CompoundTag());
+            if (ritualTag != null) {
+                tag.put("ritual", ritualTag);
+            }
         }
         super.saveAdditional(tag);
     }
