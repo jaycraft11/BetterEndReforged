@@ -20,11 +20,11 @@ import net.minecraft.world.level.Level;
 import vazkii.patchouli.api.PatchouliAPI;
 
 import java.util.List;
+import java.util.function.Supplier;
 
 public class GuideBookItem extends ModelProviderItem {
     public final static ResourceLocation BOOK_ID = BetterEnd.makeID("guidebook");
     public static final Item GUIDE_BOOK = EndItems.getItemRegistry().register(BOOK_ID, new GuideBookItem());
-
     public static void register() {
     }
 
