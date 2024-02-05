@@ -1,6 +1,5 @@
 package org.betterx.betterend.mixin.common;
 
-import java.util.Arrays;
 import org.betterx.bclib.util.BlocksHelper;
 import org.betterx.betterend.world.generator.GeneratorOptions;
 
@@ -69,11 +68,11 @@ public class EndDragonFightMixin {
             }
 
             Vec3 center = new Vec3(
-                Math.floor(portalLocation.getX()),
+                portalLocation.getX(),
                 0,
-                Math.floor(portalLocation.getZ())
+                portalLocation.getZ()
             );
-            LOGGER.debug("Assuming portal is centered at {}", center);
+            LOGGER.debug("Checking around portal centered at {}", center);
 
             List<EndCrystal> crystals = Lists.newArrayList();
             for (Direction dir : BlocksHelper.HORIZONTAL) {
