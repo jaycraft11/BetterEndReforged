@@ -1,5 +1,6 @@
 package org.betterx.betterend.mixin.common;
 
+import java.util.Arrays;
 import org.betterx.bclib.util.BlocksHelper;
 import org.betterx.betterend.world.generator.GeneratorOptions;
 
@@ -56,8 +57,7 @@ public class EndDragonFightMixin {
     @Inject(method = "tryRespawn", at = @At("HEAD"), cancellable = true)
     private void be_tryRespawnDragon(CallbackInfo info) {
         if (GeneratorOptions.replacePortal() && GeneratorOptions.hasDragonFights() && this.dragonKilled && this.respawnStage == null) {
-            BlockPos blockPos = portalLocation;
-            if (blockPos == null) {
+            if (portalLocation == null) {
                 LOGGER.debug("Tried to respawn, but need to find the portal first.");
                 BlockPattern.BlockPatternMatch blockPatternMatch = this.findExitPortal();
                 if (blockPatternMatch == null) {
@@ -68,21 +68,37 @@ public class EndDragonFightMixin {
                 }
             }
 
+            Vec3 center = new Vec3(
+                Math.floor(portalLocation.getX()),
+                0,
+                Math.floor(portalLocation.getZ())
+            );
+            LOGGER.debug("Assuming portal is centered at {}", center);
+
             List<EndCrystal> crystals = Lists.newArrayList();
             for (Direction dir : BlocksHelper.HORIZONTAL) {
-                BlockPos central = BlockPos.ZERO.relative(dir, 4);
+                LOGGER.debug("Looking to the {}", dir);
+                LOGGER.debug("Checking from {} to {}",
+                    center.relative(dir, 4),
+                    center.relative(dir, 4).relative(Direction.UP, 255)
+                );
                 List<EndCrystal> crystalList = level.getEntitiesOfClass(
                         EndCrystal.class,
                         new AABB(
-                                new Vec3(central.getX() - 1, central.getY() - 255, central.getZ() + 1),
-                                new Vec3(central.getX() - 1, central.getY() + 255, central.getZ() + 1)
+                            center.relative(dir, 4),
+                            center.relative(dir, 4).relative(Direction.UP, 255)
                         )
                 );
 
                 int count = crystalList.size();
+                LOGGER.debug("Found {} crystal(s)", count);
                 for (int n = 0; n < count; n++) {
                     EndCrystal crystal = crystalList.get(n);
                     if (!level.getBlockState(crystal.blockPosition().below()).is(Blocks.BEDROCK)) {
+                        LOGGER.debug(
+                            "Crystal at {} is not on top of bedrock",
+                            crystal.blockPosition()
+                        );
                         crystalList.remove(n);
                         count--;
                         n--;
