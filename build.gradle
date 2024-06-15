@@ -11,14 +11,15 @@ plugins {
     id "com.matthewprenger.cursegradle" version "1.4.0"
 }
 
-sourceCompatibility = JavaVersion.VERSION_17
-targetCompatibility = JavaVersion.VERSION_17
+sourceCompatibility = JavaVersion.VERSION_21
+targetCompatibility = JavaVersion.VERSION_21
 
 archivesBaseName = project.archives_base_name
 version = project.mod_version
 group = project.maven_group
 def local_bclib = findProject(':BCLib') != null
 def local_wunderlib = findProject(':WunderLib') != null
+def local_wover = findProject(':WorldWeaver') != null
 
 repositories {
     maven { url "https://maven.dblsaiko.net/" }
@@ -93,19 +94,30 @@ dependencies {
     } else {
         modImplementation "com.github.quiqueck:BCLib:${project.bclib_version}"
     }
-    modCompileOnly "me.shedaniel:RoughlyEnoughItems-fabric:${project.rei_version}"
-    modCompileOnly "me.shedaniel:RoughlyEnoughItems-api-fabric:${project.rei_version}"
+    //modCompileOnly "me.shedaniel:RoughlyEnoughItems-fabric:${project.rei_version}"
+    //modCompileOnly "me.shedaniel:RoughlyEnoughItems-api-fabric:${project.rei_version}"
 
     //needed for trinkets, otherwise BetterEnd would require users to install trinkets
-    modApi "dev.onyxstudios.cardinal-components-api:cardinal-components-base:${project.cca_version}"
-    modCompileOnly "dev.emi:trinkets:${project.trinkets_version}"
+    //modApi "dev.onyxstudios.cardinal-components-api:cardinal-components-base:${project.cca_version}"
+    //modCompileOnly "dev.emi:trinkets:${project.trinkets_version}"
 
-    modCompileOnly "dev.emi:emi-fabric:${emi_version}:api"
-    modLocalRuntime "dev.emi:emi-fabric:${emi_version}"
+    //modCompileOnly "dev.emi:emi-fabric:${emi_version}:api"
+    //modLocalRuntime "dev.emi:emi-fabric:${emi_version}"
 
+    modLocalRuntime "com.terraformersmc:modmenu:${project.modmenu_version}"
+
+    println "Using local WunderLib: ${local_wunderlib}"
     if (local_wunderlib) {
-        println "Using local WunderLib"
         implementation project(path: ":WunderLib", configuration: 'dev')
+    }
+
+    println "Using local WorldWeaver: ${local_wover}"
+    if (local_wover) {
+        implementation project(path: ":WorldWeaver", configuration: 'dev')
+
+        gradle.knownWoverModules.each {
+            implementation project(path: ":WorldWeaver:$it", configuration: 'dev')
+        }
     }
 }
 
@@ -122,7 +134,7 @@ processResources {
 // see http://yodaconditions.net/blog/fix-for-java-file-encoding-problems-with-gradle.html
 tasks.withType(JavaCompile) {
     options.encoding = "UTF-8"
-    it.options.release = 17
+    it.options.release = 21
 }
 
 javadoc {
@@ -130,7 +142,7 @@ javadoc {
 }
 
 task javadocJar(type: Jar, dependsOn: javadoc) {
-    classifier = 'javadoc'
+    archiveClassifier = 'javadoc'
     from javadoc.destinationDir
 }
 
@@ -138,7 +150,7 @@ task javadocJar(type: Jar, dependsOn: javadoc) {
 // if it is present.
 // If you remove this task, sources will not be generated.
 task sourcesJar(type: Jar, dependsOn: classes) {
-    classifier = 'sources'
+    archiveClassifier = 'sources'
     from sourceSets.main.allSource
 }
 
@@ -295,6 +307,7 @@ modrinth {
     changelog = changes
     dependencies {
         required.project "fabric-api"
+        required.project "worldweaver"
         required.project "bclib"
         optional.project "emi"
         optional.project "rei"
@@ -332,9 +345,10 @@ curseforge {
             latestVersion = "[$v]"
         }
         addGameVersion 'Fabric'
-        addGameVersion 'Java 17'
+        addGameVersion 'Java 21'
         relations {
             requiredDependency 'fabric-api'
+            requiredDependency 'worldweaver'
             requiredDependency 'bclib'
             optionalDependency 'emi'
             optionalDependency 'roughly-enough-items'
@@ -385,5 +399,14 @@ task nextVersion() {
         def propertiesFile = new File("gradle.properties")
         def newContents = propertiesFile.text.replaceFirst("mod_version=\\d+.\\d+.\\d+", "mod_version=${updatedVersion}")
         propertiesFile.text = newContents
+    }
+}
+
+allprojects {
+    // Allow 400 errors.
+    gradle.projectsEvaluated {
+        tasks.withType(JavaCompile) {
+            options.compilerArgs << "-Xmaxerrs" << "5000"
+        }
     }
 }
