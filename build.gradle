@@ -137,13 +137,17 @@ tasks.withType(JavaCompile) {
     it.options.release = 21
 }
 
-javadoc {
-    options.tags = ["reason"]
-}
+subprojects { subproject ->
+    subproject.tasks.withType(Javadoc) { javadocTask ->
+        javadocTask.failOnError false
+        javadocTask.enabled = false
+    }
 
-task javadocJar(type: Jar, dependsOn: javadoc) {
-    archiveClassifier = 'javadoc'
-    from javadoc.destinationDir
+    subproject.tasks.withType(Jar) { jarTask ->
+        if (jarTask.name == 'javadocJar') {
+            jarTask.enabled = false
+        }
+    }
 }
 
 // Loom will automatically attach sourcesJar to a RemapSourcesJar task and to the "build" task
@@ -168,7 +172,6 @@ jar {
 
 artifacts {
     archives sourcesJar
-    archives javadocJar
 }
 
 def env = System.getenv()
@@ -176,7 +179,7 @@ def env = System.getenv()
 import org.kohsuke.github.GHReleaseBuilder
 import org.kohsuke.github.GitHub
 
-task release(dependsOn: [remapJar, sourcesJar, javadocJar]) {
+task release(dependsOn: [remapJar, sourcesJar]) {
     onlyIf {
         env.GITHUB_TOKEN
     }
