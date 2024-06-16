@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class EternalPortalStructure extends TemplateStructure {
-    private static final ResourceLocation STRUCTURE_ID = BetterEnd.makeID("portal/eternal_portal");
+    private static final ResourceLocation STRUCTURE_ID = BetterEnd.C.mk("portal/eternal_portal");
     private static final StructureTemplate STRUCTURE = StructureHelper.readStructure(STRUCTURE_ID);
 
     public EternalPortalStructure(StructureSettings s) {
@@ -93,6 +93,6 @@ public class EternalPortalStructure extends TemplateStructure {
     }
 
     public static TemplateStructure.Config cfg(String name, int offsetY, StructurePlacementType type, float chance) {
-        return new TemplateStructure.Config(BetterEnd.makeID(name), offsetY, type, chance);
+        return new TemplateStructure.Config(BetterEnd.C.mk(name), offsetY, type, chance);
     }
 }

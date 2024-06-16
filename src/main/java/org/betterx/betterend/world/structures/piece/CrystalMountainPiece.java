@@ -6,7 +6,7 @@ import org.betterx.betterend.registry.EndBlocks;
 import org.betterx.betterend.registry.EndStructures;
 import org.betterx.betterend.util.GlobalState;
 import org.betterx.betterend.world.surface.SplitNoiseCondition;
-import org.betterx.worlds.together.tag.v3.CommonBlockTags;
+import org.betterx.wover.tag.api.predefined.CommonBlockTags;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;

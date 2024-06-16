@@ -118,7 +118,7 @@ public class EndEntities {
             float height,
             EntityFactory<T> entity
     ) {
-        ResourceLocation id = BetterEnd.makeID(name);
+        ResourceLocation id = BetterEnd.C.mk(name);
         EntityType<T> type = FabricEntityTypeBuilder
                 .create(group, entity)
                 .dimensions(EntityDimensions.fixed(width, height))
@@ -140,7 +140,7 @@ public class EndEntities {
             int eggColor,
             int dotsColor
     ) {
-        ResourceLocation id = BetterEnd.makeID(name);
+        ResourceLocation id = BetterEnd.C.mk(name);
         EntityType<T> type = FabricEntityTypeBuilder
                 .create(group, entity)
                 .dimensions(fixedSize
@@ -149,7 +149,7 @@ public class EndEntities {
                 .build();
         FabricDefaultAttributeRegistry.register(type, attributes);
         EndItems.registerEndEgg("spawn_egg_" + name, type, eggColor, dotsColor);
-        Registry.register(BuiltInRegistries.ENTITY_TYPE, BetterEnd.makeID(name), type);
+        Registry.register(BuiltInRegistries.ENTITY_TYPE, BetterEnd.C.mk(name), type);
 
         return new BCLEntityWrapper<>(type, Configs.ENTITY_CONFIG.getBooleanRoot(id.getPath(), true));
     }

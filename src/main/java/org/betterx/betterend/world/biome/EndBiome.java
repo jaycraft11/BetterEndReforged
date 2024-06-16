@@ -1,80 +1,54 @@
 package org.betterx.betterend.world.biome;
 
 import org.betterx.bclib.api.v2.levelgen.biomes.BCLBiome;
-import org.betterx.bclib.api.v2.levelgen.biomes.BCLBiomeBuilder;
-import org.betterx.bclib.api.v2.levelgen.biomes.BCLBiomeBuilder.BiomeSupplier;
-import org.betterx.bclib.api.v2.levelgen.biomes.BCLBiomeSettings;
 import org.betterx.bclib.api.v2.levelgen.biomes.BiomeAPI;
 import org.betterx.bclib.api.v2.levelgen.surface.SurfaceRuleBuilder;
 import org.betterx.bclib.interfaces.SurfaceMaterialProvider;
-import org.betterx.betterend.BetterEnd;
 import org.betterx.betterend.registry.EndBlocks;
-import org.betterx.betterend.registry.EndFeatures;
-import org.betterx.betterend.registry.EndSounds;
-import org.betterx.betterend.registry.EndTags;
+import org.betterx.wover.generator.api.biomesource.WoverBiomeData;
 
 import com.mojang.serialization.Codec;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
-import net.minecraft.data.worldgen.placement.EndPlacements;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.KeyDispatchDataCodec;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.Climate;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraft.world.level.levelgen.SurfaceRules;
 
 import java.util.List;
-import java.util.Optional;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-public class EndBiome extends BCLBiome implements SurfaceMaterialProvider {
-    public static final Codec<EndBiome> CODEC = RecordCodecBuilder.create(instance ->
-            codecWithSettings(
-                    instance,
-                    Codec.BOOL.fieldOf("has_caves").orElse(true).forGetter(o -> o.hasCaves),
-                    SurfaceMaterialProvider.CODEC.fieldOf("surface")
-                                                 .orElse(Config.DEFAULT_MATERIAL)
-                                                 .forGetter(o -> o.surfMatProv)
-            ).apply(instance, EndBiome::new)
+public class EndBiome extends WoverBiomeData implements SurfaceMaterialProvider {
+    public static final MapCodec<EndBiome> CODEC = codec(
+            Codec.BOOL.fieldOf("has_caves").orElse(true).forGetter(o -> o.hasCaves),
+            SurfaceMaterialProvider.CODEC.fieldOf("surface")
+                                         .orElse(Config.DEFAULT_MATERIAL)
+                                         .forGetter(o -> o.surfMatProv),
+            EndBiome::new
     );
     public static final KeyDispatchDataCodec<EndBiome> KEY_CODEC = KeyDispatchDataCodec.of(CODEC);
 
-    @Override
-    public KeyDispatchDataCodec<? extends BCLBiome> codec() {
-        return KEY_CODEC;
-    }
-
-    protected EndBiome(
-            float terrainHeight,
+    public EndBiome(
             float fogDensity,
+            @NotNull ResourceKey<Biome> biome,
+            @NotNull List<Climate.ParameterPoint> parameterPoints,
+            float terrainHeight,
             float genChance,
             int edgeSize,
             boolean vertical,
-            Optional<ResourceLocation> edge,
-            ResourceLocation biomeID,
-            Optional<List<Climate.ParameterPoint>> parameterPoints,
-            Optional<ResourceLocation> biomeParent,
-            Optional<String> intendedType,
+            @Nullable ResourceKey<Biome> edge,
+            @Nullable ResourceKey<Biome> parent,
             boolean hasCaves,
             SurfaceMaterialProvider surface
     ) {
         super(
-                terrainHeight,
-                fogDensity,
-                genChance,
-                edgeSize,
-                vertical,
-                edge,
-                biomeID,
-                parameterPoints,
-                biomeParent,
-                intendedType
+                fogDensity, biome, parameterPoints, terrainHeight,
+                genChance, edgeSize, vertical, edge, parent
         );
         this.hasCaves = hasCaves;
         this.surfMatProv = surface;
@@ -144,85 +118,25 @@ public class EndBiome extends BCLBiome implements SurfaceMaterialProvider {
         protected static final SurfaceRules.RuleSource PALLIDIUM_TINY = SurfaceRules.state(EndBlocks.PALLIDIUM_TINY.defaultBlockState());
         protected static final SurfaceRules.RuleSource UMBRALITH = SurfaceRules.state(EndBlocks.UMBRALITH.stone.defaultBlockState());
 
-        public final ResourceLocation ID;
-
-        protected Config(String name) {
-            this.ID = BetterEnd.makeID(name);
+        protected Config() {
         }
 
-        protected Config(ResourceLocation ID) {
-            this.ID = ID;
-        }
+        public abstract void addCustomBuildData(EndBiomeBuilder builder);
 
-        protected abstract void addCustomBuildData(BCLBiomeBuilder builder);
-
-        public BiomeSupplier<EndBiome> getSupplier() {
-            return EndBiome::new;
-        }
-
-        protected boolean hasCaves() {
+        public boolean hasCaves() {
             return true;
         }
 
-        protected boolean hasReturnGateway() {
+        public boolean hasReturnGateway() {
             return true;
         }
 
-        protected SurfaceMaterialProvider surfaceMaterial() {
+        public SurfaceMaterialProvider surfaceMaterial() {
             return DEFAULT_MATERIAL;
         }
     }
 
-
-    public EndBiome(ResourceKey<Biome> biomeID, BCLBiomeSettings settings) {
-        super(biomeID, settings);
-    }
-
-    public static EndBiome create(Config biomeConfig, BiomeAPI.BiomeType type) {
-        return create(biomeConfig, type, null);
-    }
-
-    public static EndBiome createSubBiome(Config data, @NotNull BCLBiome parentBiome) {
-        return create(data, parentBiome.getIntendedType(), parentBiome);
-    }
-
-    private static EndBiome create(Config biomeConfig, BiomeAPI.BiomeType type, BCLBiome parentBiome) {
-        BCLBiomeBuilder builder = BCLBiomeBuilder
-                .start(biomeConfig.ID)
-                .music(SoundEvents.MUSIC_END)
-                .waterColor(BCLBiomeBuilder.DEFAULT_END_WATER_COLOR)
-                .waterFogColor(BCLBiomeBuilder.DEFAULT_END_WATER_FOG_COLOR)
-                .fogColor(BCLBiomeBuilder.DEFAULT_END_FOG_COLOR)
-                .skyColor(BCLBiomeBuilder.DEFAULT_END_SKY_COLOR)
-                .mood(EndSounds.AMBIENT_DUST_WASTELANDS)
-                .temperature(BCLBiomeBuilder.DEFAULT_END_TEMPERATURE)
-                .wetness(BCLBiomeBuilder.DEFAULT_END_WETNESS)
-                .parentBiome(parentBiome)
-                .precipitation(Biome.Precipitation.NONE)
-                .surface(biomeConfig.surfaceMaterial().surface().build())
-                .type(type);
-
-        biomeConfig.addCustomBuildData(builder);
-        EndFeatures.addDefaultFeatures(biomeConfig.ID, builder, biomeConfig.hasCaves());
-
-        if (biomeConfig.hasReturnGateway()) {
-            builder.feature(GenerationStep.Decoration.SURFACE_STRUCTURES, EndPlacements.END_GATEWAY_RETURN);
-        }
-
-        EndBiome biome = builder.build(biomeConfig.getSupplier()).biome();
-        biome.setHasCaves(biomeConfig.hasCaves());
-        biome.setSurfaceMaterial(biomeConfig.surfaceMaterial());
-
-        EndTags.addBiomeSurfaceToEndGroup(biome);
-        return biome;
-    }
-
-
     protected SurfaceMaterialProvider surfMatProv = Config.DEFAULT_MATERIAL;
-
-    protected void setSurfaceMaterial(SurfaceMaterialProvider prov) {
-        surfMatProv = prov;
-    }
 
     @Override
     public BlockState getTopMaterial() {

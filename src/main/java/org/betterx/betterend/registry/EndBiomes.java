@@ -1,80 +1,102 @@
 package org.betterx.betterend.registry;
 
 import org.betterx.bclib.api.v2.LifeCycleAPI;
-import org.betterx.bclib.api.v2.generator.BiomePicker;
-import org.betterx.bclib.api.v2.generator.map.hex.HexBiomeMap;
 import org.betterx.bclib.api.v2.levelgen.biomes.BCLBiome;
 import org.betterx.bclib.api.v2.levelgen.biomes.BCLBiomeRegistry;
 import org.betterx.bclib.api.v2.levelgen.biomes.BiomeAPI;
 import org.betterx.betterend.BetterEnd;
 import org.betterx.betterend.config.Configs;
 import org.betterx.betterend.world.biome.EndBiome;
+import org.betterx.betterend.world.biome.EndBiomeBuilder;
+import org.betterx.betterend.world.biome.EndBiomeKey;
 import org.betterx.betterend.world.biome.cave.*;
 import org.betterx.betterend.world.generator.GeneratorOptions;
+import org.betterx.wover.biome.api.data.BiomeCodecRegistry;
+import org.betterx.wover.biome.api.data.BiomeDataRegistry;
+import org.betterx.wover.generator.api.biomesource.WoverBiomePicker;
+import org.betterx.wover.generator.impl.map.hex.HexBiomeMap;
+import org.betterx.wover.state.api.WorldState;
 
+import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.biome.Biomes;
+
+import java.util.Objects;
+import java.util.Optional;
 
 public class EndBiomes {
     public static final BiomeAPI.BiomeType END_CAVE = new BiomeAPI.BiomeType("END_CAVE", BiomeAPI.BiomeType.END_IGNORE);
-    public static BiomePicker CAVE_BIOMES = null;
+    public static WoverBiomePicker CAVE_BIOMES = null;
     private static HexBiomeMap caveBiomeMap;
     private static long lastSeed;
 
-    public static final ResourceKey<Biome> AMBER_LAND = cKey("amber_land");
-    public static final ResourceKey<Biome> BLOSSOMING_SPIRES = cKey("blossoming_spires");
-    public static final ResourceKey<Biome> CHORUS_FOREST = cKey("chorus_forest");
-    public static final ResourceKey<Biome> FOGGY_MUSHROOMLAND = cKey("foggy_mushroomland");
-    public static final ResourceKey<Biome> GLOWING_GRASSLANDS = cKey("glowing_grasslands");
-    public static final ResourceKey<Biome> LANTERN_WOODS = cKey("lantern_woods");
-    public static final ResourceKey<Biome> MEGALAKE = cKey("megalake");
-    public static final ResourceKey<Biome> MEGALAKE_GROVE = cKey("megalake_grove");
-    public static final ResourceKey<Biome> NEON_OASIS = cKey("neon_oasis");
-    public static final ResourceKey<Biome> SHADOW_FOREST = cKey("shadow_forest");
-    public static final ResourceKey<Biome> SULPHUR_SPRINGS = cKey("sulphur_springs");
-    public static final ResourceKey<Biome> UMBRELLA_JUNGLE = cKey("umbrella_jungle");
+    public static final EndBiomeKey<EndBiome.Config, ?> AMBER_LAND = EndBiomeBuilder.createKey("amber_land");
+    public static final EndBiomeKey<EndBiome.Config, ?> BLOSSOMING_SPIRES = EndBiomeBuilder.createKey("blossoming_spires");
+    public static final EndBiomeKey<EndBiome.Config, ?> CHORUS_FOREST = EndBiomeBuilder.createKey("chorus_forest");
+    public static final EndBiomeKey<EndBiome.Config, ?> CRYSTAL_MOUNTAINS = EndBiomeBuilder.createKey("crystal_mountains");
+    public static final EndBiomeKey<EndBiome.Config, ?> DRAGON_GRAVEYARDS = EndBiomeBuilder.createKey("dragon_graveyards");
+    public static final EndBiomeKey<EndBiome.Config, ?> DRY_SHRUBLAND = EndBiomeBuilder.createKey("dry_shrubland");
+    public static final EndBiomeKey<EndBiome.Config, ?> DUST_WASTELANDS = EndBiomeBuilder.createKey("dust_wastelands");
+    public static final EndBiomeKey<EndBiome.Config, ?> FOGGY_MUSHROOMLAND = EndBiomeBuilder.createKey("foggy_mushroomland");
+    public static final EndBiomeKey<EndBiome.Config, ?> GLOWING_GRASSLANDS = EndBiomeBuilder.createKey("glowing_grasslands");
+    public static final EndBiomeKey<EndBiome.Config, ?> ICE_STARFIELD = EndBiomeBuilder.createKey("ice_starfield");
+    public static final EndBiomeKey<EndBiome.Config, ?> LANTERN_WOODS = EndBiomeBuilder.createKey("lantern_woods");
+    public static final EndBiomeKey<EndBiome.Config, ?> MEGALAKE = EndBiomeBuilder.createKey("megalake");
+    public static final EndBiomeKey<EndBiome.Config, ?> SHADOW_FOREST = EndBiomeBuilder.createKey("shadow_forest");
+    public static final EndBiomeKey<EndBiome.Config, ?> SULPHUR_SPRINGS = EndBiomeBuilder.createKey("sulphur_springs");
+    public static final EndBiomeKey<EndBiome.Config, ?> UMBRELLA_JUNGLE = EndBiomeBuilder.createKey("umbrella_jungle");
+    public static final EndBiomeKey<EndBiome.Config, ?> UMBRA_VALLEY = EndBiomeBuilder.createKey("umbra_valley");
 
+    public static final EndBiomeKey<EndBiome.Config, EndBiome.Config> MEGALAKE_GROVE = EndBiomeBuilder.createKey("megalake_grove", MEGALAKE);
+    public static final EndBiomeKey<EndBiome.Config, EndBiome.Config> NEON_OASIS = EndBiomeBuilder.createKey("neon_oasis", DUST_WASTELANDS);
+    public static final EndBiomeKey<EndBiome.Config, EndBiome.Config> PAINTED_MOUNTAINS = EndBiomeBuilder.createKey("painted_mountains", DUST_WASTELANDS);
 
-    private static ResourceKey<Biome> cKey(String path) {
-        return ResourceKey.create(Registries.BIOME, BetterEnd.makeID(path));
-    }
+    public static final EndBiomeKey<EndCaveBiome.Config, ?> EMPTY_END_CAVE = EndBiomeBuilder.createKey("empty_end_cave");
+    public static final EndBiomeKey<EndCaveBiome.Config, ?> EMPTY_SMARAGDANT_CAVE = EndBiomeBuilder.createKey("empty_smaragdant_cave");
+    public static final EndBiomeKey<EndCaveBiome.Config, ?> LUSH_SMARAGDANT_CAVE = EndBiomeBuilder.createKey("lush_smaragdant_cave");
+    public static final EndBiomeKey<EndCaveBiome.Config, ?> EMPTY_AURORA_CAVE = EndBiomeBuilder.createKey("empty_aurora_cave");
+    public static final EndBiomeKey<EndCaveBiome.Config, ?> LUSH_AURORA_CAVE = EndBiomeBuilder.createKey("new LushAuroraCaveBiome()");
+    public static final EndBiomeKey<EndCaveBiome.Config, ?> JADE_CAVE = EndBiomeBuilder.createKey("jade_cave");
+
 
     public static void register() {
-        BCLBiomeRegistry.registerBiomeCodec(BetterEnd.makeID("biome"), EndBiome.KEY_CODEC);
-        BCLBiomeRegistry.registerBiomeCodec(BetterEnd.makeID("cave_biome"), EndCaveBiome.KEY_CODEC);
-        BCLBiomeRegistry.registerBiomeCodec(
-                BetterEnd.makeID("empty_aurora_cave_biome"),
-                EmptyAuroraCaveBiome.KEY_CODEC
-        );
-        BCLBiomeRegistry.registerBiomeCodec(BetterEnd.makeID("empty_end_cave_biome"), EmptyEndCaveBiome.KEY_CODEC);
-        BCLBiomeRegistry.registerBiomeCodec(
-                BetterEnd.makeID("empty_smaragdant_cave_biome"),
-                EmptySmaragdantCaveBiome.KEY_CODEC
-        );
-        BCLBiomeRegistry.registerBiomeCodec(BetterEnd.makeID("jade_cave_biome"), JadeCaveBiome.KEY_CODEC);
-        BCLBiomeRegistry.registerBiomeCodec(BetterEnd.makeID("lush_aurora_cave_biome"), LushAuroraCaveBiome.KEY_CODEC);
-        BCLBiomeRegistry.registerBiomeCodec(
-                BetterEnd.makeID("lush_smaragdant_cave_biome"),
-                LushSmaragdantCaveBiome.KEY_CODEC
-        );
+        BiomeCodecRegistry.register(BetterEnd.C.mk("biome"), EndBiome.KEY_CODEC);
+        BiomeCodecRegistry.register(BetterEnd.C.mk("cave_biome"), EndCaveBiome.KEY_CODEC);
+        BiomeCodecRegistry.register(BetterEnd.C.mk("empty_aurora_cave_biome"), EmptyAuroraCaveBiome.KEY_CODEC);
+        BiomeCodecRegistry.register(BetterEnd.C.mk("empty_end_cave_biome"), EmptyEndCaveBiome.KEY_CODEC);
+        BiomeCodecRegistry.register(BetterEnd.C.mk("empty_smaragdant_cave_biome"), EmptySmaragdantCaveBiome.KEY_CODEC);
+        BiomeCodecRegistry.register(BetterEnd.C.mk("jade_cave_biome"), JadeCaveBiome.KEY_CODEC);
+        BiomeCodecRegistry.register(BetterEnd.C.mk("lush_aurora_cave_biome"), LushAuroraCaveBiome.KEY_CODEC);
+        BiomeCodecRegistry.register(BetterEnd.C.mk("lush_smaragdant_cave_biome"), LushSmaragdantCaveBiome.KEY_CODEC);
+
         LifeCycleAPI.onLevelLoad(EndBiomes::onWorldLoad);
     }
 
     private static void onWorldLoad(ServerLevel level, long seed, Registry<Biome> registry) {
+        var dataRegistry = WorldState
+                .allStageRegistryAccess()
+                .registry(BiomeDataRegistry.BIOME_DATA_REGISTRY)
+                .orElseThrow();
+
+
         if (CAVE_BIOMES == null || CAVE_BIOMES.biomeRegistry != registry) {
-            CAVE_BIOMES = new BiomePicker(registry);
-            registry.stream()
-                    .filter(biome -> registry.getResourceKey(biome).isPresent())
-                    .map(biome -> registry.getHolderOrThrow(registry.getResourceKey(biome).get()))
-                    .map(biome -> biome.unwrapKey().orElseThrow().location())
-                    .filter(id -> BiomeAPI.wasRegisteredAs(id, END_CAVE))
-                    .map(BiomeAPI::getBiome)
-                    .filter(bcl -> !BCLBiomeRegistry.isEmptyBiome(bcl))
-                    .forEach(CAVE_BIOMES::addBiome);
+            CAVE_BIOMES = new WoverBiomePicker(Biomes.END_HIGHLANDS);
+            registry.getTag(EndTags.IS_END_CAVE)
+                    .map(tag -> tag
+                            .stream()
+                            .map(Holder::unwrapKey)
+                            .filter(Optional::isPresent)
+                            .map(Optional::orElseThrow)
+                            .map(k -> dataRegistry.get(k.location()))
+                            .filter(Objects::nonNull)
+                    ).ifPresent(
+                            list -> list.forEach(data -> {
+                                CAVE_BIOMES.addBiome(data);
+                            })
+                    );
 
             CAVE_BIOMES.rebuild();
             caveBiomeMap = null;
@@ -112,7 +134,7 @@ public class EndBiomes {
         }
     }
 
-    public static BiomePicker.ActualBiome getCaveBiome(int x, int z) {
+    public static WoverBiomePicker.PickableBiome getCaveBiome(int x, int z) {
         return caveBiomeMap.getBiome(x, 5, z);
     }
 

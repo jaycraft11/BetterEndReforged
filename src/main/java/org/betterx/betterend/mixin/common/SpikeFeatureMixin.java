@@ -78,12 +78,13 @@ public class SpikeFeatureMixin {
 
         if (GeneratorOptions.replacePillars() && be_radiusInRange(radius)) {
             radius--;
-            StructureTemplate base = StructureHelper.readStructure(BetterEnd.makeID("pillars/pillar_base_" + radius));
-            StructureTemplate top = StructureHelper.readStructure(BetterEnd.makeID("pillars/pillar_top_" + radius + (
+            StructureTemplate base = StructureHelper.readStructure(BetterEnd.C.mk("pillars/pillar_base_" + radius));
+            String path = "pillars/pillar_top_" + radius + (
                     spike
                             .isGuarded()
                             ? "_cage"
-                            : "")));
+                            : "");
+            StructureTemplate top = StructureHelper.readStructure(BetterEnd.C.mk(path));
             Vec3i side = base.getSize();
             BlockPos pos1 = new BlockPos(x - (side.getX() >> 1), minY - 3, z - (side.getZ() >> 1));
             minY = pos1.getY() + side.getY();
@@ -106,7 +107,7 @@ public class SpikeFeatureMixin {
                     if (x2 + z2 <= r2) {
                         for (int py = minY; py < maxY; py++) {
                             mut.setY(py);
-                            if (world.getBlockState(mut).canBeReplaced()){
+                            if (world.getBlockState(mut).canBeReplaced()) {
                                 if ((px == radius || px == -radius || pz == radius || pz == -radius) && random.nextInt(
                                         24) == 0) {
                                     BlocksHelper.setWithoutUpdate(world, mut, Blocks.CRYING_OBSIDIAN);
@@ -131,7 +132,7 @@ public class SpikeFeatureMixin {
                     if (x2 + z2 <= r2) {
                         for (int py = minY; py < maxY; py++) {
                             mut.setY(py);
-                            if (world.getBlockState(mut).canBeReplaced()){
+                            if (world.getBlockState(mut).canBeReplaced()) {
                                 BlocksHelper.setWithoutUpdate(world, mut, Blocks.OBSIDIAN);
                             }
                         }

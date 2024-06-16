@@ -1,22 +1,13 @@
 package org.betterx.betterend.registry;
 
-import org.betterx.bclib.api.v3.datagen.ProcessorHelper;
 import org.betterx.betterend.BetterEnd;
-
-import net.minecraft.resources.ResourceKey;
-import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorList;
+import org.betterx.wover.structure.api.StructureKeys;
+import org.betterx.wover.structure.api.processors.StructureProcessorKey;
 
 public class EndProcessors {
-    public static final ResourceKey<StructureProcessorList> WEATHERED_10_PERCENT =
-            ProcessorHelper.createKey(BetterEnd.makeID("weather_10_percent"));
-    public static final ResourceKey<StructureProcessorList> CRACK_20_PERCENT =
-            ProcessorHelper.createKey(BetterEnd.makeID("crack_20_percent"));
-    public static final ResourceKey<StructureProcessorList> CRACK_AND_WEATHER =
-            ProcessorHelper.createKey(BetterEnd.makeID("crack_and_weather"));
-
-    public static final ResourceKey<StructureProcessorList> END_STREET =
-            ProcessorHelper.createKey(BetterEnd.makeID("end_street"));
-    
-    public static final ResourceKey<StructureProcessorList> CRYING_10_PERCENT =
-            ProcessorHelper.createKey(BetterEnd.makeID("crying_10_percent"));
+    public static final StructureProcessorKey WEATHERED_10_PERCENT = StructureKeys.processor(BetterEnd.C.mk("weather_10_percent"));
+    public static final StructureProcessorKey CRACK_20_PERCENT = StructureKeys.processor(BetterEnd.C.mk("crack_20_percent"));
+    public static final StructureProcessorKey CRACK_AND_WEATHER = StructureKeys.processor(BetterEnd.C.mk("crack_and_weather"));
+    public static final StructureProcessorKey END_STREET = StructureKeys.processor(BetterEnd.C.mk("end_street"));
+    public static final StructureProcessorKey CRYING_10_PERCENT = StructureKeys.processor(BetterEnd.C.mk("crying_10_percent"));
 }

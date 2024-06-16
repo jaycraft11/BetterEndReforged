@@ -1,6 +1,6 @@
 package org.betterx.betterend.blocks;
 
-import org.betterx.bclib.blocks.BlockProperties;
+import org.betterx.wover.block.api.BlockProperties;
 import org.betterx.bclib.blocks.UpDownPlantBlock;
 import org.betterx.betterend.registry.EndBlocks;
 

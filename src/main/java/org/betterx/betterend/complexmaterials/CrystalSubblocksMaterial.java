@@ -46,62 +46,62 @@ public class CrystalSubblocksMaterial {
         brick_wall = EndBlocks.registerBlock(name + "_bricks_wall", new BaseWallBlock.Stone(bricks));
 
         // Recipes //
-        BCLRecipeBuilder.crafting(BetterEnd.makeID(name + "_bricks"), bricks)
+        BCLRecipeBuilder.crafting(BetterEnd.C.mk(name + "_bricks"), bricks)
                         .setOutputCount(4)
                         .setShape("##", "##")
                         .addMaterial('#', source)
                         .setGroup("end_bricks")
                         .build();
-        BCLRecipeBuilder.crafting(BetterEnd.makeID(name + "_polished"), polished)
+        BCLRecipeBuilder.crafting(BetterEnd.C.mk(name + "_polished"), polished)
                         .setOutputCount(4)
                         .setShape("##", "##")
                         .addMaterial('#', bricks)
                         .setGroup("end_tile")
                         .build();
-        BCLRecipeBuilder.crafting(BetterEnd.makeID(name + "_tiles"), tiles)
+        BCLRecipeBuilder.crafting(BetterEnd.C.mk(name + "_tiles"), tiles)
                         .setOutputCount(4)
                         .setShape("##", "##")
                         .addMaterial('#', polished)
                         .setGroup("end_small_tile")
                         .build();
-        BCLRecipeBuilder.crafting(BetterEnd.makeID(name + "_pillar"), pillar)
+        BCLRecipeBuilder.crafting(BetterEnd.C.mk(name + "_pillar"), pillar)
                         .setShape("#", "#")
                         .addMaterial('#', slab)
                         .setGroup("end_pillar")
                         .build();
 
-        BCLRecipeBuilder.crafting(BetterEnd.makeID(name + "_stairs"), stairs)
+        BCLRecipeBuilder.crafting(BetterEnd.C.mk(name + "_stairs"), stairs)
                         .setOutputCount(4)
                         .setShape("#  ", "## ", "###")
                         .addMaterial('#', source)
                         .setGroup("end_stone_stairs")
                         .build();
-        BCLRecipeBuilder.crafting(BetterEnd.makeID(name + "_slab"), slab)
+        BCLRecipeBuilder.crafting(BetterEnd.C.mk(name + "_slab"), slab)
                         .setOutputCount(6)
                         .setShape("###")
                         .addMaterial('#', source)
                         .setGroup("end_stone_slabs")
                         .build();
-        BCLRecipeBuilder.crafting(BetterEnd.makeID(name + "_bricks_stairs"), brick_stairs)
+        BCLRecipeBuilder.crafting(BetterEnd.C.mk(name + "_bricks_stairs"), brick_stairs)
                         .setOutputCount(4)
                         .setShape("#  ", "## ", "###")
                         .addMaterial('#', bricks)
                         .setGroup("end_stone_stairs")
                         .build();
-        BCLRecipeBuilder.crafting(BetterEnd.makeID(name + "_bricks_slab"), brick_slab)
+        BCLRecipeBuilder.crafting(BetterEnd.C.mk(name + "_bricks_slab"), brick_slab)
                         .setOutputCount(6)
                         .setShape("###")
                         .addMaterial('#', bricks)
                         .setGroup("end_stone_slabs")
                         .build();
 
-        BCLRecipeBuilder.crafting(BetterEnd.makeID(name + "_wall"), wall)
+        BCLRecipeBuilder.crafting(BetterEnd.C.mk(name + "_wall"), wall)
                         .setOutputCount(6)
                         .setShape("###", "###")
                         .addMaterial('#', source)
                         .setGroup("end_wall")
                         .build();
-        BCLRecipeBuilder.crafting(BetterEnd.makeID(name + "_bricks_wall"), brick_wall)
+        BCLRecipeBuilder.crafting(BetterEnd.C.mk(name + "_bricks_wall"), brick_wall)
                         .setOutputCount(6)
                         .setShape("###", "###")
                         .addMaterial('#', bricks)

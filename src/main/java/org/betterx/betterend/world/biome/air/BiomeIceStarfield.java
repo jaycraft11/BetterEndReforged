@@ -10,7 +10,7 @@ import net.minecraft.world.entity.EntityType;
 
 public class BiomeIceStarfield extends EndBiome.Config {
     public BiomeIceStarfield() {
-        super("ice_starfield");
+        super();
     }
 
     @Override

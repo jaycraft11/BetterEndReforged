@@ -2,21 +2,17 @@ package org.betterx.betterend.registry;
 
 import org.betterx.bclib.api.v3.tag.BCLBlockTags;
 import org.betterx.bclib.blocks.*;
-import org.betterx.bclib.registry.BlockRegistry;
 import org.betterx.betterend.BetterEnd;
 import org.betterx.betterend.blocks.*;
 import org.betterx.betterend.blocks.basis.*;
 import org.betterx.betterend.complexmaterials.*;
-import org.betterx.betterend.config.Configs;
 import org.betterx.betterend.item.material.EndArmorMaterial;
 import org.betterx.betterend.item.material.EndToolMaterial;
-import org.betterx.worlds.together.tag.v3.CommonBlockTags;
-import org.betterx.worlds.together.tag.v3.TagManager;
+import org.betterx.wover.block.api.BlockRegistry;
+import org.betterx.wover.tag.api.predefined.CommonBlockTags;
 
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.material.MapColor;
@@ -26,7 +22,7 @@ import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 
 public class EndBlocks {
-    private static final BlockRegistry REGISTRY = new BlockRegistry(Configs.BLOCK_CONFIG);
+    private static BlockRegistry BLOCKS_REGISTRY;
 
     // Terrain //
     public static final Block ENDSTONE_DUST = registerBlock("endstone_dust", new EndstoneDustBlock());
@@ -754,37 +750,23 @@ public class EndBlocks {
     ).init();
 
     public static List<Block> getModBlocks() {
-        return BlockRegistry.getModBlocks(BetterEnd.MOD_ID);
-    }
-
-    public static List<Item> getModBlockItems() {
-        return BlockRegistry.getModBlockItems(BetterEnd.MOD_ID);
-    }
-
-    public static Block registerBlock(ResourceLocation id, Block block, TagKey<Block>... tags) {
-        if (!Configs.BLOCK_CONFIG.getBooleanRoot(id.getPath(), true)) {
-            return block;
-        }
-        getBlockRegistry().register(id, block);
-        TagManager.BLOCKS.add(block, tags);
-        return block;
+        return getBlockRegistry().allBlocks().toList();
     }
 
     public static Block registerBlock(String name, Block block, TagKey<Block>... tags) {
-        return registerBlock(BetterEnd.makeID(name), block, tags);
+        return registerBlock(name, block, tags);
     }
 
     public static Block registerEndBlockOnly(String name, Block block) {
-        return getBlockRegistry().registerBlockOnly(BetterEnd.makeID(name), block);
-    }
-
-    public static Item.Properties makeBlockItemSettings() {
-        return getBlockRegistry().makeItemSettings();
+        return getBlockRegistry().registerBlockOnly(name, block);
     }
 
     @NotNull
     public static BlockRegistry getBlockRegistry() {
-        return REGISTRY;
+        if (BLOCKS_REGISTRY == null) {
+            BLOCKS_REGISTRY = BlockRegistry.forMod(BetterEnd.C);
+        }
+        return BLOCKS_REGISTRY;
     }
 
     @ApiStatus.Internal

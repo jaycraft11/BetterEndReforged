@@ -96,7 +96,7 @@ public class BYGFeatures {
             FC config,
             int density
     ) {
-        ResourceLocation id = BetterEnd.makeID(name);
+        ResourceLocation id = BetterEnd.C.mk(name);
         return BCLFeatureBuilder
                 .start(id, feature)
                 .configuration(config)

@@ -14,7 +14,7 @@ import net.minecraft.world.level.levelgen.GenerationStep.Decoration;
 
 public class ChorusForestBiome extends EndBiome.Config {
     public ChorusForestBiome() {
-        super(EndBiomes.CHORUS_FOREST.location());
+        super();
     }
 
     @Override

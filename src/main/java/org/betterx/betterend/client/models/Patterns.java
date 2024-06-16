@@ -20,84 +20,75 @@ import java.util.stream.Collectors;
 
 public class Patterns {
     //Block Models
-    public final static ResourceLocation BLOCK_EMPTY = BetterEnd.makeID("patterns/block/empty.json");
-    public final static ResourceLocation BLOCK_BASE = BetterEnd.makeID("patterns/block/block.json");
-    public final static ResourceLocation BLOCK_SIDED = BetterEnd.makeID("patterns/block/block_sided.json");
-    public final static ResourceLocation BLOCK_BOTTOM_TOP = BetterEnd.makeID("patterns/block/block_bottom_top.json");
-    public final static ResourceLocation BLOCK_SLAB = BetterEnd.makeID("patterns/block/slab.json");
-    public final static ResourceLocation BLOCK_STAIR = BetterEnd.makeID("patterns/block/stairs.json");
-    public final static ResourceLocation BLOCK_STAIR_INNER = BetterEnd.makeID("patterns/block/inner_stairs.json");
-    public final static ResourceLocation BLOCK_STAIR_OUTER = BetterEnd.makeID("patterns/block/outer_stairs.json");
-    public final static ResourceLocation BLOCK_WALL_POST = BetterEnd.makeID("patterns/block/wall_post.json");
-    public final static ResourceLocation BLOCK_WALL_SIDE = BetterEnd.makeID("patterns/block/wall_side.json");
-    public final static ResourceLocation BLOCK_WALL_SIDE_TALL = BetterEnd.makeID("patterns/block/wall_side_tall.json");
-    public final static ResourceLocation BLOCK_FENCE_POST = BetterEnd.makeID("patterns/block/fence_post.json");
-    public final static ResourceLocation BLOCK_FENCE_SIDE = BetterEnd.makeID("patterns/block/fence_side.json");
-    public final static ResourceLocation BLOCK_BUTTON = BetterEnd.makeID("patterns/block/button.json");
-    public final static ResourceLocation BLOCK_BUTTON_PRESSED = BetterEnd.makeID("patterns/block/button_pressed.json");
-    public final static ResourceLocation BLOCK_PILLAR = BetterEnd.makeID("patterns/block/pillar.json");
-    public final static ResourceLocation BLOCK_PLATE_UP = BetterEnd.makeID("patterns/block/pressure_plate_up.json");
-    public final static ResourceLocation BLOCK_PLATE_DOWN = BetterEnd.makeID("patterns/block/pressure_plate_down.json");
-    public final static ResourceLocation BLOCK_DOOR_TOP = BetterEnd.makeID("patterns/block/door_top.json");
-    public final static ResourceLocation BLOCK_DOOR_TOP_HINGE = BetterEnd.makeID("patterns/block/door_top_hinge.json");
-    public final static ResourceLocation BLOCK_DOOR_BOTTOM = BetterEnd.makeID("patterns/block/door_bottom.json");
-    public final static ResourceLocation BLOCK_DOOR_BOTTOM_HINGE = BetterEnd.makeID(
-            "patterns/block/door_bottom_hinge.json");
-    public final static ResourceLocation BLOCK_CROSS = BetterEnd.makeID("patterns/block/cross.json");
-    public final static ResourceLocation BLOCK_CROSS_SHADED = BetterEnd.makeID("patterns/block/cross_shaded.json");
-    public final static ResourceLocation BLOCK_GATE_CLOSED = BetterEnd.makeID("patterns/block/fence_gate_closed.json");
-    public final static ResourceLocation BLOCK_GATE_CLOSED_WALL = BetterEnd.makeID(
-            "patterns/block/wall_gate_closed.json");
-    public final static ResourceLocation BLOCK_GATE_OPEN = BetterEnd.makeID("patterns/block/fence_gate_open.json");
-    public final static ResourceLocation BLOCK_GATE_OPEN_WALL = BetterEnd.makeID("patterns/block/wall_gate_open.json");
-    public final static ResourceLocation BLOCK_TRAPDOOR = BetterEnd.makeID("patterns/block/trapdoor.json");
-    public final static ResourceLocation BLOCK_LADDER = BetterEnd.makeID("patterns/block/ladder.json");
-    public final static ResourceLocation BLOCK_BARREL_OPEN = BetterEnd.makeID("patterns/block/barrel_open.json");
-    public final static ResourceLocation BLOCK_PEDESTAL_DEFAULT = BetterEnd.makeID(
-            "patterns/block/pedestal_default.json");
-    public final static ResourceLocation BLOKC_PEDESTAL_COLUMN = BetterEnd.makeID("patterns/block/pedestal_column.json");
-    public final static ResourceLocation BLOCK_PEDESTAL_COLUMN_TOP = BetterEnd.makeID(
-            "patterns/block/pedestal_column_top.json");
-    public final static ResourceLocation BLOCK_PEDESTAL_TOP = BetterEnd.makeID("patterns/block/pedestal_top.json");
-    public final static ResourceLocation BLOCK_PEDESTAL_BOTTOM = BetterEnd.makeID("patterns/block/pedestal_bottom.json");
-    public final static ResourceLocation BLOCK_PEDESTAL_PILLAR = BetterEnd.makeID("patterns/block/pedestal_pillar.json");
-    public final static ResourceLocation BLOCK_BOOKSHELF = BetterEnd.makeID("patterns/block/bookshelf.json");
-    public final static ResourceLocation BLOCK_STONE_LANTERN_CEIL = BetterEnd.makeID(
-            "patterns/block/stone_lantern_ceil.json");
-    public final static ResourceLocation BLOCK_STONE_LANTERN_FLOOR = BetterEnd.makeID(
-            "patterns/block/stone_lantern_floor.json");
-    public final static ResourceLocation BLOCK_BULB_LANTERN_FLOOR = BetterEnd.makeID(
-            "patterns/block/bulb_lantern_floor.json");
-    public final static ResourceLocation BLOCK_BULB_LANTERN_CEIL = BetterEnd.makeID(
-            "patterns/block/bulb_lantern_ceil.json");
-    public final static ResourceLocation BLOCK_PETAL_COLORED = BetterEnd.makeID("models/block/block_petal_colored.json");
-    public final static ResourceLocation BLOCK_COMPOSTER = BetterEnd.makeID("patterns/block/composter.json");
-    public final static ResourceLocation BLOCK_COLORED = BetterEnd.makeID("patterns/block/block_colored.json");
-    public final static ResourceLocation BLOCK_BARS_POST = BetterEnd.makeID("patterns/block/bars_post.json");
-    public final static ResourceLocation BLOCK_BARS_SIDE = BetterEnd.makeID("patterns/block/bars_side.json");
-    public final static ResourceLocation BLOCK_ANVIL = BetterEnd.makeID("patterns/block/anvil.json");
-    public final static ResourceLocation BLOCK_CHAIN = BetterEnd.makeID("patterns/block/chain.json");
-    public final static ResourceLocation BLOCK_CHANDELIER_FLOOR = BetterEnd.makeID(
-            "patterns/block/chandelier_floor.json");
-    public final static ResourceLocation BLOCK_CHANDELIER_WALL = BetterEnd.makeID("patterns/block/chandelier_wall.json");
-    public final static ResourceLocation BLOCK_CHANDELIER_CEIL = BetterEnd.makeID("patterns/block/chandelier_ceil.json");
-    public final static ResourceLocation BLOCK_FURNACE = BetterEnd.makeID("patterns/block/furnace.json");
-    public final static ResourceLocation BLOCK_FURNACE_LIT = BetterEnd.makeID("patterns/block/furnace_glow.json");
-    public final static ResourceLocation BLOCK_TOP_SIDE_BOTTOM = BetterEnd.makeID("patterns/block/top_side_bottom.json");
-    public final static ResourceLocation BLOCK_PATH = BetterEnd.makeID("patterns/block/path.json");
-    public final static ResourceLocation BLOCK_FLOWER_POT = BetterEnd.makeID("patterns/block/flower_pot.json");
-    public final static ResourceLocation BLOCK_FLOWER_POT_SOIL = BetterEnd.makeID("patterns/block/flower_pot_soil.json");
-    public final static ResourceLocation BLOCK_POTTED_LEAVES = BetterEnd.makeID("patterns/block/potted_leaves.json");
+    public final static ResourceLocation BLOCK_EMPTY = BetterEnd.C.mk("patterns/block/empty.json");
+    public final static ResourceLocation BLOCK_BASE = BetterEnd.C.mk("patterns/block/block.json");
+    public final static ResourceLocation BLOCK_SIDED = BetterEnd.C.mk("patterns/block/block_sided.json");
+    public final static ResourceLocation BLOCK_BOTTOM_TOP = BetterEnd.C.mk("patterns/block/block_bottom_top.json");
+    public final static ResourceLocation BLOCK_SLAB = BetterEnd.C.mk("patterns/block/slab.json");
+    public final static ResourceLocation BLOCK_STAIR = BetterEnd.C.mk("patterns/block/stairs.json");
+    public final static ResourceLocation BLOCK_STAIR_INNER = BetterEnd.C.mk("patterns/block/inner_stairs.json");
+    public final static ResourceLocation BLOCK_STAIR_OUTER = BetterEnd.C.mk("patterns/block/outer_stairs.json");
+    public final static ResourceLocation BLOCK_WALL_POST = BetterEnd.C.mk("patterns/block/wall_post.json");
+    public final static ResourceLocation BLOCK_WALL_SIDE = BetterEnd.C.mk("patterns/block/wall_side.json");
+    public final static ResourceLocation BLOCK_WALL_SIDE_TALL = BetterEnd.C.mk("patterns/block/wall_side_tall.json");
+    public final static ResourceLocation BLOCK_FENCE_POST = BetterEnd.C.mk("patterns/block/fence_post.json");
+    public final static ResourceLocation BLOCK_FENCE_SIDE = BetterEnd.C.mk("patterns/block/fence_side.json");
+    public final static ResourceLocation BLOCK_BUTTON = BetterEnd.C.mk("patterns/block/button.json");
+    public final static ResourceLocation BLOCK_BUTTON_PRESSED = BetterEnd.C.mk("patterns/block/button_pressed.json");
+    public final static ResourceLocation BLOCK_PILLAR = BetterEnd.C.mk("patterns/block/pillar.json");
+    public final static ResourceLocation BLOCK_PLATE_UP = BetterEnd.C.mk("patterns/block/pressure_plate_up.json");
+    public final static ResourceLocation BLOCK_PLATE_DOWN = BetterEnd.C.mk("patterns/block/pressure_plate_down.json");
+    public final static ResourceLocation BLOCK_DOOR_TOP = BetterEnd.C.mk("patterns/block/door_top.json");
+    public final static ResourceLocation BLOCK_DOOR_TOP_HINGE = BetterEnd.C.mk("patterns/block/door_top_hinge.json");
+    public final static ResourceLocation BLOCK_DOOR_BOTTOM = BetterEnd.C.mk("patterns/block/door_bottom.json");
+    public final static ResourceLocation BLOCK_DOOR_BOTTOM_HINGE = BetterEnd.C.mk("patterns/block/door_bottom_hinge.json");
+    public final static ResourceLocation BLOCK_CROSS = BetterEnd.C.mk("patterns/block/cross.json");
+    public final static ResourceLocation BLOCK_CROSS_SHADED = BetterEnd.C.mk("patterns/block/cross_shaded.json");
+    public final static ResourceLocation BLOCK_GATE_CLOSED = BetterEnd.C.mk("patterns/block/fence_gate_closed.json");
+    public final static ResourceLocation BLOCK_GATE_CLOSED_WALL = BetterEnd.C.mk("patterns/block/wall_gate_closed.json");
+    public final static ResourceLocation BLOCK_GATE_OPEN = BetterEnd.C.mk("patterns/block/fence_gate_open.json");
+    public final static ResourceLocation BLOCK_GATE_OPEN_WALL = BetterEnd.C.mk("patterns/block/wall_gate_open.json");
+    public final static ResourceLocation BLOCK_TRAPDOOR = BetterEnd.C.mk("patterns/block/trapdoor.json");
+    public final static ResourceLocation BLOCK_LADDER = BetterEnd.C.mk("patterns/block/ladder.json");
+    public final static ResourceLocation BLOCK_BARREL_OPEN = BetterEnd.C.mk("patterns/block/barrel_open.json");
+    public final static ResourceLocation BLOCK_PEDESTAL_DEFAULT = BetterEnd.C.mk("patterns/block/pedestal_default.json");
+    public final static ResourceLocation BLOKC_PEDESTAL_COLUMN = BetterEnd.C.mk("patterns/block/pedestal_column.json");
+    public final static ResourceLocation BLOCK_PEDESTAL_COLUMN_TOP = BetterEnd.C.mk("patterns/block/pedestal_column_top.json");
+    public final static ResourceLocation BLOCK_PEDESTAL_TOP = BetterEnd.C.mk("patterns/block/pedestal_top.json");
+    public final static ResourceLocation BLOCK_PEDESTAL_BOTTOM = BetterEnd.C.mk("patterns/block/pedestal_bottom.json");
+    public final static ResourceLocation BLOCK_PEDESTAL_PILLAR = BetterEnd.C.mk("patterns/block/pedestal_pillar.json");
+    public final static ResourceLocation BLOCK_BOOKSHELF = BetterEnd.C.mk("patterns/block/bookshelf.json");
+    public final static ResourceLocation BLOCK_STONE_LANTERN_CEIL = BetterEnd.C.mk("patterns/block/stone_lantern_ceil.json");
+    public final static ResourceLocation BLOCK_STONE_LANTERN_FLOOR = BetterEnd.C.mk("patterns/block/stone_lantern_floor.json");
+    public final static ResourceLocation BLOCK_BULB_LANTERN_FLOOR = BetterEnd.C.mk("patterns/block/bulb_lantern_floor.json");
+    public final static ResourceLocation BLOCK_BULB_LANTERN_CEIL = BetterEnd.C.mk("patterns/block/bulb_lantern_ceil.json");
+    public final static ResourceLocation BLOCK_PETAL_COLORED = BetterEnd.C.mk("models/block/block_petal_colored.json");
+    public final static ResourceLocation BLOCK_COMPOSTER = BetterEnd.C.mk("patterns/block/composter.json");
+    public final static ResourceLocation BLOCK_COLORED = BetterEnd.C.mk("patterns/block/block_colored.json");
+    public final static ResourceLocation BLOCK_BARS_POST = BetterEnd.C.mk("patterns/block/bars_post.json");
+    public final static ResourceLocation BLOCK_BARS_SIDE = BetterEnd.C.mk("patterns/block/bars_side.json");
+    public final static ResourceLocation BLOCK_ANVIL = BetterEnd.C.mk("patterns/block/anvil.json");
+    public final static ResourceLocation BLOCK_CHAIN = BetterEnd.C.mk("patterns/block/chain.json");
+    public final static ResourceLocation BLOCK_CHANDELIER_FLOOR = BetterEnd.C.mk("patterns/block/chandelier_floor.json");
+    public final static ResourceLocation BLOCK_CHANDELIER_WALL = BetterEnd.C.mk("patterns/block/chandelier_wall.json");
+    public final static ResourceLocation BLOCK_CHANDELIER_CEIL = BetterEnd.C.mk("patterns/block/chandelier_ceil.json");
+    public final static ResourceLocation BLOCK_FURNACE = BetterEnd.C.mk("patterns/block/furnace.json");
+    public final static ResourceLocation BLOCK_FURNACE_LIT = BetterEnd.C.mk("patterns/block/furnace_glow.json");
+    public final static ResourceLocation BLOCK_TOP_SIDE_BOTTOM = BetterEnd.C.mk("patterns/block/top_side_bottom.json");
+    public final static ResourceLocation BLOCK_PATH = BetterEnd.C.mk("patterns/block/path.json");
+    public final static ResourceLocation BLOCK_FLOWER_POT = BetterEnd.C.mk("patterns/block/flower_pot.json");
+    public final static ResourceLocation BLOCK_FLOWER_POT_SOIL = BetterEnd.C.mk("patterns/block/flower_pot_soil.json");
+    public final static ResourceLocation BLOCK_POTTED_LEAVES = BetterEnd.C.mk("patterns/block/potted_leaves.json");
 
     //Item Models
-    public final static ResourceLocation ITEM_WALL = BetterEnd.makeID("patterns/item/pattern_wall.json");
-    public final static ResourceLocation ITEM_FENCE = BetterEnd.makeID("patterns/item/pattern_fence.json");
-    public final static ResourceLocation ITEM_BUTTON = BetterEnd.makeID("patterns/item/pattern_button.json");
-    public final static ResourceLocation ITEM_CHEST = BetterEnd.makeID("patterns/item/pattern_chest.json");
-    public final static ResourceLocation ITEM_BLOCK = BetterEnd.makeID("patterns/item/pattern_block_item.json");
-    public final static ResourceLocation ITEM_GENERATED = BetterEnd.makeID("patterns/item/pattern_item_generated.json");
-    public final static ResourceLocation ITEM_HANDHELD = BetterEnd.makeID("patterns/item/pattern_item_handheld.json");
-    public final static ResourceLocation ITEM_SPAWN_EGG = BetterEnd.makeID("patterns/item/pattern_item_spawn_egg.json");
+    public final static ResourceLocation ITEM_WALL = BetterEnd.C.mk("patterns/item/pattern_wall.json");
+    public final static ResourceLocation ITEM_FENCE = BetterEnd.C.mk("patterns/item/pattern_fence.json");
+    public final static ResourceLocation ITEM_BUTTON = BetterEnd.C.mk("patterns/item/pattern_button.json");
+    public final static ResourceLocation ITEM_CHEST = BetterEnd.C.mk("patterns/item/pattern_chest.json");
+    public final static ResourceLocation ITEM_BLOCK = BetterEnd.C.mk("patterns/item/pattern_block_item.json");
+    public final static ResourceLocation ITEM_GENERATED = BetterEnd.C.mk("patterns/item/pattern_item_generated.json");
+    public final static ResourceLocation ITEM_HANDHELD = BetterEnd.C.mk("patterns/item/pattern_item_handheld.json");
+    public final static ResourceLocation ITEM_SPAWN_EGG = BetterEnd.C.mk("patterns/item/pattern_item_spawn_egg.json");
 
     public static Optional<String> createItemGenerated(String name) {
         return createJson(ITEM_GENERATED, name);

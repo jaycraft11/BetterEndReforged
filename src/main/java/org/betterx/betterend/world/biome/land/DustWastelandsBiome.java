@@ -18,7 +18,7 @@ import net.minecraft.world.level.levelgen.placement.CaveSurface;
 
 public class DustWastelandsBiome extends EndBiome.Config {
     public DustWastelandsBiome() {
-        super("dust_wastelands");
+        super();
     }
 
     @Override

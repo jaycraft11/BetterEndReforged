@@ -20,7 +20,7 @@ import java.util.List;
 public class SulphurSpringsBiome extends EndBiome.Config {
 
     public SulphurSpringsBiome() {
-        super(EndBiomes.SULPHUR_SPRINGS.location());
+        super();
     }
 
     @Override

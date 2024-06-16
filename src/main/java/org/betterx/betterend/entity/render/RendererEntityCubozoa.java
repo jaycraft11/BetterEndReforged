@@ -68,10 +68,10 @@ public class RendererEntityCubozoa extends MobRenderer<CubozoaEntity, CubozoaEnt
     }
 
     static {
-        TEXTURE[0] = BetterEnd.makeID("textures/entity/cubozoa/cubozoa.png");
-        TEXTURE[1] = BetterEnd.makeID("textures/entity/cubozoa/cubozoa_sulphur.png");
+        TEXTURE[0] = BetterEnd.C.mk("textures/entity/cubozoa/cubozoa.png");
+        TEXTURE[1] = BetterEnd.C.mk("textures/entity/cubozoa/cubozoa_sulphur.png");
 
-        GLOW[0] = RenderType.eyes(BetterEnd.makeID("textures/entity/cubozoa/cubozoa_glow.png"));
-        GLOW[1] = RenderType.eyes(BetterEnd.makeID("textures/entity/cubozoa/cubozoa_sulphur_glow.png"));
+        GLOW[0] = RenderType.eyes(BetterEnd.C.mk("textures/entity/cubozoa/cubozoa_glow.png"));
+        GLOW[1] = RenderType.eyes(BetterEnd.C.mk("textures/entity/cubozoa/cubozoa_sulphur_glow.png"));
     }
 }

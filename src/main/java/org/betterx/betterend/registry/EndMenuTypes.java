@@ -16,7 +16,7 @@ import java.util.function.BiFunction;
 
 public class EndMenuTypes {
     public final static MenuType<EndStoneSmelterMenu> END_STONE_SMELTER = registerSimple(
-            BetterEnd.makeID(EndStoneSmelter.ID),
+            BetterEnd.C.mk(EndStoneSmelter.ID),
             EndStoneSmelterMenu::new
     );
 

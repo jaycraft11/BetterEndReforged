@@ -4,7 +4,10 @@ import org.betterx.bclib.api.v2.levelgen.biomes.BCLBiomeBuilder;
 import org.betterx.bclib.api.v2.levelgen.surface.SurfaceRuleBuilder;
 import org.betterx.bclib.api.v2.levelgen.surface.rules.SwitchRuleSource;
 import org.betterx.bclib.interfaces.SurfaceMaterialProvider;
-import org.betterx.betterend.registry.*;
+import org.betterx.betterend.registry.EndBlocks;
+import org.betterx.betterend.registry.EndFeatures;
+import org.betterx.betterend.registry.EndSounds;
+import org.betterx.betterend.registry.EndStructures;
 import org.betterx.betterend.world.biome.EndBiome;
 import org.betterx.betterend.world.surface.SplitNoiseCondition;
 
@@ -21,7 +24,7 @@ import java.util.List;
 
 public class NeonOasisBiome extends EndBiome.Config {
     public NeonOasisBiome() {
-        super(EndBiomes.NEON_OASIS.location());
+        super();
     }
 
     @Override

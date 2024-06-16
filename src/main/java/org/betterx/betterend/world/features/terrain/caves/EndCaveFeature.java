@@ -13,7 +13,7 @@ import org.betterx.betterend.registry.EndBiomes;
 import org.betterx.betterend.util.BlockFixer;
 import org.betterx.betterend.world.biome.EndBiome;
 import org.betterx.betterend.world.biome.cave.EndCaveBiome;
-import org.betterx.worlds.together.tag.v3.CommonBlockTags;
+import org.betterx.wover.tag.api.predefined.CommonBlockTags;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;

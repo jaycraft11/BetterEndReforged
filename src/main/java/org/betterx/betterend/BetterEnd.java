@@ -1,7 +1,6 @@
 package org.betterx.betterend;
 
 import org.betterx.bclib.api.v2.dataexchange.DataExchangeAPI;
-import org.betterx.bclib.api.v2.generator.BiomeDecider;
 import org.betterx.bclib.api.v2.levelgen.biomes.BiomeAPI;
 import org.betterx.betterend.advancements.BECriteria;
 import org.betterx.betterend.api.BetterEndPlugin;
@@ -18,10 +17,11 @@ import org.betterx.betterend.util.BonemealPlants;
 import org.betterx.betterend.util.LootTableUtil;
 import org.betterx.betterend.world.generator.EndLandBiomeDecider;
 import org.betterx.betterend.world.generator.GeneratorOptions;
-import org.betterx.worlds.together.util.Logger;
 import org.betterx.worlds.together.world.WorldConfig;
+import org.betterx.wover.core.api.Logger;
+import org.betterx.wover.core.api.ModCore;
+import org.betterx.wover.generator.api.biomesource.end.BiomeDecider;
 
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.biome.Biomes;
 
 import net.fabricmc.api.ModInitializer;
@@ -30,15 +30,15 @@ import net.fabricmc.loader.api.FabricLoader;
 import java.util.List;
 
 public class BetterEnd implements ModInitializer {
-    public static final String MOD_ID = "betterend";
-    public static final Logger LOGGER = new Logger(MOD_ID);
-    public static final boolean RUNS_TRINKETS = FabricLoader.getInstance()
-                                                            .getModContainer("trinkets")
-                                                            .isPresent();
+    public static final ModCore C = ModCore.create("betterend");
+    public static final ModCore TRINKETS_CORE = ModCore.create("trinkets");
+    public static final String MOD_ID = C.namespace;
+    public static final Logger LOGGER = C.LOG;
 
     @Override
     public void onInitialize() {
         WorldConfig.registerModCache(MOD_ID);
+
         EndNumericProviders.register();
         EndPortals.loadPortals();
         EndSounds.register();
@@ -70,7 +70,7 @@ public class BetterEnd implements ModInitializer {
         CreativeTabs.register();
 
         if (GeneratorOptions.useNewGenerator()) {
-            BiomeDecider.registerHighPriorityDecider(makeID("end_land"), new EndLandBiomeDecider());
+            BiomeDecider.registerHighPriorityDecider(C.mk("end_land"), new EndLandBiomeDecider());
         }
 
         BiomeAPI.registerEndBiomeModification((biomeID, biome) -> {
@@ -79,22 +79,12 @@ public class BetterEnd implements ModInitializer {
             }
         });
 
-        BiomeAPI.onFinishingEndBiomeTags((biomeID, biome) -> {
-            if (!biomeID.equals(Biomes.THE_VOID.location())) {
-                EndStructures.addBiomeStructures(biomeID, biome);
-            }
-        });
-
         DataExchangeAPI.registerDescriptors(List.of(
                 RitualUpdate.DESCRIPTOR
         ));
 
-        if (RUNS_TRINKETS) {
+        if (TRINKETS_CORE.isLoaded()) {
             Elytra.register();
         }
-    }
-
-    public static ResourceLocation makeID(String path) {
-        return new ResourceLocation(MOD_ID, path);
     }
 }

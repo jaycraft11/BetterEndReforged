@@ -6,15 +6,15 @@ import org.betterx.bclib.util.MHelper;
 import org.betterx.betterend.noise.OpenSimplexNoise;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 
 /**
  * Noise source that returns a value in [0, 1]
  */
 public class SplitNoiseCondition implements NumericProvider {
     public static final SplitNoiseCondition DEFAULT = new SplitNoiseCondition();
-    public static final Codec<SplitNoiseCondition> CODEC = Codec.BYTE.fieldOf("split_noise")
-                                                                     .xmap((obj) -> DEFAULT, obj -> (byte) 0)
-                                                                     .codec();
+    public static final MapCodec<SplitNoiseCondition> CODEC = Codec.BYTE.fieldOf("split_noise")
+                                                                        .xmap((obj) -> DEFAULT, obj -> (byte) 0);
 
     private static final OpenSimplexNoise NOISE = new OpenSimplexNoise(4141);
 
@@ -37,7 +37,7 @@ public class SplitNoiseCondition implements NumericProvider {
 
 
     @Override
-    public Codec<? extends NumericProvider> pcodec() {
+    public MapCodec<? extends NumericProvider> pcodec() {
         return CODEC;
     }
 

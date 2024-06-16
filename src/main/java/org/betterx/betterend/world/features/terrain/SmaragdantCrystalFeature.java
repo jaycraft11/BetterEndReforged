@@ -6,7 +6,7 @@ import org.betterx.bclib.util.MHelper;
 import org.betterx.betterend.blocks.BuddingSmaragdantCrystalBlock;
 import org.betterx.betterend.blocks.SmaragdantCrystalShardBlock;
 import org.betterx.betterend.registry.EndBlocks;
-import org.betterx.worlds.together.tag.v3.CommonBlockTags;
+import org.betterx.wover.tag.api.predefined.CommonBlockTags;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
@@ -56,9 +56,12 @@ public class SmaragdantCrystalFeature extends DefaultFeature {
                                 BlockState sideState = world.getBlockState(sidePos);
                                 if (BuddingSmaragdantCrystalBlock.canShardGrowAtState(sideState)) {
                                     if (random.nextBoolean()) {
-                                        BlockState attachedShard = EndBlocks.SMARAGDANT_CRYSTAL_SHARD.defaultBlockState()
-                                                .setValue(SmaragdantCrystalShardBlock.WATERLOGGED,
-                                                        sideState.getFluidState().getType() == Fluids.WATER)
+                                        BlockState attachedShard = EndBlocks.SMARAGDANT_CRYSTAL_SHARD
+                                                .defaultBlockState()
+                                                .setValue(
+                                                        SmaragdantCrystalShardBlock.WATERLOGGED,
+                                                        sideState.getFluidState().getType() == Fluids.WATER
+                                                )
                                                 .setValue(SmaragdantCrystalShardBlock.FACING, k);
                                         BlocksHelper.setWithoutUpdate(world, sidePos, attachedShard);
                                     }

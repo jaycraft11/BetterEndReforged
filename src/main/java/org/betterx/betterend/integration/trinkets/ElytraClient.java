@@ -20,3 +20,8 @@ package org.betterx.betterend.integration.trinkets;
 //                ).size() == 0).orElse(true));
 //    }
 //}
+
+public class ElytraClient {
+    public static void register() {
+    }
+}

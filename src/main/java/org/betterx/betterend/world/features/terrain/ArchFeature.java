@@ -7,7 +7,7 @@ import org.betterx.bclib.sdf.operator.SDFRotation;
 import org.betterx.bclib.sdf.primitive.SDFTorus;
 import org.betterx.bclib.util.MHelper;
 import org.betterx.betterend.noise.OpenSimplexNoise;
-import org.betterx.worlds.together.tag.v3.CommonBlockTags;
+import org.betterx.wover.tag.api.predefined.CommonBlockTags;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;

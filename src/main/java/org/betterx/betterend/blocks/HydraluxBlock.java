@@ -8,12 +8,11 @@ import org.betterx.bclib.util.MHelper;
 import org.betterx.betterend.blocks.EndBlockProperties.HydraluxShape;
 import org.betterx.betterend.registry.EndBlocks;
 import org.betterx.betterend.registry.EndItems;
-import org.betterx.worlds.together.tag.v3.CommonBlockTags;
+import org.betterx.wover.tag.api.predefined.CommonBlockTags;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
@@ -66,7 +65,7 @@ public class HydraluxBlock extends UnderwaterPlantBlock implements BehaviourWate
     }
 
     @Override
-    public boolean isValidBonemealTarget(LevelReader world, BlockPos pos, BlockState state, boolean isClient) {
+    public boolean isValidBonemealTarget(LevelReader world, BlockPos pos, BlockState state) {
         return false;
     }
 
@@ -77,7 +76,7 @@ public class HydraluxBlock extends UnderwaterPlantBlock implements BehaviourWate
 
     @Override
     @Environment(EnvType.CLIENT)
-    public ItemStack getCloneItemStack(BlockGetter world, BlockPos pos, BlockState state) {
+    public ItemStack getCloneItemStack(LevelReader levelReader, BlockPos blockPos, BlockState blockState) {
         return new ItemStack(EndBlocks.HYDRALUX_SAPLING);
     }
 

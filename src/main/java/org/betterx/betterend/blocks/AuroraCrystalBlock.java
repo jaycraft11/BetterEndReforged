@@ -9,28 +9,27 @@ import org.betterx.bclib.interfaces.tools.AddMineablePickaxe;
 import org.betterx.bclib.util.MHelper;
 import org.betterx.betterend.registry.EndItems;
 import org.betterx.ui.ColorUtil;
+import org.betterx.wover.loot.api.BlockLootProvider;
+import org.betterx.wover.loot.api.LootLookupProvider;
 
 import net.minecraft.client.color.block.BlockColor;
 import net.minecraft.client.color.item.ItemColor;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Vec3i;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.block.AbstractGlassBlock;
+import net.minecraft.world.level.block.TransparentBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.storage.loot.LootParams;
-import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
+import net.minecraft.world.level.storage.loot.LootTable;
+import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-import com.google.common.collect.Lists;
+import org.jetbrains.annotations.NotNull;
 
-import java.util.List;
-
-public class AuroraCrystalBlock extends AbstractGlassBlock implements RenderLayerProvider, CustomColorProvider, AddMineablePickaxe, AddMineableHammer {
+public class AuroraCrystalBlock extends TransparentBlock implements BlockLootProvider, RenderLayerProvider, CustomColorProvider, AddMineablePickaxe, AddMineableHammer {
     public static final Vec3i[] COLORS;
     private static final int MIN_DROP = 1;
     private static final int MAX_DROP = 4;
@@ -92,29 +91,12 @@ public class AuroraCrystalBlock extends AbstractGlassBlock implements RenderLaye
     }
 
     @Override
-    @SuppressWarnings("deprecation")
-    public List<ItemStack> getDrops(BlockState state, LootParams.Builder builder) {
-        ItemStack tool = builder.getParameter(LootContextParams.TOOL);
-        if (tool != null && tool.isCorrectToolForDrops(state)) {
-            int count = 0;
-            int enchant = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, tool);
-            if (enchant > 0) {
-                return Lists.newArrayList(new ItemStack(this));
-            }
-            enchant = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.BLOCK_FORTUNE, tool);
-            if (enchant > 0) {
-                int min = Mth.clamp(MIN_DROP + enchant, MIN_DROP, MAX_DROP);
-                int max = MAX_DROP + (enchant / Enchantments.BLOCK_FORTUNE.getMaxLevel());
-                if (min == max) {
-                    return Lists.newArrayList(new ItemStack(EndItems.CRYSTAL_SHARDS, max));
-                }
-                count = MHelper.randRange(min, max, MHelper.RANDOM_SOURCE);
-            } else {
-                count = MHelper.randRange(MIN_DROP, MAX_DROP, MHelper.RANDOM_SOURCE);
-            }
-            return Lists.newArrayList(new ItemStack(EndItems.CRYSTAL_SHARDS, count));
-        }
-        return Lists.newArrayList();
+    public LootTable.Builder registerBlockLoot(
+            @NotNull ResourceLocation location,
+            @NotNull LootLookupProvider provider,
+            @NotNull ResourceKey<LootTable> tableKey
+    ) {
+        return provider.dropOre(this, EndItems.CRYSTAL_SHARDS, UniformGenerator.between(MIN_DROP, MAX_DROP));
     }
 
     static {

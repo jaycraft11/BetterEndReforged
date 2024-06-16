@@ -12,7 +12,7 @@ import net.minecraft.world.level.block.state.BlockState;
 
 public class ShadowForestBiome extends EndBiome.Config {
     public ShadowForestBiome() {
-        super(EndBiomes.SHADOW_FOREST.location());
+        super();
     }
 
     @Override

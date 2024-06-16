@@ -1,20 +1,16 @@
 package org.betterx.betterend.world.biome.cave;
 
-import org.betterx.bclib.api.v2.levelgen.biomes.BCLBiome;
-import org.betterx.bclib.api.v2.levelgen.biomes.BCLBiomeBuilder;
-import org.betterx.bclib.api.v2.levelgen.biomes.BCLBiomeBuilder.BiomeSupplier;
 import org.betterx.bclib.api.v2.levelgen.biomes.BCLBiomeSettings;
 import org.betterx.bclib.interfaces.SurfaceMaterialProvider;
 import org.betterx.bclib.util.WeightedList;
 import org.betterx.betterend.noise.OpenSimplexNoise;
 import org.betterx.betterend.registry.EndBlocks;
-import org.betterx.betterend.world.biome.EndBiome;
+import org.betterx.betterend.world.biome.EndBiomeBuilder;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.KeyDispatchDataCodec;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.biome.Climate;
@@ -22,10 +18,11 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 
 import java.util.List;
-import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public class JadeCaveBiome extends EndCaveBiome.Config {
-    public static final Codec<JadeCaveBiome.Biome> CODEC = EndCaveBiome.simpleCaveBiomeCodec(JadeCaveBiome.Biome::new);
+    public static final MapCodec<Biome> CODEC = EndCaveBiome.simpleCaveBiomeCodec(JadeCaveBiome.Biome::new);
     public static final KeyDispatchDataCodec<JadeCaveBiome.Biome> KEY_CODEC = KeyDispatchDataCodec.of(CODEC);
 
     public static class Biome extends EndCaveBiome {
@@ -39,41 +36,30 @@ public class JadeCaveBiome extends EndCaveBiome.Config {
         }
 
         @Override
-        public KeyDispatchDataCodec<? extends BCLBiome> codec() {
+        public KeyDispatchDataCodec<? extends EndCaveBiome> codec() {
             return JadeCaveBiome.KEY_CODEC;
         }
 
         protected Biome(
-                float terrainHeight,
                 float fogDensity,
+                @NotNull ResourceKey<net.minecraft.world.level.biome.Biome> biome,
+                @NotNull List<Climate.ParameterPoint> parameterPoints,
+                float terrainHeight,
                 float genChance,
                 int edgeSize,
                 boolean vertical,
-                Optional<ResourceLocation> edge,
-                ResourceLocation biomeID,
-                Optional<List<Climate.ParameterPoint>> parameterPoints,
-                Optional<ResourceLocation> biomeParent,
-                Optional<String> intendedType,
+                @Nullable ResourceKey<net.minecraft.world.level.biome.Biome> edge,
+                @Nullable ResourceKey<net.minecraft.world.level.biome.Biome> parent,
                 boolean hasCaves,
                 SurfaceMaterialProvider surface,
                 WeightedList<Holder<ConfiguredFeature<?, ?>>> floorFeatures,
                 WeightedList<Holder<ConfiguredFeature<?, ?>>> ceilFeatures
         ) {
             super(
-                    terrainHeight,
-                    fogDensity,
-                    genChance,
-                    edgeSize,
-                    vertical,
-                    edge,
-                    biomeID,
-                    parameterPoints,
-                    biomeParent,
-                    intendedType,
-                    hasCaves,
-                    surface,
-                    floorFeatures,
-                    ceilFeatures
+                    fogDensity, biome, parameterPoints, terrainHeight,
+                    genChance, edgeSize, vertical,
+                    edge, parent,
+                    hasCaves, surface, floorFeatures, ceilFeatures
             );
         }
 
@@ -96,21 +82,16 @@ public class JadeCaveBiome extends EndCaveBiome.Config {
     }
 
     public JadeCaveBiome() {
-        super("jade_cave");
+        super();
     }
 
 
     @Override
-    protected void addCustomBuildData(BCLBiomeBuilder builder) {
+    public void addCustomBuildData(EndBiomeBuilder builder) {
         super.addCustomBuildData(builder);
         builder.fogColor(118, 150, 112)
                .fogDensity(2.0F)
                .waterAndFogColor(95, 223, 255);
-    }
-
-    @Override
-    public BiomeSupplier<EndBiome> getSupplier() {
-        return JadeCaveBiome.Biome::new;
     }
 
 

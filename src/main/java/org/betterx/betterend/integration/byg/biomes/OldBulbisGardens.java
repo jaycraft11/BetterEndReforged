@@ -31,7 +31,7 @@ import java.util.List;
 
 public class OldBulbisGardens extends EndBiome.Config {
     public OldBulbisGardens() {
-        super("old_bulbis_gardens");
+        super();
     }
 
     @Override

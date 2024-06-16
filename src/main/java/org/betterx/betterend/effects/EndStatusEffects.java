@@ -38,6 +38,6 @@ public class EndStatusEffects {
     public final static MobEffect END_VEIL = registerEffect("end_veil", new EndVeilEffect());
 
     public static <E extends MobEffect> MobEffect registerEffect(String name, E effect) {
-        return Registry.register(BuiltInRegistries.MOB_EFFECT, BetterEnd.makeID(name), effect);
+        return Registry.register(BuiltInRegistries.MOB_EFFECT, BetterEnd.C.mk(name), effect);
     }
 }

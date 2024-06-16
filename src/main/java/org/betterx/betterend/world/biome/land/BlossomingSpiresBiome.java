@@ -1,33 +1,33 @@
 package org.betterx.betterend.world.biome.land;
 
-import org.betterx.bclib.api.v2.levelgen.biomes.BCLBiomeBuilder;
 import org.betterx.bclib.interfaces.SurfaceMaterialProvider;
 import org.betterx.betterend.registry.EndBlocks;
 import org.betterx.betterend.registry.EndEntities;
 import org.betterx.betterend.registry.EndFeatures;
 import org.betterx.betterend.registry.EndSounds;
 import org.betterx.betterend.world.biome.EndBiome;
+import org.betterx.betterend.world.biome.EndBiomeBuilder;
 
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.block.state.BlockState;
 
 public class BlossomingSpiresBiome extends EndBiome.Config {
     public BlossomingSpiresBiome() {
-        super("blossoming_spires");
+        super();
     }
 
     @Override
-    protected boolean hasCaves() {
+    public boolean hasCaves() {
         return false;
     }
 
     @Override
-    protected boolean hasReturnGateway() {
+    public boolean hasReturnGateway() {
         return false;
     }
 
     @Override
-    protected void addCustomBuildData(BCLBiomeBuilder builder) {
+    public void addCustomBuildData(EndBiomeBuilder builder) {
         builder
                 .fogColor(241, 146, 229)
                 .fogDensity(1.7F)
@@ -50,7 +50,7 @@ public class BlossomingSpiresBiome extends EndBiome.Config {
     }
 
     @Override
-    protected SurfaceMaterialProvider surfaceMaterial() {
+    public SurfaceMaterialProvider surfaceMaterial() {
         return new EndBiome.DefaultSurfaceMaterialProvider() {
             @Override
             public BlockState getTopMaterial() {

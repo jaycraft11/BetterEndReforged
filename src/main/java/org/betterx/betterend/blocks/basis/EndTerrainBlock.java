@@ -4,7 +4,7 @@ import org.betterx.bclib.behaviours.interfaces.BehaviourStone;
 import org.betterx.bclib.blocks.BaseTerrainBlock;
 import org.betterx.bclib.interfaces.TagProvider;
 import org.betterx.betterend.interfaces.PottableTerrain;
-import org.betterx.worlds.together.tag.v3.CommonBlockTags;
+import org.betterx.wover.tag.api.predefined.CommonBlockTags;
 
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;

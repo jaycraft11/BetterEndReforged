@@ -13,25 +13,25 @@ public class EndNumericProviders {
     public static void register() {
         Registry.register(
                 NumericProvider.NUMERIC_PROVIDER,
-                BetterEnd.makeID("sulphuric_surf"),
+                BetterEnd.C.mk("sulphuric_surf"),
                 SulphuricSurfaceNoiseCondition.CODEC
         );
 
         Registry.register(
                 NumericProvider.NUMERIC_PROVIDER,
-                BetterEnd.makeID("vertical_band"),
+                BetterEnd.C.mk("vertical_band"),
                 VerticalBandNoiseCondition.CODEC
         );
 
         Registry.register(
                 NumericProvider.NUMERIC_PROVIDER,
-                BetterEnd.makeID("split_noise"),
+                BetterEnd.C.mk("split_noise"),
                 SplitNoiseCondition.CODEC
         );
 
         Registry.register(
                 NumericProvider.NUMERIC_PROVIDER,
-                BetterEnd.makeID("umbra_srf"),
+                BetterEnd.C.mk("umbra_srf"),
                 UmbraSurfaceNoiseCondition.CODEC
         );
     }

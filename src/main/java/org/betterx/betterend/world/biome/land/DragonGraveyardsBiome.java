@@ -10,7 +10,7 @@ import net.minecraft.world.level.block.state.BlockState;
 
 public class DragonGraveyardsBiome extends EndBiome.Config {
     public DragonGraveyardsBiome() {
-        super("dragon_graveyards");
+        super();
     }
 
     @Override

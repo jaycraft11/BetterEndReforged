@@ -2,7 +2,7 @@ package org.betterx.datagen.betterend.worldgen;
 
 import org.betterx.betterend.world.structures.village.VillagePools;
 
-import net.minecraft.data.worldgen.BootstapContext;
+import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.world.level.levelgen.structure.pools.StructureTemplatePool;
 
 public class TemplatePoolDataProvider {
@@ -11,7 +11,7 @@ public class TemplatePoolDataProvider {
 
     }
 
-    public static void bootstrap(BootstapContext<StructureTemplatePool> ctx) {
+    public static void bootstrap(BootstrapContext<StructureTemplatePool> ctx) {
         VillagePools.bootstrap(ctx);
     }
 }

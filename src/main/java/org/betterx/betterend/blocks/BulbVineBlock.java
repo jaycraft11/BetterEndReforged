@@ -1,10 +1,10 @@
 package org.betterx.betterend.blocks;
 
 import org.betterx.bclib.blocks.BaseVineBlock;
-import org.betterx.bclib.blocks.BlockProperties.TripleShape;
 import org.betterx.bclib.util.MHelper;
 import org.betterx.betterend.registry.EndBlocks;
 import org.betterx.betterend.registry.EndItems;
+import org.betterx.wover.block.api.BlockProperties.TripleShape;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.ItemStack;
@@ -33,7 +33,7 @@ public class BulbVineBlock extends BaseVineBlock {
     }
 
     @Override
-    public boolean isValidBonemealTarget(LevelReader world, BlockPos pos, BlockState state, boolean isClient) {
+    public boolean isValidBonemealTarget(LevelReader world, BlockPos pos, BlockState state) {
         return false;
     }
 

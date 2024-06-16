@@ -27,13 +27,13 @@ public class Integrations {
             GuideBookItem.register();
 
             PlayerAdvancementsCallback.PLAYER_ADVANCEMENT_COMPLETE.register((player, advancement, criterionName) -> {
-                ResourceLocation advId = new ResourceLocation("minecraft:end/enter_end_gateway");
+                ResourceLocation advId = ResourceLocation.withDefaultNamespace("end/enter_end_gateway");
                 if (advId.equals(advancement.getId())) {
                     player.addItem(new ItemStack(GuideBookItem.GUIDE_BOOK));
                 }
             });
 
-            BCLRecipeBuilder.crafting(BetterEnd.makeID("guide_book"), GuideBookItem.GUIDE_BOOK)
+            BCLRecipeBuilder.crafting(BetterEnd.C.mk("guide_book"), GuideBookItem.GUIDE_BOOK)
                             .setShape("D", "B", "C")
                             .addMaterial('D', EndItems.ENDER_DUST)
                             .addMaterial('B', Items.BOOK)

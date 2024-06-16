@@ -24,27 +24,28 @@ import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.ai.util.AirAndWaterRandomPos;
 import net.minecraft.world.entity.ai.util.HoverRandomPos;
 import net.minecraft.world.entity.animal.FlyingAnimal;
-import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.level.pathfinder.Path;
+import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.EnumSet;
+import org.jetbrains.annotations.NotNull;
 
 public class DragonflyEntity extends DespawnableAnimal implements FlyingAnimal {
     public DragonflyEntity(EntityType<DragonflyEntity> entityType, Level world) {
         super(entityType, world);
         this.moveControl = new FlyingMoveControl(this, 20, true);
         this.lookControl = new DragonflyLookControl(this);
-        this.setPathfindingMalus(BlockPathTypes.WATER, -1.0F);
-        this.setPathfindingMalus(BlockPathTypes.DANGER_FIRE, -1.0F);
+        this.setPathfindingMalus(PathType.WATER, -1.0F);
+        this.setPathfindingMalus(PathType.DANGER_FIRE, -1.0F);
         this.xpReward = 1;
     }
 
-    public static AttributeSupplier.Builder createMobAttributes() {
+    public static AttributeSupplier.@NotNull Builder createMobAttributes() {
         return LivingEntity
                 .createLivingAttributes()
                 .add(Attributes.MAX_HEALTH, 8.0D)
@@ -54,12 +55,12 @@ public class DragonflyEntity extends DespawnableAnimal implements FlyingAnimal {
     }
 
     @Override
-    public boolean canBeLeashed(Player player) {
+    public boolean canBeLeashed() {
         return false;
     }
 
     @Override
-    protected PathNavigation createNavigation(Level world) {
+    protected @NotNull PathNavigation createNavigation(Level world) {
         FlyingPathNavigation birdNavigation = new FlyingPathNavigation(this, world) {
             public boolean isStableDestination(BlockPos pos) {
                 BlockState state = this.level.getBlockState(pos);
@@ -82,6 +83,11 @@ public class DragonflyEntity extends DespawnableAnimal implements FlyingAnimal {
     }
 
     @Override
+    public boolean isFood(ItemStack itemStack) {
+        return false;
+    }
+
+    @Override
     protected void registerGoals() {
         this.goalSelector.addGoal(1, new FloatGoal(this));
         this.goalSelector.addGoal(2, new BreedGoal(this, 1.0D));
@@ -100,7 +106,7 @@ public class DragonflyEntity extends DespawnableAnimal implements FlyingAnimal {
     }
 
     @Override
-    protected Entity.MovementEmission getMovementEmission() {
+    protected Entity.@NotNull MovementEmission getMovementEmission() {
         return Entity.MovementEmission.EVENTS;
     }
 
@@ -124,7 +130,7 @@ public class DragonflyEntity extends DespawnableAnimal implements FlyingAnimal {
         return MHelper.randRange(0.25F, 0.5F, random);
     }
 
-    class DragonflyLookControl extends LookControl {
+    static class DragonflyLookControl extends LookControl {
         DragonflyLookControl(Mob entity) {
             super(entity);
         }

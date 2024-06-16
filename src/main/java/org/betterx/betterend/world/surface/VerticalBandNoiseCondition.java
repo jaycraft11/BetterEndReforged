@@ -4,6 +4,7 @@ import org.betterx.bclib.interfaces.NumericProvider;
 import org.betterx.bclib.mixin.common.SurfaceRulesContextAccessor;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
@@ -18,7 +19,7 @@ public class VerticalBandNoiseCondition implements NumericProvider {
             6.0,
             1.3
     );
-    public static final Codec<VerticalBandNoiseCondition> CODEC = RecordCodecBuilder.create(instance -> instance
+    public static final MapCodec<VerticalBandNoiseCondition> CODEC = RecordCodecBuilder.mapCodec(instance -> instance
             .group(
                     ResourceKey.codec(Registries.NOISE).fieldOf("noise").forGetter(o -> o.noise),
                     Codec.DOUBLE.fieldOf("offset_scale").orElse(4.0).forGetter(o -> o.offsetScale),
@@ -62,7 +63,7 @@ public class VerticalBandNoiseCondition implements NumericProvider {
     }
 
     @Override
-    public Codec<? extends NumericProvider> pcodec() {
+    public MapCodec<? extends NumericProvider> pcodec() {
         return CODEC;
     }
 }

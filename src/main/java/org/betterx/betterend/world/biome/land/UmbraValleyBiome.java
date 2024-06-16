@@ -27,7 +27,7 @@ public class UmbraValleyBiome extends EndBiome.Config {
     };
 
     public UmbraValleyBiome() {
-        super("umbra_valley");
+        super();
     }
 
     @Override

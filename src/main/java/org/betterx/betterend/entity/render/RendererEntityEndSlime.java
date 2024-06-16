@@ -160,13 +160,13 @@ public class RendererEntityEndSlime extends MobRenderer<EndSlimeEntity, EndSlime
     }
 
     static {
-        TEXTURE[0] = BetterEnd.makeID("textures/entity/end_slime/end_slime.png");
-        TEXTURE[1] = BetterEnd.makeID("textures/entity/end_slime/end_slime_mossy.png");
-        TEXTURE[2] = BetterEnd.makeID("textures/entity/end_slime/end_slime_lake.png");
-        TEXTURE[3] = BetterEnd.makeID("textures/entity/end_slime/end_slime_amber.png");
-        GLOW[0] = RenderType.eyes(BetterEnd.makeID("textures/entity/end_slime/end_slime_glow.png"));
+        TEXTURE[0] = BetterEnd.C.mk("textures/entity/end_slime/end_slime.png");
+        TEXTURE[1] = BetterEnd.C.mk("textures/entity/end_slime/end_slime_mossy.png");
+        TEXTURE[2] = BetterEnd.C.mk("textures/entity/end_slime/end_slime_lake.png");
+        TEXTURE[3] = BetterEnd.C.mk("textures/entity/end_slime/end_slime_amber.png");
+        GLOW[0] = RenderType.eyes(BetterEnd.C.mk("textures/entity/end_slime/end_slime_glow.png"));
         GLOW[1] = GLOW[0];
-        GLOW[2] = RenderType.eyes(BetterEnd.makeID("textures/entity/end_slime/end_slime_lake_glow.png"));
-        GLOW[3] = RenderType.eyes(BetterEnd.makeID("textures/entity/end_slime/end_slime_amber_glow.png"));
+        GLOW[2] = RenderType.eyes(BetterEnd.C.mk("textures/entity/end_slime/end_slime_lake_glow.png"));
+        GLOW[3] = RenderType.eyes(BetterEnd.C.mk("textures/entity/end_slime/end_slime_amber_glow.png"));
     }
 }

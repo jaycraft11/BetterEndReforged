@@ -27,19 +27,19 @@ import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import net.fabricmc.fabric.api.loot.v2.LootTableEvents;
 
 public class LootTableUtil {
-    public static final ResourceLocation VILLAGE_LOOT = BetterEnd.makeID("chests/end_village_loot");
-    public static final ResourceLocation VILLAGE_TEMPLATE_LOOT = BetterEnd.makeID("chests/end_village_template_loot");
-    public static final ResourceLocation VILLAGE_BONUS_LOOT = BetterEnd.makeID("chests/end_village_bonus_loot");
-    public static final ResourceLocation COMMON = BetterEnd.makeID("chests/common");
-    public static final ResourceLocation FOGGY_MUSHROOMLAND = BetterEnd.makeID("chests/foggy_mushroomland");
-    public static final ResourceLocation CHORUS_FOREST = BetterEnd.makeID("chests/chorus_forest");
-    public static final ResourceLocation SHADOW_FOREST = BetterEnd.makeID("chests/shadow_forest");
-    public static final ResourceLocation LANTERN_WOODS = BetterEnd.makeID("chests/lantern_woods");
-    public static final ResourceLocation UMBRELLA_JUNGLE = BetterEnd.makeID("chests/umbrella_jungle");
-    public static final ResourceLocation BIOME_CHEST = BetterEnd.makeID("chests/biome");
-    public static final ResourceLocation FISHING_FISH = BetterEnd.makeID("gameplay/fishing/fish");
-    public static final ResourceLocation FISHING_TREASURE = BetterEnd.makeID("gameplay/fishing/treasure");
-    public static final ResourceLocation FISHING_JUNK = BetterEnd.makeID("gameplay/fishing/junk");
+    public static final ResourceLocation VILLAGE_LOOT = BetterEnd.C.mk("chests/end_village_loot");
+    public static final ResourceLocation VILLAGE_TEMPLATE_LOOT = BetterEnd.C.mk("chests/end_village_template_loot");
+    public static final ResourceLocation VILLAGE_BONUS_LOOT = BetterEnd.C.mk("chests/end_village_bonus_loot");
+    public static final ResourceLocation COMMON = BetterEnd.C.mk("chests/common");
+    public static final ResourceLocation FOGGY_MUSHROOMLAND = BetterEnd.C.mk("chests/foggy_mushroomland");
+    public static final ResourceLocation CHORUS_FOREST = BetterEnd.C.mk("chests/chorus_forest");
+    public static final ResourceLocation SHADOW_FOREST = BetterEnd.C.mk("chests/shadow_forest");
+    public static final ResourceLocation LANTERN_WOODS = BetterEnd.C.mk("chests/lantern_woods");
+    public static final ResourceLocation UMBRELLA_JUNGLE = BetterEnd.C.mk("chests/umbrella_jungle");
+    public static final ResourceLocation BIOME_CHEST = BetterEnd.C.mk("chests/biome");
+    public static final ResourceLocation FISHING_FISH = BetterEnd.C.mk("gameplay/fishing/fish");
+    public static final ResourceLocation FISHING_TREASURE = BetterEnd.C.mk("gameplay/fishing/treasure");
+    public static final ResourceLocation FISHING_JUNK = BetterEnd.C.mk("gameplay/fishing/junk");
 
 
     public static final LootItemCondition.Builder IN_END

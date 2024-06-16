@@ -1,8 +1,8 @@
 package org.betterx.betterend.blocks;
 
 import org.betterx.bclib.blocks.BaseBlock;
-import org.betterx.bclib.blocks.BlockProperties;
-import org.betterx.bclib.blocks.BlockProperties.TripleShape;
+import org.betterx.wover.block.api.BlockProperties;
+import org.betterx.wover.block.api.BlockProperties.TripleShape;
 import org.betterx.bclib.client.render.BCLRenderLayer;
 import org.betterx.bclib.interfaces.CustomColorProvider;
 import org.betterx.bclib.interfaces.RenderLayerProvider;
@@ -75,7 +75,7 @@ public class RespawnObeliskBlock extends BaseBlock.Stone implements CustomColorP
     @SuppressWarnings("deprecation")
     public boolean canSurvive(BlockState state, LevelReader world, BlockPos pos) {
         for (int i = 0; i < 3; i++) {
-            if (!world.getBlockState(pos.above(i)).canBeReplaced()){
+            if (!world.getBlockState(pos.above(i)).canBeReplaced()) {
                 return false;
             }
         }

@@ -31,10 +31,11 @@ public class BetterEndClient implements ClientModInitializer {
         ClientOptions.init();
         registerTooltips();
 
-        ResourceLocation checkFlowerId = new ResourceLocation("item/chorus_flower");
-        ResourceLocation checkPlantId = new ResourceLocation("item/chorus_plant");
-        ResourceLocation toLoadFlowerId = new ResourceLocation("betterend", "item/custom_chorus_flower");
-        ResourceLocation toLoadPlantId = new ResourceLocation("betterend", "item/custom_chorus_plant");
+        ResourceLocation checkFlowerId = ResourceLocation.withDefaultNamespace("item/chorus_flower");
+        ResourceLocation checkPlantId = ResourceLocation.withDefaultNamespace("item/chorus_plant");
+        ResourceLocation toLoadFlowerId = BetterEnd.C.mk("item/custom_chorus_flower");
+        ResourceLocation toLoadPlantId = BetterEnd.C.mk("item/custom_chorus_plant");
+
         ModelLoadingRegistry.INSTANCE.registerResourceProvider(manager -> (resourceId, context) -> {
             if (GeneratorOptions.changeChorusPlant()) {
                 if (resourceId.equals(checkFlowerId)) {
@@ -49,7 +50,7 @@ public class BetterEndClient implements ClientModInitializer {
         if (ClientOptions.isCustomSky()) {
             DimensionRenderingRegistry.registerSkyRenderer(Level.END, new BetterEndSkyRenderer());
         }
-        if (BetterEnd.RUNS_TRINKETS) {
+        if (BetterEnd.TRINKETS_CORE.isLoaded()) {
             org.betterx.betterend.integration.trinkets.ElytraClient.register();
         }
     }

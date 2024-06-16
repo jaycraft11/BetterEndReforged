@@ -1,7 +1,7 @@
 package org.betterx.betterend.world.features;
 
 import org.betterx.bclib.api.v2.levelgen.features.features.DefaultFeature;
-import org.betterx.bclib.blocks.BlockProperties.TripleShape;
+import org.betterx.wover.block.api.BlockProperties.TripleShape;
 import org.betterx.bclib.util.BlocksHelper;
 import org.betterx.betterend.blocks.EndLotusLeafBlock;
 import org.betterx.betterend.registry.EndBlocks;

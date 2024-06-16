@@ -17,7 +17,7 @@ import net.fabricmc.fabric.api.networking.v1.PacketSender;
 
 public class RitualUpdate extends DataHandler.FromServer {
     public static final DataHandlerDescriptor DESCRIPTOR = new DataHandlerDescriptor(
-            BetterEnd.makeID("ritual_update"),
+            BetterEnd.C.mk("ritual_update"),
             RitualUpdate::new,
             false,
             false

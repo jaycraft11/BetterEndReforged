@@ -11,7 +11,7 @@ import net.minecraft.world.level.block.state.BlockState;
 
 public class LanternWoodsBiome extends EndBiome.Config {
     public LanternWoodsBiome() {
-        super(EndBiomes.LANTERN_WOODS.location());
+        super();
     }
 
     @Override

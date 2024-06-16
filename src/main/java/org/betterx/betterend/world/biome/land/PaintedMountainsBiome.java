@@ -20,7 +20,7 @@ import java.util.List;
 
 public class PaintedMountainsBiome extends EndBiome.Config {
     public PaintedMountainsBiome() {
-        super("painted_mountains");
+        super();
     }
 
     @Override

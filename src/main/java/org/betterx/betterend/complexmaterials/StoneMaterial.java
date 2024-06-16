@@ -9,9 +9,9 @@ import org.betterx.betterend.blocks.basis.StoneLanternBlock;
 import org.betterx.betterend.recipe.CraftingRecipes;
 import org.betterx.betterend.registry.EndBlocks;
 import org.betterx.betterend.registry.EndItems;
-import org.betterx.worlds.together.tag.v3.CommonBlockTags;
-import org.betterx.worlds.together.tag.v3.CommonItemTags;
 import org.betterx.worlds.together.tag.v3.TagManager;
+import org.betterx.wover.tag.api.predefined.CommonBlockTags;
+import org.betterx.wover.tag.api.predefined.CommonItemTags;
 
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
@@ -75,90 +75,90 @@ public class StoneMaterial {
         flowerPot = EndBlocks.registerBlock(name + "_flower_pot", new FlowerPotBlock.Stone(bricks));
 
         // Recipes //
-        BCLRecipeBuilder.crafting(BetterEnd.makeID(name + "_bricks"), bricks)
+        BCLRecipeBuilder.crafting(BetterEnd.C.mk(name + "_bricks"), bricks)
                         .setOutputCount(4)
                         .setShape("##", "##")
                         .addMaterial('#', stone)
                         .setGroup("end_bricks")
                         .build();
-        BCLRecipeBuilder.crafting(BetterEnd.makeID(name + "_polished"), polished)
+        BCLRecipeBuilder.crafting(BetterEnd.C.mk(name + "_polished"), polished)
                         .setOutputCount(4)
                         .setShape("##", "##")
                         .addMaterial('#', bricks)
                         .setGroup("end_tile")
                         .build();
-        BCLRecipeBuilder.crafting(BetterEnd.makeID(name + "_tiles"), tiles)
+        BCLRecipeBuilder.crafting(BetterEnd.C.mk(name + "_tiles"), tiles)
                         .setOutputCount(4)
                         .setShape("##", "##")
                         .addMaterial('#', polished)
                         .setGroup("end_small_tile")
                         .build();
-        BCLRecipeBuilder.crafting(BetterEnd.makeID(name + "_pillar"), pillar)
+        BCLRecipeBuilder.crafting(BetterEnd.C.mk(name + "_pillar"), pillar)
                         .setShape("#", "#")
                         .addMaterial('#', slab)
                         .setGroup("end_pillar")
                         .build();
 
-        BCLRecipeBuilder.crafting(BetterEnd.makeID(name + "_stairs"), stairs)
+        BCLRecipeBuilder.crafting(BetterEnd.C.mk(name + "_stairs"), stairs)
                         .setOutputCount(4)
                         .setShape("#  ", "## ", "###")
                         .addMaterial('#', stone)
                         .setGroup("end_stone_stairs")
                         .build();
-        BCLRecipeBuilder.crafting(BetterEnd.makeID(name + "_slab"), slab)
+        BCLRecipeBuilder.crafting(BetterEnd.C.mk(name + "_slab"), slab)
                         .setOutputCount(6)
                         .setShape("###")
                         .addMaterial('#', stone)
                         .setGroup("end_stone_slabs")
                         .build();
-        BCLRecipeBuilder.crafting(BetterEnd.makeID(name + "_bricks_stairs"), brickStairs)
+        BCLRecipeBuilder.crafting(BetterEnd.C.mk(name + "_bricks_stairs"), brickStairs)
                         .setOutputCount(4)
                         .setShape("#  ", "## ", "###")
                         .addMaterial('#', bricks)
                         .setGroup("end_stone_stairs")
                         .build();
-        BCLRecipeBuilder.crafting(BetterEnd.makeID(name + "_bricks_slab"), brickSlab)
+        BCLRecipeBuilder.crafting(BetterEnd.C.mk(name + "_bricks_slab"), brickSlab)
                         .setOutputCount(6)
                         .setShape("###")
                         .addMaterial('#', bricks)
                         .setGroup("end_stone_slabs")
                         .build();
 
-        BCLRecipeBuilder.crafting(BetterEnd.makeID(name + "_wall"), wall)
+        BCLRecipeBuilder.crafting(BetterEnd.C.mk(name + "_wall"), wall)
                         .setOutputCount(6)
                         .setShape("###", "###")
                         .addMaterial('#', stone)
                         .setGroup("end_wall")
                         .build();
-        BCLRecipeBuilder.crafting(BetterEnd.makeID(name + "_bricks_wall"), brickWall)
+        BCLRecipeBuilder.crafting(BetterEnd.C.mk(name + "_bricks_wall"), brickWall)
                         .setOutputCount(6)
                         .setShape("###", "###")
                         .addMaterial('#', bricks)
                         .setGroup("end_wall")
                         .build();
 
-        BCLRecipeBuilder.crafting(BetterEnd.makeID(name + "_button"), button)
+        BCLRecipeBuilder.crafting(BetterEnd.C.mk(name + "_button"), button)
                         .shapeless()
                         .addMaterial('#', stone)
                         .setGroup("end_stone_buttons")
                         .build();
-        BCLRecipeBuilder.crafting(BetterEnd.makeID(name + "_pressure_plate"), pressurePlate)
+        BCLRecipeBuilder.crafting(BetterEnd.C.mk(name + "_pressure_plate"), pressurePlate)
                         .setShape("##")
                         .addMaterial('#', stone)
                         .setGroup("end_stone_plates")
                         .build();
-        BCLRecipeBuilder.crafting(BetterEnd.makeID(name + "_lantern"), lantern)
+        BCLRecipeBuilder.crafting(BetterEnd.C.mk(name + "_lantern"), lantern)
                         .setShape("S", "#", "S")
                         .addMaterial('#', EndItems.CRYSTAL_SHARDS)
                         .addMaterial('S', slab, brickSlab)
                         .setGroup("end_stone_lanterns")
                         .build();
-        BCLRecipeBuilder.crafting(BetterEnd.makeID(name + "_furnace"), furnace)
+        BCLRecipeBuilder.crafting(BetterEnd.C.mk(name + "_furnace"), furnace)
                         .setShape("###", "# #", "###")
                         .addMaterial('#', stone)
                         .setGroup("end_stone_ITEM_FURNACES")
                         .build();
-        BCLRecipeBuilder.crafting(BetterEnd.makeID(name + "_flower_pot"), flowerPot)
+        BCLRecipeBuilder.crafting(BetterEnd.C.mk(name + "_flower_pot"), flowerPot)
                         .setOutputCount(3)
                         .setShape("# #", " # ")
                         .addMaterial('#', bricks)
@@ -191,7 +191,7 @@ public class StoneMaterial {
     public static void recipesForStoneMaterial(StoneMaterial mat) {
         BCLRecipeBuilder
                 .stonecutting(
-                        BetterEnd.makeID(mat.baseName + "_bricks_stonecutting"),
+                        BetterEnd.C.mk(mat.baseName + "_bricks_stonecutting"),
                         mat.bricks
                 )
                 .setPrimaryInputAndUnlock(mat.stone)
@@ -200,7 +200,7 @@ public class StoneMaterial {
 
         BCLRecipeBuilder
                 .stonecutting(
-                        BetterEnd.makeID(mat.baseName + "_wall_stonecutting"),
+                        BetterEnd.C.mk(mat.baseName + "_wall_stonecutting"),
                         mat.wall
                 )
                 .setPrimaryInputAndUnlock(mat.stone)
@@ -209,7 +209,7 @@ public class StoneMaterial {
 
         BCLRecipeBuilder
                 .stonecutting(
-                        BetterEnd.makeID(mat.baseName + "_slab_stonecutting"),
+                        BetterEnd.C.mk(mat.baseName + "_slab_stonecutting"),
                         mat.slab
                 )
                 .setPrimaryInputAndUnlock(mat.stone)
@@ -218,7 +218,7 @@ public class StoneMaterial {
 
         BCLRecipeBuilder
                 .stonecutting(
-                        BetterEnd.makeID(mat.baseName + "_stairs_stonecutting"),
+                        BetterEnd.C.mk(mat.baseName + "_stairs_stonecutting"),
                         mat.stairs
                 )
                 .setPrimaryInputAndUnlock(mat.stone)
@@ -227,7 +227,7 @@ public class StoneMaterial {
 
         BCLRecipeBuilder
                 .stonecutting(
-                        BetterEnd.makeID(mat.baseName + "_tiles_stonecutting"),
+                        BetterEnd.C.mk(mat.baseName + "_tiles_stonecutting"),
                         mat.tiles
                 )
                 .setPrimaryInputAndUnlock(mat.stone)
@@ -236,7 +236,7 @@ public class StoneMaterial {
 
         BCLRecipeBuilder
                 .stonecutting(
-                        BetterEnd.makeID(mat.baseName + "_brick_slab_stonecutting"),
+                        BetterEnd.C.mk(mat.baseName + "_brick_slab_stonecutting"),
                         mat.brickSlab
                 )
                 .setOutputCount(2)
@@ -246,7 +246,7 @@ public class StoneMaterial {
 
         BCLRecipeBuilder
                 .stonecutting(
-                        BetterEnd.makeID(mat.baseName + "_brick_stair_stonecutting"),
+                        BetterEnd.C.mk(mat.baseName + "_brick_stair_stonecutting"),
                         mat.brickStairs
                 )
                 .setPrimaryInputAndUnlock(mat.stone)
@@ -255,7 +255,7 @@ public class StoneMaterial {
 
         BCLRecipeBuilder
                 .stonecutting(
-                        BetterEnd.makeID(mat.baseName + "_brick_wall_stonecutting"),
+                        BetterEnd.C.mk(mat.baseName + "_brick_wall_stonecutting"),
                         mat.brickWall
                 )
                 .setPrimaryInputAndUnlock(mat.stone)
@@ -264,7 +264,7 @@ public class StoneMaterial {
 
         BCLRecipeBuilder
                 .stonecutting(
-                        BetterEnd.makeID(mat.baseName + "_pillar_stonecutting"),
+                        BetterEnd.C.mk(mat.baseName + "_pillar_stonecutting"),
                         mat.pillar
                 )
                 .setPrimaryInputAndUnlock(mat.stone)
@@ -273,7 +273,7 @@ public class StoneMaterial {
 
         BCLRecipeBuilder
                 .stonecutting(
-                        BetterEnd.makeID(mat.baseName + "_polished_stonecutting"),
+                        BetterEnd.C.mk(mat.baseName + "_polished_stonecutting"),
                         mat.polished
                 )
                 .setPrimaryInputAndUnlock(mat.stone)
@@ -282,7 +282,7 @@ public class StoneMaterial {
 
         BCLRecipeBuilder
                 .stonecutting(
-                        BetterEnd.makeID(mat.baseName + "_brick_slabs_from_" + mat.baseName + "_brick_stonecutting"),
+                        BetterEnd.C.mk(mat.baseName + "_brick_slabs_from_" + mat.baseName + "_brick_stonecutting"),
                         mat.brickSlab
                 )
                 .setOutputCount(2)
@@ -292,7 +292,7 @@ public class StoneMaterial {
 
         BCLRecipeBuilder
                 .stonecutting(
-                        BetterEnd.makeID(mat.baseName + "_brick_stair_from_" + mat.baseName + "_brick_stonecutting"),
+                        BetterEnd.C.mk(mat.baseName + "_brick_stair_from_" + mat.baseName + "_brick_stonecutting"),
                         mat.brickStairs
                 )
                 .setPrimaryInputAndUnlock(mat.bricks)
@@ -301,7 +301,7 @@ public class StoneMaterial {
 
         BCLRecipeBuilder
                 .stonecutting(
-                        BetterEnd.makeID(mat.baseName + "_brick_wall_from_" + mat.baseName + "_brick_stonecutting"),
+                        BetterEnd.C.mk(mat.baseName + "_brick_wall_from_" + mat.baseName + "_brick_stonecutting"),
                         mat.brickWall
                 )
                 .setPrimaryInputAndUnlock(mat.bricks)

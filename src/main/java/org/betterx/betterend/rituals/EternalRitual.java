@@ -1,7 +1,7 @@
 package org.betterx.betterend.rituals;
 
 import org.betterx.bclib.api.v2.dataexchange.DataExchangeAPI;
-import org.betterx.bclib.blocks.BlockProperties;
+import org.betterx.wover.block.api.BlockProperties;
 import org.betterx.betterend.BetterEnd;
 import org.betterx.betterend.advancements.BECriteria;
 import org.betterx.betterend.blocks.EndPortalBlock;

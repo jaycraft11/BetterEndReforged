@@ -11,7 +11,7 @@ import net.minecraft.world.level.block.state.BlockState;
 
 public class UmbrellaJungleBiome extends EndBiome.Config {
     public UmbrellaJungleBiome() {
-        super(EndBiomes.UMBRELLA_JUNGLE.location());
+        super();
     }
 
     @Override

@@ -13,7 +13,7 @@ import org.joml.Matrix3f;
 import org.joml.Matrix4f;
 
 public class BeamRenderer {
-    private static final ResourceLocation BEAM_TEXTURE = new ResourceLocation("textures/entity/end_gateway_beam.png");
+    private static final ResourceLocation BEAM_TEXTURE = ResourceLocation.withDefaultNamespace("textures/entity/end_gateway_beam.png");
 
     public static void renderLightBeam(
             PoseStack matrices,

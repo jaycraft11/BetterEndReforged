@@ -11,7 +11,7 @@ import net.minecraft.world.level.block.state.BlockState;
 
 public class FoggyMushroomlandBiome extends EndBiome.Config {
     public FoggyMushroomlandBiome() {
-        super(EndBiomes.FOGGY_MUSHROOMLAND.location());
+        super();
     }
 
     @Override

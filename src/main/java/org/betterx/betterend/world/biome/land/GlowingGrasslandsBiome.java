@@ -11,7 +11,7 @@ import net.minecraft.world.level.block.state.BlockState;
 
 public class GlowingGrasslandsBiome extends EndBiome.Config {
     public GlowingGrasslandsBiome() {
-        super(EndBiomes.GLOWING_GRASSLANDS.location());
+        super();
     }
 
     @Override

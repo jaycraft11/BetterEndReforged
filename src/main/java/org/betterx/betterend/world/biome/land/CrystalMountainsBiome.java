@@ -20,7 +20,7 @@ import java.util.List;
 
 public class CrystalMountainsBiome extends EndBiome.Config {
     public CrystalMountainsBiome() {
-        super("crystal_mountains");
+        super();
     }
 
     @Override

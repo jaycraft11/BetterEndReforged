@@ -5,8 +5,11 @@ import org.betterx.betterend.BetterEnd;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.item.JukeboxSong;
 
 public class EndSounds {
     // Music
@@ -37,16 +40,25 @@ public class EndSounds {
     public static final Holder<SoundEvent> ENTITY_SHADOW_WALKER_DEATH = register("entity", "shadow_walker_death");
 
     // Records
-    public static final Holder<SoundEvent> RECORD_STRANGE_AND_ALIEN = register("record", "strange_and_alien");
-    public static final Holder<SoundEvent> RECORD_GRASPING_AT_STARS = register("record", "grasping_at_stars");
-    public static final Holder<SoundEvent> RECORD_ENDSEEKER = register("record", "endseeker");
-    public static final Holder<SoundEvent> RECORD_EO_DRACONA = register("record", "eo_dracona");
+    public static final Holder.Reference<SoundEvent> RECORD_STRANGE_AND_ALIEN_SOUND = register("record", "strange_and_alien");
+    public static final Holder.Reference<SoundEvent> RECORD_GRASPING_AT_STARS_SOUND = register("record", "grasping_at_stars");
+    public static final Holder.Reference<SoundEvent> RECORD_ENDSEEKER_SOUND = register("record", "endseeker");
+    public static final Holder.Reference<SoundEvent> RECORD_EO_DRACONA_SOUND = register("record", "eo_dracona");
+
+    public static final ResourceKey<JukeboxSong> RECORD_STRANGE_AND_ALIEN = createSongKey("strange_and_alien");
+    public static final ResourceKey<JukeboxSong> RECORD_GRASPING_AT_STARS = createSongKey("grasping_at_stars");
+    public static final ResourceKey<JukeboxSong> RECORD_ENDSEEKER = createSongKey("endseeker");
+    public static final ResourceKey<JukeboxSong> RECORD_EO_DRACONA = createSongKey("eo_dracona");
 
     public static void register() {
     }
 
-    private static Holder<SoundEvent> register(String type, String id) {
-        ResourceLocation loc = BetterEnd.makeID("betterend." + type + "." + id);
+    private static ResourceKey<JukeboxSong> createSongKey(String string) {
+        return ResourceKey.create(Registries.JUKEBOX_SONG, BetterEnd.C.mk(string));
+    }
+
+    private static Holder.Reference<SoundEvent> register(String type, String id) {
+        ResourceLocation loc = BetterEnd.C.mk("betterend." + type + "." + id);
         return Registry.registerForHolder(
                 BuiltInRegistries.SOUND_EVENT,
                 loc, SoundEvent.createVariableRangeEvent(loc)

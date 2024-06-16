@@ -1,7 +1,7 @@
 package org.betterx.betterend.blocks.basis;
 
 import org.betterx.bclib.blocks.BaseBlockNotFull;
-import org.betterx.bclib.blocks.BlockProperties;
+import org.betterx.wover.block.api.BlockProperties;
 import org.betterx.bclib.client.models.ModelsHelper;
 import org.betterx.bclib.interfaces.TagProvider;
 import org.betterx.betterend.blocks.EndBlockProperties;

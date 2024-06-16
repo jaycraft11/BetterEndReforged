@@ -2,9 +2,9 @@ package org.betterx.betterend.blocks;
 
 import org.betterx.bclib.client.models.ModelsHelper;
 import org.betterx.bclib.client.render.BCLRenderLayer;
-import org.betterx.bclib.interfaces.BlockModelProvider;
 import org.betterx.bclib.interfaces.CustomColorProvider;
 import org.betterx.bclib.interfaces.RenderLayerProvider;
+import org.betterx.bclib.interfaces.RuntimeBlockModelProvider;
 import org.betterx.bclib.util.MHelper;
 import org.betterx.betterend.client.models.Patterns;
 import org.betterx.betterend.noise.OpenSimplexNoise;
@@ -36,7 +36,7 @@ import java.util.List;
 import java.util.Optional;
 import org.jetbrains.annotations.Nullable;
 
-public class JellyshroomCapBlock extends SlimeBlock implements RenderLayerProvider, BlockModelProvider, CustomColorProvider {
+public class JellyshroomCapBlock extends SlimeBlock implements RenderLayerProvider, RuntimeBlockModelProvider, CustomColorProvider {
     public static final IntegerProperty COLOR = EndBlockProperties.COLOR;
     private static final OpenSimplexNoise NOISE = new OpenSimplexNoise(0);
     private final Vec3i colorStart;

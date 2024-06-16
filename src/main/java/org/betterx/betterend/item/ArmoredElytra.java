@@ -39,7 +39,7 @@ public class ArmoredElytra extends BaseArmorItem implements MultiModelItem, Bett
                         .rarity(Rarity.EPIC)
                         .fireResistant() : EndItems.makeEndItemSettings().durability(durability).rarity(Rarity.EPIC)
         );
-        this.wingTexture = BetterEnd.makeID("textures/entity/" + name + ".png");
+        this.wingTexture = BetterEnd.C.mk("textures/entity/" + name + ".png");
         this.repairItem = repairItem;
         this.movementFactor = movementFactor;
         this.defense = (int) ((double) material.getDefenseForType(Type.CHESTPLATE) / 1.15);
@@ -95,7 +95,7 @@ public class ArmoredElytra extends BaseArmorItem implements MultiModelItem, Bett
     public void registerModelPredicate() {
         ItemProperties.register(
                 this,
-                new ResourceLocation("broken"),
+                ResourceLocation.withDefaultNamespace("broken"),
                 (itemStack, clientLevel, livingEntity, id) -> ElytraItem.isFlyEnabled(itemStack) ? 0.0F : 1.0F
         );
     }

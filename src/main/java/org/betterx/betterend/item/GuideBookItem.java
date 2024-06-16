@@ -1,13 +1,11 @@
 package org.betterx.betterend.item;
 
 import org.betterx.bclib.items.ModelProviderItem;
-import org.betterx.betterend.BetterEnd;
 import org.betterx.betterend.registry.EndItems;
 import org.betterx.betterend.util.LangUtil;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
@@ -19,8 +17,7 @@ import net.minecraft.world.level.Level;
 import java.util.List;
 
 public class GuideBookItem extends ModelProviderItem {
-    public final static ResourceLocation BOOK_ID = BetterEnd.makeID("guidebook");
-    public static final Item GUIDE_BOOK = EndItems.getItemRegistry().register(BOOK_ID, new GuideBookItem());
+    public static final Item GUIDE_BOOK = EndItems.getItemRegistry().register("guidebook", new GuideBookItem());
 
     public static void register() {
     }
@@ -40,8 +37,13 @@ public class GuideBookItem extends ModelProviderItem {
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, Level world, List<Component> tooltip, TooltipFlag context) {
-        tooltip.add(LangUtil.getText("book.betterend", "subtitle")
-                            .withStyle(ChatFormatting.DARK_PURPLE, ChatFormatting.ITALIC));
+    public void appendHoverText(
+            ItemStack itemStack,
+            TooltipContext tooltipContext,
+            List<Component> list,
+            TooltipFlag tooltipFlag
+    ) {
+        list.add(LangUtil.getText("book.betterend", "subtitle")
+                         .withStyle(ChatFormatting.DARK_PURPLE, ChatFormatting.ITALIC));
     }
 }

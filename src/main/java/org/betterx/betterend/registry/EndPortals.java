@@ -107,8 +107,8 @@ public class EndPortals {
 
     private static PortalInfo makeDefault() {
         return new PortalInfo(
-                new ResourceLocation("minecraft:overworld"),
-                BetterEnd.makeID("eternal_crystal"),
+                ResourceLocation.withDefaultNamespace("overworld"),
+                BetterEnd.C.mk("eternal_crystal"),
                 255,
                 255,
                 255
@@ -123,8 +123,8 @@ public class EndPortals {
 
         PortalInfo(JsonObject obj) {
             this(
-                    new ResourceLocation(JsonFactory.getString(obj, "dimension", "minecraft:overworld")),
-                    new ResourceLocation(JsonFactory.getString(obj, "item", "betterend:eternal_crystal")),
+                    ResourceLocation.parse(JsonFactory.getString(obj, "dimension", "minecraft:overworld")),
+                    ResourceLocation.parse(JsonFactory.getString(obj, "item", "betterend:eternal_crystal")),
                     JsonFactory.getInt(obj, "colorRed", 255),
                     JsonFactory.getInt(obj, "colorGreen", 255),
                     JsonFactory.getInt(obj, "colorBlue", 255)

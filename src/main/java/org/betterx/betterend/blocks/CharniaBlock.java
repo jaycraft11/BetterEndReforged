@@ -6,13 +6,12 @@ import org.betterx.bclib.interfaces.SurvivesOnSpecialGround;
 import org.betterx.betterend.blocks.basis.EndUnderwaterPlantBlock;
 
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.List;
-import org.jetbrains.annotations.Nullable;
 
 public class CharniaBlock extends EndUnderwaterPlantBlock implements BehaviourWaterPlant {
     public CharniaBlock() {
@@ -24,11 +23,11 @@ public class CharniaBlock extends EndUnderwaterPlantBlock implements BehaviourWa
     @Override
     public void appendHoverText(
             ItemStack itemStack,
-            @Nullable BlockGetter blockGetter,
+            Item.TooltipContext tooltipContext,
             List<Component> list,
             TooltipFlag tooltipFlag
     ) {
-        super.appendHoverText(itemStack, blockGetter, list, tooltipFlag);
+        super.appendHoverText(itemStack, tooltipContext, list, tooltipFlag);
         SurvivesOnSpecialGround.appendHoverTextUnderwater(list);
     }
 

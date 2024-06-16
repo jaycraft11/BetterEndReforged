@@ -41,14 +41,14 @@ public class ColoredMaterial {
             Block block = constructor.apply(FabricBlockSettings.copyOf(source).mapColor(MapColor.COLOR_BLACK));
             EndBlocks.registerBlock(blockName, block);
             if (craftEight) {
-                BCLRecipeBuilder.crafting(BetterEnd.makeID(blockName), block)
+                BCLRecipeBuilder.crafting(BetterEnd.C.mk(blockName), block)
                                 .setOutputCount(8)
                                 .setShape("###", "#D#", "###")
                                 .addMaterial('#', source)
                                 .addMaterial('D', dyes.get(color))
                                 .build();
             } else {
-                BCLRecipeBuilder.crafting(BetterEnd.makeID(blockName), block)
+                BCLRecipeBuilder.crafting(BetterEnd.C.mk(blockName), block)
                                 .setList("#D")
                                 .addMaterial('#', source)
                                 .addMaterial('D', dyes.get(color))

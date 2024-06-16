@@ -417,7 +417,7 @@ public class FlowerPotBlock extends BaseBlockNotFull implements RenderLayerProvi
                 continue;
             }
 
-            ResourceLocation soilLoc = BetterEnd.makeID("flower_pot_soil_" + i);
+            ResourceLocation soilLoc = BetterEnd.C.mk("flower_pot_soil_" + i);
             if (!modelCache.containsKey(soilLoc)) {
                 String texture = BuiltInRegistries.BLOCK.getKey(soils[i]).getPath() + "_top";
                 if (texture.contains("rutiscus")) {

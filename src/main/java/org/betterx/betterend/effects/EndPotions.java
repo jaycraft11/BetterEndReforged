@@ -22,7 +22,7 @@ public class EndPotions {
     }
 
     public static Potion registerPotion(String name, Potion potion) {
-        return Registry.register(BuiltInRegistries.POTION, BetterEnd.makeID(name), potion);
+        return Registry.register(BuiltInRegistries.POTION, BetterEnd.C.mk(name), potion);
     }
 
     public static void register() {

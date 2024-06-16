@@ -4,8 +4,8 @@ import org.betterx.bclib.client.models.ModelsHelper;
 import org.betterx.bclib.interfaces.ItemModelProvider;
 import org.betterx.bclib.interfaces.TagProvider;
 import org.betterx.bclib.util.MHelper;
-import org.betterx.worlds.together.tag.v3.CommonBlockTags;
-import org.betterx.worlds.together.tag.v3.CommonItemTags;
+import org.betterx.wover.tag.api.predefined.CommonBlockTags;
+import org.betterx.wover.tag.api.predefined.CommonItemTags;
 
 import net.minecraft.client.renderer.block.model.BlockModel;
 import net.minecraft.core.BlockPos;

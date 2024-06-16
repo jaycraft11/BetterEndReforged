@@ -6,15 +6,15 @@ import org.betterx.bclib.util.MHelper;
 import org.betterx.betterend.noise.OpenSimplexNoise;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 
 /**
  * Noise source that returns a value in [0, 3]
  */
 public class SulphuricSurfaceNoiseCondition implements NumericProvider {
     public static final SulphuricSurfaceNoiseCondition DEFAULT = new SulphuricSurfaceNoiseCondition();
-    public static final Codec<SulphuricSurfaceNoiseCondition> CODEC = Codec.BYTE.fieldOf("sulphuric_surf")
-                                                                                .xmap((obj) -> DEFAULT, obj -> (byte) 0)
-                                                                                .codec();
+    public static final MapCodec<SulphuricSurfaceNoiseCondition> CODEC = Codec.BYTE.fieldOf("sulphuric_surf")
+                                                                                   .xmap((obj) -> DEFAULT, obj -> (byte) 0);
 
     private static final OpenSimplexNoise NOISE = new OpenSimplexNoise(5123);
 
@@ -37,7 +37,7 @@ public class SulphuricSurfaceNoiseCondition implements NumericProvider {
     }
 
     @Override
-    public Codec<? extends NumericProvider> pcodec() {
+    public MapCodec<? extends NumericProvider> pcodec() {
         return CODEC;
     }
 

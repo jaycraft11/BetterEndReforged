@@ -25,7 +25,7 @@ public class CrystaliteElytra extends CrystaliteArmor implements MultiModelItem,
 
     public CrystaliteElytra(int durability, double movementFactor) {
         super(Type.CHESTPLATE, EndItems.makeEndItemSettings().durability(durability).rarity(Rarity.EPIC));
-        this.wingTexture = BetterEnd.makeID("textures/entity/elytra_crystalite.png");
+        this.wingTexture = BetterEnd.C.mk("textures/entity/elytra_crystalite.png");
         this.movementFactor = movementFactor;
         this.defense = (int) ((double) material.getDefenseForType(Type.CHESTPLATE) / 1.25);
         this.toughness = material.getToughness() / 1.25F;
@@ -79,7 +79,7 @@ public class CrystaliteElytra extends CrystaliteArmor implements MultiModelItem,
     public void registerModelPredicate() {
         ItemProperties.register(
                 this,
-                new ResourceLocation("broken"),
+                ResourceLocation.withDefaultNamespace("broken"),
                 (itemStack, clientLevel, livingEntity, i) -> ElytraItem.isFlyEnabled(itemStack) ? 0.0F : 1.0F
         );
     }

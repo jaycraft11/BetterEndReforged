@@ -26,11 +26,11 @@ public class BetterEndSkyRenderer implements DimensionRenderingRegistry.SkyRende
         void make(BufferBuilder bufferBuilder, double minSize, double maxSize, int count, long seed);
     }
 
-    private static final ResourceLocation NEBULA_1 = BetterEnd.makeID("textures/sky/nebula_2.png");
-    private static final ResourceLocation NEBULA_2 = BetterEnd.makeID("textures/sky/nebula_3.png");
-    private static final ResourceLocation HORIZON = BetterEnd.makeID("textures/sky/nebula_1.png");
-    private static final ResourceLocation STARS = BetterEnd.makeID("textures/sky/stars.png");
-    private static final ResourceLocation FOG = BetterEnd.makeID("textures/sky/fog.png");
+    private static final ResourceLocation NEBULA_1 = BetterEnd.C.mk("textures/sky/nebula_2.png");
+    private static final ResourceLocation NEBULA_2 = BetterEnd.C.mk("textures/sky/nebula_3.png");
+    private static final ResourceLocation HORIZON = BetterEnd.C.mk("textures/sky/nebula_1.png");
+    private static final ResourceLocation STARS = BetterEnd.C.mk("textures/sky/stars.png");
+    private static final ResourceLocation FOG = BetterEnd.C.mk("textures/sky/fog.png");
 
     private VertexBuffer nebula1;
     private VertexBuffer nebula2;

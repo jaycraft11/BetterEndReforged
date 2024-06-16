@@ -39,7 +39,7 @@ public class EndBlockEntities {
             String id,
             FabricBlockEntityTypeBuilder<T> builder
     ) {
-        return Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, BetterEnd.makeID(id), builder.build(null));
+        return Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, BetterEnd.C.mk(id), builder.build(null));
 
         //return Registry.register(Registry.BLOCK_ENTITY_TYPE, BetterEnd.makeID(id), builder.build(null));
     }

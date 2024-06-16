@@ -4,21 +4,19 @@ import org.betterx.bclib.behaviours.interfaces.BehaviourIce;
 import org.betterx.bclib.blocks.BaseBlock;
 import org.betterx.bclib.client.render.BCLRenderLayer;
 import org.betterx.bclib.interfaces.RenderLayerProvider;
+import org.betterx.wover.loot.api.BlockLootProvider;
+import org.betterx.wover.loot.api.LootLookupProvider;
 
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.storage.loot.LootParams;
-import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
+import net.minecraft.world.level.storage.loot.LootTable;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 
-import java.util.Collections;
-import java.util.List;
+import org.jetbrains.annotations.NotNull;
 
-public class DenseEmeraldIceBlock extends BaseBlock implements RenderLayerProvider, BehaviourIce {
+public class DenseEmeraldIceBlock extends BaseBlock implements RenderLayerProvider, BehaviourIce, BlockLootProvider {
     public DenseEmeraldIceBlock() {
         super(FabricBlockSettings.copyOf(Blocks.PACKED_ICE));
     }
@@ -29,12 +27,11 @@ public class DenseEmeraldIceBlock extends BaseBlock implements RenderLayerProvid
     }
 
     @Override
-    public List<ItemStack> getDrops(BlockState state, LootParams.Builder builder) {
-        ItemStack tool = builder.getOptionalParameter(LootContextParams.TOOL);
-        if (tool != null && EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, tool) != 0) {
-            return Collections.singletonList(new ItemStack(this));
-        } else {
-            return Collections.emptyList();
-        }
+    public LootTable.Builder registerBlockLoot(
+            @NotNull ResourceLocation location,
+            @NotNull LootLookupProvider provider,
+            @NotNull ResourceKey<LootTable> tableKey
+    ) {
+        return provider.dropWithSilkTouch(this);
     }
 }

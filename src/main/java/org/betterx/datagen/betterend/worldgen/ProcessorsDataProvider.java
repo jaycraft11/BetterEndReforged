@@ -6,7 +6,7 @@ import org.betterx.bclib.complexmaterials.set.wood.WoodSlots;
 import org.betterx.betterend.registry.EndBlocks;
 import org.betterx.betterend.registry.EndProcessors;
 
-import net.minecraft.data.worldgen.BootstapContext;
+import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.structure.templatesystem.*;
 
@@ -14,7 +14,7 @@ import com.google.common.collect.ImmutableList;
 
 public class ProcessorsDataProvider {
 
-    public static void bootstrap(BootstapContext<StructureProcessorList> bootstapContext) {
+    public static void bootstrap(BootstrapContext<StructureProcessorList> bootstapContext) {
         ProcessorHelper.register(
                 bootstapContext,
                 EndProcessors.CRYING_10_PERCENT,

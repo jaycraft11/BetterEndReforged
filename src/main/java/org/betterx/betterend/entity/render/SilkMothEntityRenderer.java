@@ -10,7 +10,7 @@ import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
 
 public class SilkMothEntityRenderer extends MobRenderer<SilkMothEntity, SilkMothEntityModel> {
-    private static final ResourceLocation TEXTURE = BetterEnd.makeID("textures/entity/silk_moth.png");
+    private static final ResourceLocation TEXTURE = BetterEnd.C.mk("textures/entity/silk_moth.png");
 
     public SilkMothEntityRenderer(EntityRendererProvider.Context ctx) {
         super(ctx, new SilkMothEntityModel(ctx.bakeLayer(EndEntitiesRenders.SILK_MOTH_MODEL)), 0.5f);

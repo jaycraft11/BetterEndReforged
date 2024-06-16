@@ -2,7 +2,7 @@ package org.betterx.betterend.world.features.terrain;
 
 import org.betterx.bclib.blocks.StalactiteBlock;
 import org.betterx.bclib.util.BlocksHelper;
-import org.betterx.worlds.together.tag.v3.CommonBlockTags;
+import org.betterx.wover.tag.api.predefined.CommonBlockTags;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
@@ -38,7 +38,7 @@ public class StalactiteFeature extends Feature<StalactiteFeatureConfig> {
         for (int i = 1; i <= height; i++) {
             mut.setY(pos.getY() + i * dir);
             BlockState state = world.getBlockState(mut);
-            if (!state.canBeReplaced()){
+            if (!state.canBeReplaced()) {
                 stalagnate = state.is(CommonBlockTags.GEN_END_STONES);
                 height = i;
                 break;

@@ -86,3 +86,9 @@ package org.betterx.betterend.integration.trinkets;
 //}
 
 
+public class Elytra {
+    public static void register() {
+    }
+}
+
+

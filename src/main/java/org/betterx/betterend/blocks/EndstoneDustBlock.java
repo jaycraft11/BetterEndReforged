@@ -3,7 +3,7 @@ package org.betterx.betterend.blocks;
 import org.betterx.bclib.behaviours.interfaces.BehaviourSand;
 import org.betterx.bclib.interfaces.TagProvider;
 import org.betterx.ui.ColorUtil;
-import org.betterx.worlds.together.tag.v3.CommonBlockTags;
+import org.betterx.wover.tag.api.predefined.CommonBlockTags;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.tags.TagKey;

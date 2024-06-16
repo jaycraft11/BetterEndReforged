@@ -11,13 +11,13 @@ import java.util.Set;
 
 public class EndPoiTypes {
     public static final BCLPoiType ETERNAL_PORTAL = PoiManager.register(
-            BetterEnd.makeID("eternal_portal"),
+            BetterEnd.C.mk("eternal_portal"),
             ImmutableSet.copyOf(EndBlocks.END_PORTAL_BLOCK.getStateDefinition().getPossibleStates()),
             0, 1
     );
 
     public static final BCLPoiType ETERNAL_PORTAL_FRAME = PoiManager.register(
-            BetterEnd.makeID("eternal_portal_frame"),
+            BetterEnd.C.mk("eternal_portal_frame"),
             Set.of(
                     EndBlocks.FLAVOLITE_RUNED_ETERNAL.defaultBlockState().setValue(RunedFlavolite.ACTIVATED, false)
             ),

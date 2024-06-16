@@ -45,11 +45,11 @@ public class EndParticles {
     }
 
     private static SimpleParticleType register(String name) {
-        return BCLParticleType.register(BetterEnd.makeID(name));
+        return BCLParticleType.register(BetterEnd.C.mk(name));
     }
 
     private static SimpleParticleType registerFar(String name) {
-        return BCLParticleType.register(BetterEnd.makeID(name), true);
+        return BCLParticleType.register(BetterEnd.C.mk(name), true);
     }
 
     private static <T extends ParticleOptions> ParticleType<T> register(
@@ -57,7 +57,7 @@ public class EndParticles {
             ParticleOptions.Deserializer<T> type,
             Codec<T> codec
     ) {
-        return BCLParticleType.register(BetterEnd.makeID(name), type, codec);
+        return BCLParticleType.register(BetterEnd.C.mk(name), type, codec);
     }
 
     public static void ensureStaticallyLoadedServerside() {

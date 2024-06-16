@@ -5,7 +5,7 @@ import org.betterx.betterend.integration.EndBiomeIntegration;
 import org.betterx.betterend.integration.Integrations;
 import org.betterx.betterend.integration.byg.biomes.BYGBiomes;
 import org.betterx.betterend.integration.byg.features.BYGFeatures;
-import org.betterx.worlds.together.tag.v3.CommonBlockTags;
+import org.betterx.wover.tag.api.predefined.CommonBlockTags;
 import org.betterx.worlds.together.tag.v3.TagManager;
 
 import net.minecraft.world.level.block.Block;

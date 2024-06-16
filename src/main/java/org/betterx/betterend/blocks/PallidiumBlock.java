@@ -4,11 +4,9 @@ import org.betterx.bclib.util.BlocksHelper;
 import org.betterx.betterend.blocks.basis.EndTerrainBlock;
 import org.betterx.betterend.registry.EndBlocks;
 
-import net.minecraft.client.resources.model.UnbakedModel;
 import net.minecraft.core.BlockPos;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -17,11 +15,6 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.BlockHitResult;
-
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
-
-import java.util.Map;
 
 public class PallidiumBlock extends EndTerrainBlock {
     private final Block nextLevel;
@@ -40,8 +33,10 @@ public class PallidiumBlock extends EndTerrainBlock {
         return EndBlocks.UMBRALITH.stone;
     }
 
+
     @Override
-    public InteractionResult use(
+    public ItemInteractionResult useItemOn(
+            ItemStack itemStack,
             BlockState state,
             Level level,
             BlockPos pos,
@@ -50,29 +45,18 @@ public class PallidiumBlock extends EndTerrainBlock {
             BlockHitResult hit
     ) {
         if (nextLevel == null) {
-            return InteractionResult.PASS;
+            return ItemInteractionResult.SKIP_DEFAULT_BLOCK_INTERACTION;
         } else if (level.isClientSide) {
-            return InteractionResult.PASS;
+            return ItemInteractionResult.SKIP_DEFAULT_BLOCK_INTERACTION;
         }
 
-        ItemStack itemStack = player.getItemInHand(hand);
         if (itemStack.is(Items.BONE_MEAL)) {
             BlocksHelper.setWithUpdate(level, pos, nextLevel);
             if (!player.isCreative()) {
                 itemStack.shrink(1);
             }
-            return InteractionResult.SUCCESS;
+            return ItemInteractionResult.SUCCESS;
         }
-        return InteractionResult.PASS;
-    }
-
-    @Override
-    @Environment(EnvType.CLIENT)
-    public UnbakedModel getModelVariant(
-            ResourceLocation stateId,
-            BlockState blockState,
-            Map<ResourceLocation, UnbakedModel> modelCache
-    ) {
-        return this.getBlockModel(stateId, blockState);
+        return ItemInteractionResult.SKIP_DEFAULT_BLOCK_INTERACTION;
     }
 }

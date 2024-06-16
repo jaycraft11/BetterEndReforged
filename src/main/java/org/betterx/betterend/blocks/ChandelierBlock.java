@@ -3,8 +3,8 @@ package org.betterx.betterend.blocks;
 import org.betterx.bclib.blocks.BaseAttachedBlock;
 import org.betterx.bclib.client.models.ModelsHelper;
 import org.betterx.bclib.client.render.BCLRenderLayer;
-import org.betterx.bclib.interfaces.BlockModelProvider;
 import org.betterx.bclib.interfaces.RenderLayerProvider;
+import org.betterx.bclib.interfaces.RuntimeBlockModelProvider;
 import org.betterx.betterend.client.models.Patterns;
 
 import net.minecraft.client.renderer.block.model.BlockModel;
@@ -31,7 +31,7 @@ import java.util.Map;
 import java.util.Optional;
 import org.jetbrains.annotations.Nullable;
 
-public class ChandelierBlock extends BaseAttachedBlock.Metal implements RenderLayerProvider, BlockModelProvider {
+public class ChandelierBlock extends BaseAttachedBlock.Metal implements RenderLayerProvider, RuntimeBlockModelProvider {
     private static final EnumMap<Direction, VoxelShape> BOUNDING_SHAPES = Maps.newEnumMap(Direction.class);
 
     public ChandelierBlock(Block source) {

@@ -68,6 +68,6 @@ public class EndEntitiesRenders {
     }
 
     private static ModelLayerLocation registerMain(String id) {
-        return new ModelLayerLocation(BetterEnd.makeID(id), "main");
+        return new ModelLayerLocation(BetterEnd.C.mk(id), "main");
     }
 }

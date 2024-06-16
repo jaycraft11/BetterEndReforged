@@ -14,7 +14,7 @@ public class EndAttributes {
     public static Attribute registerAttribute(String name, double value, boolean syncable) {
         return Registry.register(
                 BuiltInRegistries.ATTRIBUTE,
-                BetterEnd.makeID(name),
+                BetterEnd.C.mk(name),
                 new EndAttribute("attribute.name." + name, value).setSyncable(syncable)
         );
     }

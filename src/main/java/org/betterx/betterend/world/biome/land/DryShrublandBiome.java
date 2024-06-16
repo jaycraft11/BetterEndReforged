@@ -14,7 +14,7 @@ import net.minecraft.world.level.block.state.BlockState;
 
 public class DryShrublandBiome extends EndBiome.Config {
     public DryShrublandBiome() {
-        super("dry_shrubland");
+        super();
     }
 
     @Override

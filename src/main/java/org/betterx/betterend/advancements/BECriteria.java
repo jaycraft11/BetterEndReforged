@@ -17,9 +17,9 @@ public class BECriteria {
 
 
     public static void register() {
-        PORTAL_ON = CriteriaTriggers.register(new PlayerTrigger(BetterEnd.makeID("portal_on")));
-        PORTAL_TRAVEL = CriteriaTriggers.register(new PlayerTrigger(BetterEnd.makeID("portal_travel")));
-        INFUSION_FINISHED = CriteriaTriggers.register(new PlayerTrigger(BetterEnd.makeID("infusion_finished")));
+        PORTAL_ON = CriteriaTriggers.register(new PlayerTrigger(BetterEnd.C.mk("portal_on")));
+        PORTAL_TRAVEL = CriteriaTriggers.register(new PlayerTrigger(BetterEnd.C.mk("portal_travel")));
+        INFUSION_FINISHED = CriteriaTriggers.register(new PlayerTrigger(BetterEnd.C.mk("infusion_finished")));
 
         PORTAL_ON_TRIGGER = new PlayerTrigger.TriggerInstance(
                 PORTAL_ON.getId(),

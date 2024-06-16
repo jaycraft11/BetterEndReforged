@@ -124,7 +124,7 @@ public class EternalCrystalRenderer {
     }
 
     static {
-        RENDER_LAYER = RenderType.itemEntityTranslucentCull(BetterEnd.makeID("textures/entity/eternal_crystal.png"));
+        RENDER_LAYER = RenderType.itemEntityTranslucentCull(BetterEnd.C.mk("textures/entity/eternal_crystal.png"));
         SHARDS = new ModelPart[4];
 
         ModelPart root = getTexturedModelData().bakeRoot();

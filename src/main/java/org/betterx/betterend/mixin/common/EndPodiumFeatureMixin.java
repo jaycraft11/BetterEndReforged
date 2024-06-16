@@ -48,9 +48,10 @@ public class EndPodiumFeatureMixin {
             RandomSource random = featurePlaceContext.random();
             WorldGenLevel world = featurePlaceContext.level();
             BlockPos blockPos = be_updatePortalPos(world);
-            StructureTemplate structure = StructureHelper.readStructure(BetterEnd.makeID(active
+            String path = active
                     ? "portal/end_portal_active"
-                    : "portal/end_portal_inactive"));
+                    : "portal/end_portal_inactive";
+            StructureTemplate structure = StructureHelper.readStructure(BetterEnd.C.mk(path));
             Vec3i size = structure.getSize();
             blockPos = blockPos.offset(-(size.getX() >> 1), -3, -(size.getZ() >> 1));
             structure.placeInWorld(world, blockPos, blockPos, new StructurePlaceSettings(), random, 2);

@@ -41,7 +41,7 @@ public class BoluxMushroomBlock extends EndPlantBlock implements SurvivesOnRutis
 
 
     @Override
-    public boolean isValidBonemealTarget(LevelReader world, BlockPos pos, BlockState state, boolean isClient) {
+    public boolean isValidBonemealTarget(LevelReader world, BlockPos pos, BlockState state) {
         return false;
     }
 

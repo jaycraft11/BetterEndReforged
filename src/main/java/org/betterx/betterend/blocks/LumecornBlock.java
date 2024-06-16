@@ -7,7 +7,7 @@ import org.betterx.bclib.interfaces.RenderLayerProvider;
 import org.betterx.bclib.util.MHelper;
 import org.betterx.betterend.registry.EndBlocks;
 import org.betterx.betterend.registry.EndItems;
-import org.betterx.worlds.together.tag.v3.CommonBlockTags;
+import org.betterx.wover.tag.api.predefined.CommonBlockTags;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -107,8 +107,8 @@ public class LumecornBlock extends BaseBlockNotFull.Wood implements RenderLayerP
 
     @Override
     @Environment(EnvType.CLIENT)
-    public ItemStack getCloneItemStack(BlockGetter world, BlockPos pos, BlockState state) {
-        EndBlockProperties.LumecornShape shape = state.getValue(SHAPE);
+    public ItemStack getCloneItemStack(LevelReader levelReader, BlockPos blockPos, BlockState blockState) {
+        EndBlockProperties.LumecornShape shape = blockState.getValue(SHAPE);
         if (shape == EndBlockProperties.LumecornShape.BOTTOM_BIG || shape == EndBlockProperties.LumecornShape.BOTTOM_SMALL || shape == EndBlockProperties.LumecornShape.MIDDLE) {
             return new ItemStack(EndBlocks.LUMECORN_SEED);
         }

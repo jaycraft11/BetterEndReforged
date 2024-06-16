@@ -26,7 +26,7 @@ import java.util.List;
 
 public class NightshadeRedwoods extends EndBiome.Config {
     public NightshadeRedwoods() {
-        super("nightshade_redwoods");
+        super();
     }
 
     @Override

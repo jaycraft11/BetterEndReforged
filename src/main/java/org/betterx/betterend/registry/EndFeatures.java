@@ -2,7 +2,6 @@ package org.betterx.betterend.registry;
 
 import org.betterx.bclib.BCLib;
 import org.betterx.bclib.api.v2.levelgen.biomes.BCLBiome;
-import org.betterx.bclib.api.v2.levelgen.biomes.BCLBiomeBuilder;
 import org.betterx.bclib.api.v2.levelgen.biomes.BCLBiomeRegistry;
 import org.betterx.bclib.api.v2.levelgen.biomes.BiomeAPI;
 import org.betterx.bclib.api.v3.levelgen.features.BCLConfigureFeature;
@@ -15,6 +14,7 @@ import org.betterx.betterend.BetterEnd;
 import org.betterx.betterend.complexmaterials.StoneMaterial;
 import org.betterx.betterend.config.Configs;
 import org.betterx.betterend.world.biome.EndBiome;
+import org.betterx.betterend.world.biome.EndBiomeBuilder;
 import org.betterx.betterend.world.biome.cave.EndCaveBiome;
 import org.betterx.betterend.world.features.*;
 import org.betterx.betterend.world.features.bushes.*;
@@ -786,7 +786,7 @@ public class EndFeatures {
     );
     public static final BCLFeature<BiomeIslandFeature, NoneFeatureConfiguration> BIOME_ISLAND = BCLFeatureBuilder
             .start(
-                    BetterEnd.makeID("overworld_island"),
+                    BetterEnd.C.mk("overworld_island"),
                     inlineBuild("overworld_island", new BiomeIslandFeature())
             )
             .build()
@@ -848,7 +848,7 @@ public class EndFeatures {
     );
     public static final BCLFeature<SulphuricCaveFeature, NoneFeatureConfiguration> SULPHURIC_CAVE = BCLFeatureBuilder
             .start(
-                    BetterEnd.makeID("sulphuric_cave"),
+                    BetterEnd.C.mk("sulphuric_cave"),
                     inlineBuild("sulphuric_cave", new SulphuricCaveFeature())
             )
             .build()
@@ -899,7 +899,7 @@ public class EndFeatures {
     );
     public static final BCLFeature<TunelCaveFeature, NoneFeatureConfiguration> TUNEL_CAVE = BCLFeatureBuilder
             .start(
-                    BetterEnd.makeID("tunel_cave"),
+                    BetterEnd.C.mk("tunel_cave"),
                     inlineBuild("tunel_cave", new TunelCaveFeature())
             ).build()
             .place()
@@ -983,51 +983,51 @@ public class EndFeatures {
     // Caves
     public static final BCLConfigureFeature<SmaragdantCrystalFeature, NoneFeatureConfiguration> SMARAGDANT_CRYSTAL = BCLFeatureBuilder
             .start(
-                    BetterEnd.makeID("smaragdant_crystal"),
+                    BetterEnd.C.mk("smaragdant_crystal"),
                     inlineBuild("smaragdant_crystal", new SmaragdantCrystalFeature())
             )
             .build();
     public static final BCLConfigureFeature<SingleBlockFeature, SimpleBlockConfiguration> SMARAGDANT_CRYSTAL_SHARD = BCLFeatureBuilder
-            .start(BetterEnd.makeID("smaragdant_crystal_shard"), SINGLE_BLOCK_FEATURE)
+            .start(BetterEnd.C.mk("smaragdant_crystal_shard"), SINGLE_BLOCK_FEATURE)
             .configuration(new SimpleBlockConfiguration(SimpleStateProvider.simple(EndBlocks.SMARAGDANT_CRYSTAL_SHARD)))
             .build();
 
     public static final BCLConfigureFeature<BigAuroraCrystalFeature, NoneFeatureConfiguration> BIG_AURORA_CRYSTAL = BCLFeatureBuilder
             .start(
-                    BetterEnd.makeID("big_aurora_crystal"),
+                    BetterEnd.C.mk("big_aurora_crystal"),
                     inlineBuild("big_aurora_crystal", new BigAuroraCrystalFeature())
             )
             .build();
     public static final BCLConfigureFeature<BushFeature, BushFeatureConfig> CAVE_BUSH = BCLFeatureBuilder
-            .start(BetterEnd.makeID("cave_bush"), BUSH_FEATURE)
+            .start(BetterEnd.C.mk("cave_bush"), BUSH_FEATURE)
             .configuration(new BushFeatureConfig(EndBlocks.CAVE_BUSH, EndBlocks.CAVE_BUSH))
             .build();
     public static final BCLConfigureFeature<SingleBlockFeature, SimpleBlockConfiguration> CAVE_GRASS = BCLFeatureBuilder
-            .start(BetterEnd.makeID("cave_grass"), SINGLE_BLOCK_FEATURE)
+            .start(BetterEnd.C.mk("cave_grass"), SINGLE_BLOCK_FEATURE)
             .configuration(new SimpleBlockConfiguration(SimpleStateProvider.simple(EndBlocks.CAVE_GRASS)))
             .build();
     public static final BCLConfigureFeature<VineFeature, VineFeatureConfig> RUBINEA = BCLFeatureBuilder
-            .start(BetterEnd.makeID("rubinea"), VINE_FEATURE)
+            .start(BetterEnd.C.mk("rubinea"), VINE_FEATURE)
             .configuration(new VineFeatureConfig(EndBlocks.RUBINEA, 8))
             .build();
 
     public static final BCLConfigureFeature<VineFeature, VineFeatureConfig> MAGNULA = BCLFeatureBuilder
-            .start(BetterEnd.makeID("magnula"), VINE_FEATURE)
+            .start(BetterEnd.C.mk("magnula"), VINE_FEATURE)
             .configuration(new VineFeatureConfig(EndBlocks.MAGNULA, 8))
             .build();
 
     public static final BCLConfigureFeature<StalactiteFeature, StalactiteFeatureConfig> END_STONE_STALACTITE = BCLFeatureBuilder
-            .start(BetterEnd.makeID("end_stone_stalactite"), STALACTITE_FEATURE)
+            .start(BetterEnd.C.mk("end_stone_stalactite"), STALACTITE_FEATURE)
             .configuration(new StalactiteFeatureConfig(true, EndBlocks.END_STONE_STALACTITE, Blocks.END_STONE))
             .build();
 
 
     public static final BCLConfigureFeature<StalactiteFeature, StalactiteFeatureConfig> END_STONE_STALAGMITE = BCLFeatureBuilder
-            .start(BetterEnd.makeID("end_stone_stalagmite"), STALACTITE_FEATURE)
+            .start(BetterEnd.C.mk("end_stone_stalagmite"), STALACTITE_FEATURE)
             .configuration(new StalactiteFeatureConfig(false, EndBlocks.END_STONE_STALACTITE, Blocks.END_STONE))
             .build();
     public static final BCLConfigureFeature<StalactiteFeature, StalactiteFeatureConfig> END_STONE_STALACTITE_CAVEMOSS = BCLFeatureBuilder
-            .start(BetterEnd.makeID("end_stone_stalactite_cavemoss"), STALACTITE_FEATURE)
+            .start(BetterEnd.C.mk("end_stone_stalactite_cavemoss"), STALACTITE_FEATURE)
             .configuration(new StalactiteFeatureConfig(
                     true,
                     EndBlocks.END_STONE_STALACTITE_CAVEMOSS,
@@ -1036,7 +1036,7 @@ public class EndFeatures {
             ))
             .build();
     public static final BCLConfigureFeature<StalactiteFeature, StalactiteFeatureConfig> END_STONE_STALAGMITE_CAVEMOSS = BCLFeatureBuilder
-            .start(BetterEnd.makeID("end_stone_stalagmite_cavemoss"), STALACTITE_FEATURE)
+            .start(BetterEnd.C.mk("end_stone_stalagmite_cavemoss"), STALACTITE_FEATURE)
             .configuration(new StalactiteFeatureConfig(
                     false,
                     EndBlocks.END_STONE_STALACTITE_CAVEMOSS,
@@ -1045,20 +1045,20 @@ public class EndFeatures {
             .build();
     public static final BCLConfigureFeature<CavePumpkinFeature, NoneFeatureConfiguration> CAVE_PUMPKIN = BCLFeatureBuilder
             .start(
-                    BetterEnd.makeID("cave_pumpkin"),
+                    BetterEnd.C.mk("cave_pumpkin"),
                     inlineBuild("cave_pumpkin", new CavePumpkinFeature())
             )
             .build();
 
 
     private static final Holder<PlacedFeature> BONEMEAL_END_MOSS_NOT_GLOWING_GRASSLANDS = BCLFeatureBuilder
-            .startBonemealPatch(BetterEnd.makeID("bonemeal_end_moss_not_glowing_grasslands"))
+            .startBonemealPatch(BetterEnd.C.mk("bonemeal_end_moss_not_glowing_grasslands"))
             .add(EndBlocks.CREEPING_MOSS, 10)
             .add(EndBlocks.UMBRELLA_MOSS, 10)
             .inlinePlace().build().placedFeature;
 
     private static final Holder<PlacedFeature> BONEMEAL_END_MOSS_GLOWING_GRASSLANDS = BCLFeatureBuilder
-            .startBonemealPatch(BetterEnd.makeID("bonemeal_end_moss_glowing_grasslands"))
+            .startBonemealPatch(BetterEnd.C.mk("bonemeal_end_moss_glowing_grasslands"))
             .add(EndBlocks.CREEPING_MOSS, 10)
             .add(EndBlocks.UMBRELLA_MOSS, 10)
             .add(EndBlocks.BLOOMING_COOKSONIA, 100)
@@ -1070,7 +1070,7 @@ public class EndFeatures {
 
     public static final BCLConfigureFeature<Feature<ConditionFeatureConfig>, ConditionFeatureConfig> BONEMEAL_END_MOSS = BCLFeatureBuilder
             .start(
-                    BetterEnd.makeID("bonemeal_end_moss"),
+                    BetterEnd.C.mk("bonemeal_end_moss"),
                     BCLFeature.CONDITION
             )
             .configuration(new ConditionFeatureConfig(
@@ -1081,7 +1081,7 @@ public class EndFeatures {
             .build();
 
     private static final Holder<PlacedFeature> BONEMEAL_RUTISCUS_NOT_LANTERN_WOODS = BCLFeatureBuilder
-            .startBonemealPatch(BetterEnd.makeID("bonemeal_rutiscus_not_lantern_woods"))
+            .startBonemealPatch(BetterEnd.C.mk("bonemeal_rutiscus_not_lantern_woods"))
             .add(EndBlocks.ORANGO, 100)
             .add(EndBlocks.AERIDIUM, 20)
             .add(EndBlocks.LUTEBUS, 20)
@@ -1090,7 +1090,7 @@ public class EndFeatures {
             .build().placedFeature;
 
     private static final Holder<PlacedFeature> BONEMEAL_RUTISCUS_LANTERN_WOODS = BCLFeatureBuilder
-            .startBonemealPatch(BetterEnd.makeID("bonemeal_rutiscus_lantern_woods"))
+            .startBonemealPatch(BetterEnd.C.mk("bonemeal_rutiscus_lantern_woods"))
             .add(EndBlocks.AERIDIUM, 20)
             .add(EndBlocks.BOLUX_MUSHROOM, 5)
             .add(EndBlocks.LAMELLARIUM, 100)
@@ -1099,7 +1099,7 @@ public class EndFeatures {
 
     public static final BCLConfigureFeature<Feature<ConditionFeatureConfig>, ConditionFeatureConfig> BONEMEAL_RUTISCUS = BCLFeatureBuilder
             .start(
-                    BetterEnd.makeID("bonemeal_rutiscus"),
+                    BetterEnd.C.mk("bonemeal_rutiscus"),
                     BCLFeature.CONDITION
             )
             .configuration(new ConditionFeatureConfig(
@@ -1110,72 +1110,72 @@ public class EndFeatures {
             .build();
 
     public static final BCLConfigureFeature<RandomPatchFeature, RandomPatchConfiguration> BONEMEAL_END_MYCELIUM = BCLFeatureBuilder
-            .startBonemealPatch(BetterEnd.makeID("bonemeal_end_mycelium"))
+            .startBonemealPatch(BetterEnd.C.mk("bonemeal_end_mycelium"))
             .add(EndBlocks.CREEPING_MOSS, 100)
             .add(EndBlocks.UMBRELLA_MOSS, 100)
             .build();
 
     public static final BCLConfigureFeature<RandomPatchFeature, RandomPatchConfiguration> BONEMEAL_JUNGLE_MOSS = BCLFeatureBuilder
-            .startBonemealPatch(BetterEnd.makeID("bonemeal_jungle_moss"))
+            .startBonemealPatch(BetterEnd.C.mk("bonemeal_jungle_moss"))
             .add(EndBlocks.JUNGLE_GRASS, 100)
             .add(EndBlocks.TWISTED_UMBRELLA_MOSS, 100)
             .add(EndBlocks.SMALL_JELLYSHROOM, 10)
             .build();
 
     public static final BCLConfigureFeature<RandomPatchFeature, RandomPatchConfiguration> BONEMEAL_SANGNUM = BCLFeatureBuilder
-            .startBonemealPatch(BetterEnd.makeID("bonemeal_sangnum"))
+            .startBonemealPatch(BetterEnd.C.mk("bonemeal_sangnum"))
             .add(EndBlocks.CLAWFERN, 100)
             .add(EndBlocks.GLOBULAGUS, 100)
             .add(EndBlocks.SMALL_AMARANITA_MUSHROOM, 10)
             .build();
 
     public static final BCLConfigureFeature<RandomPatchFeature, RandomPatchConfiguration> BONEMEAL_MOSSY_DRAGON_BONE = BCLFeatureBuilder
-            .startBonemealPatch(BetterEnd.makeID("bonemeal_mossy_dragon_bone"))
+            .startBonemealPatch(BetterEnd.C.mk("bonemeal_mossy_dragon_bone"))
             .add(EndBlocks.CLAWFERN, 100)
             .add(EndBlocks.GLOBULAGUS, 100)
             .add(EndBlocks.SMALL_AMARANITA_MUSHROOM, 10)
             .build();
 
     public static final BCLConfigureFeature<RandomPatchFeature, RandomPatchConfiguration> BONEMEAL_MOSSY_OBSIDIAN = BCLFeatureBuilder
-            .startBonemealPatch(BetterEnd.makeID("bonemeal_mossy_obsidian"))
+            .startBonemealPatch(BetterEnd.C.mk("bonemeal_mossy_obsidian"))
             .add(EndBlocks.CLAWFERN, 100)
             .add(EndBlocks.GLOBULAGUS, 100)
             .add(EndBlocks.SMALL_AMARANITA_MUSHROOM, 10)
             .build();
 
     public static final BCLConfigureFeature<RandomPatchFeature, RandomPatchConfiguration> BONEMEAL_CAVE_MOSS = BCLFeatureBuilder
-            .startBonemealPatch(BetterEnd.makeID("bonemeal_cave_moss"))
+            .startBonemealPatch(BetterEnd.C.mk("bonemeal_cave_moss"))
             .add(EndBlocks.CAVE_GRASS, 100)
             .build();
 
     public static final BCLConfigureFeature<RandomPatchFeature, RandomPatchConfiguration> BONEMEAL_CHORUS_NYLIUM = BCLFeatureBuilder
-            .startBonemealPatch(BetterEnd.makeID("bonemeal_chorus_nylium"))
+            .startBonemealPatch(BetterEnd.C.mk("bonemeal_chorus_nylium"))
             .add(EndBlocks.CHORUS_GRASS, 100)
             .build();
 
     public static final BCLConfigureFeature<RandomPatchFeature, RandomPatchConfiguration> BONEMEAL_CRYSTAL_MOSS = BCLFeatureBuilder
-            .startBonemealPatch(BetterEnd.makeID("bonemeal_crystal_moss"))
+            .startBonemealPatch(BetterEnd.C.mk("bonemeal_crystal_moss"))
             .add(EndBlocks.CRYSTAL_GRASS, 100)
             .build();
 
     public static final BCLConfigureFeature<RandomPatchFeature, RandomPatchConfiguration> BONEMEAL_SHADOW_GRASS = BCLFeatureBuilder
-            .startBonemealPatch(BetterEnd.makeID("bonemeal_shadow_grass"))
+            .startBonemealPatch(BetterEnd.C.mk("bonemeal_shadow_grass"))
             .add(EndBlocks.SHADOW_PLANT, 100)
             .build();
 
     public static final BCLConfigureFeature<RandomPatchFeature, RandomPatchConfiguration> BONEMEAL_PINK_MOSS = BCLFeatureBuilder
-            .startBonemealPatch(BetterEnd.makeID("bonemeal_pink_moss"))
+            .startBonemealPatch(BetterEnd.C.mk("bonemeal_pink_moss"))
             .add(EndBlocks.BUSHY_GRASS, 100)
             .build();
 
     public static final BCLConfigureFeature<RandomPatchFeature, RandomPatchConfiguration> BONEMEAL_AMBER_MOSS = BCLFeatureBuilder
-            .startBonemealPatch(BetterEnd.makeID("bonemeal_amber_moss"))
+            .startBonemealPatch(BetterEnd.C.mk("bonemeal_amber_moss"))
             .add(EndBlocks.AMBER_GRASS, 100)
             .build();
 
 
     public static <F extends Feature<FC>, FC extends FeatureConfiguration> F inlineBuild(String name, F feature) {
-        ResourceLocation l = BetterEnd.makeID(name);
+        ResourceLocation l = BetterEnd.C.mk(name);
 
         final Registry<Feature<?>> features;
         if (WorldBootstrap.getLastRegistryAccess() != null) {
@@ -1222,7 +1222,7 @@ public class EndFeatures {
             FC config,
             int density
     ) {
-        ResourceLocation id = BetterEnd.makeID(name);
+        ResourceLocation id = BetterEnd.C.mk(name);
         return BCLFeatureBuilder.start(id, feature)
                                 .configuration(config)
                                 .build()
@@ -1247,7 +1247,7 @@ public class EndFeatures {
             int chance
     ) {
         return BCLFeatureBuilder
-                .start(BetterEnd.makeID(name), feature)
+                .start(BetterEnd.C.mk(name), feature)
                 .configuration(config)
                 .build()
                 .place()
@@ -1264,7 +1264,7 @@ public class EndFeatures {
             int chance
     ) {
         return BCLFeatureBuilder
-                .start(BetterEnd.makeID(name), feature)
+                .start(BetterEnd.C.mk(name), feature)
                 .build()
                 .place()
                 .decoration(Decoration.LAKES)
@@ -1290,7 +1290,7 @@ public class EndFeatures {
     ) {
         return
                 BCLFeatureBuilder
-                        .start(BetterEnd.makeID(name), feature)
+                        .start(BetterEnd.C.mk(name), feature)
                         .configuration(config)
                         .build()
                         .place()
@@ -1308,7 +1308,7 @@ public class EndFeatures {
             int veinSize
     ) {
         return BCLFeatureBuilder
-                .startOre(BetterEnd.makeID(name))
+                .startOre(BetterEnd.C.mk(name))
                 .add(Blocks.END_STONE, blockOre)
                 .veinSize(veinSize)
                 .discardChanceOnAirExposure(0)
@@ -1332,7 +1332,7 @@ public class EndFeatures {
     ) {
         OreLayerFeature layer = inlineBuild("ore_layer", new OreLayerFeature());
         return BCLFeatureBuilder
-                .start(BetterEnd.makeID(name), layer)
+                .start(BetterEnd.C.mk(name), layer)
                 .configuration(new OreLayerFeatureConfig(block.defaultBlockState(), radius, minY, maxY))
                 .build()
                 .place()
@@ -1438,9 +1438,9 @@ public class EndFeatures {
         return null;
     }
 
-    public static BCLBiomeBuilder addDefaultFeatures(
+    public static EndBiomeBuilder addDefaultFeatures(
             ResourceLocation biomeID,
-            BCLBiomeBuilder builder,
+            EndBiomeBuilder builder,
             boolean hasCaves
     ) {
         builder.feature(THALLASIUM_ORE);

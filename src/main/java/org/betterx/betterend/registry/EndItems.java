@@ -1,25 +1,27 @@
 package org.betterx.betterend.registry;
 
 import org.betterx.bclib.BCLib;
+import org.betterx.bclib.behaviours.BehaviourBuilders;
 import org.betterx.bclib.items.BaseArmorItem;
+import org.betterx.bclib.items.BaseDiscItem;
+import org.betterx.bclib.items.BaseSpawnEggItem;
 import org.betterx.bclib.items.ModelProviderItem;
 import org.betterx.bclib.items.tool.BaseAxeItem;
 import org.betterx.bclib.items.tool.BaseHoeItem;
 import org.betterx.bclib.items.tool.BaseShovelItem;
 import org.betterx.bclib.items.tool.BaseSwordItem;
-import org.betterx.bclib.registry.BaseRegistry;
-import org.betterx.bclib.registry.ItemRegistry;
+import org.betterx.bclib.models.RecordItemModelProvider;
 import org.betterx.betterend.BetterEnd;
-import org.betterx.betterend.config.Configs;
 import org.betterx.betterend.item.*;
 import org.betterx.betterend.item.material.EndArmorMaterial;
 import org.betterx.betterend.item.material.EndToolMaterial;
 import org.betterx.betterend.item.tool.EndHammerItem;
 import org.betterx.betterend.item.tool.EndPickaxe;
 import org.betterx.betterend.util.DebugHelpers;
+import org.betterx.wover.item.api.ItemRegistry;
+import org.betterx.wover.tag.api.predefined.CommonItemTags;
 
-import net.minecraft.core.Holder;
-import net.minecraft.sounds.SoundEvent;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
@@ -33,7 +35,7 @@ import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 
 public class EndItems {
-    private static final ItemRegistry REGISTRY = new ItemRegistry(Configs.ITEM_CONFIG);
+    private static ItemRegistry ITEMS_REGISTRY;
 
     // Materials //
     public final static Item ENDER_DUST = registerEndItem("ender_dust");
@@ -70,27 +72,19 @@ public class EndItems {
     // Music Discs
     public final static Item MUSIC_DISC_STRANGE_AND_ALIEN = registerEndDisc(
             "music_disc_strange_and_alien",
-            0,
-            EndSounds.RECORD_STRANGE_AND_ALIEN,
-            (4 * 60) + 26
+            EndSounds.RECORD_STRANGE_AND_ALIEN
     );
     public final static Item MUSIC_DISC_GRASPING_AT_STARS = registerEndDisc(
             "music_disc_grasping_at_stars",
-            0,
-            EndSounds.RECORD_GRASPING_AT_STARS,
-            (8 * 60) + 48
+            EndSounds.RECORD_GRASPING_AT_STARS
     );
     public final static Item MUSIC_DISC_ENDSEEKER = registerEndDisc(
             "music_disc_endseeker",
-            0,
-            EndSounds.RECORD_ENDSEEKER,
-            (7 * 60) + 41
+            EndSounds.RECORD_ENDSEEKER
     );
     public final static Item MUSIC_DISC_EO_DRACONA = registerEndDisc(
             "music_disc_eo_dracona",
-            0,
-            EndSounds.RECORD_EO_DRACONA,
-            (5 * 60) + 53
+            EndSounds.RECORD_EO_DRACONA
     );
 
     // Armor //
@@ -300,54 +294,56 @@ public class EndItems {
     public final static Item UMBRELLA_CLUSTER_JUICE = registerEndDrink("umbrella_cluster_juice", 5, 0.7F);
 
     public static List<Item> getModItems() {
-        return BaseRegistry.getModItems(BetterEnd.MOD_ID);
+        return getItemRegistry().allItems().toList();
     }
 
-    public static Item registerEndDisc(String name, int power, Holder<SoundEvent> sound, int lengthInSeconds) {
-        return getItemRegistry().registerDisc(BetterEnd.makeID(name), power, sound.value(), lengthInSeconds);
+    public static Item registerEndDisc(String name, ResourceKey<JukeboxSong> sound) {
+        Item item = BaseDiscItem.create(sound, BehaviourBuilders.createDisc());
+        RecordItemModelProvider.add(item);
+        getItemRegistry().register(name, item, CommonItemTags.MUSIC_DISCS);
+        return item;
     }
 
     public static Item registerEndItem(String name) {
-        return getItemRegistry().register(BetterEnd.makeID(name));
+        return getItemRegistry().register(name, new ModelProviderItem(makeEndItemSettings()));
     }
 
     public static Item registerEndItem(String name, Item item) {
-        if (item instanceof EndArmorItem) {
-            return getItemRegistry().register(BetterEnd.makeID(name), item, "armour");
-        }
-        return getItemRegistry().register(BetterEnd.makeID(name), item);
+        return getItemRegistry().register(name, item);
     }
 
     public static TieredItem registerEndTool(String name, TieredItem item) {
-        if (!Configs.ITEM_CONFIG.getBoolean("tools", name, true)) {
-            return item;
-        }
-        return (TieredItem) getItemRegistry().registerTool(BetterEnd.makeID(name), item);
+        return getItemRegistry().registerAsTool(name, item);
     }
 
     public static Item registerEndEgg(String name, EntityType<? extends Mob> type, int background, int dots) {
-        return getItemRegistry().registerEgg(BetterEnd.makeID(name), type, background, dots);
+        return getItemRegistry().registerEgg(name, new BaseSpawnEggItem(type, background, dots, makeEndItemSettings()));
     }
 
     public static Item registerEndFood(String name, int hunger, float saturation, MobEffectInstance... effects) {
-        return getItemRegistry().registerFood(BetterEnd.makeID(name), hunger, saturation, effects);
+        return getItemRegistry().registerFood(name, ModelProviderItem::new, hunger, saturation, effects);
     }
 
     public static Item registerEndFood(String name, FoodProperties foodComponent) {
-        return getItemRegistry().registerFood(BetterEnd.makeID(name), foodComponent);
+        return getItemRegistry().register(name, new ModelProviderItem(getItemRegistry()
+                .createDefaultItemSettings()
+                .food(foodComponent)));
     }
 
     public static Item registerEndDrink(String name, int hunger, float saturation) {
-        return getItemRegistry().registerDrink(BetterEnd.makeID(name), hunger, saturation);
+        return getItemRegistry().registerDrink(name, ModelProviderItem::new, hunger, saturation);
     }
 
     public static Item.Properties makeEndItemSettings() {
-        return getItemRegistry().makeItemSettings();
+        return new Item.Properties();
     }
 
     @NotNull
     public static ItemRegistry getItemRegistry() {
-        return REGISTRY;
+        if (ITEMS_REGISTRY == null) {
+            ITEMS_REGISTRY = ItemRegistry.forMod(BetterEnd.C);
+        }
+        return ITEMS_REGISTRY;
     }
 
     @ApiStatus.Internal

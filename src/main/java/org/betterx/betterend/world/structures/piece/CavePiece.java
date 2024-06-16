@@ -5,7 +5,7 @@ import org.betterx.bclib.util.MHelper;
 import org.betterx.betterend.noise.OpenSimplexNoise;
 import org.betterx.betterend.registry.EndStructures;
 import org.betterx.betterend.util.GlobalState;
-import org.betterx.worlds.together.tag.v3.CommonBlockTags;
+import org.betterx.wover.tag.api.predefined.CommonBlockTags;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
@@ -80,7 +80,7 @@ public class CavePiece extends BasePiece {
                             BlocksHelper.setWithoutUpdate(world, pos, CAVE_AIR);
                         }
                     } else if (dist < r * r) {
-                        if (world.getBlockState(pos).canBeReplaced()){
+                        if (world.getBlockState(pos).canBeReplaced()) {
                             BlocksHelper.setWithoutUpdate(world, pos, Blocks.END_STONE);
                         }
                     }

@@ -12,8 +12,8 @@ import net.minecraft.client.renderer.entity.layers.EyesLayer;
 import net.minecraft.resources.ResourceLocation;
 
 public class RendererEntityDragonfly extends MobRenderer<DragonflyEntity, DragonflyEntityModel> {
-    private static final ResourceLocation TEXTURE = BetterEnd.makeID("textures/entity/dragonfly.png");
-    private static final RenderType GLOW = RenderType.eyes(BetterEnd.makeID("textures/entity/dragonfly_glow.png"));
+    private static final ResourceLocation TEXTURE = BetterEnd.C.mk("textures/entity/dragonfly.png");
+    private static final RenderType GLOW = RenderType.eyes(BetterEnd.C.mk("textures/entity/dragonfly_glow.png"));
 
     public RendererEntityDragonfly(EntityRendererProvider.Context ctx) {
         super(ctx, new DragonflyEntityModel(ctx.bakeLayer(EndEntitiesRenders.DRAGONFLY_MODEL)), 0.5f);

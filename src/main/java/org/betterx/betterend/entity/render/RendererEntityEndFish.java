@@ -69,8 +69,8 @@ public class RendererEntityEndFish extends MobRenderer<EndFishEntity, EndFishEnt
 
     static {
         for (int i = 0; i < EndFishEntity.VARIANTS; i++) {
-            TEXTURE[i] = BetterEnd.makeID("textures/entity/end_fish/end_fish_" + i + ".png");
-            GLOW[i] = RenderType.eyes(BetterEnd.makeID("textures/entity/end_fish/end_fish_" + i + "_glow.png"));
+            TEXTURE[i] = BetterEnd.C.mk("textures/entity/end_fish/end_fish_" + i + ".png");
+            GLOW[i] = RenderType.eyes(BetterEnd.C.mk("textures/entity/end_fish/end_fish_" + i + "_glow.png"));
         }
     }
 }

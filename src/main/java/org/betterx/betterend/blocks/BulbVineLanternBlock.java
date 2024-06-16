@@ -4,8 +4,8 @@ import org.betterx.bclib.behaviours.BehaviourBuilders;
 import org.betterx.bclib.behaviours.interfaces.BehaviourWood;
 import org.betterx.bclib.client.models.ModelsHelper;
 import org.betterx.bclib.client.render.BCLRenderLayer;
-import org.betterx.bclib.interfaces.BlockModelProvider;
 import org.betterx.bclib.interfaces.RenderLayerProvider;
+import org.betterx.bclib.interfaces.RuntimeBlockModelProvider;
 import org.betterx.betterend.blocks.basis.EndLanternBlock;
 import org.betterx.betterend.client.models.Patterns;
 
@@ -29,7 +29,7 @@ import java.util.Map;
 import java.util.Optional;
 import org.jetbrains.annotations.Nullable;
 
-public class BulbVineLanternBlock extends EndLanternBlock implements RenderLayerProvider, BlockModelProvider, BehaviourWood {
+public class BulbVineLanternBlock extends EndLanternBlock implements RenderLayerProvider, RuntimeBlockModelProvider, BehaviourWood {
     private static final VoxelShape SHAPE_CEIL = Block.box(4, 4, 4, 12, 16, 12);
     private static final VoxelShape SHAPE_FLOOR = Block.box(4, 0, 4, 12, 12, 12);
 

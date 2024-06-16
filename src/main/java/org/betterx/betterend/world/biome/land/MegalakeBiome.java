@@ -10,7 +10,7 @@ import net.minecraft.world.level.block.state.BlockState;
 
 public class MegalakeBiome extends EndBiome.Config {
     public MegalakeBiome() {
-        super(EndBiomes.MEGALAKE.location());
+        super();
     }
 
     @Override

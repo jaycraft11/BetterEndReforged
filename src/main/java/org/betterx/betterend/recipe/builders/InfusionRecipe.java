@@ -66,7 +66,7 @@ public class InfusionRecipe implements Recipe<InfusionRitual>, UnknownReceipBook
     }
 
     public static Builder create(String id, ItemLike output) {
-        return create(BetterEnd.makeID(id), output);
+        return create(BetterEnd.C.mk(id), output);
     }
 
     public static Builder create(ResourceLocation id, ItemLike output) {
@@ -74,7 +74,7 @@ public class InfusionRecipe implements Recipe<InfusionRitual>, UnknownReceipBook
     }
 
     public static Builder create(String id, ItemStack output) {
-        return create(BetterEnd.makeID(id), output);
+        return create(BetterEnd.C.mk(id), output);
     }
 
     public static Builder create(ResourceLocation id, ItemStack output) {
@@ -82,7 +82,7 @@ public class InfusionRecipe implements Recipe<InfusionRitual>, UnknownReceipBook
     }
 
     public static Builder create(String id, Enchantment enchantment, int level) {
-        return create(BetterEnd.makeID(id), enchantment, level);
+        return create(BetterEnd.C.mk(id), enchantment, level);
     }
 
     public static Builder create(ResourceLocation id, Enchantment enchantment, int level) {

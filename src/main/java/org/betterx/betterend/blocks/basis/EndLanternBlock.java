@@ -1,7 +1,7 @@
 package org.betterx.betterend.blocks.basis;
 
 import org.betterx.bclib.blocks.BaseBlockNotFull;
-import org.betterx.bclib.blocks.BlockProperties;
+import org.betterx.wover.block.api.BlockProperties;
 import org.betterx.bclib.client.models.ModelsHelper;
 
 import net.minecraft.client.resources.model.UnbakedModel;

@@ -17,7 +17,7 @@ public abstract class ModelLoaderMixin {
         //this should allways be a block state, as it is supplied a BLOCKSTATE_LISTER
         if (GeneratorOptions.changeChorusPlant() && be_changeModel(loc)) {
             String path = loc.getPath().replace("chorus", "custom_chorus");
-            return BetterEnd.makeID(path);
+            return BetterEnd.C.mk(path);
         }
         return loc;
     }

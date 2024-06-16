@@ -254,13 +254,13 @@ public class MetalMaterial {
         );
 
         if (hasOre) {
-            BCLRecipeBuilder.smelting(BetterEnd.makeID(name + "_ingot_furnace_ore"), ingot)
+            BCLRecipeBuilder.smelting(BetterEnd.C.mk(name + "_ingot_furnace_ore"), ingot)
                             .setPrimaryInputAndUnlock(ore)
                             .buildWithBlasting();
-            BCLRecipeBuilder.smelting(BetterEnd.makeID(name + "_ingot_furnace_raw"), ingot)
+            BCLRecipeBuilder.smelting(BetterEnd.C.mk(name + "_ingot_furnace_raw"), ingot)
                             .setPrimaryInputAndUnlock(rawOre)
                             .buildWithBlasting();
-            BCLRecipeBuilder.alloying(BetterEnd.makeID(name + "_ingot_alloy"), ingot)
+            BCLRecipeBuilder.alloying(BetterEnd.C.mk(name + "_ingot_alloy"), ingot)
                             .setInput(alloyingOre, alloyingOre)
                             .setOutputCount(3)
                             .setExperience(2.1F)
@@ -268,23 +268,23 @@ public class MetalMaterial {
         }
 
         // Basic recipes
-        BCLRecipeBuilder.crafting(BetterEnd.makeID(name + "_ingot_from_nuggets"), ingot)
+        BCLRecipeBuilder.crafting(BetterEnd.C.mk(name + "_ingot_from_nuggets"), ingot)
                         .setShape("###", "###", "###")
                         .addMaterial('#', nugget)
                         .setGroup("end_metal_ingots_nug")
                         .build();
-        BCLRecipeBuilder.crafting(BetterEnd.makeID(name + "_nuggets_from_ingot"), nugget)
+        BCLRecipeBuilder.crafting(BetterEnd.C.mk(name + "_nuggets_from_ingot"), nugget)
                         .setOutputCount(9)
                         .shapeless()
                         .addMaterial('#', ingot)
                         .setGroup("end_metal_nuggets_ing")
                         .build();
-        BCLRecipeBuilder.crafting(BetterEnd.makeID(name + "_block"), block)
+        BCLRecipeBuilder.crafting(BetterEnd.C.mk(name + "_block"), block)
                         .setShape("###", "###", "###")
                         .addMaterial('#', ingot)
                         .setGroup("end_metal_blocks")
                         .build();
-        BCLRecipeBuilder.crafting(BetterEnd.makeID(name + "_ingot_from_block"), ingot)
+        BCLRecipeBuilder.crafting(BetterEnd.C.mk(name + "_ingot_from_block"), ingot)
                         .setOutputCount(9)
                         .shapeless()
                         .addMaterial('#', block)
@@ -292,66 +292,66 @@ public class MetalMaterial {
                         .build();
 
         // Block recipes
-        BCLRecipeBuilder.crafting(BetterEnd.makeID(name + "_tile"), tile)
+        BCLRecipeBuilder.crafting(BetterEnd.C.mk(name + "_tile"), tile)
                         .setOutputCount(4)
                         .setShape("##", "##")
                         .addMaterial('#', block)
                         .setGroup("end_metal_tiles")
                         .build();
-        BCLRecipeBuilder.crafting(BetterEnd.makeID(name + "_bars"), bars)
+        BCLRecipeBuilder.crafting(BetterEnd.C.mk(name + "_bars"), bars)
                         .setOutputCount(16)
                         .setShape("###", "###")
                         .addMaterial('#', ingot)
                         .setGroup("end_metal_bars")
                         .build();
-        BCLRecipeBuilder.crafting(BetterEnd.makeID(name + "_pressure_plate"), pressurePlate)
+        BCLRecipeBuilder.crafting(BetterEnd.C.mk(name + "_pressure_plate"), pressurePlate)
                         .setShape("##")
                         .addMaterial('#', ingot)
                         .setGroup("end_metal_plates")
                         .build();
-        BCLRecipeBuilder.crafting(BetterEnd.makeID(name + "_door"), door)
+        BCLRecipeBuilder.crafting(BetterEnd.C.mk(name + "_door"), door)
                         .setOutputCount(3)
                         .setShape("##", "##", "##")
                         .addMaterial('#', ingot)
                         .setGroup("end_metal_doors")
                         .build();
-        BCLRecipeBuilder.crafting(BetterEnd.makeID(name + "_trapdoor"), trapdoor)
+        BCLRecipeBuilder.crafting(BetterEnd.C.mk(name + "_trapdoor"), trapdoor)
                         .setShape("##", "##")
                         .addMaterial('#', ingot)
                         .setGroup("end_metal_trapdoors")
                         .build();
-        BCLRecipeBuilder.crafting(BetterEnd.makeID(name + "_stairs"), stairs)
+        BCLRecipeBuilder.crafting(BetterEnd.C.mk(name + "_stairs"), stairs)
                         .setOutputCount(4)
                         .setShape("#  ", "## ", "###")
                         .addMaterial('#', block, tile)
                         .setGroup("end_metal_stairs")
                         .build();
-        BCLRecipeBuilder.crafting(BetterEnd.makeID(name + "_slab"), slab)
+        BCLRecipeBuilder.crafting(BetterEnd.C.mk(name + "_slab"), slab)
                         .setOutputCount(6)
                         .setShape("###")
                         .addMaterial('#', block, tile)
                         .setGroup("end_metal_slabs")
                         .build();
-        BCLRecipeBuilder.crafting(BetterEnd.makeID(name + "_chain"), chain)
+        BCLRecipeBuilder.crafting(BetterEnd.C.mk(name + "_chain"), chain)
                         .setShape("N", "#", "N")
                         .addMaterial('#', ingot)
                         .addMaterial('N', nugget)
                         .setGroup("end_metal_chain")
                         .build();
-        BCLRecipeBuilder.crafting(BetterEnd.makeID(name + "_anvil"), anvilBlock)
+        BCLRecipeBuilder.crafting(BetterEnd.C.mk(name + "_anvil"), anvilBlock)
                         .setShape("###", " I ", "III")
                         .addMaterial('#', block, tile)
                         .addMaterial('I', ingot)
                         .setGroup("end_metal_anvil")
                         .build();
-        BCLRecipeBuilder.crafting(BetterEnd.makeID(name + "_bulb_lantern"), bulb_lantern)
+        BCLRecipeBuilder.crafting(BetterEnd.C.mk(name + "_bulb_lantern"), bulb_lantern)
                         .setShape("C", "I", "#")
                         .addMaterial('C', chain)
                         .addMaterial('I', ingot)
                         .addMaterial('#', EndItems.GLOWING_BULB)
                         .build();
 
-        BCLRecipeBuilder.crafting(BetterEnd.makeID(name + "_chandelier"), chandelier)
+        BCLRecipeBuilder.crafting(BetterEnd.C.mk(name + "_chandelier"), chandelier)
                         .setShape("I#I", " # ")
                         .addMaterial('#', ingot)
                         .addMaterial('I', EndItems.LUMECORN_ROD)
@@ -359,69 +359,69 @@ public class MetalMaterial {
                         .build();
 
         // Tools & armor into nuggets
-        BCLRecipeBuilder.smelting(BetterEnd.makeID(name + "_axe_nugget"), nugget)
+        BCLRecipeBuilder.smelting(BetterEnd.C.mk(name + "_axe_nugget"), nugget)
                         .setPrimaryInputAndUnlock(axe)
                         .buildWithBlasting();
-        BCLRecipeBuilder.smelting(BetterEnd.makeID(name + "_hoe_nugget"), nugget)
+        BCLRecipeBuilder.smelting(BetterEnd.C.mk(name + "_hoe_nugget"), nugget)
                         .setPrimaryInputAndUnlock(hoe)
                         .buildWithBlasting();
-        BCLRecipeBuilder.smelting(BetterEnd.makeID(name + "_pickaxe_nugget"), nugget)
+        BCLRecipeBuilder.smelting(BetterEnd.C.mk(name + "_pickaxe_nugget"), nugget)
                         .setPrimaryInputAndUnlock(pickaxe)
                         .buildWithBlasting();
-        BCLRecipeBuilder.smelting(BetterEnd.makeID(name + "_sword_nugget"), nugget)
+        BCLRecipeBuilder.smelting(BetterEnd.C.mk(name + "_sword_nugget"), nugget)
                         .setPrimaryInputAndUnlock(sword)
                         .buildWithBlasting();
-        BCLRecipeBuilder.smelting(BetterEnd.makeID(name + "_hammer_nugget"), nugget)
+        BCLRecipeBuilder.smelting(BetterEnd.C.mk(name + "_hammer_nugget"), nugget)
                         .setPrimaryInputAndUnlock(hammer)
                         .buildWithBlasting();
-        BCLRecipeBuilder.smelting(BetterEnd.makeID(name + "_helmet_nugget"), nugget)
+        BCLRecipeBuilder.smelting(BetterEnd.C.mk(name + "_helmet_nugget"), nugget)
                         .setPrimaryInputAndUnlock(helmet)
                         .buildWithBlasting();
-        BCLRecipeBuilder.smelting(BetterEnd.makeID(name + "_chestplate_nugget"), nugget)
+        BCLRecipeBuilder.smelting(BetterEnd.C.mk(name + "_chestplate_nugget"), nugget)
                         .setPrimaryInputAndUnlock(chestplate)
                         .buildWithBlasting();
-        BCLRecipeBuilder.smelting(BetterEnd.makeID(name + "_leggings_nugget"), nugget)
+        BCLRecipeBuilder.smelting(BetterEnd.C.mk(name + "_leggings_nugget"), nugget)
                         .setPrimaryInputAndUnlock(leggings)
                         .buildWithBlasting();
-        BCLRecipeBuilder.smelting(BetterEnd.makeID(name + "_boots_nugget"), nugget)
+        BCLRecipeBuilder.smelting(BetterEnd.C.mk(name + "_boots_nugget"), nugget)
                         .setPrimaryInputAndUnlock(boots)
                         .buildWithBlasting();
 
         // Tool parts from ingots
-        BCLRecipeBuilder.anvil(BetterEnd.makeID(name + "_shovel_head"), shovelHead)
+        BCLRecipeBuilder.anvil(BetterEnd.C.mk(name + "_shovel_head"), shovelHead)
                         .setPrimaryInput(ingot)
                         .setAnvilLevel(anvilAndToolLevel)
                         .setToolLevel(level)
                         .setDamage(level)
                         .build();
-        BCLRecipeBuilder.anvil(BetterEnd.makeID(name + "_pickaxe_head"), pickaxeHead)
-                        .setPrimaryInput(ingot)
-                        .setInputCount(3)
-                        .setAnvilLevel(anvilAndToolLevel)
-                        .setToolLevel(level)
-                        .setDamage(level)
-                        .build();
-        BCLRecipeBuilder.anvil(BetterEnd.makeID(name + "_axe_head"), axeHead)
+        BCLRecipeBuilder.anvil(BetterEnd.C.mk(name + "_pickaxe_head"), pickaxeHead)
                         .setPrimaryInput(ingot)
                         .setInputCount(3)
                         .setAnvilLevel(anvilAndToolLevel)
                         .setToolLevel(level)
                         .setDamage(level)
                         .build();
-        BCLRecipeBuilder.anvil(BetterEnd.makeID(name + "_hoe_head"), hoeHead)
+        BCLRecipeBuilder.anvil(BetterEnd.C.mk(name + "_axe_head"), axeHead)
+                        .setPrimaryInput(ingot)
+                        .setInputCount(3)
+                        .setAnvilLevel(anvilAndToolLevel)
+                        .setToolLevel(level)
+                        .setDamage(level)
+                        .build();
+        BCLRecipeBuilder.anvil(BetterEnd.C.mk(name + "_hoe_head"), hoeHead)
                         .setPrimaryInput(ingot)
                         .setInputCount(2)
                         .setAnvilLevel(anvilAndToolLevel)
                         .setToolLevel(level)
                         .setDamage(level)
                         .build();
-        BCLRecipeBuilder.anvil(BetterEnd.makeID(name + "_sword_blade"), swordBlade)
+        BCLRecipeBuilder.anvil(BetterEnd.C.mk(name + "_sword_blade"), swordBlade)
                         .setPrimaryInput(ingot)
                         .setAnvilLevel(anvilAndToolLevel)
                         .setToolLevel(level)
                         .setDamage(level)
                         .build();
-        BCLRecipeBuilder.anvil(BetterEnd.makeID(name + "_forged_plate"), forgedPlate)
+        BCLRecipeBuilder.anvil(BetterEnd.C.mk(name + "_forged_plate"), forgedPlate)
                         .setPrimaryInput(ingot)
                         .setAnvilLevel(anvilAndToolLevel)
                         .setToolLevel(level)
@@ -429,59 +429,59 @@ public class MetalMaterial {
                         .build();
 
         // Tools from parts
-        BCLRecipeBuilder.smithing(BetterEnd.makeID(name + "_hammer"), hammer)
+        BCLRecipeBuilder.smithing(BetterEnd.C.mk(name + "_hammer"), hammer)
                         .setTemplate(EndTemplates.HANDLE_ATTACHMENT)
                         .setPrimaryInputAndUnlock(block)
                         .setAddition(Items.STICK)
                         .build();
-        BCLRecipeBuilder.smithing(BetterEnd.makeID(name + "_axe"), axe)
+        BCLRecipeBuilder.smithing(BetterEnd.C.mk(name + "_axe"), axe)
                         .setTemplate(EndTemplates.HANDLE_ATTACHMENT)
                         .setPrimaryInputAndUnlock(axeHead)
                         .setAddition(Items.STICK)
                         .build();
-        BCLRecipeBuilder.smithing(BetterEnd.makeID(name + "_pickaxe"), pickaxe)
+        BCLRecipeBuilder.smithing(BetterEnd.C.mk(name + "_pickaxe"), pickaxe)
                         .setTemplate(EndTemplates.HANDLE_ATTACHMENT)
                         .setPrimaryInputAndUnlock(pickaxeHead)
                         .setAddition(Items.STICK)
                         .build();
-        BCLRecipeBuilder.smithing(BetterEnd.makeID(name + "_hoe"), hoe)
+        BCLRecipeBuilder.smithing(BetterEnd.C.mk(name + "_hoe"), hoe)
                         .setTemplate(EndTemplates.HANDLE_ATTACHMENT)
                         .setPrimaryInputAndUnlock(hoeHead)
                         .setAddition(Items.STICK)
                         .build();
-        BCLRecipeBuilder.smithing(BetterEnd.makeID(name + "_sword_handle"), swordHandle)
+        BCLRecipeBuilder.smithing(BetterEnd.C.mk(name + "_sword_handle"), swordHandle)
                         .setTemplate(this.swordHandleTemplate)
                         .setPrimaryInputAndUnlock(Items.STICK)
                         .setAddition(ingot)
                         .build();
-        BCLRecipeBuilder.smithing(BetterEnd.makeID(name + "_sword"), sword)
+        BCLRecipeBuilder.smithing(BetterEnd.C.mk(name + "_sword"), sword)
                         .setTemplate(EndTemplates.TOOL_ASSEMBLY)
                         .setPrimaryInputAndUnlock(swordBlade)
                         .setAddition(swordHandle)
                         .build();
-        BCLRecipeBuilder.smithing(BetterEnd.makeID(name + "_shovel"), shovel)
+        BCLRecipeBuilder.smithing(BetterEnd.C.mk(name + "_shovel"), shovel)
                         .setTemplate(EndTemplates.HANDLE_ATTACHMENT)
                         .setPrimaryInputAndUnlock(shovelHead)
                         .setAddition(Items.STICK)
                         .build();
 
         // Armor crafting
-        BCLRecipeBuilder.crafting(BetterEnd.makeID(name + "_helmet"), helmet)
+        BCLRecipeBuilder.crafting(BetterEnd.C.mk(name + "_helmet"), helmet)
                         .setShape("###", "# #")
                         .addMaterial('#', forgedPlate)
                         .setGroup("end_metal_helmets")
                         .build();
-        BCLRecipeBuilder.crafting(BetterEnd.makeID(name + "_chestplate"), chestplate)
+        BCLRecipeBuilder.crafting(BetterEnd.C.mk(name + "_chestplate"), chestplate)
                         .setShape("# #", "###", "###")
                         .addMaterial('#', forgedPlate)
                         .setGroup("end_metal_chestplates")
                         .build();
-        BCLRecipeBuilder.crafting(BetterEnd.makeID(name + "_leggings"), leggings)
+        BCLRecipeBuilder.crafting(BetterEnd.C.mk(name + "_leggings"), leggings)
                         .setShape("###", "# #", "# #")
                         .addMaterial('#', forgedPlate)
                         .setGroup("end_metal_leggings")
                         .build();
-        BCLRecipeBuilder.crafting(BetterEnd.makeID(name + "_boots"), boots)
+        BCLRecipeBuilder.crafting(BetterEnd.C.mk(name + "_boots"), boots)
                         .setShape("# #", "# #")
                         .addMaterial('#', forgedPlate)
                         .setGroup("end_metal_boots")

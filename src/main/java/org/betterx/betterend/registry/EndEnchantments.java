@@ -15,7 +15,7 @@ public class EndEnchantments {
         if (!Configs.ENCHANTMENT_CONFIG.getBooleanRoot(name, true)) {
             return enchantment;
         }
-        return Registry.register(BuiltInRegistries.ENCHANTMENT, BetterEnd.makeID(name), enchantment);
+        return Registry.register(BuiltInRegistries.ENCHANTMENT, BetterEnd.C.mk(name), enchantment);
     }
 
     public static void register() {
