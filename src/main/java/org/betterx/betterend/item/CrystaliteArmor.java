@@ -13,7 +13,6 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 
 public class CrystaliteArmor extends BaseArmorItem {
-
     public final static MutableComponent CHEST_DESC;
     public final static MutableComponent BOOTS_DESC;
 

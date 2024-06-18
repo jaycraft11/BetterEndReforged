@@ -2,26 +2,30 @@ package org.betterx.betterend.item;
 
 import org.betterx.betterend.effects.EndStatusEffects;
 import org.betterx.betterend.interfaces.MobEffectApplier;
-import org.betterx.betterend.registry.EndItems;
+import org.betterx.betterend.item.material.EndArmorTier;
+import org.betterx.wover.complex.api.equipment.ArmorSlot;
 
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.level.Level;
-
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 
 import java.util.List;
-import org.jetbrains.annotations.Nullable;
 
 public class CrystaliteChestplate extends CrystaliteArmor implements MobEffectApplier {
+    private static Properties defaultSettings() {
+        return EndArmorItem.createDefaultEndArmorSettings(
+                ArmorSlot.CHESTPLATE_SLOT, EndArmorTier.CRYSTALITE,
+                EndArmorItem.startAttributeBuilder(
+                        ArmorSlot.CHESTPLATE_SLOT,
+                        EndArmorTier.CRYSTALITE
+                ).build()
+        );
+    }
 
     public CrystaliteChestplate() {
-        super(Type.CHESTPLATE, EndItems.makeEndItemSettings().rarity(Rarity.RARE));
+        super(Type.CHESTPLATE, defaultSettings());
     }
 
     @Override
@@ -30,9 +34,13 @@ public class CrystaliteChestplate extends CrystaliteArmor implements MobEffectAp
     }
 
     @Override
-    @Environment(EnvType.CLIENT)
-    public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> lines, TooltipFlag tooltip) {
-        super.appendHoverText(stack, level, lines, tooltip);
+    public void appendHoverText(
+            ItemStack itemStack,
+            TooltipContext tooltipContext,
+            List<Component> lines,
+            TooltipFlag tooltipFlag
+    ) {
+        super.appendHoverText(itemStack, tooltipContext, lines, tooltipFlag);
         lines.add(1, Component.empty());
         lines.add(2, CHEST_DESC);
     }

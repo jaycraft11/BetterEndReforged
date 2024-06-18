@@ -14,6 +14,7 @@ import org.betterx.bclib.models.RecordItemModelProvider;
 import org.betterx.betterend.BetterEnd;
 import org.betterx.betterend.item.*;
 import org.betterx.betterend.item.material.EndArmorMaterial;
+import org.betterx.betterend.item.material.EndArmorTier;
 import org.betterx.betterend.item.material.EndToolMaterial;
 import org.betterx.betterend.item.tool.EndHammerItem;
 import org.betterx.betterend.item.tool.EndPickaxe;
@@ -131,10 +132,12 @@ public class EndItems {
             "elytra_armored",
             new ArmoredElytra(
                     "elytra_armored",
-                    EndArmorMaterial.AETERNIUM,
+                    EndArmorTier.AETERNIUM,
                     Items.PHANTOM_MEMBRANE,
                     900,
                     0.97D,
+                    1.15f,
+                    1.15f,
                     true
             )
     );
@@ -185,7 +188,7 @@ public class EndItems {
                     EndToolMaterial.AETERNIUM,
                     6.0F,
                     -3.0F,
-                    0.3D,
+                    0.3f,
                     makeEndItemSettings().fireResistant()
             )
     );
@@ -227,7 +230,7 @@ public class EndItems {
                     Tiers.IRON,
                     5.0F,
                     -3.2F,
-                    0.2D,
+                    0.2f,
                     makeEndItemSettings()
             )
     );
@@ -237,7 +240,7 @@ public class EndItems {
                     Tiers.GOLD,
                     4.5F,
                     -3.4F,
-                    0.3D,
+                    0.3f,
                     makeEndItemSettings()
             )
     );
@@ -247,7 +250,7 @@ public class EndItems {
                     Tiers.DIAMOND,
                     5.5F,
                     -3.1F,
-                    0.2D,
+                    0.2f,
                     makeEndItemSettings()
             )
     );
@@ -257,7 +260,7 @@ public class EndItems {
                     Tiers.NETHERITE,
                     5.0F,
                     -3.0F,
-                    0.2D,
+                    0.2f,
                     makeEndItemSettings().fireResistant()
             )
     );
@@ -353,4 +356,7 @@ public class EndItems {
         }
     }
 
+    public static Item.Properties defaultSettings() {
+        return new Item.Properties();
+    }
 }

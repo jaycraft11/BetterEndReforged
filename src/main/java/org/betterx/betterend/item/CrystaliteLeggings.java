@@ -1,22 +1,32 @@
 package org.betterx.betterend.item;
 
-import org.betterx.betterend.registry.EndItems;
+import org.betterx.betterend.item.material.EndArmorTier;
+import org.betterx.wover.complex.api.equipment.ArmorSlot;
 
-import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.item.Rarity;
-
-import java.util.UUID;
 
 public class CrystaliteLeggings extends CrystaliteArmor {
+    private static Properties defaultSettings() {
+        return EndArmorItem.createDefaultEndArmorSettings(
+                ArmorSlot.LEGGINGS_SLOT, EndArmorTier.CRYSTALITE,
+                EndArmorItem.startAttributeBuilder(
+                        ArmorSlot.LEGGINGS_SLOT,
+                        EndArmorTier.CRYSTALITE
+                ).add(
+                        Attributes.MAX_HEALTH,
+                        new AttributeModifier(
+                                EndArmorItem.MAX_HEALTH_BOOST,
+                                4.0,
+                                AttributeModifier.Operation.ADD_VALUE
+                        ),
+                        EquipmentSlotGroup.HEAD
+                ).build()
+        );
+    }
 
     public CrystaliteLeggings() {
-        super(Type.LEGGINGS, EndItems.makeEndItemSettings().rarity(Rarity.RARE));
-        UUID uuid = ARMOR_MODIFIER_UUID_PER_SLOT[EquipmentSlot.LEGS.getIndex()];
-        addAttributeModifier(
-                Attributes.MAX_HEALTH,
-                new AttributeModifier(uuid, "Armor health boost", 4.0, AttributeModifier.Operation.ADDITION)
-        );
+        super(Type.LEGGINGS, defaultSettings());
     }
 }

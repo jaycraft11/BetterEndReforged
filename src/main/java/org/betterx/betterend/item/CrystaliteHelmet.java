@@ -1,22 +1,32 @@
 package org.betterx.betterend.item;
 
+import org.betterx.betterend.item.material.EndArmorTier;
 import org.betterx.betterend.registry.EndAttributes;
-import org.betterx.betterend.registry.EndItems;
+import org.betterx.wover.complex.api.equipment.ArmorSlot;
 
-import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
-import net.minecraft.world.item.Rarity;
-
-import java.util.UUID;
 
 public class CrystaliteHelmet extends CrystaliteArmor {
+    private static Properties defaultSettings() {
+        return EndArmorItem.createDefaultEndArmorSettings(
+                ArmorSlot.HELMET_SLOT, EndArmorTier.CRYSTALITE,
+                EndArmorItem.startAttributeBuilder(
+                        ArmorSlot.HELMET_SLOT,
+                        EndArmorTier.CRYSTALITE
+                ).add(
+                        EndAttributes.BLINDNESS_RESISTANCE,
+                        new AttributeModifier(
+                                EndArmorItem.BASE_BLINDNESS_RESISTANCE,
+                                1.0,
+                                AttributeModifier.Operation.ADD_VALUE
+                        ),
+                        EquipmentSlotGroup.HEAD
+                ).build()
+        );
+    }
 
     public CrystaliteHelmet() {
-        super(Type.HELMET, EndItems.makeEndItemSettings().rarity(Rarity.RARE));
-        UUID uuid = ARMOR_MODIFIER_UUID_PER_SLOT[EquipmentSlot.HEAD.getIndex()];
-        addAttributeModifier(
-                EndAttributes.BLINDNESS_RESISTANCE,
-                new AttributeModifier(uuid, "Helmet blindness resistance", 1.0, AttributeModifier.Operation.ADDITION)
-        );
+        super(Type.HELMET, defaultSettings());
     }
 }
