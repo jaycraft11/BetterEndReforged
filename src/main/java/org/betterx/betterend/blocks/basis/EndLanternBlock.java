@@ -1,13 +1,14 @@
 package org.betterx.betterend.blocks.basis;
 
 import org.betterx.bclib.blocks.BaseBlockNotFull;
-import org.betterx.wover.block.api.BlockProperties;
 import org.betterx.bclib.client.models.ModelsHelper;
+import org.betterx.wover.block.api.BlockProperties;
 
 import net.minecraft.client.resources.model.UnbakedModel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.LevelAccessor;
@@ -29,6 +30,7 @@ import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 
 import java.util.Map;
+import org.jetbrains.annotations.Nullable;
 
 @SuppressWarnings("deprecation")
 public class EndLanternBlock extends BaseBlockNotFull.Wood implements SimpleWaterloggedBlock, LiquidBlockContainer {
@@ -111,7 +113,13 @@ public class EndLanternBlock extends BaseBlockNotFull.Wood implements SimpleWate
     }
 
     @Override
-    public boolean canPlaceLiquid(BlockGetter world, BlockPos pos, BlockState state, Fluid fluid) {
+    public boolean canPlaceLiquid(
+            @Nullable Player player,
+            BlockGetter blockGetter,
+            BlockPos blockPos,
+            BlockState blockState,
+            Fluid fluid
+    ) {
         return false;
     }
 
@@ -133,7 +141,7 @@ public class EndLanternBlock extends BaseBlockNotFull.Wood implements SimpleWate
             Map<ResourceLocation, UnbakedModel> modelCache
     ) {
         String floor = blockState.getValue(IS_FLOOR) ? "_floor" : "";
-        ResourceLocation modelId = new ResourceLocation(stateId.getNamespace(), "block/" + stateId.getPath() + floor);
+        ResourceLocation modelId = ResourceLocation.fromNamespaceAndPath(stateId.getNamespace(), "block/" + stateId.getPath() + floor);
         registerBlockModel(stateId, modelId, blockState, modelCache);
         return ModelsHelper.createBlockSimple(modelId);
     }

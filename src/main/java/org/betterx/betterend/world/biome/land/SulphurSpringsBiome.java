@@ -1,7 +1,5 @@
 package org.betterx.betterend.world.biome.land;
 
-import org.betterx.bclib.api.v2.levelgen.surface.SurfaceRuleBuilder;
-import org.betterx.bclib.api.v2.levelgen.surface.rules.SwitchRuleSource;
 import org.betterx.bclib.interfaces.SurfaceMaterialProvider;
 import org.betterx.betterend.registry.*;
 import org.betterx.betterend.registry.features.EndLakeFeatures;
@@ -10,6 +8,8 @@ import org.betterx.betterend.registry.features.EndVegetationFeatures;
 import org.betterx.betterend.world.biome.EndBiome;
 import org.betterx.betterend.world.biome.EndBiomeBuilder;
 import org.betterx.betterend.world.surface.SulphuricSurfaceNoiseCondition;
+import org.betterx.wover.surface.api.SurfaceRuleBuilder;
+import org.betterx.wover.surface.impl.rules.SwitchRuleSource;
 
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.block.Blocks;
@@ -87,13 +87,12 @@ public class SulphurSpringsBiome extends EndBiome.Config {
                 );
                 return super
                         .surface()
-                        .rule(2, SurfaceRules.ifTrue(SurfaceRules.ON_FLOOR, surfaceBlockRule))
+                        .rule(SurfaceRules.ifTrue(SurfaceRules.ON_FLOOR, surfaceBlockRule), 2)
                         .rule(
-                                2,
                                 SurfaceRules.ifTrue(
                                         SurfaceRules.stoneDepthCheck(5, false, CaveSurface.FLOOR),
                                         surfaceBlockRule
-                                )
+                                ), 2
                         );
             }
         };

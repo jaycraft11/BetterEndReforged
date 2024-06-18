@@ -8,6 +8,7 @@ import org.betterx.betterend.registry.EndStructures;
 import org.betterx.betterend.registry.features.EndLakeFeatures;
 import org.betterx.betterend.registry.features.EndVegetationFeatures;
 import org.betterx.betterend.world.biome.EndBiome;
+import org.betterx.betterend.world.biome.EndBiomeBuilder;
 
 import net.minecraft.tags.BiomeTags;
 import net.minecraft.world.entity.EntityType;
@@ -23,7 +24,7 @@ public class UmbrellaJungleBiome extends EndBiome.Config {
         builder
                 .fogColor(87, 223, 221)
                 .waterAndFogColor(119, 198, 253)
-                .foliageColor(27, 183, 194)
+                .foliageColorOverride(27, 183, 194)
                 .fogDensity(2.3F)
                 .particles(EndParticles.JUNGLE_SPORE, 0.001F)
                 .music(EndSounds.MUSIC_FOREST)

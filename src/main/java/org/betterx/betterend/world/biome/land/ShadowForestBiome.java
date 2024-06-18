@@ -9,6 +9,7 @@ import org.betterx.betterend.registry.features.EndLakeFeatures;
 import org.betterx.betterend.registry.features.EndOreFeatures;
 import org.betterx.betterend.registry.features.EndVegetationFeatures;
 import org.betterx.betterend.world.biome.EndBiome;
+import org.betterx.betterend.world.biome.EndBiomeBuilder;
 
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.tags.BiomeTags;
@@ -46,7 +47,7 @@ public class ShadowForestBiome extends EndBiome.Config {
                 .feature(EndVegetationFeatures.CHARNIA_RED_RARE)
                 .structure(BiomeTags.HAS_END_CITY)
                 .structure(EndStructures.ETERNAL_PORTAL)
-                .spawn(EndEntities.SHADOW_WALKER, 80, 2, 4)
+                .spawn(EndEntities.SHADOW_WALKER.type(), 80, 2, 4)
                 .spawn(EntityType.ENDERMAN, 40, 1, 4)
                 .spawn(EntityType.PHANTOM, 1, 1, 2);
     }

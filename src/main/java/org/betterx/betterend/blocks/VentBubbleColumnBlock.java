@@ -12,6 +12,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.BlockGetter;
@@ -32,6 +33,7 @@ import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 
 import java.util.Optional;
+import org.jetbrains.annotations.Nullable;
 
 public class VentBubbleColumnBlock extends Block implements BucketPickup, LiquidBlockContainer {
     public VentBubbleColumnBlock() {
@@ -147,7 +149,13 @@ public class VentBubbleColumnBlock extends Block implements BucketPickup, Liquid
     }
 
     @Override
-    public boolean canPlaceLiquid(BlockGetter world, BlockPos pos, BlockState state, Fluid fluid) {
+    public boolean canPlaceLiquid(
+            @Nullable Player player,
+            BlockGetter blockGetter,
+            BlockPos blockPos,
+            BlockState blockState,
+            Fluid fluid
+    ) {
         return false;
     }
 

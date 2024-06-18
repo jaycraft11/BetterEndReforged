@@ -1,31 +1,35 @@
 package org.betterx.betterend.blocks;
 
 import org.betterx.bclib.behaviours.interfaces.BehaviourSand;
-import org.betterx.bclib.interfaces.TagProvider;
 import org.betterx.ui.ColorUtil;
+import org.betterx.wover.block.api.BlockTagProvider;
+import org.betterx.wover.loot.api.BlockLootProvider;
+import org.betterx.wover.loot.api.LootLookupProvider;
+import org.betterx.wover.tag.api.event.context.TagBootstrapContext;
 import org.betterx.wover.tag.api.predefined.CommonBlockTags;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
-import net.minecraft.tags.TagKey;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.FallingBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.storage.loot.LootParams;
+import net.minecraft.world.level.storage.loot.LootTable;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 
-import java.util.Collections;
-import java.util.List;
+import org.jetbrains.annotations.NotNull;
 
-public class EndstoneDustBlock extends FallingBlock implements TagProvider, BehaviourSand {
+public class EndstoneDustBlock extends FallingBlock implements BlockTagProvider, BehaviourSand, BlockLootProvider {
     @Environment(EnvType.CLIENT)
     private static final int COLOR = ColorUtil.color(226, 239, 168);
+
+    public static final MapCodec<EndstoneDustBlock> CODEC = MapCodec.unit(EndstoneDustBlock::new);
 
     public EndstoneDustBlock() {
         super(FabricBlockSettings
@@ -35,9 +39,17 @@ public class EndstoneDustBlock extends FallingBlock implements TagProvider, Beha
     }
 
     @Override
-    @SuppressWarnings("deprecation")
-    public List<ItemStack> getDrops(BlockState state, LootParams.Builder builder) {
-        return Collections.singletonList(new ItemStack(this));
+    protected MapCodec<? extends FallingBlock> codec() {
+        return CODEC;
+    }
+
+    @Override
+    public LootTable.Builder registerBlockLoot(
+            @NotNull ResourceLocation location,
+            @NotNull LootLookupProvider provider,
+            @NotNull ResourceKey<LootTable> tableKey
+    ) {
+        return provider.drop(this);
     }
 
     @Environment(EnvType.CLIENT)
@@ -46,7 +58,7 @@ public class EndstoneDustBlock extends FallingBlock implements TagProvider, Beha
     }
 
     @Override
-    public void addTags(List<TagKey<Block>> blockTags, List<TagKey<Item>> itemTags) {
-        blockTags.add(CommonBlockTags.END_STONES);
+    public void registerBlockTags(ResourceLocation location, TagBootstrapContext<Block> context) {
+        context.add(this, CommonBlockTags.END_STONES);
     }
 }
