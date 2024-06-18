@@ -1,9 +1,6 @@
 package org.betterx.betterend.registry;
 
 import org.betterx.betterend.BetterEnd;
-import org.betterx.wover.feature.api.configured.ConfiguredFeatureKey;
-import org.betterx.wover.feature.api.configured.configurators.WithConfiguration;
-import org.betterx.wover.feature.api.placed.PlacedConfiguredFeatureKey;
 import org.betterx.wover.feature.api.placed.PlacedFeatureKey;
 import org.betterx.wover.feature.api.placed.PlacedFeatureManager;
 
@@ -28,105 +25,98 @@ public class EndVegetationFeatures {
     public static final PlacedFeatureKey LUMECORN = createVegetationKey("lumecorn");
     public static final PlacedFeatureKey LARGE_AMARANITA = createVegetationKey("large_amaranita");
     public static final PlacedFeatureKey NEON_CACTUS = createVegetationKey("neon_cactus");
-    public static final PlacedConfiguredFeatureKey PYTHADENDRON_BUSH = createVegetationKey("pythadendron_bush", EndConfiguredVegetationFeatures.PYTHADENDRON_BUSH_CONFIGURATION);
-    public static final PlacedConfiguredFeatureKey DRAGON_TREE_BUSH = createVegetationKey("dragon_tree_bush", EndConfiguredVegetationFeatures.DRAGON_TREE_BUSH_CONFIGURATION);
-    public static final PlacedConfiguredFeatureKey LUCERNIA_BUSH = createVegetationKey("lucernia_bush", EndConfiguredVegetationFeatures.LUCERNIA_BUSH_CONFIGURATION);
-    public static final PlacedConfiguredFeatureKey LUCERNIA_BUSH_RARE = createVegetationKey("lucernia_bush_rare", EndConfiguredVegetationFeatures.LUCERNIA_BUSH_RARE_CONFIGURATION);
+    public static final PlacedFeatureKey PYTHADENDRON_BUSH = createVegetationKey("pythadendron_bush");
+    public static final PlacedFeatureKey DRAGON_TREE_BUSH = createVegetationKey("dragon_tree_bush");
+    public static final PlacedFeatureKey LUCERNIA_BUSH = createVegetationKey("lucernia_bush");
+    public static final PlacedFeatureKey LUCERNIA_BUSH_RARE = createVegetationKey("lucernia_bush_rare");
 
     //Vines
-    public static final PlacedConfiguredFeatureKey DENSE_VINE = createVegetationKey("dense_vine", EndConfiguredVegetationFeatures.DENSE_VINE_CONFIGURATION);
-    public static final PlacedConfiguredFeatureKey TWISTED_VINE = createVegetationKey("twisted_vine", EndConfiguredVegetationFeatures.TWISTED_VINE_CONFIGURATION);
-    public static final PlacedConfiguredFeatureKey BULB_VINE = createVegetationKey("bulb_vine", EndConfiguredVegetationFeatures.BULB_VINE_CONFIGURATION);
-    public static final PlacedConfiguredFeatureKey JUNGLE_VINE = createVegetationKey("jungle_vine", EndConfiguredVegetationFeatures.JUNGLE_VINE_CONFIGURATION);
-    public static final PlacedConfiguredFeatureKey BLUE_VINE = createVegetationKey("blue_vine", EndConfiguredVegetationFeatures.BLUE_VINE_CONFIGURATION);
+    public static final PlacedFeatureKey DENSE_VINE = createVegetationKey("dense_vine");
+    public static final PlacedFeatureKey TWISTED_VINE = createVegetationKey("twisted_vine");
+    public static final PlacedFeatureKey BULB_VINE = createVegetationKey("bulb_vine");
+    public static final PlacedFeatureKey JUNGLE_VINE = createVegetationKey("jungle_vine");
+    public static final PlacedFeatureKey BLUE_VINE = createVegetationKey("blue_vine");
 
     // Ceil plants
-    public static final PlacedConfiguredFeatureKey SMALL_JELLYSHROOM_CEIL = createVegetationKey("small_jellyshroom_ceil", EndConfiguredVegetationFeatures.SMALL_JELLYSHROOM_CEIL_CONFIGURATION);
+    public static final PlacedFeatureKey SMALL_JELLYSHROOM_CEIL = createVegetationKey("small_jellyshroom_ceil");
 
     // Wall Plants
-    public static final PlacedConfiguredFeatureKey PURPLE_POLYPORE = createVegetationKey("purple_polypore", EndConfiguredVegetationFeatures.PURPLE_POLYPORE_CONFIGURATION);
-    public static final PlacedConfiguredFeatureKey AURANT_POLYPORE = createVegetationKey("aurant_polypore", EndConfiguredVegetationFeatures.AURANT_POLYPORE_CONFIGURATION);
-    public static final PlacedConfiguredFeatureKey TAIL_MOSS = createVegetationKey("tail_moss", EndConfiguredVegetationFeatures.TAIL_MOSS_CONFIGURATION);
-    public static final PlacedConfiguredFeatureKey CYAN_MOSS = createVegetationKey("cyan_moss", EndConfiguredVegetationFeatures.CYAN_MOSS_CONFIGURATION);
-    public static final PlacedConfiguredFeatureKey TAIL_MOSS_WOOD = createVegetationKey("tail_moss_wood", EndConfiguredVegetationFeatures.TAIL_MOSS_WOOD_CONFIGURATION);
-    public static final PlacedConfiguredFeatureKey CYAN_MOSS_WOOD = createVegetationKey("cyan_moss_wood", EndConfiguredVegetationFeatures.CYAN_MOSS_WOOD_CONFIGURATION);
-    public static final PlacedConfiguredFeatureKey TWISTED_MOSS = createVegetationKey("twisted_moss", EndConfiguredVegetationFeatures.TWISTED_MOSS_CONFIGURATION);
-    public static final PlacedConfiguredFeatureKey TWISTED_MOSS_WOOD = createVegetationKey("twisted_moss_wood", EndConfiguredVegetationFeatures.TWISTED_MOSS_WOOD_CONFIGURATION);
-    public static final PlacedConfiguredFeatureKey BULB_MOSS = createVegetationKey("bulb_moss", EndConfiguredVegetationFeatures.BULB_MOSS_CONFIGURATION);
-    public static final PlacedConfiguredFeatureKey BULB_MOSS_WOOD = createVegetationKey("bulb_moss_wood", EndConfiguredVegetationFeatures.BULB_MOSS_WOOD_CONFIGURATION);
-    public static final PlacedConfiguredFeatureKey SMALL_JELLYSHROOM_WALL = createVegetationKey("small_jellyshroom_wall", EndConfiguredVegetationFeatures.SMALL_JELLYSHROOM_WALL_CONFIGURATION);
-    public static final PlacedConfiguredFeatureKey SMALL_JELLYSHROOM_WOOD = createVegetationKey("small_jellyshroom_wood", EndConfiguredVegetationFeatures.SMALL_JELLYSHROOM_WOOD_CONFIGURATION);
-    public static final PlacedConfiguredFeatureKey JUNGLE_FERN_WOOD = createVegetationKey("jungle_fern_wood", EndConfiguredVegetationFeatures.JUNGLE_FERN_WOOD_CONFIGURATION);
-    public static final PlacedConfiguredFeatureKey RUSCUS = createVegetationKey("ruscus", EndConfiguredVegetationFeatures.RUSCUS_CONFIGURATION);
-    public static final PlacedConfiguredFeatureKey RUSCUS_WOOD = createVegetationKey("ruscus_wood", EndConfiguredVegetationFeatures.RUSCUS_WOOD_CONFIGURATION);
+    public static final PlacedFeatureKey PURPLE_POLYPORE = createVegetationKey("purple_polypore");
+    public static final PlacedFeatureKey AURANT_POLYPORE = createVegetationKey("aurant_polypore");
+    public static final PlacedFeatureKey TAIL_MOSS = createVegetationKey("tail_moss");
+    public static final PlacedFeatureKey CYAN_MOSS = createVegetationKey("cyan_moss");
+    public static final PlacedFeatureKey TAIL_MOSS_WOOD = createVegetationKey("tail_moss_wood");
+    public static final PlacedFeatureKey CYAN_MOSS_WOOD = createVegetationKey("cyan_moss_wood");
+    public static final PlacedFeatureKey TWISTED_MOSS = createVegetationKey("twisted_moss");
+    public static final PlacedFeatureKey TWISTED_MOSS_WOOD = createVegetationKey("twisted_moss_wood");
+    public static final PlacedFeatureKey BULB_MOSS = createVegetationKey("bulb_moss");
+    public static final PlacedFeatureKey BULB_MOSS_WOOD = createVegetationKey("bulb_moss_wood");
+    public static final PlacedFeatureKey SMALL_JELLYSHROOM_WALL = createVegetationKey("small_jellyshroom_wall");
+    public static final PlacedFeatureKey SMALL_JELLYSHROOM_WOOD = createVegetationKey("small_jellyshroom_wood");
+    public static final PlacedFeatureKey JUNGLE_FERN_WOOD = createVegetationKey("jungle_fern_wood");
+    public static final PlacedFeatureKey RUSCUS = createVegetationKey("ruscus");
+    public static final PlacedFeatureKey RUSCUS_WOOD = createVegetationKey("ruscus_wood");
 
     // Sky plants
-    public static final PlacedConfiguredFeatureKey FILALUX = createVegetationKey("filalux", EndConfiguredVegetationFeatures.FILALUX_CONFIGURATION);
+    public static final PlacedFeatureKey FILALUX = createVegetationKey("filalux");
 
     // Water
-    public static final PlacedConfiguredFeatureKey BUBBLE_CORAL = createVegetationKey("bubble_coral", EndConfiguredVegetationFeatures.BUBBLE_CORAL_CONFIGURATION);
-    public static final PlacedConfiguredFeatureKey BUBBLE_CORAL_RARE = createVegetationKey("bubble_coral_rare", EndConfiguredVegetationFeatures.BUBBLE_CORAL_RARE_CONFIGURATION);
-    public static final PlacedConfiguredFeatureKey END_LILY = createVegetationKey("end_lily", EndConfiguredVegetationFeatures.END_LILY_CONFIGURATION);
-    public static final PlacedConfiguredFeatureKey END_LILY_RARE = createVegetationKey("end_lily_rare", EndConfiguredVegetationFeatures.END_LILY_RARE_CONFIGURATION);
-    public static final PlacedConfiguredFeatureKey END_LOTUS = createVegetationKey("end_lotus", EndConfiguredVegetationFeatures.END_LOTUS_CONFIGURATION);
-    public static final PlacedConfiguredFeatureKey END_LOTUS_LEAF = createVegetationKey("end_lotus_leaf", EndConfiguredVegetationFeatures.END_LOTUS_LEAF_CONFIGURATION);
-    public static final PlacedConfiguredFeatureKey HYDRALUX = createVegetationKey("hydralux", EndConfiguredVegetationFeatures.HYDRALUX_CONFIGURATION);
-    public static final PlacedConfiguredFeatureKey POND_ANEMONE = createVegetationKey("pond_anemone", EndConfiguredVegetationFeatures.POND_ANEMONE_CONFIGURATION);
-    public static final PlacedConfiguredFeatureKey MENGER_SPONGE = createVegetationKey("menger_sponge", EndConfiguredVegetationFeatures.MENGER_SPONGE_CONFIGURATION);
-    public static final PlacedConfiguredFeatureKey FLAMAEA = createVegetationKey("flamaea", EndConfiguredVegetationFeatures.FLAMAEA_CONFIGURATION);
-    public static final PlacedConfiguredFeatureKey CHARNIA_RED = createVegetationKey("charnia_red", EndConfiguredVegetationFeatures.CHARNIA_RED_CONFIGURATION);
-    public static final PlacedConfiguredFeatureKey CHARNIA_PURPLE = createVegetationKey("charnia_purple", EndConfiguredVegetationFeatures.CHARNIA_PURPLE_CONFIGURATION);
-    public static final PlacedConfiguredFeatureKey CHARNIA_CYAN = createVegetationKey("charnia_cyan", EndConfiguredVegetationFeatures.CHARNIA_CYAN_CONFIGURATION);
-    public static final PlacedConfiguredFeatureKey CHARNIA_LIGHT_BLUE = createVegetationKey("charnia_light_blue", EndConfiguredVegetationFeatures.CHARNIA_LIGHT_BLUE_CONFIGURATION);
-    public static final PlacedConfiguredFeatureKey CHARNIA_ORANGE = createVegetationKey("charnia_orange", EndConfiguredVegetationFeatures.CHARNIA_ORANGE_CONFIGURATION);
-    public static final PlacedConfiguredFeatureKey CHARNIA_GREEN = createVegetationKey("charnia_green", EndConfiguredVegetationFeatures.CHARNIA_GREEN_CONFIGURATION);
-    public static final PlacedConfiguredFeatureKey CHARNIA_RED_RARE = createVegetationKey("charnia_red_rare", EndConfiguredVegetationFeatures.CHARNIA_RED_RARE_CONFIGURATION);
+    public static final PlacedFeatureKey BUBBLE_CORAL = createVegetationKey("bubble_coral");
+    public static final PlacedFeatureKey BUBBLE_CORAL_RARE = createVegetationKey("bubble_coral_rare");
+    public static final PlacedFeatureKey END_LILY = createVegetationKey("end_lily");
+    public static final PlacedFeatureKey END_LILY_RARE = createVegetationKey("end_lily_rare");
+    public static final PlacedFeatureKey END_LOTUS = createVegetationKey("end_lotus");
+    public static final PlacedFeatureKey END_LOTUS_LEAF = createVegetationKey("end_lotus_leaf");
+    public static final PlacedFeatureKey HYDRALUX = createVegetationKey("hydralux");
+    public static final PlacedFeatureKey POND_ANEMONE = createVegetationKey("pond_anemone");
+    public static final PlacedFeatureKey MENGER_SPONGE = createVegetationKey("menger_sponge");
+    public static final PlacedFeatureKey FLAMAEA = createVegetationKey("flamaea");
+    public static final PlacedFeatureKey CHARNIA_RED = createVegetationKey("charnia_red");
+    public static final PlacedFeatureKey CHARNIA_PURPLE = createVegetationKey("charnia_purple");
+    public static final PlacedFeatureKey CHARNIA_CYAN = createVegetationKey("charnia_cyan");
+    public static final PlacedFeatureKey CHARNIA_LIGHT_BLUE = createVegetationKey("charnia_light_blue");
+    public static final PlacedFeatureKey CHARNIA_ORANGE = createVegetationKey("charnia_orange");
+    public static final PlacedFeatureKey CHARNIA_GREEN = createVegetationKey("charnia_green");
+    public static final PlacedFeatureKey CHARNIA_RED_RARE = createVegetationKey("charnia_red_rare");
 
     // Plants
-    public static final PlacedConfiguredFeatureKey UMBRELLA_MOSS = createVegetationKey("umbrella_moss", EndConfiguredVegetationFeatures.UMBRELLA_MOSS_CONFIGURATION);
-    public static final PlacedConfiguredFeatureKey CREEPING_MOSS = createVegetationKey("creeping_moss", EndConfiguredVegetationFeatures.CREEPING_MOSS_CONFIGURATION);
-    public static final PlacedConfiguredFeatureKey CHORUS_GRASS = createVegetationKey("chorus_grass", EndConfiguredVegetationFeatures.CHORUS_GRASS_CONFIGURATION);
-    public static final PlacedConfiguredFeatureKey CRYSTAL_GRASS = createVegetationKey("crystal_grass", EndConfiguredVegetationFeatures.CRYSTAL_GRASS_CONFIGURATION);
-    public static final PlacedConfiguredFeatureKey SHADOW_PLANT = createVegetationKey("shadow_plant", EndConfiguredVegetationFeatures.SHADOW_PLANT_CONFIGURATION);
-    public static final PlacedConfiguredFeatureKey MURKWEED = createVegetationKey("murkweed", EndConfiguredVegetationFeatures.MURKWEED_CONFIGURATION);
-    public static final PlacedConfiguredFeatureKey NEEDLEGRASS = createVegetationKey("needlegrass", EndConfiguredVegetationFeatures.NEEDLEGRASS_CONFIGURATION);
-    public static final PlacedConfiguredFeatureKey SHADOW_BERRY = createVegetationKey("shadow_berry", EndConfiguredVegetationFeatures.SHADOW_BERRY_CONFIGURATION);
-    public static final PlacedConfiguredFeatureKey BUSHY_GRASS = createVegetationKey("bushy_grass", EndConfiguredVegetationFeatures.BUSHY_GRASS_CONFIGURATION);
-    public static final PlacedConfiguredFeatureKey BUSHY_GRASS_WG = createVegetationKey("bushy_grass_wg", EndConfiguredVegetationFeatures.BUSHY_GRASS_WG_CONFIGURATION);
-    public static final PlacedConfiguredFeatureKey AMBER_GRASS = createVegetationKey("amber_grass", EndConfiguredVegetationFeatures.AMBER_GRASS_CONFIGURATION);
-    public static final PlacedConfiguredFeatureKey TWISTED_UMBRELLA_MOSS = createVegetationKey("twisted_umbrella_moss", EndConfiguredVegetationFeatures.TWISTED_UMBRELLA_MOSS_CONFIGURATION);
-    public static final PlacedConfiguredFeatureKey JUNGLE_GRASS = createVegetationKey("jungle_grass", EndConfiguredVegetationFeatures.JUNGLE_GRASS_CONFIGURATION);
-    public static final PlacedConfiguredFeatureKey SMALL_JELLYSHROOM_FLOOR = createVegetationKey("small_jellyshroom_floor", EndConfiguredVegetationFeatures.SMALL_JELLYSHROOM_FLOOR_CONFIGURATION);
-    public static final PlacedConfiguredFeatureKey BLOSSOM_BERRY = createVegetationKey("blossom_berry", EndConfiguredVegetationFeatures.BLOSSOM_BERRY_CONFIGURATION);
-    public static final PlacedConfiguredFeatureKey BLOOMING_COOKSONIA = createVegetationKey("blooming_cooksonia", EndConfiguredVegetationFeatures.BLOOMING_COOKSONIA_CONFIGURATION);
-    public static final PlacedConfiguredFeatureKey SALTEAGO = createVegetationKey("salteago", EndConfiguredVegetationFeatures.SALTEAGO_CONFIGURATION);
-    public static final PlacedConfiguredFeatureKey VAIOLUSH_FERN = createVegetationKey("vaiolush_fern", EndConfiguredVegetationFeatures.VAIOLUSH_FERN_CONFIGURATION);
-    public static final PlacedConfiguredFeatureKey FRACTURN = createVegetationKey("fracturn", EndConfiguredVegetationFeatures.FRACTURN_CONFIGURATION);
-    public static final PlacedConfiguredFeatureKey UMBRELLA_MOSS_RARE = createVegetationKey("umbrella_moss_rare", EndConfiguredVegetationFeatures.UMBRELLA_MOSS_RARE_CONFIGURATION);
-    public static final PlacedConfiguredFeatureKey CREEPING_MOSS_RARE = createVegetationKey("creeping_moss_rare", EndConfiguredVegetationFeatures.CREEPING_MOSS_RARE_CONFIGURATION);
-    public static final PlacedConfiguredFeatureKey TWISTED_UMBRELLA_MOSS_RARE = createVegetationKey("twisted_umbrella_moss_rare", EndConfiguredVegetationFeatures.TWISTED_UMBRELLA_MOSS_RARE_CONFIGURATION);
-    public static final PlacedConfiguredFeatureKey ORANGO = createVegetationKey("orango", EndConfiguredVegetationFeatures.ORANGO_CONFIGURATION);
-    public static final PlacedConfiguredFeatureKey AERIDIUM = createVegetationKey("aeridium", EndConfiguredVegetationFeatures.AERIDIUM_CONFIGURATION);
-    public static final PlacedConfiguredFeatureKey LUTEBUS = createVegetationKey("lutebus", EndConfiguredVegetationFeatures.LUTEBUS_CONFIGURATION);
-    public static final PlacedConfiguredFeatureKey LAMELLARIUM = createVegetationKey("lamellarium", EndConfiguredVegetationFeatures.LAMELLARIUM_CONFIGURATION);
-    public static final PlacedConfiguredFeatureKey SMALL_AMARANITA = createVegetationKey("small_amaranita", EndConfiguredVegetationFeatures.SMALL_AMARANITA_CONFIGURATION);
-    public static final PlacedConfiguredFeatureKey GLOBULAGUS = createVegetationKey("globulagus", EndConfiguredVegetationFeatures.GLOBULAGUS_CONFIGURATION);
-    public static final PlacedConfiguredFeatureKey CLAWFERN = createVegetationKey("clawfern", EndConfiguredVegetationFeatures.CLAWFERN_CONFIGURATION);
-    public static final PlacedConfiguredFeatureKey BOLUX_MUSHROOM = createVegetationKey("bolux_mushroom", EndConfiguredVegetationFeatures.BOLUX_MUSHROOM_CONFIGURATION);
-    public static final PlacedConfiguredFeatureKey CHORUS_MUSHROOM = createVegetationKey("chorus_mushroom", EndConfiguredVegetationFeatures.CHORUS_MUSHROOM_CONFIGURATION);
-    public static final PlacedConfiguredFeatureKey AMBER_ROOT = createVegetationKey("amber_root", EndConfiguredVegetationFeatures.AMBER_ROOT_CONFIGURATION);
-    public static final PlacedConfiguredFeatureKey INFLEXIA = createVegetationKey("inflexia", EndConfiguredVegetationFeatures.INFLEXIA_CONFIGURATION);
-    public static final PlacedConfiguredFeatureKey FLAMMALIX = createVegetationKey("flammalix", EndConfiguredVegetationFeatures.FLAMMALIX_CONFIGURATION);
-    public static final PlacedConfiguredFeatureKey LANCELEAF = createVegetationKey("lanceleaf", EndConfiguredVegetationFeatures.LANCELEAF_CONFIGURATION);
-    public static final PlacedConfiguredFeatureKey GLOW_PILLAR = createVegetationKey("glow_pillar", EndConfiguredVegetationFeatures.GLOW_PILLAR_CONFIGURATION);
+    public static final PlacedFeatureKey UMBRELLA_MOSS = createVegetationKey("umbrella_moss");
+    public static final PlacedFeatureKey CREEPING_MOSS = createVegetationKey("creeping_moss");
+    public static final PlacedFeatureKey CHORUS_GRASS = createVegetationKey("chorus_grass");
+    public static final PlacedFeatureKey CRYSTAL_GRASS = createVegetationKey("crystal_grass");
+    public static final PlacedFeatureKey SHADOW_PLANT = createVegetationKey("shadow_plant");
+    public static final PlacedFeatureKey MURKWEED = createVegetationKey("murkweed");
+    public static final PlacedFeatureKey NEEDLEGRASS = createVegetationKey("needlegrass");
+    public static final PlacedFeatureKey SHADOW_BERRY = createVegetationKey("shadow_berry");
+    public static final PlacedFeatureKey BUSHY_GRASS = createVegetationKey("bushy_grass");
+    public static final PlacedFeatureKey BUSHY_GRASS_WG = createVegetationKey("bushy_grass_wg");
+    public static final PlacedFeatureKey AMBER_GRASS = createVegetationKey("amber_grass");
+    public static final PlacedFeatureKey TWISTED_UMBRELLA_MOSS = createVegetationKey("twisted_umbrella_moss");
+    public static final PlacedFeatureKey JUNGLE_GRASS = createVegetationKey("jungle_grass");
+    public static final PlacedFeatureKey SMALL_JELLYSHROOM_FLOOR = createVegetationKey("small_jellyshroom_floor");
+    public static final PlacedFeatureKey BLOSSOM_BERRY = createVegetationKey("blossom_berry");
+    public static final PlacedFeatureKey BLOOMING_COOKSONIA = createVegetationKey("blooming_cooksonia");
+    public static final PlacedFeatureKey SALTEAGO = createVegetationKey("salteago");
+    public static final PlacedFeatureKey VAIOLUSH_FERN = createVegetationKey("vaiolush_fern");
+    public static final PlacedFeatureKey FRACTURN = createVegetationKey("fracturn");
+    public static final PlacedFeatureKey UMBRELLA_MOSS_RARE = createVegetationKey("umbrella_moss_rare");
+    public static final PlacedFeatureKey CREEPING_MOSS_RARE = createVegetationKey("creeping_moss_rare");
+    public static final PlacedFeatureKey TWISTED_UMBRELLA_MOSS_RARE = createVegetationKey("twisted_umbrella_moss_rare");
+    public static final PlacedFeatureKey ORANGO = createVegetationKey("orango");
+    public static final PlacedFeatureKey AERIDIUM = createVegetationKey("aeridium");
+    public static final PlacedFeatureKey LUTEBUS = createVegetationKey("lutebus");
+    public static final PlacedFeatureKey LAMELLARIUM = createVegetationKey("lamellarium");
+    public static final PlacedFeatureKey SMALL_AMARANITA = createVegetationKey("small_amaranita");
+    public static final PlacedFeatureKey GLOBULAGUS = createVegetationKey("globulagus");
+    public static final PlacedFeatureKey CLAWFERN = createVegetationKey("clawfern");
+    public static final PlacedFeatureKey BOLUX_MUSHROOM = createVegetationKey("bolux_mushroom");
+    public static final PlacedFeatureKey CHORUS_MUSHROOM = createVegetationKey("chorus_mushroom");
+    public static final PlacedFeatureKey AMBER_ROOT = createVegetationKey("amber_root");
+    public static final PlacedFeatureKey INFLEXIA = createVegetationKey("inflexia");
+    public static final PlacedFeatureKey FLAMMALIX = createVegetationKey("flammalix");
+    public static final PlacedFeatureKey LANCELEAF = createVegetationKey("lanceleaf");
+    public static final PlacedFeatureKey GLOW_PILLAR = createVegetationKey("glow_pillar");
 
-
-    private static <F extends Feature<FC>, FC extends FeatureConfiguration> PlacedConfiguredFeatureKey createVegetationKey(
-            String name,
-            ConfiguredFeatureKey<WithConfiguration<F, FC>> feature
-    ) {
-        return PlacedFeatureManager.createKey(BetterEnd.C.mk(name), feature);
-    }
 
     private static <F extends Feature<FC>, FC extends FeatureConfiguration> PlacedFeatureKey createVegetationKey(
             String name
