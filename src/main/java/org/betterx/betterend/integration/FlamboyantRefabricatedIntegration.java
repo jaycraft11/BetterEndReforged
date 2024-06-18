@@ -1,6 +1,7 @@
 package org.betterx.betterend.integration;
 
 import org.betterx.bclib.integration.ModIntegration;
+import org.betterx.betterend.BetterEnd;
 import org.betterx.betterend.blocks.HydraluxPetalColoredBlock;
 import org.betterx.betterend.complexmaterials.ColoredMaterial;
 import org.betterx.betterend.registry.EndBlocks;
@@ -15,7 +16,7 @@ import java.util.Map;
 
 public class FlamboyantRefabricatedIntegration extends ModIntegration {
     public FlamboyantRefabricatedIntegration() {
-        super("flamboyant");
+        super(BetterEnd.FLAMBOYANT);
     }
 
     @Override

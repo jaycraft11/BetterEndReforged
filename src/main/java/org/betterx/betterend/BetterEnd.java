@@ -21,6 +21,8 @@ import org.betterx.wover.core.api.Logger;
 import org.betterx.wover.core.api.ModCore;
 import org.betterx.wover.generator.api.biomesource.end.BiomeDecider;
 
+import net.minecraft.resources.ResourceLocation;
+
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.loader.api.FabricLoader;
 
@@ -31,6 +33,11 @@ public class BetterEnd implements ModInitializer {
     public static final ModCore TRINKETS_CORE = ModCore.create("trinkets");
     public static final String MOD_ID = C.namespace;
     public static final Logger LOGGER = C.LOG;
+
+    public static final ModCore BYG = ModCore.create("byg");
+    public static final ModCore NOURISH = ModCore.create("nourish");
+    public static final ModCore FLAMBOYANT = ModCore.create("flamboyant");
+    public static final ResourceLocation BYG_ADDITIONS_PACK = C.addDatapack(BYG);
 
     @Override
     public void onInitialize() {

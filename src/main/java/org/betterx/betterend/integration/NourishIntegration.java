@@ -1,6 +1,7 @@
 package org.betterx.betterend.integration;
 
 import org.betterx.bclib.integration.ModIntegration;
+import org.betterx.betterend.BetterEnd;
 import org.betterx.betterend.registry.EndItems;
 import org.betterx.worlds.together.tag.v3.TagManager;
 
@@ -9,7 +10,7 @@ import net.minecraft.world.item.Item;
 
 public class NourishIntegration extends ModIntegration {
     public NourishIntegration() {
-        super("nourish");
+        super(BetterEnd.NOURISH);
     }
 
     @Override

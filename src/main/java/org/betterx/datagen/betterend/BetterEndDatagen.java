@@ -9,6 +9,7 @@ import org.betterx.datagen.betterend.recipes.JukeboxRegistryProvider;
 import org.betterx.datagen.betterend.tags.BiomeTagProvider;
 import org.betterx.datagen.betterend.tags.BlockTagProvider;
 import org.betterx.datagen.betterend.tags.ItemTagProvider;
+import org.betterx.datagen.betterend.worldgen.BYGBlockTagsProvider;
 import org.betterx.datagen.betterend.worldgen.EndBiomeModificationProvider;
 import org.betterx.datagen.betterend.worldgen.EndBiomesProvider;
 import org.betterx.datagen.betterend.worldgen.StructureDataProvider;
@@ -46,6 +47,13 @@ public class BetterEndDatagen extends WoverDataGenEntryPoint {
                 pack.addProvider(EndBlockLootTableProvider::new);
             }
         });
+
+        BYGBlockTagsProvider.registerBYGDummies();
+
+        //Add providers for the byg integration
+        addDatapack(BetterEnd.BYG_ADDITIONS_PACK)
+                .addMultiProvider(BYGFeatureProvider::new)
+                .addProvider(BYGBlockTagsProvider::new);
     }
 
     @Override

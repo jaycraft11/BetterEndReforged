@@ -37,12 +37,12 @@ public class NightshadeRedwoods extends EndBiome.Config {
         builder.fogColor(140, 108, 47)
                .fogDensity(1.5F)
                .waterAndFogColor(55, 70, 186)
-               .foliageColor(122, 17, 155)
+               .foliageColorOverride(122, 17, 155)
                .particles(
                        ParticleTypes.REVERSE_PORTAL,
                        0.002F
                )
-               .grassColor(48, 13, 89)
+               .grassColorOverride(48, 13, 89)
                .plantsColor(200, 125, 9)
                .feature(EndLakeFeatures.END_LAKE_RARE)
                .feature(BYGFeatures.NIGHTSHADE_REDWOOD_TREE)
