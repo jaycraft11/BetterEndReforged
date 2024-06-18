@@ -69,7 +69,7 @@ public class ObsidianBoulderFeature extends DefaultFeature {
             }
             return info.getState();
         }).setReplaceFunction((state) -> {
-            return state.is(CommonBlockTags.GEN_END_STONES) || BlocksHelper.replaceableOrPlant(state);
+            return state.is(CommonBlockTags.END_STONES) || BlocksHelper.replaceableOrPlant(state);
         }).fillRecursive(world, pos);
     }
 }

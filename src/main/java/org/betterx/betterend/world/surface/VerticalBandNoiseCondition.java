@@ -1,7 +1,7 @@
 package org.betterx.betterend.world.surface;
 
-import org.betterx.bclib.interfaces.NumericProvider;
-import org.betterx.bclib.mixin.common.SurfaceRulesContextAccessor;
+import org.betterx.wover.surface.api.conditions.SurfaceRulesContext;
+import org.betterx.wover.surface.api.noise.NumericProvider;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
@@ -50,7 +50,7 @@ public class VerticalBandNoiseCondition implements NumericProvider {
     }
 
     @Override
-    public int getNumber(SurfaceRulesContextAccessor context) {
+    public int getNumber(SurfaceRulesContext context) {
         final NormalNoise normalNoise = context.getRandomState().getOrCreateNoise(this.noise);
         double offset = normalNoise.getValue(
                 (double) context.getBlockX() * xzScale,

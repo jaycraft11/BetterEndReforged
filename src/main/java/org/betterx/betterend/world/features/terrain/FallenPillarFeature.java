@@ -32,7 +32,7 @@ public class FallenPillarFeature extends DefaultFeature {
                 world,
                 new BlockPos(pos.getX() + random.nextInt(16), pos.getY(), pos.getZ() + random.nextInt(16))
         );
-        if (!world.getBlockState(pos.below(5)).is(CommonBlockTags.GEN_END_STONES)
+        if (!world.getBlockState(pos.below(5)).is(CommonBlockTags.END_STONES)
                 || !world.getBlockState(pos).isAir()) {
             return false;
         }
@@ -59,7 +59,7 @@ public class FallenPillarFeature extends DefaultFeature {
             }
             return info.getState();
         }).setReplaceFunction((state) -> {
-            return state.is(CommonBlockTags.GEN_END_STONES) || BlocksHelper.replaceableOrPlant(state);
+            return state.is(CommonBlockTags.END_STONES) || BlocksHelper.replaceableOrPlant(state);
         }).fillRecursive(world, pos);
 
         return true;

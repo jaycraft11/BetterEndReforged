@@ -76,7 +76,7 @@ public class RoundCaveFeature extends EndCaveFeatures {
     }
 
     private boolean isReplaceable(BlockState state) {
-        return state.is(CommonBlockTags.GEN_END_STONES) ||
+        return state.is(CommonBlockTags.END_STONES) ||
                 BlocksHelper.replaceableOrPlant(state) ||
                 state.is(BlockTags.LEAVES);
     }

@@ -1,9 +1,9 @@
 package org.betterx.betterend.world.surface;
 
-import org.betterx.bclib.interfaces.NumericProvider;
-import org.betterx.bclib.mixin.common.SurfaceRulesContextAccessor;
 import org.betterx.bclib.util.MHelper;
 import org.betterx.betterend.noise.OpenSimplexNoise;
+import org.betterx.wover.surface.api.conditions.SurfaceRulesContext;
+import org.betterx.wover.surface.api.noise.NumericProvider;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
@@ -19,7 +19,7 @@ public class SplitNoiseCondition implements NumericProvider {
     private static final OpenSimplexNoise NOISE = new OpenSimplexNoise(4141);
 
     @Override
-    public int getNumber(SurfaceRulesContextAccessor context) {
+    public int getNumber(SurfaceRulesContext context) {
         final int x = context.getBlockX();
         final int z = context.getBlockZ();
         float noise = (float) NOISE.eval(x * 0.1, z * 0.1) + MHelper.randRange(-0.4F, 0.4F, MHelper.RANDOM_SOURCE);

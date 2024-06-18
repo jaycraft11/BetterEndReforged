@@ -1,15 +1,14 @@
 package org.betterx.betterend.world.biome;
 
-import org.betterx.bclib.api.v2.levelgen.biomes.BCLBiome;
-import org.betterx.bclib.api.v2.levelgen.biomes.BiomeAPI;
-import org.betterx.bclib.api.v2.levelgen.surface.SurfaceRuleBuilder;
 import org.betterx.bclib.interfaces.SurfaceMaterialProvider;
 import org.betterx.betterend.registry.EndBlocks;
 import org.betterx.wover.generator.api.biomesource.WoverBiomeData;
+import org.betterx.wover.surface.api.SurfaceRuleBuilder;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.KeyDispatchDataCodec;
 import net.minecraft.world.level.WorldGenLevel;
@@ -167,27 +166,31 @@ public class EndBiome extends WoverBiomeData implements SurfaceMaterialProvider 
         return surfMatProv.surface();
     }
 
-    public static BlockState findTopMaterial(BCLBiome biome) {
-        return BiomeAPI.findTopMaterial(biome).orElse(EndBiome.Config.DEFAULT_MATERIAL.getTopMaterial());
-    }
-
-    public static BlockState findTopMaterial(Biome biome) {
-        return findTopMaterial(BiomeAPI.getBiome(biome));
+    public static BlockState findTopMaterial(Holder<Biome> biome) {
+        return SurfaceMaterialProvider
+                .findSurfaceMaterialProvider(biome)
+                .map(SurfaceMaterialProvider::getTopMaterial)
+                .orElse(EndBiome.Config.DEFAULT_MATERIAL.getTopMaterial());
     }
 
     public static BlockState findTopMaterial(WorldGenLevel world, BlockPos pos) {
-        return findTopMaterial(BiomeAPI.getBiome(world.getBiome(pos)));
+        return SurfaceMaterialProvider
+                .findSurfaceMaterialProvider(world, pos)
+                .map(SurfaceMaterialProvider::getTopMaterial)
+                .orElse(EndBiome.Config.DEFAULT_MATERIAL.getTopMaterial());
     }
 
-    public static BlockState findUnderMaterial(BCLBiome biome) {
-        return BiomeAPI.findUnderMaterial(biome).orElse(EndBiome.Config.DEFAULT_MATERIAL.getUnderMaterial());
+    public static BlockState findUnderMaterial(Holder<Biome> biome) {
+        return SurfaceMaterialProvider
+                .findSurfaceMaterialProvider(biome)
+                .map(SurfaceMaterialProvider::getUnderMaterial)
+                .orElse(EndBiome.Config.DEFAULT_MATERIAL.getUnderMaterial());
     }
 
     public static BlockState findUnderMaterial(WorldGenLevel world, BlockPos pos) {
-        return findUnderMaterial(BiomeAPI.getBiome(world.getBiome(pos)));
-    }
-
-    public static List<BCLBiome> getAllBeBiomes() {
-        return BiomeAPI.getAllBiomes(BiomeAPI.BiomeType.END);
+        return SurfaceMaterialProvider
+                .findSurfaceMaterialProvider(world, pos)
+                .map(SurfaceMaterialProvider::getUnderMaterial)
+                .orElse(EndBiome.Config.DEFAULT_MATERIAL.getUnderMaterial());
     }
 }

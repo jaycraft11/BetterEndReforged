@@ -23,7 +23,7 @@ public class MegaLakeSmallStructure extends FeatureBaseStructure {
 
     @Override
     public StructureType<MegaLakeSmallStructure> type() {
-        return EndStructures.MEGALAKE_SMALL.structureType;
+        return EndStructures.MEGALAKE_SMALL.type();
     }
 
     protected void generatePieces(StructurePiecesBuilder structurePiecesBuilder, GenerationContext context) {

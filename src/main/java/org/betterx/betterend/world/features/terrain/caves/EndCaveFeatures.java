@@ -1,8 +1,5 @@
 package org.betterx.betterend.world.features.terrain.caves;
 
-import org.betterx.bclib.api.v2.generator.BiomePicker;
-import org.betterx.bclib.api.v2.levelgen.biomes.BCLBiome;
-import org.betterx.bclib.api.v2.levelgen.biomes.BCLBiomeRegistry;
 import org.betterx.bclib.api.v2.levelgen.biomes.BiomeAPI;
 import org.betterx.bclib.api.v2.levelgen.features.features.DefaultFeature;
 import org.betterx.bclib.config.Configs;
@@ -75,11 +72,11 @@ public abstract class EndCaveFeatures extends DefaultFeature {
                 caveBlocks.parallelStream().forEach((bpos) -> {
                     if (world.getBlockState(bpos).canBeReplaced()) {
                         BlockPos side = bpos.below();
-                        if (world.getBlockState(side).is(CommonBlockTags.GEN_END_STONES)) {
+                        if (world.getBlockState(side).is(CommonBlockTags.END_STONES)) {
                             floorPositions.add(side);
                         }
                         side = bpos.above();
-                        if (world.getBlockState(side).is(CommonBlockTags.GEN_END_STONES)) {
+                        if (world.getBlockState(side).is(CommonBlockTags.END_STONES)) {
                             ceilPositions.add(side);
                         }
                     }
@@ -162,7 +159,7 @@ public abstract class EndCaveFeatures extends DefaultFeature {
                     for (Vec3i offset : SPHERE) {
                         BlockPos wallPos = pos.offset(offset);
                         if (!positions.contains(wallPos) && !placed.contains(wallPos) && world.getBlockState(wallPos)
-                                                                                              .is(CommonBlockTags.GEN_END_STONES)) {
+                                                                                              .is(CommonBlockTags.END_STONES)) {
                             wallBlock = biome.getWall(wallPos);
                             BlocksHelper.setWithoutUpdate(world, wallPos, wallBlock);
                             placed.add(wallPos);
@@ -198,7 +195,7 @@ public abstract class EndCaveFeatures extends DefaultFeature {
         bpos.setY(top - 1);
 
         BlockState state = world.getBlockState(bpos);
-        while (!state.is(CommonBlockTags.GEN_END_STONES) && bpos.getY() > 5) {
+        while (!state.is(CommonBlockTags.END_STONES) && bpos.getY() > 5) {
             bpos.setY(bpos.getY() - 1);
             state = world.getBlockState(bpos);
         }
@@ -207,7 +204,7 @@ public abstract class EndCaveFeatures extends DefaultFeature {
         }
         top = (int) (bpos.getY() - (radius * 1.3F + 5));
 
-        while (state.is(CommonBlockTags.GEN_END_STONES) || !state.getFluidState().isEmpty() && bpos.getY() > 5) {
+        while (state.is(CommonBlockTags.END_STONES) || !state.getFluidState().isEmpty() && bpos.getY() > 5) {
             bpos.setY(bpos.getY() - 1);
             state = world.getBlockState(bpos);
         }

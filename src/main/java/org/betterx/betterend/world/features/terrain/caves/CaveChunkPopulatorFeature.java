@@ -1,6 +1,5 @@
 package org.betterx.betterend.world.features.terrain.caves;
 
-import org.betterx.bclib.api.v2.levelgen.biomes.BCLBiomeRegistry;
 import org.betterx.bclib.util.BlocksHelper;
 import org.betterx.betterend.util.BlockFixer;
 import org.betterx.betterend.world.biome.cave.EndCaveBiome;
@@ -76,12 +75,12 @@ public class CaveChunkPopulatorFeature extends Feature<CaveChunkPopulatorFeature
                     mut.setY(y);
                     BlockState top = chunk.getBlockState(mut);
                     BlockState bottom = chunk.getBlockState(mut2);
-                    if (top.isAir() && (bottom.is(CommonBlockTags.GEN_END_STONES) || bottom.is(Blocks.STONE))) {
+                    if (top.isAir() && (bottom.is(CommonBlockTags.END_STONES) || bottom.is(Blocks.STONE))) {
                         mut3.set(mut2).move(sx, 0, sz);
                         floorPositions.add(mut3.immutable());
                         updateMin(mut3, min);
                         updateMax(mut3, max);
-                    } else if (bottom.isAir() && (top.is(CommonBlockTags.GEN_END_STONES) || top.is(Blocks.STONE))) {
+                    } else if (bottom.isAir() && (top.is(CommonBlockTags.END_STONES) || top.is(Blocks.STONE))) {
                         mut3.set(mut).move(sx, 0, sz);
                         ceilPositions.add(mut3.immutable());
                         updateMin(mut3, min);

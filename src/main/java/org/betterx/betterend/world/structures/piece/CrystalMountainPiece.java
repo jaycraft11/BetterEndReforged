@@ -81,7 +81,7 @@ public class CrystalMountainPiece extends MountainPiece {
                         continue;
                     }
                     pos.setY(minY);
-                    while (!chunk.getBlockState(pos).is(CommonBlockTags.GEN_END_STONES)
+                    while (!chunk.getBlockState(pos).is(CommonBlockTags.END_STONES)
                             && pos.getY() > 56
                             && chunk.getBlockState(pos.below()).is(Blocks.CAVE_AIR)
                     ) {

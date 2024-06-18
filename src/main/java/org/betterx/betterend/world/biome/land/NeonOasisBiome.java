@@ -1,7 +1,5 @@
 package org.betterx.betterend.world.biome.land;
 
-import org.betterx.bclib.api.v2.levelgen.surface.SurfaceRuleBuilder;
-import org.betterx.bclib.api.v2.levelgen.surface.rules.SwitchRuleSource;
 import org.betterx.bclib.interfaces.SurfaceMaterialProvider;
 import org.betterx.betterend.registry.EndBlocks;
 import org.betterx.betterend.registry.EndSounds;
@@ -10,7 +8,10 @@ import org.betterx.betterend.registry.features.EndLakeFeatures;
 import org.betterx.betterend.registry.features.EndOreFeatures;
 import org.betterx.betterend.registry.features.EndVegetationFeatures;
 import org.betterx.betterend.world.biome.EndBiome;
+import org.betterx.betterend.world.biome.EndBiomeBuilder;
 import org.betterx.betterend.world.surface.SplitNoiseCondition;
+import org.betterx.wover.surface.api.SurfaceRuleBuilder;
+import org.betterx.wover.surface.impl.rules.SwitchRuleSource;
 
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.tags.BiomeTags;
@@ -76,11 +77,11 @@ public class NeonOasisBiome extends EndBiome.Config {
                 return super
                         .surface()
                         .ceil(Blocks.END_STONE.defaultBlockState())
-                        .rule(1, SurfaceRules.ifTrue(SurfaceRules.ON_FLOOR, surfaceBlockRule))
-                        .rule(4, SurfaceRules.ifTrue(
+                        .rule(SurfaceRules.ifTrue(SurfaceRules.ON_FLOOR, surfaceBlockRule), 1)
+                        .rule(SurfaceRules.ifTrue(
                                 SurfaceRules.stoneDepthCheck(5, false, CaveSurface.FLOOR),
                                 SurfaceRules.state(EndBlocks.ENDSTONE_DUST.defaultBlockState())
-                        ));
+                        ), 4);
             }
         };
     }

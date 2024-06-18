@@ -19,7 +19,7 @@ public class CavePumpkinFeature extends DefaultFeature {
         final BlockPos pos = featureConfig.origin();
         final WorldGenLevel world = featureConfig.level();
         if (!world.getBlockState(pos.above())
-                  .is(CommonBlockTags.GEN_END_STONES) || !world.isEmptyBlock(pos) || !world.isEmptyBlock(
+                  .is(CommonBlockTags.END_STONES) || !world.isEmptyBlock(pos) || !world.isEmptyBlock(
                 pos.below())) {
             return false;
         }

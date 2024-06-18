@@ -113,7 +113,7 @@ public class DragonTreeFeature extends DefaultFeature {
             SplineHelper.scale(branch, scale);
             Vector3f last = branch.get(branch.size() - 1);
             if (world.getBlockState(pos.offset((int) last.x(), (int) last.y(), (int) last.z()))
-                     .is(CommonBlockTags.GEN_END_STONES)) {
+                     .is(CommonBlockTags.END_STONES)) {
                 SplineHelper.fillSpline(
                         branch,
                         world,

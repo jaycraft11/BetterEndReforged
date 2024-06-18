@@ -23,7 +23,7 @@ public class SingleBlockFeature extends Feature<SimpleBlockConfiguration> {
         final BlockPos pos = featureConfig.origin();
         final WorldGenLevel world = featureConfig.level();
         final SimpleBlockConfiguration cfg = featureConfig.config();
-        if (!world.getBlockState(pos.below()).is(CommonBlockTags.GEN_END_STONES)) {
+        if (!world.getBlockState(pos.below()).is(CommonBlockTags.END_STONES)) {
             return false;
         }
 

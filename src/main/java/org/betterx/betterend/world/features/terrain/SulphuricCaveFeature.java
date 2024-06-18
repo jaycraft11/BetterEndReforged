@@ -46,7 +46,7 @@ public class SulphuricCaveFeature extends DefaultFeature {
         bpos.setY(top - 1);
 
         BlockState state = world.getBlockState(bpos);
-        while (!state.is(CommonBlockTags.GEN_END_STONES) && bpos.getY() > 5) {
+        while (!state.is(CommonBlockTags.END_STONES) && bpos.getY() > 5) {
             bpos.setY(bpos.getY() - 1);
             state = world.getBlockState(bpos);
         }
@@ -55,7 +55,7 @@ public class SulphuricCaveFeature extends DefaultFeature {
         }
         top = (int) (bpos.getY() - (radius * 1.3F + 5));
 
-        while (state.is(CommonBlockTags.GEN_END_STONES) || !state.getFluidState().isEmpty() && bpos.getY() > 5) {
+        while (state.is(CommonBlockTags.END_STONES) || !state.getFluidState().isEmpty() && bpos.getY() > 5) {
             bpos.setY(bpos.getY() - 1);
             state = world.getBlockState(bpos);
         }
@@ -106,7 +106,7 @@ public class SulphuricCaveFeature extends DefaultFeature {
                         }
                     } else if (dist < r2 * r2) {
                         state = world.getBlockState(mut);
-                        if (state.is(CommonBlockTags.GEN_END_STONES) || state.is(Blocks.AIR)) {
+                        if (state.is(CommonBlockTags.END_STONES) || state.is(Blocks.AIR)) {
                             double v = noise.eval(x * 0.1, y * 0.1, z * 0.1) + noise.eval(
                                     x * 0.03,
                                     y * 0.03,
@@ -145,8 +145,8 @@ public class SulphuricCaveFeature extends DefaultFeature {
                         mut.setY(mut.getY() - 1);
                         state = world.getBlockState(mut);
                     }
-                    if (state.is(CommonBlockTags.GEN_END_STONES) && !world.getBlockState(mut.above())
-                                                                          .is(EndBlocks.HYDROTHERMAL_VENT)) {
+                    if (state.is(CommonBlockTags.END_STONES) && !world.getBlockState(mut.above())
+                                                                      .is(EndBlocks.HYDROTHERMAL_VENT)) {
                         for (int j = 0; j <= dist; j++) {
                             BlocksHelper.setWithoutUpdate(world, mut, EndBlocks.SULPHURIC_ROCK.stone);
                             MHelper.shuffle(HORIZONTAL, random);
@@ -187,7 +187,7 @@ public class SulphuricCaveFeature extends DefaultFeature {
     }
 
     private boolean isReplaceable(BlockState state) {
-        return state.is(CommonBlockTags.GEN_END_STONES)
+        return state.is(CommonBlockTags.END_STONES)
                 || state.is(EndBlocks.HYDROTHERMAL_VENT)
                 || state.is(EndBlocks.VENT_BUBBLE_COLUMN)
                 || state.is(EndBlocks.SULPHUR_CRYSTAL)

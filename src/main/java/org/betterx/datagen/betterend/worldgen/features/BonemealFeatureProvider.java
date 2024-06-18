@@ -1,6 +1,6 @@
 package org.betterx.datagen.betterend.worldgen.features;
 
-import org.betterx.bclib.api.v3.levelgen.features.placement.InBiome;
+
 import org.betterx.betterend.registry.EndBiomes;
 import org.betterx.betterend.registry.EndBlocks;
 import org.betterx.betterend.registry.features.EndBonemealFeature;
@@ -8,6 +8,7 @@ import org.betterx.betterend.registry.features.EndConfiguredBonemealFeature;
 import org.betterx.wover.core.api.ModCore;
 import org.betterx.wover.datagen.api.provider.multi.WoverFeatureProvider;
 import org.betterx.wover.feature.api.features.config.ConditionFeatureConfig;
+import org.betterx.wover.feature.api.placed.modifiers.InBiome;
 
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;

@@ -1,7 +1,5 @@
 package org.betterx.betterend.world.biome.land;
 
-import org.betterx.bclib.api.v2.levelgen.surface.SurfaceRuleBuilder;
-import org.betterx.bclib.api.v2.levelgen.surface.rules.SwitchRuleSource;
 import org.betterx.bclib.interfaces.SurfaceMaterialProvider;
 import org.betterx.betterend.registry.EndBlocks;
 import org.betterx.betterend.registry.EndParticles;
@@ -11,6 +9,8 @@ import org.betterx.betterend.registry.features.EndVegetationFeatures;
 import org.betterx.betterend.world.biome.EndBiome;
 import org.betterx.betterend.world.biome.EndBiomeBuilder;
 import org.betterx.betterend.world.surface.UmbraSurfaceNoiseCondition;
+import org.betterx.wover.surface.api.SurfaceRuleBuilder;
+import org.betterx.wover.surface.impl.rules.SwitchRuleSource;
 
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
@@ -72,7 +72,7 @@ public class UmbraValleyBiome extends EndBiome.Config {
             @Override
             public SurfaceRuleBuilder surface() {
                 return super.surface()
-                            .rule(2, SurfaceRules.ifTrue(
+                            .rule(SurfaceRules.ifTrue(
                                     SurfaceRules.ON_FLOOR,
                                     new SwitchRuleSource(
                                             new UmbraSurfaceNoiseCondition(),
@@ -84,7 +84,7 @@ public class UmbraValleyBiome extends EndBiome.Config {
                                                     SurfaceRules.state(surfaceMaterial().getTopMaterial())
                                             )
                                     )
-                            ));
+                            ), 2);
             }
         };
     }

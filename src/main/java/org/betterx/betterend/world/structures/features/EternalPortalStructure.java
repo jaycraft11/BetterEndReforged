@@ -61,7 +61,7 @@ public class EternalPortalStructure extends TemplateStructure {
 
     @Override
     public StructureType<EternalPortalStructure> type() {
-        return EndStructures.ETERNAL_PORTAL.structureType;
+        return EndStructures.ETERNAL_PORTAL.type();
     }
 
     @Override

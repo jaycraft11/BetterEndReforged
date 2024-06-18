@@ -31,7 +31,7 @@ public class PaintedMountainStructure extends FeatureBaseStructure {
 
     @Override
     public StructureType<PaintedMountainStructure> type() {
-        return EndStructures.PAINTED_MOUNTAIN.structureType;
+        return EndStructures.PAINTED_MOUNTAIN.type();
     }
 
     protected void generatePieces(StructurePiecesBuilder structurePiecesBuilder, GenerationContext context) {

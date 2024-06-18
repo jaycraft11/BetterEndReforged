@@ -121,11 +121,11 @@ public class DesertLakeFeature extends DefaultFeature {
                             r *= r;
                             if (x2 + z2 <= r) {
                                 state = world.getBlockState(POS);
-                                if (state.is(CommonBlockTags.GEN_END_STONES)) {
+                                if (state.is(CommonBlockTags.END_STONES)) {
                                     BlocksHelper.setWithoutUpdate(world, POS, AIR);
                                 }
                                 pos = POS.below();
-                                if (world.getBlockState(pos).is(CommonBlockTags.GEN_END_STONES)) {
+                                if (world.getBlockState(pos).is(CommonBlockTags.END_STONES)) {
                                     state = EndBiome.findTopMaterial(
                                             world,
                                             pos
@@ -184,7 +184,7 @@ public class DesertLakeFeature extends DefaultFeature {
                                 BlocksHelper.setWithoutUpdate(world, POS, state);
                             }
                             pos = POS.below();
-                            if (world.getBlockState(pos).is(CommonBlockTags.GEN_END_STONES)) {
+                            if (world.getBlockState(pos).is(CommonBlockTags.END_STONES)) {
                                 BlocksHelper.setWithoutUpdate(world, pos, EndBlocks.ENDSTONE_DUST.defaultBlockState());
                             }
                             pos = POS.above();
@@ -198,7 +198,7 @@ public class DesertLakeFeature extends DefaultFeature {
                         // Make border
                         else if (y2 + x2 + z2 <= rb) {
                             state = world.getBlockState(POS);
-                            if (state.is(CommonBlockTags.GEN_END_STONES) && world.isEmptyBlock(POS.above())) {
+                            if (state.is(CommonBlockTags.END_STONES) && world.isEmptyBlock(POS.above())) {
                                 BlocksHelper.setWithoutUpdate(world, POS, EndBlocks.END_MOSS);
                             } else if (y < waterLevel) {
                                 if (world.isEmptyBlock(POS.above())) {
@@ -237,7 +237,7 @@ public class DesertLakeFeature extends DefaultFeature {
     }
 
     private boolean canReplace(BlockState state) {
-        return state.is(CommonBlockTags.GEN_END_STONES)
+        return state.is(CommonBlockTags.END_STONES)
                 || state.is(EndBlocks.ENDSTONE_DUST)
                 || BlocksHelper.replaceableOrPlant(state)
                 || state.is(CommonBlockTags.WATER_PLANT);

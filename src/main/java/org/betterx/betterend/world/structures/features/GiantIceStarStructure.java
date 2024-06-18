@@ -37,7 +37,7 @@ public class GiantIceStarStructure extends SDFStructureFeature {
 
     @Override
     public StructureType<GiantIceStarStructure> type() {
-        return EndStructures.GIANT_ICE_STAR.structureType;
+        return EndStructures.GIANT_ICE_STAR.type();
     }
 
     protected static SDF getSDF(BlockPos pos, RandomSource random) {

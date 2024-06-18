@@ -46,7 +46,7 @@ public class ThinArchFeature extends Feature<ThinArchFeatureConfig> {
                         (origin.getZ() & 0xFFFFFFF0) | 7
                 )
         );
-        if (!world.getBlockState(pos.below(5)).is(CommonBlockTags.GEN_END_STONES)) {
+        if (!world.getBlockState(pos.below(5)).is(CommonBlockTags.END_STONES)) {
             return false;
         }
 

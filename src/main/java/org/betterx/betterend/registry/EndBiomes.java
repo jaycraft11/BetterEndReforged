@@ -1,8 +1,6 @@
 package org.betterx.betterend.registry;
 
 import org.betterx.bclib.api.v2.LifeCycleAPI;
-import org.betterx.bclib.api.v2.levelgen.biomes.BCLBiome;
-import org.betterx.bclib.api.v2.levelgen.biomes.BCLBiomeRegistry;
 import org.betterx.bclib.api.v2.levelgen.biomes.BiomeAPI;
 import org.betterx.betterend.BetterEnd;
 import org.betterx.betterend.config.Configs;
@@ -30,7 +28,6 @@ import java.util.Objects;
 import java.util.Optional;
 
 public class EndBiomes {
-    public static final BiomeAPI.BiomeType END_CAVE = new BiomeAPI.BiomeType("END_CAVE", BiomeAPI.BiomeType.END_IGNORE);
     public static WoverBiomePicker CAVE_BIOMES = null;
     private static HexBiomeMap caveBiomeMap;
     private static long lastSeed;

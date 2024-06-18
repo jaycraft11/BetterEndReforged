@@ -5,42 +5,37 @@ import org.betterx.bclib.behaviours.interfaces.BehaviourShearablePlant;
 import org.betterx.bclib.blocks.BaseAttachedBlock;
 import org.betterx.bclib.client.render.BCLRenderLayer;
 import org.betterx.bclib.interfaces.RenderLayerProvider;
-import org.betterx.bclib.interfaces.TagProvider;
-import org.betterx.bclib.items.tool.BaseShearsItem;
-import org.betterx.bclib.util.MHelper;
+import org.betterx.wover.block.api.BlockTagProvider;
+import org.betterx.wover.loot.api.BlockLootProvider;
+import org.betterx.wover.loot.api.LootLookupProvider;
+import org.betterx.wover.tag.api.event.context.TagBootstrapContext;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.tags.TagKey;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.MapColor;
-import net.minecraft.world.level.storage.loot.LootParams;
-import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
+import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
 import java.util.EnumMap;
-import java.util.List;
+import org.jetbrains.annotations.NotNull;
 
-public class FurBlock extends BaseAttachedBlock implements RenderLayerProvider, BehaviourShearablePlant, TagProvider {
+public class FurBlock extends BaseAttachedBlock implements RenderLayerProvider, BehaviourShearablePlant, BlockTagProvider, BlockLootProvider {
     private static final EnumMap<Direction, VoxelShape> BOUNDING_SHAPES = Maps.newEnumMap(Direction.class);
-    private final ItemLike drop;
+    private final Block drop;
     private final int dropChance;
 
-    public FurBlock(MapColor color, ItemLike drop, int light, int dropChance, boolean wet) {
+    public FurBlock(MapColor color, Block drop, int light, int dropChance, boolean wet) {
         super(BehaviourBuilders
                 .createPlant(color)
                 .replaceable()
@@ -53,29 +48,28 @@ public class FurBlock extends BaseAttachedBlock implements RenderLayerProvider, 
         this.dropChance = dropChance;
     }
 
-    public FurBlock(MapColor color, ItemLike drop, int dropChance) {
+    public FurBlock(MapColor color, Block drop, int dropChance) {
         this(color, drop, 0, dropChance, false);
     }
 
     @Override
-    @SuppressWarnings("deprecation")
-    public VoxelShape getShape(BlockState state, BlockGetter view, BlockPos pos, CollisionContext ePos) {
+    public @NotNull VoxelShape getShape(BlockState state, BlockGetter view, BlockPos pos, CollisionContext ePos) {
         return BOUNDING_SHAPES.get(state.getValue(FACING));
     }
 
     @Override
-    public List<ItemStack> getDrops(BlockState state, LootParams.Builder builder) {
-        ItemStack tool = builder.getParameter(LootContextParams.TOOL);
-        if (tool != null && BaseShearsItem.isShear(tool) || EnchantmentHelper.getItemEnchantmentLevel(
-                Enchantments.SILK_TOUCH,
-                tool
-        ) > 0) {
-            return Lists.newArrayList(new ItemStack(this));
-        } else if (dropChance < 1 || MHelper.RANDOM.nextInt(dropChance) == 0) {
-            return Lists.newArrayList(new ItemStack(drop));
-        } else {
-            return Lists.newArrayList();
-        }
+    public LootTable.Builder registerBlockLoot(
+            @NotNull ResourceLocation location,
+            @NotNull LootLookupProvider provider,
+            @NotNull ResourceKey<LootTable> tableKey
+    ) {
+        final float[] LEAVES_SAPLING_CHANCES = new float[]{
+                0.8f * dropChance,
+                dropChance,
+                1.333f * dropChance,
+                1.666f * dropChance
+        };
+        return provider.dropLeaves(this, drop, LEAVES_SAPLING_CHANCES);
     }
 
     @Override
@@ -93,7 +87,7 @@ public class FurBlock extends BaseAttachedBlock implements RenderLayerProvider, 
     }
 
     @Override
-    public void addTags(List<TagKey<Block>> blockTags, List<TagKey<Item>> itemTags) {
-        blockTags.add(BlockTags.LEAVES);
+    public void registerBlockTags(ResourceLocation location, TagBootstrapContext<Block> context) {
+        context.add(this, BlockTags.LEAVES);
     }
 }

@@ -98,7 +98,7 @@ public abstract class ChorusFlowerBlockMixin extends Block {
     @Inject(method = "placeDeadFlower", at = @At("HEAD"), cancellable = true)
     private void be_placeDeadFlower(Level world, BlockPos pos, CallbackInfo info) {
         BlockState down = world.getBlockState(pos.below());
-        if (down.is(Blocks.CHORUS_PLANT) || down.is(CommonBlockTags.GEN_END_STONES)) {
+        if (down.is(Blocks.CHORUS_PLANT) || down.is(CommonBlockTags.END_STONES)) {
             world.setBlock(pos, this.defaultBlockState().setValue(BlockStateProperties.AGE_5, 5), 2);
             world.levelEvent(1034, pos, 0);
         }

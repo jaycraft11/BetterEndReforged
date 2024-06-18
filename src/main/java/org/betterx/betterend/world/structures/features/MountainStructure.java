@@ -24,7 +24,7 @@ public class MountainStructure extends FeatureBaseStructure {
 
     @Override
     public StructureType<MountainStructure> type() {
-        return EndStructures.MOUNTAIN.structureType;
+        return EndStructures.MOUNTAIN.type();
     }
 
     protected void generatePieces(StructurePiecesBuilder structurePiecesBuilder, GenerationContext context) {

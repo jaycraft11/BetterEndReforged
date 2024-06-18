@@ -154,6 +154,6 @@ public class GiantMossyGlowshroomStructure extends SDFStructureFeature {
 
     @Override
     public StructureType<GiantMossyGlowshroomStructure> type() {
-        return EndStructures.GIANT_MOSSY_GLOWSHROOM.structureType;
+        return EndStructures.GIANT_MOSSY_GLOWSHROOM.type();
     }
 }

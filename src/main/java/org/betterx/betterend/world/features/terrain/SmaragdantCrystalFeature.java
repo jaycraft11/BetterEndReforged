@@ -25,7 +25,7 @@ public class SmaragdantCrystalFeature extends DefaultFeature {
         final RandomSource random = featureConfig.random();
         final BlockPos pos = featureConfig.origin();
         final WorldGenLevel world = featureConfig.level();
-        if (!world.getBlockState(pos.below()).is(CommonBlockTags.GEN_END_STONES)) {
+        if (!world.getBlockState(pos.below()).is(CommonBlockTags.END_STONES)) {
             return false;
         }
 
@@ -47,7 +47,7 @@ public class SmaragdantCrystalFeature extends DefaultFeature {
                     mut.setY(mut.getY() - 1);
                     state = world.getBlockState(mut);
                 }
-                if (state.is(CommonBlockTags.GEN_END_STONES) && world.getBlockState(mut.above()).isAir()) {
+                if (state.is(CommonBlockTags.END_STONES) && world.getBlockState(mut.above()).isAir()) {
                     for (int j = 0; j <= dist; j++) {
                         if (random.nextInt(8) == 0) {
                             BlocksHelper.setWithoutUpdate(world, mut, buddingCrystal);

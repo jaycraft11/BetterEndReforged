@@ -58,7 +58,7 @@ public class CrashedShipFeature extends NBTFeature<NBTFeatureConfig> {
         if (x * x + z * z < 3600) {
             return false;
         }
-        return pos.getY() > 5 && world.getBlockState(pos.below()).is(CommonBlockTags.GEN_END_STONES);
+        return pos.getY() > 5 && world.getBlockState(pos.below()).is(CommonBlockTags.END_STONES);
     }
 
     @Override

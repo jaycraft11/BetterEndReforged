@@ -1,8 +1,5 @@
 package org.betterx.betterend.world.features.terrain;
 
-import org.betterx.bclib.api.v2.levelgen.biomes.BCLBiome;
-import org.betterx.bclib.api.v2.levelgen.biomes.BCLBiomeRegistry;
-import org.betterx.bclib.api.v2.levelgen.biomes.BiomeAPI;
 import org.betterx.bclib.api.v2.levelgen.features.features.DefaultFeature;
 import org.betterx.bclib.sdf.SDF;
 import org.betterx.bclib.sdf.operator.SDFDisplacement;
@@ -19,9 +16,11 @@ import org.betterx.wover.tag.api.predefined.CommonBlockTags;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Holder;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.state.BlockState;
@@ -32,7 +31,6 @@ import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConf
 import com.google.common.collect.Lists;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.function.Function;
 
 public class SpireFeature extends DefaultFeature {
@@ -46,8 +44,8 @@ public class SpireFeature extends DefaultFeature {
         final ChunkGenerator chunkGenerator = featureConfig.chunkGenerator();
         pos = getPosOnSurfaceWG(world, pos);
         if (pos.getY() < 10 || !world.getBlockState(pos.below(3))
-                                     .is(CommonBlockTags.GEN_END_STONES) || !world.getBlockState(pos.below(6))
-                                                                                  .is(CommonBlockTags.GEN_END_STONES)) {
+                                     .is(CommonBlockTags.END_STONES) || !world.getBlockState(pos.below(6))
+                                                                              .is(CommonBlockTags.END_STONES)) {
             return false;
         }
 
@@ -89,17 +87,9 @@ public class SpireFeature extends DefaultFeature {
         }).fillRecursive(world, center);
 
         support.forEach((bpos) -> {
-            BCLBiome biome = BiomeAPI.getBiome(world.getBiome(bpos));
-            if (!BCLBiomeRegistry.isEmptyBiome(biome) && biome.equals(EndBiomes.BLOSSOMING_SPIRES)) {
-                EndConfiguredVegetation.TENANEA_BUSH.getFeature()
-                                                    .place(new FeaturePlaceContext<NoneFeatureConfiguration>(
-                                                            Optional.empty(),
-                                                            world,
-                                                            chunkGenerator,
-                                                            random,
-                                                            bpos,
-                                                            null
-                                                    ));
+            Holder<Biome> biome = world.getBiome(bpos);
+            if (biome != null && biome.equals(EndBiomes.BLOSSOMING_SPIRES)) {
+                EndConfiguredVegetation.TENANEA_BUSH.placeInWorld(world, bpos, random, chunkGenerator);
             }
         });
 
