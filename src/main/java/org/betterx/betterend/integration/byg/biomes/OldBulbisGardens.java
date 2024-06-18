@@ -1,14 +1,15 @@
 package org.betterx.betterend.integration.byg.biomes;
 
 import org.betterx.bclib.BCLib;
-import org.betterx.bclib.api.v2.levelgen.biomes.BCLBiomeBuilder;
 import org.betterx.bclib.api.v2.levelgen.surface.SurfaceRuleBuilder;
 import org.betterx.bclib.api.v2.levelgen.surface.rules.RoughNoiseCondition;
 import org.betterx.bclib.interfaces.SurfaceMaterialProvider;
 import org.betterx.betterend.integration.Integrations;
 import org.betterx.betterend.integration.byg.features.BYGFeatures;
-import org.betterx.betterend.registry.EndFeatures;
+import org.betterx.betterend.registry.features.EndLakeFeatures;
+import org.betterx.betterend.registry.features.EndVegetationFeatures;
 import org.betterx.betterend.world.biome.EndBiome;
+import org.betterx.betterend.world.biome.EndBiomeBuilder;
 
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
@@ -35,7 +36,7 @@ public class OldBulbisGardens extends EndBiome.Config {
     }
 
     @Override
-    protected void addCustomBuildData(BCLBiomeBuilder builder) {
+    public void addCustomBuildData(EndBiomeBuilder builder) {
         Holder<Biome> biome = Integrations.BYG.getBiome("bulbis_gardens");
         BiomeSpecialEffects effects = biome.value().getSpecialEffects();
 
@@ -47,7 +48,7 @@ public class OldBulbisGardens extends EndBiome.Config {
                        ParticleTypes.REVERSE_PORTAL,
                        0.002F
                )
-               .feature(EndFeatures.END_LAKE_RARE)
+               .feature(EndLakeFeatures.END_LAKE_RARE)
                .feature(BYGFeatures.OLD_BULBIS_TREE);
 
         if (BCLib.isClient()) {
@@ -107,7 +108,7 @@ public class OldBulbisGardens extends EndBiome.Config {
 //			}
 //        }
 
-        builder.feature(EndFeatures.PURPLE_POLYPORE)
+        builder.feature(EndVegetationFeatures.PURPLE_POLYPORE)
                .feature(BYGFeatures.IVIS_MOSS_WOOD)
                .feature(BYGFeatures.IVIS_MOSS)
                .feature(BYGFeatures.IVIS_VINE)
@@ -115,7 +116,7 @@ public class OldBulbisGardens extends EndBiome.Config {
     }
 
     @Override
-    protected SurfaceMaterialProvider surfaceMaterial() {
+    public SurfaceMaterialProvider surfaceMaterial() {
         return new EndBiome.DefaultSurfaceMaterialProvider() {
             @Override
             public BlockState getTopMaterial() {

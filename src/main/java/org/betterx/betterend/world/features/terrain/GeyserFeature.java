@@ -12,7 +12,7 @@ import org.betterx.bclib.util.MHelper;
 import org.betterx.betterend.blocks.HydrothermalVentBlock;
 import org.betterx.betterend.noise.OpenSimplexNoise;
 import org.betterx.betterend.registry.EndBlocks;
-import org.betterx.betterend.registry.EndFeatures;
+import org.betterx.betterend.registry.features.EndConfiguredLakeFeature;
 import org.betterx.betterend.util.BlockFixer;
 import org.betterx.wover.tag.api.predefined.CommonBlockTags;
 
@@ -30,7 +30,6 @@ import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
-import java.util.Optional;
 import java.util.function.Function;
 
 public class GeyserFeature extends DefaultFeature {
@@ -53,7 +52,7 @@ public class GeyserFeature extends DefaultFeature {
         MutableBlockPos bpos = new MutableBlockPos().set(pos);
         bpos.setY(bpos.getY() - 1);
         BlockState state = world.getBlockState(bpos);
-        while (state.is(CommonBlockTags.GEN_END_STONES) || !state.getFluidState().isEmpty() && bpos.getY() > 5) {
+        while (state.is(CommonBlockTags.END_STONES) || !state.getFluidState().isEmpty() && bpos.getY() > 5) {
             bpos.setY(bpos.getY() - 1);
             state = world.getBlockState(bpos);
         }
@@ -195,8 +194,8 @@ public class GeyserFeature extends DefaultFeature {
                     mut.setY(mut.getY() - 1);
                     state = world.getBlockState(mut);
                 }
-                if (state.is(CommonBlockTags.GEN_END_STONES) && !world.getBlockState(mut.above())
-                                                                      .is(EndBlocks.HYDROTHERMAL_VENT)) {
+                if (state.is(CommonBlockTags.END_STONES) && !world.getBlockState(mut.above())
+                                                                  .is(EndBlocks.HYDROTHERMAL_VENT)) {
                     for (int j = 0; j <= dist; j++) {
                         BlocksHelper.setWithoutUpdate(world, mut, EndBlocks.SULPHURIC_ROCK.stone);
                         MHelper.shuffle(HORIZONTAL, random);
@@ -242,7 +241,7 @@ public class GeyserFeature extends DefaultFeature {
                     mut.setY(mut.getY() - 1);
                     state = world.getBlockState(mut);
                 }
-                if (state.is(CommonBlockTags.GEN_END_STONES)) {
+                if (state.is(CommonBlockTags.END_STONES)) {
                     for (int j = 0; j <= dist; j++) {
                         BlocksHelper.setWithoutUpdate(world, mut, EndBlocks.SULPHURIC_ROCK.stone);
                         mut.setY(mut.getY() + 1);
@@ -261,15 +260,7 @@ public class GeyserFeature extends DefaultFeature {
             }
         }
 
-        EndFeatures.SULPHURIC_LAKE.getFeature()
-                                  .place(new FeaturePlaceContext<>(
-                                          Optional.empty(),
-                                          world,
-                                          chunkGenerator,
-                                          random,
-                                          pos,
-                                          null
-                                  ));
+        EndConfiguredLakeFeature.SULPHURIC_LAKE.placeInWorld(world, pos, random);
 
         double distance = radius1 * 1.7;
         BlockPos start = pos.offset((int) -distance, (int) (-halfHeight - 15 - distance), (int) -distance);
@@ -280,10 +271,10 @@ public class GeyserFeature extends DefaultFeature {
     }
 
     static {
-        REPLACE1 = (state) -> state.isAir() || (state.is(CommonBlockTags.GEN_END_STONES));
+        REPLACE1 = (state) -> state.isAir() || (state.is(CommonBlockTags.END_STONES));
 
         REPLACE2 = (state) -> {
-            if (state.is(CommonBlockTags.GEN_END_STONES) || state.is(EndBlocks.HYDROTHERMAL_VENT) || state.is(EndBlocks.SULPHUR_CRYSTAL)) {
+            if (state.is(CommonBlockTags.END_STONES) || state.is(EndBlocks.HYDROTHERMAL_VENT) || state.is(EndBlocks.SULPHUR_CRYSTAL)) {
                 return true;
             }
             return BlocksHelper.replaceableOrPlant(state);

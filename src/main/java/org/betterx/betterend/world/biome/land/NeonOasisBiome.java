@@ -1,13 +1,14 @@
 package org.betterx.betterend.world.biome.land;
 
-import org.betterx.bclib.api.v2.levelgen.biomes.BCLBiomeBuilder;
 import org.betterx.bclib.api.v2.levelgen.surface.SurfaceRuleBuilder;
 import org.betterx.bclib.api.v2.levelgen.surface.rules.SwitchRuleSource;
 import org.betterx.bclib.interfaces.SurfaceMaterialProvider;
 import org.betterx.betterend.registry.EndBlocks;
-import org.betterx.betterend.registry.EndFeatures;
 import org.betterx.betterend.registry.EndSounds;
 import org.betterx.betterend.registry.EndStructures;
+import org.betterx.betterend.registry.features.EndLakeFeatures;
+import org.betterx.betterend.registry.features.EndOreFeatures;
+import org.betterx.betterend.registry.features.EndVegetationFeatures;
 import org.betterx.betterend.world.biome.EndBiome;
 import org.betterx.betterend.world.surface.SplitNoiseCondition;
 
@@ -28,7 +29,7 @@ public class NeonOasisBiome extends EndBiome.Config {
     }
 
     @Override
-    protected void addCustomBuildData(BCLBiomeBuilder builder) {
+    public void addCustomBuildData(EndBiomeBuilder builder) {
         builder
                 .genChance(0.5F)
                 .fogColor(226, 239, 168)
@@ -37,21 +38,21 @@ public class NeonOasisBiome extends EndBiome.Config {
                 .particles(ParticleTypes.WHITE_ASH, 0.01F)
                 .loop(EndSounds.AMBIENT_DUST_WASTELANDS)
                 .music(EndSounds.MUSIC_OPENSPACE)
-                .feature(EndFeatures.DESERT_LAKE)
-                .feature(EndFeatures.NEON_CACTUS)
-                .feature(EndFeatures.UMBRELLA_MOSS)
-                .feature(EndFeatures.CREEPING_MOSS)
-                .feature(EndFeatures.CHARNIA_CYAN)
-                .feature(EndFeatures.CHARNIA_GREEN)
-                .feature(EndFeatures.CHARNIA_RED)
-                .feature(EndFeatures.FLAVOLITE_LAYER)
+                .feature(EndLakeFeatures.DESERT_LAKE)
+                .feature(EndVegetationFeatures.NEON_CACTUS)
+                .feature(EndVegetationFeatures.UMBRELLA_MOSS)
+                .feature(EndVegetationFeatures.CREEPING_MOSS)
+                .feature(EndVegetationFeatures.CHARNIA_CYAN)
+                .feature(EndVegetationFeatures.CHARNIA_GREEN)
+                .feature(EndVegetationFeatures.CHARNIA_RED)
+                .feature(EndOreFeatures.FLAVOLITE_LAYER)
                 .structure(BiomeTags.HAS_END_CITY)
                 .structure(EndStructures.ETERNAL_PORTAL)
                 .spawn(EntityType.ENDERMAN, 50, 1, 2);
     }
 
     @Override
-    protected SurfaceMaterialProvider surfaceMaterial() {
+    public SurfaceMaterialProvider surfaceMaterial() {
         return new EndBiome.DefaultSurfaceMaterialProvider() {
             @Override
             public BlockState getTopMaterial() {

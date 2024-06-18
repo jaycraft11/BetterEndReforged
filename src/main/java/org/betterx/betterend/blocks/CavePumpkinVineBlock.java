@@ -2,10 +2,10 @@ package org.betterx.betterend.blocks;
 
 import org.betterx.bclib.behaviours.BehaviourBuilders;
 import org.betterx.bclib.behaviours.interfaces.BehaviourPlant;
-import org.betterx.wover.block.api.BlockProperties;
 import org.betterx.betterend.blocks.basis.EndPlantWithAgeBlock;
 import org.betterx.betterend.interfaces.survives.SurvivesOnEndStone;
 import org.betterx.betterend.registry.EndBlocks;
+import org.betterx.wover.block.api.BlockProperties;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

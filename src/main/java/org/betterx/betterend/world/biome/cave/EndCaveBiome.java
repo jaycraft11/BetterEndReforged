@@ -1,18 +1,17 @@
 package org.betterx.betterend.world.biome.cave;
 
-import org.betterx.bclib.api.v2.levelgen.biomes.BCLBiomeSettings;
-import org.betterx.bclib.api.v3.levelgen.features.BCLFeature;
-import org.betterx.bclib.api.v3.levelgen.features.BCLFeatureBuilder;
 import org.betterx.bclib.interfaces.SurfaceMaterialProvider;
 import org.betterx.bclib.util.WeightedList;
 import org.betterx.betterend.BetterEnd;
-import org.betterx.betterend.registry.EndBiomes;
-import org.betterx.betterend.registry.EndFeatures;
 import org.betterx.betterend.registry.EndSounds;
 import org.betterx.betterend.world.biome.EndBiome;
 import org.betterx.betterend.world.biome.EndBiomeBuilder;
-import org.betterx.betterend.world.features.terrain.caves.CaveChunkPopulatorFeature;
+import org.betterx.betterend.world.biome.EndBiomeKey;
 import org.betterx.betterend.world.features.terrain.caves.CaveChunkPopulatorFeatureConfig;
+import org.betterx.wover.feature.api.configured.ConfiguredFeatureKey;
+import org.betterx.wover.feature.api.placed.PlacedFeatureKey;
+import org.betterx.wover.feature.api.placed.PlacedFeatureManager;
+import org.betterx.wover.state.api.WorldState;
 
 import com.mojang.datafixers.util.Function13;
 import com.mojang.serialization.Codec;
@@ -86,29 +85,24 @@ public class EndCaveBiome extends EndBiome {
         this.ceilFeatures.addAll((WeightedList) ceilFeatures);
     }
 
-    public static abstract class Config extends EndBiome.Config {
-        protected Config() {
+    public static abstract class Config<C extends Config<?>> extends EndBiome.Config {
+        public final PlacedFeatureKey populatorFeature;
+        public final CaveChunkPopulatorFeatureConfig populatorConfig;
+
+        protected Config(EndBiomeKey<C, ?> key) {
             super();
+            this.populatorFeature = PlacedFeatureManager
+                    .createKey(BetterEnd.C.mk(key.key
+                            .location()
+                            .getPath() + "_cave_populator"))
+                    .setDecoration(GenerationStep.Decoration.UNDERGROUND_DECORATION);
+            this.populatorConfig = new CaveChunkPopulatorFeatureConfig(key.dataKey.location());
         }
 
 
         @Override
         public void addCustomBuildData(EndBiomeBuilder builder) {
-            BCLFeature<CaveChunkPopulatorFeature, CaveChunkPopulatorFeatureConfig> feature = BCLFeatureBuilder
-                    .start(
-                            BetterEnd.C.mk(ID.getPath() + "_cave_populator"),
-                            EndFeatures.CAVE_CHUNK_POPULATOR
-                    )
-                    .configuration(new CaveChunkPopulatorFeatureConfig(ID))
-                    .build()
-                    .place()
-                    .decoration(GenerationStep.Decoration.UNDERGROUND_DECORATION)
-                    .count(1)
-                    .onlyInBiome()
-                    .build();
-
-            builder.feature(feature)
-                   .intendedType(EndBiomes.END_CAVE)
+            builder.feature(populatorFeature)
                    .music(EndSounds.MUSIC_CAVES)
                    .loop(EndSounds.AMBIENT_CAVES);
         }
@@ -128,16 +122,20 @@ public class EndCaveBiome extends EndBiome {
     private final WeightedList<Holder<? extends ConfiguredFeature<?, ?>>> floorFeatures = new WeightedList<>();
     private final WeightedList<Holder<? extends ConfiguredFeature<?, ?>>> ceilFeatures = new WeightedList<>();
 
-    public EndCaveBiome(ResourceKey<Biome> biomeID, BCLBiomeSettings settings) {
-        super(biomeID, settings);
-    }
-
     public void addFloorFeature(Holder<? extends ConfiguredFeature<?, ?>> feature, float weight) {
         floorFeatures.add(feature, weight);
     }
 
+    public void addFloorFeature(ConfiguredFeatureKey<?> feature, float weight) {
+        floorFeatures.add(feature.getHolder(WorldState.registryAccess()), weight);
+    }
+
     public void addCeilFeature(Holder<? extends ConfiguredFeature<?, ?>> feature, float weight) {
         ceilFeatures.add(feature, weight);
+    }
+
+    public void addCeilFeature(ConfiguredFeatureKey<?> feature, float weight) {
+        ceilFeatures.add(feature.getHolder(WorldState.registryAccess()), weight);
     }
 
     public Holder<? extends ConfiguredFeature<?, ?>> getFloorFeature(RandomSource random) {
@@ -162,9 +160,5 @@ public class EndCaveBiome extends EndBiome {
 
     public BlockState getWall(BlockPos pos) {
         return null;
-    }
-
-    public static EndCaveBiome create(EndBiome.Config biomeConfig) {
-        return (EndCaveBiome) EndBiome.create(biomeConfig, EndBiomes.END_CAVE);
     }
 }

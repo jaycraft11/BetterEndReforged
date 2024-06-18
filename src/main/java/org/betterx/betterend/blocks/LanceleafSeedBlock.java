@@ -2,13 +2,13 @@ package org.betterx.betterend.blocks;
 
 import org.betterx.bclib.behaviours.BehaviourBuilders;
 import org.betterx.bclib.behaviours.interfaces.BehaviourSeed;
-import org.betterx.wover.block.api.BlockProperties;
-import org.betterx.wover.block.api.BlockProperties.PentaShape;
 import org.betterx.bclib.util.BlocksHelper;
 import org.betterx.bclib.util.MHelper;
 import org.betterx.betterend.blocks.basis.EndPlantWithAgeBlock;
 import org.betterx.betterend.interfaces.survives.SurvivesOnAmberMoss;
 import org.betterx.betterend.registry.EndBlocks;
+import org.betterx.wover.block.api.BlockProperties;
+import org.betterx.wover.block.api.BlockProperties.PentaShape;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;

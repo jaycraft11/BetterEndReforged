@@ -11,6 +11,10 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class EndBiomeKey<C extends EndBiome.Config, PC extends EndBiome.Config> extends BiomeKey<EndBiomeBuilder> {
+    public interface ConfigSupplier<C extends EndBiome.Config> {
+        C get(EndBiomeKey<C, ?> key);
+    }
+
     private final @Nullable EndBiomeKey<PC, ?> parentOrNull;
 
     protected EndBiomeKey(@NotNull ResourceLocation location, @Nullable EndBiomeKey<PC, ?> parentOrNull) {
@@ -25,7 +29,11 @@ public class EndBiomeKey<C extends EndBiome.Config, PC extends EndBiome.Config> 
     }
 
     @SafeVarargs
-    public final EndBiomeBuilder bootstrap(BiomeBootstrapContext context, C config, TagKey<Biome>... typeTag) {
+    public final EndBiomeBuilder bootstrap(
+            BiomeBootstrapContext context,
+            EndBiome.Config config,
+            TagKey<Biome>... typeTag
+    ) {
         return new EndBiomeBuilder(context, this, typeTag)
                 .parent(this.parentOrNull)
                 .configure(config);

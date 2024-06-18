@@ -41,6 +41,11 @@ public class EndTags {
             "bonemeal/target/water_grass"
     );
 
+    public static final TagKey<Block> INCORRECT_FOR_AETERNIUM_TOOL = TagManager.BLOCKS.makeTag(
+            BetterEnd.C,
+            "incorrect_for_aeternium_tool"
+    );
+
     public static void register() {
 
 

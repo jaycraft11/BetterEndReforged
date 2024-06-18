@@ -37,7 +37,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.IntStream;
 
-public class TunelCaveFeature extends EndCaveFeature {
+public class TunelCaveFeature extends EndCaveFeatures {
     private static int tunnelFloorErrCounter = 0;
     private static int tunnelCeilErrCounter = 0;
     private static int tunnelWallErrCounter = 0;

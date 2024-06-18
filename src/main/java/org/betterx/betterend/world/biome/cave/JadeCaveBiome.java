@@ -1,11 +1,11 @@
 package org.betterx.betterend.world.biome.cave;
 
-import org.betterx.bclib.api.v2.levelgen.biomes.BCLBiomeSettings;
 import org.betterx.bclib.interfaces.SurfaceMaterialProvider;
 import org.betterx.bclib.util.WeightedList;
 import org.betterx.betterend.noise.OpenSimplexNoise;
 import org.betterx.betterend.registry.EndBlocks;
 import org.betterx.betterend.world.biome.EndBiomeBuilder;
+import org.betterx.betterend.world.biome.EndBiomeKey;
 
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
@@ -21,7 +21,7 @@ import java.util.List;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class JadeCaveBiome extends EndCaveBiome.Config {
+public class JadeCaveBiome extends EndCaveBiome.Config<JadeCaveBiome> {
     public static final MapCodec<Biome> CODEC = EndCaveBiome.simpleCaveBiomeCodec(JadeCaveBiome.Biome::new);
     public static final KeyDispatchDataCodec<JadeCaveBiome.Biome> KEY_CODEC = KeyDispatchDataCodec.of(CODEC);
 
@@ -29,11 +29,6 @@ public class JadeCaveBiome extends EndCaveBiome.Config {
         private static final OpenSimplexNoise WALL_NOISE = new OpenSimplexNoise("jade_cave".hashCode());
         private static final OpenSimplexNoise DEPTH_NOISE = new OpenSimplexNoise("depth_noise".hashCode());
         private static final BlockState[] JADE = new BlockState[3];
-
-
-        public Biome(ResourceKey<net.minecraft.world.level.biome.Biome> biomeID, BCLBiomeSettings settings) {
-            super(biomeID, settings);
-        }
 
         @Override
         public KeyDispatchDataCodec<? extends EndCaveBiome> codec() {
@@ -81,8 +76,8 @@ public class JadeCaveBiome extends EndCaveBiome.Config {
         }
     }
 
-    public JadeCaveBiome() {
-        super();
+    public JadeCaveBiome(EndBiomeKey<JadeCaveBiome, ?> key) {
+        super(key);
     }
 
 

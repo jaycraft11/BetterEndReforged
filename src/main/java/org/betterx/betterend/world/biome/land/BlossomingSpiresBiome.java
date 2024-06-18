@@ -3,8 +3,9 @@ package org.betterx.betterend.world.biome.land;
 import org.betterx.bclib.interfaces.SurfaceMaterialProvider;
 import org.betterx.betterend.registry.EndBlocks;
 import org.betterx.betterend.registry.EndEntities;
-import org.betterx.betterend.registry.EndFeatures;
 import org.betterx.betterend.registry.EndSounds;
+import org.betterx.betterend.registry.features.EndTerrainFeatures;
+import org.betterx.betterend.registry.features.EndVegetationFeatures;
 import org.betterx.betterend.world.biome.EndBiome;
 import org.betterx.betterend.world.biome.EndBiomeBuilder;
 
@@ -34,19 +35,19 @@ public class BlossomingSpiresBiome extends EndBiome.Config {
                 .plantsColor(122, 45, 122)
                 .music(EndSounds.MUSIC_FOREST)
                 .loop(EndSounds.AMBIENT_BLOSSOMING_SPIRES)
-                .feature(EndFeatures.SPIRE)
-                .feature(EndFeatures.FLOATING_SPIRE)
-                .feature(EndFeatures.TENANEA)
-                .feature(EndFeatures.TENANEA_BUSH)
-                .feature(EndFeatures.BULB_VINE)
-                .feature(EndFeatures.BUSHY_GRASS)
-                .feature(EndFeatures.BUSHY_GRASS_WG)
-                .feature(EndFeatures.BLOSSOM_BERRY)
-                .feature(EndFeatures.TWISTED_MOSS)
-                .feature(EndFeatures.TWISTED_MOSS_WOOD)
-                .feature(EndFeatures.SILK_MOTH_NEST)
+                .feature(EndTerrainFeatures.SPIRE)
+                .feature(EndTerrainFeatures.FLOATING_SPIRE)
+                .feature(EndVegetationFeatures.TENANEA)
+                .feature(EndVegetationFeatures.TENANEA_BUSH)
+                .feature(EndVegetationFeatures.BULB_VINE)
+                .feature(EndVegetationFeatures.BUSHY_GRASS)
+                .feature(EndVegetationFeatures.BUSHY_GRASS_WG)
+                .feature(EndVegetationFeatures.BLOSSOM_BERRY)
+                .feature(EndVegetationFeatures.TWISTED_MOSS)
+                .feature(EndVegetationFeatures.TWISTED_MOSS_WOOD)
+                .feature(EndTerrainFeatures.SILK_MOTH_NEST)
                 .spawn(EntityType.ENDERMAN, 50, 1, 4)
-                .spawn(EndEntities.SILK_MOTH, 5, 1, 2);
+                .spawn(EndEntities.SILK_MOTH.type(), 5, 1, 2);
     }
 
     @Override

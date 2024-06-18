@@ -1,11 +1,11 @@
 package org.betterx.betterend.world.biome.cave;
 
-import org.betterx.bclib.api.v2.levelgen.biomes.BCLBiomeSettings;
 import org.betterx.bclib.interfaces.SurfaceMaterialProvider;
 import org.betterx.bclib.util.WeightedList;
-import org.betterx.betterend.registry.EndFeatures;
 import org.betterx.betterend.registry.EndParticles;
+import org.betterx.betterend.registry.features.EndConfiguredCaveFeatures;
 import org.betterx.betterend.world.biome.EndBiomeBuilder;
+import org.betterx.betterend.world.biome.EndBiomeKey;
 
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.Holder;
@@ -18,16 +18,16 @@ import java.util.List;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class EmptyAuroraCaveBiome extends EndCaveBiome.Config {
+public class EmptyAuroraCaveBiome extends EndCaveBiome.Config<EmptyAuroraCaveBiome> {
     public static final MapCodec<Biome> CODEC = EndCaveBiome.simpleCaveBiomeCodec(EmptyAuroraCaveBiome.Biome::new);
     public static final KeyDispatchDataCodec<EmptyAuroraCaveBiome.Biome> KEY_CODEC = KeyDispatchDataCodec.of(CODEC);
 
-    public static class Biome extends EndCaveBiome {
-        public Biome(ResourceKey<net.minecraft.world.level.biome.Biome> biomeID, BCLBiomeSettings settings) {
-            super(biomeID, settings);
-            this.addFloorFeature(EndFeatures.BIG_AURORA_CRYSTAL.configuredFeature, 1);
 
-            this.addCeilFeature(EndFeatures.END_STONE_STALACTITE.configuredFeature, 1);
+    public static class Biome extends EndCaveBiome {
+        @Override
+        public void datagenSetup() {
+            this.addFloorFeature(EndConfiguredCaveFeatures.BIG_AURORA_CRYSTAL, 1);
+            this.addCeilFeature(EndConfiguredCaveFeatures.END_STONE_STALACTITE, 1);
         }
 
         @Override
@@ -69,8 +69,8 @@ public class EmptyAuroraCaveBiome extends EndCaveBiome.Config {
         }
     }
 
-    public EmptyAuroraCaveBiome() {
-        super();
+    public EmptyAuroraCaveBiome(EndBiomeKey<EmptyAuroraCaveBiome, ?> key) {
+        super(key);
     }
 
     @Override

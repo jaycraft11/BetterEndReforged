@@ -1,7 +1,7 @@
 package org.betterx.betterend.registry;
 
-import org.betterx.bclib.recipes.SmithingTemplates;
 import org.betterx.betterend.BetterEnd;
+import org.betterx.wover.item.api.smithing.SmithingTemplates;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.SmithingTemplateItem;
@@ -28,7 +28,7 @@ public class EndTemplates {
     public static final SmithingTemplateItem HANDLE_ATTACHMENT = EndItems
             .getItemRegistry()
             .registerSmithingTemplateItem(
-                    BetterEnd.C.mk("handle_attachment"),
+                    "handle_attachment",
                     List.of(
                             EMPTY_SLOT_HAMMER_HEAD,
                             EMPTY_SLOT_PICKAXE_HEAD,
@@ -41,7 +41,7 @@ public class EndTemplates {
     public static final SmithingTemplateItem LEATHER_HANDLE_ATTACHMENT = EndItems
             .getItemRegistry()
             .registerSmithingTemplateItem(
-                    BetterEnd.C.mk("leather_handle_attachment"),
+                    "leather_handle_attachment",
                     List.of(
                             EMPTY_SLOT_HAMMER_HEAD,
                             EMPTY_SLOT_PICKAXE_HEAD,
@@ -55,17 +55,15 @@ public class EndTemplates {
     public static final SmithingTemplateItem TOOL_ASSEMBLY = EndItems
             .getItemRegistry()
             .registerSmithingTemplateItem(
-                    BetterEnd.C.mk("tool_assembly"),
-                    List.of(
-                            EMPTY_SLOT_SWORD_BLADE
-                    ),
+                    "tool_assembly",
+                    List.of(EMPTY_SLOT_SWORD_BLADE),
                     List.of(EMPTY_SLOT_SWORD_HANDLE)
             );
 
     public static final SmithingTemplateItem PLATE_UPGRADE = EndItems
             .getItemRegistry()
             .registerSmithingTemplateItem(
-                    BetterEnd.C.mk("plate_upgrade"),
+                    "plate_upgrade",
                     SmithingTemplates.ARMOR,
                     List.of(EMPTY_SLOT_PLATE)
             );
@@ -73,7 +71,7 @@ public class EndTemplates {
     public static final SmithingTemplateItem THALLASIUM_UPGRADE = EndItems
             .getItemRegistry()
             .registerSmithingTemplateItem(
-                    BetterEnd.C.mk("thallasium_upgrade"),
+                    "thallasium_upgrade",
                     List.of(EMPTY_SLOT_STICK),
                     List.of(SmithingTemplates.EMPTY_SLOT_INGOT)
             );
@@ -81,7 +79,7 @@ public class EndTemplates {
     public static final SmithingTemplateItem TERMINITE_UPGRADE = EndItems
             .getItemRegistry()
             .registerSmithingTemplateItem(
-                    BetterEnd.C.mk("terminite_upgrade"),
+                    "terminite_upgrade",
                     List.of(EMPTY_SLOT_ANVIL, EMPTY_SLOT_STICK),
                     List.of(SmithingTemplates.EMPTY_SLOT_INGOT)
             );
@@ -89,7 +87,7 @@ public class EndTemplates {
     public static final SmithingTemplateItem AETERNIUM_UPGRADE = EndItems
             .getItemRegistry()
             .registerSmithingTemplateItem(
-                    BetterEnd.C.mk("aeternium_upgrade"),
+                    "aeternium_upgrade",
                     List.of(EMPTY_SLOT_ANVIL, EMPTY_SLOT_ELYTRA),
                     List.of(SmithingTemplates.EMPTY_SLOT_INGOT)
             );
@@ -98,7 +96,7 @@ public class EndTemplates {
     public static final SmithingTemplateItem NETHERITE_UPGRADE = EndItems
             .getItemRegistry()
             .registerSmithingTemplateItem(
-                    BetterEnd.C.mk("netherite_upgrade"),
+                    "netherite_upgrade",
                     List.of(EMPTY_SLOT_HAMMER),
                     List.of(SmithingTemplates.EMPTY_SLOT_INGOT)
             );

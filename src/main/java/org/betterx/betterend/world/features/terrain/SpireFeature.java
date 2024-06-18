@@ -13,7 +13,7 @@ import org.betterx.bclib.util.BlocksHelper;
 import org.betterx.bclib.util.MHelper;
 import org.betterx.betterend.noise.OpenSimplexNoise;
 import org.betterx.betterend.registry.EndBiomes;
-import org.betterx.betterend.registry.EndFeatures;
+import org.betterx.betterend.registry.features.EndConfiguredVegetation;
 import org.betterx.betterend.world.biome.EndBiome;
 import org.betterx.wover.tag.api.predefined.CommonBlockTags;
 
@@ -91,15 +91,15 @@ public class SpireFeature extends DefaultFeature {
         support.forEach((bpos) -> {
             BCLBiome biome = BiomeAPI.getBiome(world.getBiome(bpos));
             if (!BCLBiomeRegistry.isEmptyBiome(biome) && biome.equals(EndBiomes.BLOSSOMING_SPIRES)) {
-                EndFeatures.TENANEA_BUSH.getFeature()
-                                        .place(new FeaturePlaceContext<NoneFeatureConfiguration>(
-                                                Optional.empty(),
-                                                world,
-                                                chunkGenerator,
-                                                random,
-                                                bpos,
-                                                null
-                                        ));
+                EndConfiguredVegetation.TENANEA_BUSH.getFeature()
+                                                    .place(new FeaturePlaceContext<NoneFeatureConfiguration>(
+                                                            Optional.empty(),
+                                                            world,
+                                                            chunkGenerator,
+                                                            random,
+                                                            bpos,
+                                                            null
+                                                    ));
             }
         });
 

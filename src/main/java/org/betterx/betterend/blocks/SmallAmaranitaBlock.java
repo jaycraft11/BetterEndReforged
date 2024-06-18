@@ -5,7 +5,7 @@ import org.betterx.bclib.behaviours.interfaces.BehaviourPlant;
 import org.betterx.bclib.util.BlocksHelper;
 import org.betterx.betterend.blocks.basis.EndPlantBlock;
 import org.betterx.betterend.interfaces.survives.SurvivesOnEndBone;
-import org.betterx.betterend.registry.EndFeatures;
+import org.betterx.betterend.registry.features.EndConfiguredVegetation;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -15,13 +15,10 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-
-import java.util.Optional;
 
 public class SmallAmaranitaBlock extends EndPlantBlock implements SurvivesOnEndBone, BehaviourPlant {
     public SmallAmaranitaBlock() {
@@ -37,31 +34,17 @@ public class SmallAmaranitaBlock extends EndPlantBlock implements SurvivesOnEndB
     public void performBonemeal(ServerLevel world, RandomSource random, BlockPos pos, BlockState state) {
         BlockPos bigPos = growBig(world, pos);
         if (bigPos != null) {
-            if (EndFeatures.GIGANTIC_AMARANITA.getFeature()
-                                              .place(new FeaturePlaceContext<net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration>(
-                                                      Optional.empty(),
-                                                      world,
-                                                      null,
-                                                      random,
-                                                      bigPos,
-                                                      null
-                                              ))) {
+            if (EndConfiguredVegetation.GIGANTIC_AMARANITA.placeInWorld(world, pos, random)) {
                 replaceMushroom(world, bigPos);
                 replaceMushroom(world, bigPos.south());
                 replaceMushroom(world, bigPos.east());
                 replaceMushroom(world, bigPos.south().east());
+
+                return;
             }
-            return;
         }
-        EndFeatures.LARGE_AMARANITA.getFeature()
-                                   .place(new FeaturePlaceContext<net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration>(
-                                           Optional.empty(),
-                                           world,
-                                           null,
-                                           random,
-                                           pos,
-                                           null
-                                   ));
+
+        EndConfiguredVegetation.LARGE_AMARANITA.placeInWorld(world, pos, random);
     }
 
     @Override
@@ -85,8 +68,10 @@ public class SmallAmaranitaBlock extends EndPlantBlock implements SurvivesOnEndB
     private boolean checkFrame(ServerLevel world, BlockPos pos) {
         return world.getBlockState(pos).is(this) && world.getBlockState(pos.south()).is(this) && world.getBlockState(pos
                                                                                                               .east())
-                                                                                                      .is(this) && world.getBlockState(
-                pos.south().east()).is(this);
+                                                                                                      .is(this) && world
+                .getBlockState(
+                        pos.south().east())
+                .is(this);
     }
 
     private void replaceMushroom(ServerLevel world, BlockPos pos) {

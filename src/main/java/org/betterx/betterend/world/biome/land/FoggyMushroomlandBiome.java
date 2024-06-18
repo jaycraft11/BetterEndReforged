@@ -1,9 +1,11 @@
 package org.betterx.betterend.world.biome.land;
 
-import org.betterx.bclib.api.v2.levelgen.biomes.BCLBiomeBuilder;
 import org.betterx.bclib.interfaces.SurfaceMaterialProvider;
 import org.betterx.betterend.registry.*;
+import org.betterx.betterend.registry.features.EndLakeFeatures;
+import org.betterx.betterend.registry.features.EndVegetationFeatures;
 import org.betterx.betterend.world.biome.EndBiome;
+import org.betterx.betterend.world.biome.EndBiomeBuilder;
 
 import net.minecraft.tags.BiomeTags;
 import net.minecraft.world.entity.EntityType;
@@ -15,7 +17,7 @@ public class FoggyMushroomlandBiome extends EndBiome.Config {
     }
 
     @Override
-    protected void addCustomBuildData(BCLBiomeBuilder builder) {
+    public void addCustomBuildData(EndBiomeBuilder builder) {
         builder
                 .structure(EndStructures.GIANT_MOSSY_GLOWSHROOM)
                 .plantsColor(73, 210, 209)
@@ -25,31 +27,31 @@ public class FoggyMushroomlandBiome extends EndBiome.Config {
                 .particles(EndParticles.GLOWING_SPHERE, 0.001F)
                 .loop(EndSounds.AMBIENT_FOGGY_MUSHROOMLAND)
                 .music(EndSounds.MUSIC_FOREST)
-                .feature(EndFeatures.END_LAKE)
-                .feature(EndFeatures.MOSSY_GLOWSHROOM)
-                .feature(EndFeatures.BLUE_VINE)
-                .feature(EndFeatures.UMBRELLA_MOSS)
-                .feature(EndFeatures.CREEPING_MOSS)
-                .feature(EndFeatures.DENSE_VINE)
-                //.feature(EndFeatures.PEARLBERRY)
-                .feature(EndFeatures.CYAN_MOSS)
-                .feature(EndFeatures.CYAN_MOSS_WOOD)
-                .feature(EndFeatures.END_LILY)
-                .feature(EndFeatures.BUBBLE_CORAL)
-                .feature(EndFeatures.CHARNIA_CYAN)
-                .feature(EndFeatures.CHARNIA_LIGHT_BLUE)
-                .feature(EndFeatures.CHARNIA_RED_RARE)
+                .feature(EndLakeFeatures.END_LAKE)
+                .feature(EndVegetationFeatures.MOSSY_GLOWSHROOM)
+                .feature(EndVegetationFeatures.BLUE_VINE)
+                .feature(EndVegetationFeatures.UMBRELLA_MOSS)
+                .feature(EndVegetationFeatures.CREEPING_MOSS)
+                .feature(EndVegetationFeatures.DENSE_VINE)
+                //.featur(EndVegetationFeatures.PEARLBERRY)
+                .feature(EndVegetationFeatures.CYAN_MOSS)
+                .feature(EndVegetationFeatures.CYAN_MOSS_WOOD)
+                .feature(EndVegetationFeatures.END_LILY)
+                .feature(EndVegetationFeatures.BUBBLE_CORAL)
+                .feature(EndVegetationFeatures.CHARNIA_CYAN)
+                .feature(EndVegetationFeatures.CHARNIA_LIGHT_BLUE)
+                .feature(EndVegetationFeatures.CHARNIA_RED_RARE)
                 .structure(BiomeTags.HAS_END_CITY)
                 .structure(EndStructures.ETERNAL_PORTAL)
-                .spawn(EndEntities.DRAGONFLY, 80, 2, 5)
-                .spawn(EndEntities.END_FISH, 20, 2, 5)
-                .spawn(EndEntities.CUBOZOA, 10, 3, 8)
-                .spawn(EndEntities.END_SLIME, 10, 1, 2)
+                .spawn(EndEntities.DRAGONFLY.type(), 80, 2, 5)
+                .spawn(EndEntities.END_FISH.type(), 20, 2, 5)
+                .spawn(EndEntities.CUBOZOA.type(), 10, 3, 8)
+                .spawn(EndEntities.END_SLIME.type(), 10, 1, 2)
                 .spawn(EntityType.ENDERMAN, 10, 1, 2);
     }
 
     @Override
-    protected SurfaceMaterialProvider surfaceMaterial() {
+    public SurfaceMaterialProvider surfaceMaterial() {
         return new EndBiome.DefaultSurfaceMaterialProvider() {
             @Override
             public BlockState getTopMaterial() {

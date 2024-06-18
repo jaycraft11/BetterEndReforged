@@ -1,13 +1,13 @@
 package org.betterx.betterend.integration.byg.biomes;
 
 import org.betterx.bclib.BCLib;
-import org.betterx.bclib.api.v2.levelgen.biomes.BCLBiomeBuilder;
 import org.betterx.bclib.api.v2.levelgen.surface.SurfaceRuleBuilder;
 import org.betterx.bclib.interfaces.SurfaceMaterialProvider;
 import org.betterx.betterend.integration.Integrations;
 import org.betterx.betterend.integration.byg.features.BYGFeatures;
-import org.betterx.betterend.registry.EndFeatures;
+import org.betterx.betterend.registry.features.EndLakeFeatures;
 import org.betterx.betterend.world.biome.EndBiome;
+import org.betterx.betterend.world.biome.EndBiomeBuilder;
 
 import net.minecraft.core.Holder;
 import net.minecraft.core.particles.ParticleTypes;
@@ -30,7 +30,7 @@ public class NightshadeRedwoods extends EndBiome.Config {
     }
 
     @Override
-    protected void addCustomBuildData(BCLBiomeBuilder builder) {
+    public void addCustomBuildData(EndBiomeBuilder builder) {
         Holder<Biome> biome = Integrations.BYG.getBiome("nightshade_forest");
         BiomeSpecialEffects effects = biome.value().getSpecialEffects();
 
@@ -44,7 +44,7 @@ public class NightshadeRedwoods extends EndBiome.Config {
                )
                .grassColor(48, 13, 89)
                .plantsColor(200, 125, 9)
-               .feature(EndFeatures.END_LAKE_RARE)
+               .feature(EndLakeFeatures.END_LAKE_RARE)
                .feature(BYGFeatures.NIGHTSHADE_REDWOOD_TREE)
                .feature(BYGFeatures.NIGHTSHADE_MOSS_WOOD)
                .feature(BYGFeatures.NIGHTSHADE_MOSS);
@@ -86,7 +86,7 @@ public class NightshadeRedwoods extends EndBiome.Config {
     }
 
     @Override
-    protected SurfaceMaterialProvider surfaceMaterial() {
+    public SurfaceMaterialProvider surfaceMaterial() {
         return new EndBiome.DefaultSurfaceMaterialProvider() {
             @Override
             public BlockState getTopMaterial() {

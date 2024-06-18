@@ -2,7 +2,7 @@ package org.betterx.betterend.blocks;
 
 import org.betterx.betterend.blocks.basis.PottableFeatureSapling;
 import org.betterx.betterend.interfaces.survives.SurvivesOnShadowGrass;
-import org.betterx.betterend.registry.EndFeatures;
+import org.betterx.betterend.registry.features.EndConfiguredVegetation;
 import org.betterx.betterend.world.features.trees.DragonTreeFeature;
 
 import net.minecraft.world.level.block.Block;
@@ -10,7 +10,7 @@ import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConf
 
 public class DragonTreeSaplingBlock extends PottableFeatureSapling<DragonTreeFeature, NoneFeatureConfiguration> implements SurvivesOnShadowGrass {
     public DragonTreeSaplingBlock() {
-        super((state) -> EndFeatures.DRAGON_TREE.configuredFeature);
+        super((level, pos, state, rnd) -> EndConfiguredVegetation.DRAGON_TREE.placeInWorld(level, pos, rnd));
     }
 
     @Override

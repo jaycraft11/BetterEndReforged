@@ -1,11 +1,14 @@
 package org.betterx.betterend.world.biome.land;
 
-import org.betterx.bclib.api.v2.levelgen.biomes.BCLBiomeBuilder;
 import org.betterx.bclib.api.v2.levelgen.surface.SurfaceRuleBuilder;
 import org.betterx.bclib.api.v2.levelgen.surface.rules.SwitchRuleSource;
 import org.betterx.bclib.interfaces.SurfaceMaterialProvider;
 import org.betterx.betterend.registry.*;
+import org.betterx.betterend.registry.features.EndLakeFeatures;
+import org.betterx.betterend.registry.features.EndTerrainFeatures;
+import org.betterx.betterend.registry.features.EndVegetationFeatures;
 import org.betterx.betterend.world.biome.EndBiome;
+import org.betterx.betterend.world.biome.EndBiomeBuilder;
 import org.betterx.betterend.world.surface.SulphuricSurfaceNoiseCondition;
 
 import net.minecraft.world.entity.EntityType;
@@ -24,12 +27,12 @@ public class SulphurSpringsBiome extends EndBiome.Config {
     }
 
     @Override
-    protected boolean hasCaves() {
+    public boolean hasCaves() {
         return false;
     }
 
     @Override
-    protected void addCustomBuildData(BCLBiomeBuilder builder) {
+    public void addCustomBuildData(EndBiomeBuilder builder) {
         builder
                 .music(EndSounds.MUSIC_OPENSPACE)
                 .loop(EndSounds.AMBIENT_SULPHUR_SPRINGS)
@@ -39,22 +42,22 @@ public class SulphurSpringsBiome extends EndBiome.Config {
                 .fogDensity(1.5F)
                 .terrainHeight(0F)
                 .particles(EndParticles.SULPHUR_PARTICLE, 0.001F)
-                .feature(EndFeatures.GEYSER)
-                .feature(EndFeatures.SURFACE_VENT)
-                .feature(EndFeatures.SULPHURIC_LAKE)
-                .feature(EndFeatures.SULPHURIC_CAVE)
-                .feature(EndFeatures.HYDRALUX)
-                .feature(EndFeatures.CHARNIA_GREEN)
-                .feature(EndFeatures.CHARNIA_ORANGE)
-                .feature(EndFeatures.CHARNIA_RED_RARE)
+                .feature(EndTerrainFeatures.GEYSER)
+                .feature(EndTerrainFeatures.SURFACE_VENT)
+                .feature(EndLakeFeatures.SULPHURIC_LAKE)
+                .feature(EndTerrainFeatures.SULPHURIC_CAVE)
+                .feature(EndVegetationFeatures.HYDRALUX)
+                .feature(EndVegetationFeatures.CHARNIA_GREEN)
+                .feature(EndVegetationFeatures.CHARNIA_ORANGE)
+                .feature(EndVegetationFeatures.CHARNIA_RED_RARE)
                 .structure(EndStructures.ETERNAL_PORTAL)
-                .spawn(EndEntities.END_FISH, 50, 3, 8)
-                .spawn(EndEntities.CUBOZOA, 50, 3, 8)
+                .spawn(EndEntities.END_FISH.type(), 50, 3, 8)
+                .spawn(EndEntities.CUBOZOA.type(), 50, 3, 8)
                 .spawn(EntityType.ENDERMAN, 50, 1, 4);
     }
 
     @Override
-    protected SurfaceMaterialProvider surfaceMaterial() {
+    public SurfaceMaterialProvider surfaceMaterial() {
         return new EndBiome.DefaultSurfaceMaterialProvider() {
             @Override
             public BlockState getTopMaterial() {

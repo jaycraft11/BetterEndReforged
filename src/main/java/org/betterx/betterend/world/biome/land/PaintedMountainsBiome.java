@@ -1,6 +1,5 @@
 package org.betterx.betterend.world.biome.land;
 
-import org.betterx.bclib.api.v2.levelgen.biomes.BCLBiomeBuilder;
 import org.betterx.bclib.api.v2.levelgen.surface.SurfaceRuleBuilder;
 import org.betterx.bclib.api.v2.levelgen.surface.rules.SwitchRuleSource;
 import org.betterx.bclib.interfaces.SurfaceMaterialProvider;
@@ -24,7 +23,7 @@ public class PaintedMountainsBiome extends EndBiome.Config {
     }
 
     @Override
-    protected void addCustomBuildData(BCLBiomeBuilder builder) {
+    public void addCustomBuildData(EndBiomeBuilder builder) {
         builder
                 .structure(EndStructures.PAINTED_MOUNTAIN)
                 .fogColor(226, 239, 168)
@@ -37,7 +36,7 @@ public class PaintedMountainsBiome extends EndBiome.Config {
     }
 
     @Override
-    protected SurfaceMaterialProvider surfaceMaterial() {
+    public SurfaceMaterialProvider surfaceMaterial() {
         return new EndBiome.DefaultSurfaceMaterialProvider() {
             @Override
             public BlockState getTopMaterial() {

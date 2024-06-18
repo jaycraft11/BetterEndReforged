@@ -9,23 +9,18 @@ import org.betterx.wover.biome.api.builder.BiomeBootstrapContext;
 import org.betterx.wover.biome.api.builder.BiomeBuilder;
 import org.betterx.wover.biome.api.data.BiomeData;
 import org.betterx.wover.generator.api.biomesource.WoverBiomeBuilder;
-import org.betterx.wover.tag.api.event.context.TagBootstrapContext;
 
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.data.worldgen.placement.EndPlacements;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.biome.Biome;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.levelgen.GenerationStep;
 
-import java.util.LinkedList;
-import java.util.List;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class EndBiomeBuilder extends WoverBiomeBuilder.AbstractWoverBiomeBuilder<EndBiomeBuilder> {
-    public static final List<SurfaceMaterialProvider> MATERIALS = new LinkedList<>();
     protected boolean hasCave = false;
     protected SurfaceMaterialProvider surface;
 
@@ -55,12 +50,11 @@ public class EndBiomeBuilder extends WoverBiomeBuilder.AbstractWoverBiomeBuilder
             .finishSurface();
 
         this.surface = biomeConfig.surfaceMaterial();
-        MATERIALS.add(this.surface);
 
         this.hasCave = biomeConfig.hasCaves();
         biomeConfig.addCustomBuildData(this);
 
-        EndFeatures.addDefaultFeatures(biomeConfig.ID, this, biomeConfig.hasCaves());
+        EndFeatures.addDefaultFeatures(this, biomeConfig.hasCaves());
 
         if (biomeConfig.hasReturnGateway()) {
             this.feature(GenerationStep.Decoration.SURFACE_STRUCTURES, EndPlacements.END_GATEWAY_RETURN);
@@ -90,20 +84,13 @@ public class EndBiomeBuilder extends WoverBiomeBuilder.AbstractWoverBiomeBuilder
 
     @Override
     public void registerBiomeData(BootstrapContext<BiomeData> dataContext) {
-        dataContext.register(
-                key.dataKey,
-                new EndBiome(
-                        fogDensity, key.key, parameters,
-                        terrainHeight, genChance, edgeSize, vertical, edge, parent,
-                        hasCave, surface
-                )
+        final EndBiome biome = new EndBiome(
+                fogDensity, key.key, parameters,
+                terrainHeight, genChance, edgeSize, vertical, edge, parent,
+                hasCave, surface
         );
-    }
-
-    public static void registerAllSurfaceBlocksTo(TagBootstrapContext<Block> context, TagKey<Block> groundTag) {
-        for (SurfaceMaterialProvider material : MATERIALS) {
-            material.addBiomeSurfaceToEndGroup(context, groundTag);
-        }
+        biome.datagenSetup();
+        dataContext.register(key.dataKey, biome);
     }
 }
 

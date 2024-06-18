@@ -1,21 +1,20 @@
 package org.betterx.betterend.world.features.terrain;
 
-import org.betterx.bclib.api.v2.levelgen.biomes.BCLBiome;
-import org.betterx.bclib.api.v2.levelgen.biomes.BCLBiomeRegistry;
-import org.betterx.bclib.api.v2.levelgen.biomes.BiomeAPI;
 import org.betterx.bclib.sdf.SDF;
 import org.betterx.bclib.sdf.operator.SDFDisplacement;
 import org.betterx.bclib.sdf.primitive.SDFSphere;
 import org.betterx.bclib.util.MHelper;
 import org.betterx.betterend.noise.OpenSimplexNoise;
 import org.betterx.betterend.registry.EndBiomes;
-import org.betterx.betterend.registry.EndFeatures;
+import org.betterx.betterend.registry.features.EndConfiguredVegetation;
 import org.betterx.betterend.world.biome.EndBiome;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Holder;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
@@ -24,7 +23,6 @@ import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConf
 import com.google.common.collect.Lists;
 
 import java.util.List;
-import java.util.Optional;
 
 public class FloatingSpireFeature extends SpireFeature {
     @Override
@@ -87,20 +85,12 @@ public class FloatingSpireFeature extends SpireFeature {
         });
         sdf.fillRecursive(world, center);
 
-        support.forEach((bpos) -> {
-            BCLBiome biome = BiomeAPI.getBiome(world.getBiome(bpos));
-            if (!BCLBiomeRegistry.isEmptyBiome(biome) && biome.is(EndBiomes.BLOSSOMING_SPIRES)) {
-                EndFeatures.TENANEA_BUSH.getFeature()
-                                        .place(new FeaturePlaceContext<NoneFeatureConfiguration>(
-                                                Optional.empty(),
-                                                world,
-                                                chunkGenerator,
-                                                random,
-                                                bpos,
-                                                null
-                                        ));
+        for (BlockPos bpos : support) {
+            final Holder<Biome> biome = world.getBiome(bpos);
+            if (biome.is(EndBiomes.BLOSSOMING_SPIRES.key)) {
+                EndConfiguredVegetation.TENANEA_BUSH.placeInWorld(world, bpos, random);
             }
-        });
+        }
 
         return true;
     }

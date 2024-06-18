@@ -2,12 +2,14 @@ package org.betterx.datagen.betterend.worldgen.features;
 
 import org.betterx.betterend.registry.EndBlocks;
 import org.betterx.betterend.registry.EndFeatures;
-import org.betterx.betterend.registry.EndVegetationFeatures;
+import org.betterx.betterend.registry.features.EndConfiguredVegetation;
+import org.betterx.betterend.registry.features.EndVegetationFeatures;
 import org.betterx.betterend.world.features.*;
 import org.betterx.betterend.world.features.bushes.BushFeatureConfig;
 import org.betterx.betterend.world.features.bushes.BushWithOuterFeatureConfig;
 import org.betterx.wover.core.api.ModCore;
 import org.betterx.wover.datagen.api.provider.multi.WoverFeatureProvider;
+import org.betterx.wover.feature.api.placed.PlacedConfiguredFeatureKey;
 import org.betterx.wover.feature.api.placed.PlacedFeatureKey;
 
 import net.minecraft.data.worldgen.BootstrapContext;
@@ -23,60 +25,42 @@ public class VegetationFeaturesProvider extends WoverFeatureProvider {
         super(modCore, modCore.id("vegetation"));
     }
 
-    private static <F extends Feature<FC>, FC extends FeatureConfiguration> void registerVegetation(
-            BootstrapContext<PlacedFeature> context,
-            PlacedFeatureKey key,
-            F feature,
-            FC config,
-            int density
-    ) {
-        key.inlineConfiguration(context)
-           .configuration(feature)
-           .configuration(config)
-           .inlinePlace()
-           .onEveryLayerMax(density)
-           .onlyInBiome()
-           .register();
-    }
-
-    private static <F extends Feature<FC>, FC extends FeatureConfiguration> void registerVegetation(
-            BootstrapContext<PlacedFeature> context,
-            PlacedFeatureKey key,
-            F feature,
-            int density
-    ) {
-        key
-                .inlineConfiguration(context)
-                .configuration(feature)
-                .inlinePlace()
-                .onEveryLayerMax(density)
-                .onlyInBiome()
-                .register();
-    }
-
     @Override
     protected void bootstrapConfigured(BootstrapContext<ConfiguredFeature<?, ?>> context) {
+        EndConfiguredVegetation.DRAGON_TREE.bootstrap(context).register();
+        EndConfiguredVegetation.GIGANTIC_AMARANITA.bootstrap(context).register();
+        EndConfiguredVegetation.HELIX_TREE.bootstrap(context).register();
+        EndConfiguredVegetation.JELLYSHROOM.bootstrap(context).register();
+        EndConfiguredVegetation.LACUGROVE.bootstrap(context).register();
+        EndConfiguredVegetation.LUCERNIA.bootstrap(context).register();
+        EndConfiguredVegetation.MOSSY_GLOWSHROOM.bootstrap(context).register();
+        EndConfiguredVegetation.PYTHADENDRON_TREE.bootstrap(context).register();
+        EndConfiguredVegetation.TENANEA.bootstrap(context).register();
+        EndConfiguredVegetation.UMBRELLA_TREE.bootstrap(context).register();
 
+        EndConfiguredVegetation.LARGE_AMARANITA.bootstrap(context).register();
+        EndConfiguredVegetation.LUMECORN.bootstrap(context).register();
+        EndConfiguredVegetation.TENANEA_BUSH.bootstrap(context).register();
     }
 
     @Override
     protected void bootstrapPlaced(BootstrapContext<PlacedFeature> context) {
         //Trees
-        registerVegetation(context, EndVegetationFeatures.MOSSY_GLOWSHROOM, EndFeatures.MOSSY_GLOWSHROOM_FEATURE, 2);
-        registerVegetation(context, EndVegetationFeatures.PYTHADENDRON_TREE, EndFeatures.PYTHADENDRON_TREE_FEATURE, 1);
-        registerVegetation(context, EndVegetationFeatures.LACUGROVE, EndFeatures.LACUGROVE_FEATURE, 4);
-        registerVegetation(context, EndVegetationFeatures.DRAGON_TREE, EndFeatures.DRAGON_TREE_FEATURE, 2);
-        registerVegetation(context, EndVegetationFeatures.TENANEA, EndFeatures.TENANEA_FEATURE, 3);
-        registerVegetation(context, EndVegetationFeatures.HELIX_TREE, EndFeatures.HELIX_TREE_FEATURE, 1);
-        registerVegetation(context, EndVegetationFeatures.UMBRELLA_TREE, EndFeatures.UMBRELLA_TREE_FEATURE, 2);
-        registerVegetation(context, EndVegetationFeatures.JELLYSHROOM, EndFeatures.JELLYSHROOM_FEATURE, 2);
-        registerVegetation(context, EndVegetationFeatures.GIGANTIC_AMARANITA, EndFeatures.GIGANTIC_AMARANITA_FEATURE, 1);
-        registerVegetation(context, EndVegetationFeatures.LUCERNIA, EndFeatures.LUCERNIA_FEATURE, 3);
+        registerVegetation(context, EndVegetationFeatures.MOSSY_GLOWSHROOM, 2);
+        registerVegetation(context, EndVegetationFeatures.PYTHADENDRON_TREE, 1);
+        registerVegetation(context, EndVegetationFeatures.LACUGROVE, 4);
+        registerVegetation(context, EndVegetationFeatures.DRAGON_TREE, 2);
+        registerVegetation(context, EndVegetationFeatures.TENANEA, 3);
+        registerVegetation(context, EndVegetationFeatures.HELIX_TREE, 1);
+        registerVegetation(context, EndVegetationFeatures.UMBRELLA_TREE, 2);
+        registerVegetation(context, EndVegetationFeatures.JELLYSHROOM, 2);
+        registerVegetation(context, EndVegetationFeatures.GIGANTIC_AMARANITA, 1);
+        registerVegetation(context, EndVegetationFeatures.LUCERNIA, 3);
 
         //Bushes
-        registerVegetation(context, EndVegetationFeatures.TENANEA_BUSH, EndFeatures.TENANEA_BUSH_FEATURE, 12);
-        registerVegetation(context, EndVegetationFeatures.LUMECORN, EndFeatures.LUMECORN_FEATURE, 5);
-        registerVegetation(context, EndVegetationFeatures.LARGE_AMARANITA, EndFeatures.LARGE_AMARANITA_FEATURE, 5);
+        registerVegetation(context, EndVegetationFeatures.TENANEA_BUSH, 12);
+        registerVegetation(context, EndVegetationFeatures.LUMECORN, 5);
+        registerVegetation(context, EndVegetationFeatures.LARGE_AMARANITA, 5);
         registerVegetation(context, EndVegetationFeatures.NEON_CACTUS, EndFeatures.NEON_CACTUS_FEATURE, 2);
         registerVegetation(context, EndVegetationFeatures.PYTHADENDRON_BUSH, EndFeatures.BUSH_FEATURE, new BushFeatureConfig(EndBlocks.PYTHADENDRON_LEAVES, EndBlocks.PYTHADENDRON.getBark()), 3);
         registerVegetation(context, EndVegetationFeatures.DRAGON_TREE_BUSH, EndFeatures.BUSH_FEATURE, new BushFeatureConfig(EndBlocks.DRAGON_TREE_LEAVES, EndBlocks.DRAGON_TREE.getBark()), 5);
@@ -170,5 +154,48 @@ public class VegetationFeaturesProvider extends WoverFeatureProvider {
         registerVegetation(context, EndVegetationFeatures.FLAMMALIX, EndFeatures.SINGLE_PLANT_FEATURE, new SinglePlantFeatureConfig(EndBlocks.FLAMMALIX, 3, false, 7), 5);
         registerVegetation(context, EndVegetationFeatures.LANCELEAF, EndFeatures.LANCELEAF_FEATURE, ScatterFeatureConfig.lanceleaf(), 2);
         registerVegetation(context, EndVegetationFeatures.GLOW_PILLAR, EndFeatures.GLOW_PILLAR_FEATURE, ScatterFeatureConfig.glowPillar(), 1);
+    }
+
+    private static <F extends Feature<FC>, FC extends FeatureConfiguration> void registerVegetation(
+            BootstrapContext<PlacedFeature> context,
+            PlacedFeatureKey key,
+            F feature,
+            FC config,
+            int density
+    ) {
+        key.inlineConfiguration(context)
+           .withFeature(feature)
+           .configuration(config)
+           .inlinePlace()
+           .onEveryLayerMax(density)
+           .onlyInBiome()
+           .register();
+    }
+
+    private static <F extends Feature<FC>, FC extends FeatureConfiguration> void registerVegetation(
+            BootstrapContext<PlacedFeature> context,
+            PlacedFeatureKey key,
+            F feature,
+            int density
+    ) {
+        key
+                .inlineConfiguration(context)
+                .withFeature(feature)
+                .inlinePlace()
+                .onEveryLayerMax(density)
+                .onlyInBiome()
+                .register();
+    }
+
+    private static <F extends Feature<FC>, FC extends FeatureConfiguration> void registerVegetation(
+            BootstrapContext<PlacedFeature> context,
+            PlacedConfiguredFeatureKey key,
+            int density
+    ) {
+        key
+                .place(context)
+                .onEveryLayerMax(density)
+                .onlyInBiome()
+                .register();
     }
 }

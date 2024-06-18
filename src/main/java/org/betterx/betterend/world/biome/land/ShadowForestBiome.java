@@ -1,8 +1,13 @@
 package org.betterx.betterend.world.biome.land;
 
-import org.betterx.bclib.api.v2.levelgen.biomes.BCLBiomeBuilder;
 import org.betterx.bclib.interfaces.SurfaceMaterialProvider;
-import org.betterx.betterend.registry.*;
+import org.betterx.betterend.registry.EndBlocks;
+import org.betterx.betterend.registry.EndEntities;
+import org.betterx.betterend.registry.EndSounds;
+import org.betterx.betterend.registry.EndStructures;
+import org.betterx.betterend.registry.features.EndLakeFeatures;
+import org.betterx.betterend.registry.features.EndOreFeatures;
+import org.betterx.betterend.registry.features.EndVegetationFeatures;
 import org.betterx.betterend.world.biome.EndBiome;
 
 import net.minecraft.core.particles.ParticleTypes;
@@ -16,7 +21,7 @@ public class ShadowForestBiome extends EndBiome.Config {
     }
 
     @Override
-    protected void addCustomBuildData(BCLBiomeBuilder builder) {
+    public void addCustomBuildData(EndBiomeBuilder builder) {
         builder
                 .fogColor(0, 0, 0)
                 .fogDensity(2.5F)
@@ -25,20 +30,20 @@ public class ShadowForestBiome extends EndBiome.Config {
                 .particles(ParticleTypes.MYCELIUM, 0.01F)
                 .loop(EndSounds.AMBIENT_CHORUS_FOREST)
                 .music(EndSounds.MUSIC_DARK)
-                .feature(EndFeatures.VIOLECITE_LAYER)
-                .feature(EndFeatures.END_LAKE_RARE)
-                .feature(EndFeatures.DRAGON_TREE)
-                .feature(EndFeatures.DRAGON_TREE_BUSH)
-                .feature(EndFeatures.SHADOW_PLANT)
-                .feature(EndFeatures.MURKWEED)
-                .feature(EndFeatures.NEEDLEGRASS)
-                .feature(EndFeatures.SHADOW_BERRY)
-                .feature(EndFeatures.TWISTED_VINE)
-                .feature(EndFeatures.PURPLE_POLYPORE)
-                .feature(EndFeatures.TAIL_MOSS)
-                .feature(EndFeatures.TAIL_MOSS_WOOD)
-                .feature(EndFeatures.CHARNIA_PURPLE)
-                .feature(EndFeatures.CHARNIA_RED_RARE)
+                .feature(EndOreFeatures.VIOLECITE_LAYER)
+                .feature(EndLakeFeatures.END_LAKE_RARE)
+                .feature(EndVegetationFeatures.DRAGON_TREE)
+                .feature(EndVegetationFeatures.DRAGON_TREE_BUSH)
+                .feature(EndVegetationFeatures.SHADOW_PLANT)
+                .feature(EndVegetationFeatures.MURKWEED)
+                .feature(EndVegetationFeatures.NEEDLEGRASS)
+                .feature(EndVegetationFeatures.SHADOW_BERRY)
+                .feature(EndVegetationFeatures.TWISTED_VINE)
+                .feature(EndVegetationFeatures.PURPLE_POLYPORE)
+                .feature(EndVegetationFeatures.TAIL_MOSS)
+                .feature(EndVegetationFeatures.TAIL_MOSS_WOOD)
+                .feature(EndVegetationFeatures.CHARNIA_PURPLE)
+                .feature(EndVegetationFeatures.CHARNIA_RED_RARE)
                 .structure(BiomeTags.HAS_END_CITY)
                 .structure(EndStructures.ETERNAL_PORTAL)
                 .spawn(EndEntities.SHADOW_WALKER, 80, 2, 4)
@@ -47,7 +52,7 @@ public class ShadowForestBiome extends EndBiome.Config {
     }
 
     @Override
-    protected SurfaceMaterialProvider surfaceMaterial() {
+    public SurfaceMaterialProvider surfaceMaterial() {
         return new EndBiome.DefaultSurfaceMaterialProvider() {
             @Override
             public BlockState getTopMaterial() {

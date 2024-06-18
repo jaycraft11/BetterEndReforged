@@ -1,14 +1,15 @@
 package org.betterx.betterend.world.biome.land;
 
-import org.betterx.bclib.api.v2.levelgen.biomes.BCLBiomeBuilder;
 import org.betterx.bclib.api.v2.levelgen.surface.SurfaceRuleBuilder;
 import org.betterx.bclib.api.v2.levelgen.surface.rules.SwitchRuleSource;
 import org.betterx.bclib.interfaces.SurfaceMaterialProvider;
 import org.betterx.betterend.registry.EndBlocks;
-import org.betterx.betterend.registry.EndFeatures;
 import org.betterx.betterend.registry.EndParticles;
 import org.betterx.betterend.registry.EndSounds;
+import org.betterx.betterend.registry.features.EndTerrainFeatures;
+import org.betterx.betterend.registry.features.EndVegetationFeatures;
 import org.betterx.betterend.world.biome.EndBiome;
+import org.betterx.betterend.world.biome.EndBiomeBuilder;
 import org.betterx.betterend.world.surface.UmbraSurfaceNoiseCondition;
 
 import net.minecraft.world.level.block.Block;
@@ -31,7 +32,7 @@ public class UmbraValleyBiome extends EndBiome.Config {
     }
 
     @Override
-    protected void addCustomBuildData(BCLBiomeBuilder builder) {
+    public void addCustomBuildData(EndBiomeBuilder builder) {
         builder
                 .fogColor(100, 100, 100)
                 .plantsColor(172, 189, 190)
@@ -39,14 +40,14 @@ public class UmbraValleyBiome extends EndBiome.Config {
                 .particles(EndParticles.AMBER_SPHERE, 0.0001F)
                 .loop(EndSounds.UMBRA_VALLEY)
                 .music(EndSounds.MUSIC_DARK)
-                .feature(EndFeatures.UMBRALITH_ARCH)
-                .feature(EndFeatures.THIN_UMBRALITH_ARCH)
-                .feature(EndFeatures.INFLEXIA)
-                .feature(EndFeatures.FLAMMALIX);
+                .feature(EndTerrainFeatures.UMBRALITH_ARCH)
+                .feature(EndTerrainFeatures.THIN_UMBRALITH_ARCH)
+                .feature(EndVegetationFeatures.INFLEXIA)
+                .feature(EndVegetationFeatures.FLAMMALIX);
     }
 
     @Override
-    protected SurfaceMaterialProvider surfaceMaterial() {
+    public SurfaceMaterialProvider surfaceMaterial() {
         return new EndBiome.DefaultSurfaceMaterialProvider() {
             @Override
             public BlockState getTopMaterial() {

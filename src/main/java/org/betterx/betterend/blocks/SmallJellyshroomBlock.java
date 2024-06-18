@@ -7,7 +7,7 @@ import org.betterx.bclib.client.render.BCLRenderLayer;
 import org.betterx.bclib.interfaces.RenderLayerProvider;
 import org.betterx.bclib.util.BlocksHelper;
 import org.betterx.betterend.interfaces.PottablePlant;
-import org.betterx.betterend.registry.EndFeatures;
+import org.betterx.betterend.registry.features.EndConfiguredVegetation;
 import org.betterx.wover.loot.api.BlockLootProvider;
 import org.betterx.wover.loot.api.LootLookupProvider;
 import org.betterx.wover.tag.api.predefined.CommonBlockTags;
@@ -27,7 +27,6 @@ import net.minecraft.world.level.block.BonemealableBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -40,7 +39,6 @@ import net.fabricmc.api.Environment;
 import com.google.common.collect.Maps;
 
 import java.util.EnumMap;
-import java.util.Optional;
 import org.jetbrains.annotations.NotNull;
 
 public class SmallJellyshroomBlock extends BaseAttachedBlock implements RenderLayerProvider, BonemealableBlock, PottablePlant, BehaviourPlant, BlockLootProvider {
@@ -103,15 +101,8 @@ public class SmallJellyshroomBlock extends BaseAttachedBlock implements RenderLa
     @Override
     public void performBonemeal(ServerLevel world, RandomSource random, BlockPos pos, BlockState state) {
         BlocksHelper.setWithUpdate(world, pos, Blocks.AIR);
-        EndFeatures.JELLYSHROOM.getFeature()
-                               .place(new FeaturePlaceContext<net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration>(
-                                       Optional.empty(),
-                                       world,
-                                       null,
-                                       random,
-                                       pos,
-                                       null
-                               ));
+        EndConfiguredVegetation
+                .JELLYSHROOM.placeInWorld(world, pos, random);
     }
 
     @Override

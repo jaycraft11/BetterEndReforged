@@ -5,8 +5,8 @@ import org.betterx.bclib.complexmaterials.entry.RecipeEntry;
 import org.betterx.bclib.complexmaterials.entry.SlotMap;
 import org.betterx.bclib.complexmaterials.set.wood.HangingSign;
 import org.betterx.bclib.complexmaterials.set.wood.WoodSlots;
-import org.betterx.bclib.recipes.BCLRecipeBuilder;
 import org.betterx.betterend.registry.EndBlocks;
+import org.betterx.wover.recipe.api.RecipeBuilder;
 
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.world.item.Items;
@@ -24,17 +24,16 @@ public class JellyLucerniaWoodMaterial extends EndWoodenComplexMaterial {
         return SlotMap.of(new HangingSign() {
             @Override
             public void addRecipeEntry(WoodenComplexMaterial parentMaterial, Consumer<RecipeEntry> adder) {
-                adder.accept(new RecipeEntry(suffix, (mat, id) ->
-                        BCLRecipeBuilder
-                                .crafting(id, parentMaterial.getBlock(suffix))
-                                .setOutputCount(3)
-                                .setShape("I I", "o#o", "o#o")
-                                .addMaterial('#', EndBlocks.LUCERNIA.getBlock(WoodSlots.STRIPPED_LOG))
-                                .addMaterial('o', EndBlocks.JELLYSHROOM.getBlock(WoodSlots.LOG))
-                                .addMaterial('I', Items.CHAIN)
-                                .setGroup("sign")
-                                .setCategory(RecipeCategory.DECORATIONS)
-                                .build()
+                adder.accept(new RecipeEntry(suffix, (ctx, mat, id) ->
+                        RecipeBuilder.crafting(id, parentMaterial.getBlock(suffix))
+                                     .setOutputCount(3)
+                                     .setShape("I I", "o#o", "o#o")
+                                     .addMaterial('#', EndBlocks.LUCERNIA.getBlock(WoodSlots.STRIPPED_LOG))
+                                     .addMaterial('o', EndBlocks.JELLYSHROOM.getBlock(WoodSlots.LOG))
+                                     .addMaterial('I', Items.CHAIN)
+                                     .setGroup("sign")
+                                     .setCategory(RecipeCategory.DECORATIONS)
+                                     .build(ctx)
                 ));
             }
         });

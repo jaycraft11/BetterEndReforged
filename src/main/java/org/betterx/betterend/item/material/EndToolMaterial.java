@@ -2,76 +2,82 @@ package org.betterx.betterend.item.material;
 
 import org.betterx.betterend.registry.EndBlocks;
 import org.betterx.betterend.registry.EndItems;
+import org.betterx.betterend.registry.EndTags;
 
-import net.minecraft.util.LazyLoadedValue;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.Tiers;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.level.ItemLike;
+import net.minecraft.world.level.block.Block;
 
-import java.util.function.Supplier;
+import org.jetbrains.annotations.NotNull;
 
 public enum EndToolMaterial implements Tier {
-    THALLASIUM(Tiers.IRON.getLevel(), 320, 7.0F, 1.5F, 12, () -> {
-        return Ingredient.of(EndBlocks.THALLASIUM.ingot);
-    }), TERMINITE(Tiers.DIAMOND.getLevel(), 1230, 8.5F, 3.0F, 14, () -> {
-        return Ingredient.of(EndBlocks.TERMINITE.ingot);
-    }), AETERNIUM(5, 2196, 10.0F, 4.5F, 18, () -> {
-        return Ingredient.of(EndItems.AETERNIUM_INGOT);
-    });
+    THALLASIUM(Tiers.IRON.getIncorrectBlocksForDrops(), 2, 320, 7.0F, 1.5F, 12, EndBlocks.THALLASIUM.ingot),
+    TERMINITE(Tiers.DIAMOND.getIncorrectBlocksForDrops(), 3, 1230, 8.5F, 3.0F, 14, EndBlocks.TERMINITE.ingot),
+    AETERNIUM(EndTags.INCORRECT_FOR_AETERNIUM_TOOL, 5, 2196, 10.0F, 4.5F, 18, EndItems.AETERNIUM_INGOT);
 
-    private final int durability;
-    private final float miningSpeed;
-    private final float attackDamage;
-    private final int miningLevel;
-    private final int enchantability;
-    @SuppressWarnings("deprecation")
-    private final LazyLoadedValue<Ingredient> repairIngredient;
+    private final int uses;
+    private final float speed;
+    private final int level;
+    private final int enchantibility;
+    private final float damage;
+    private final ItemLike reapair;
+    public final TagKey<Block> incorrectBlocksForDrops;
 
-    @SuppressWarnings("deprecation")
     EndToolMaterial(
-            int miningLevel,
-            int durability,
-            float miningSpeed,
-            float attackDamage,
-            int enchantability,
-            Supplier<Ingredient> repairIngredient
+            TagKey<Block> incorrectBlocksForDrops,
+            int level,
+            int uses,
+            float speed,
+            float damage,
+            int enchantibility,
+            ItemLike reapair
     ) {
-        this.durability = durability;
-        this.miningSpeed = miningSpeed;
-        this.attackDamage = attackDamage;
-        this.miningLevel = miningLevel;
-        this.enchantability = enchantability;
-        this.repairIngredient = new LazyLoadedValue<>(repairIngredient);
+
+        this.incorrectBlocksForDrops = incorrectBlocksForDrops;
+        this.uses = uses;
+        this.speed = speed;
+        this.level = level;
+        this.enchantibility = enchantibility;
+        this.damage = damage;
+        this.reapair = reapair;
     }
 
     @Override
     public int getUses() {
-        return this.durability;
+        return uses;
     }
 
     @Override
     public float getSpeed() {
-        return this.miningSpeed;
+        return speed;
     }
 
     @Override
     public float getAttackDamageBonus() {
-        return this.attackDamage;
+        return damage;
     }
 
     @Override
+    public @NotNull TagKey<Block> getIncorrectBlocksForDrops() {
+        return this.incorrectBlocksForDrops;
+    }
+
+    @Deprecated(forRemoval = true)
     public int getLevel() {
-        return this.miningLevel;
+        return level;
     }
 
     @Override
     public int getEnchantmentValue() {
-        return this.enchantability;
+        return enchantibility;
     }
 
     @Override
-    public Ingredient getRepairIngredient() {
-        return this.repairIngredient.get();
+    public @NotNull Ingredient getRepairIngredient() {
+        return Ingredient.of(reapair);
     }
 
 }

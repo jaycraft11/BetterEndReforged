@@ -1,6 +1,9 @@
 package org.betterx.datagen.betterend.worldgen;
 
+import org.betterx.bclib.complexmaterials.set.stone.StoneSlots;
+import org.betterx.bclib.complexmaterials.set.wood.WoodSlots;
 import org.betterx.betterend.BetterEnd;
+import org.betterx.betterend.registry.EndBlocks;
 import org.betterx.betterend.registry.EndProcessors;
 import org.betterx.betterend.registry.EndStructures;
 import org.betterx.betterend.world.structures.village.VillagePools;
@@ -11,6 +14,7 @@ import org.betterx.wover.tag.api.event.context.TagBootstrapContext;
 
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.VerticalAnchor;
 import net.minecraft.world.level.levelgen.heightproviders.ConstantHeight;
@@ -18,7 +22,7 @@ import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.levelgen.structure.StructureSet;
 import net.minecraft.world.level.levelgen.structure.TerrainAdjustment;
 import net.minecraft.world.level.levelgen.structure.pools.StructureTemplatePool;
-import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorList;
+import net.minecraft.world.level.levelgen.structure.templatesystem.*;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -288,8 +292,75 @@ public class StructureDataProvider extends WoverStructureProvider {
     }
 
     @Override
-    protected void bootstrapProcessors(BootstrapContext<StructureProcessorList> context) {
+    protected void bootstrapProcessors(BootstrapContext<StructureProcessorList> bootstapContext) {
+        EndProcessors
+                .CRYING_10_PERCENT
+                .bootstrap(bootstapContext).startRule().add(new ProcessorRule(
+                        new RandomBlockMatchTest(Blocks.OBSIDIAN, 0.1f),
+                        AlwaysTrueTest.INSTANCE,
+                        Blocks.CRYING_OBSIDIAN.defaultBlockState()
+                )).endRule().register();
 
+        EndProcessors
+                .WEATHERED_10_PERCENT
+                .bootstrap(bootstapContext).startRule().add(new ProcessorRule(
+                        new RandomBlockMatchTest(Blocks.END_STONE_BRICKS, 0.1f),
+                        AlwaysTrueTest.INSTANCE,
+                        EndBlocks.END_STONE_BRICK_VARIATIONS.getBlock(StoneSlots.WEATHERED).defaultBlockState()
+                )).endRule().register();
+
+        EndProcessors
+                .CRACK_20_PERCENT
+                .bootstrap(bootstapContext).startRule().add(new ProcessorRule(
+                        new RandomBlockMatchTest(Blocks.END_STONE_BRICKS, 0.2f),
+                        AlwaysTrueTest.INSTANCE,
+                        EndBlocks.END_STONE_BRICK_VARIATIONS.getBlock(StoneSlots.CRACKED).defaultBlockState()
+                )).endRule().register();
+
+        EndProcessors
+                .CRACK_AND_WEATHER
+                .bootstrap(bootstapContext).startRule()
+                .add(new ProcessorRule(
+                        new RandomBlockMatchTest(Blocks.END_STONE_BRICKS, 0.2f),
+                        AlwaysTrueTest.INSTANCE,
+                        EndBlocks.END_STONE_BRICK_VARIATIONS.getBlock(StoneSlots.CRACKED).defaultBlockState()
+                ))
+                .add(new ProcessorRule(
+                        new RandomBlockMatchTest(Blocks.END_STONE_BRICKS, 0.1f),
+                        AlwaysTrueTest.INSTANCE,
+                        EndBlocks.END_STONE_BRICK_VARIATIONS.getBlock(StoneSlots.WEATHERED).defaultBlockState()
+                ))
+                .endRule().register();
+
+        EndProcessors
+                .END_STREET
+                .bootstrap(bootstapContext).startRule()
+                .add(new ProcessorRule(
+                        new BlockMatchTest(Blocks.END_STONE_BRICKS),
+                        new BlockMatchTest(Blocks.WATER),
+                        EndBlocks.PYTHADENDRON.getBlock(WoodSlots.PLANKS).defaultBlockState()
+                ))
+                .add(new ProcessorRule(
+                        new BlockMatchTest(EndBlocks.ENDSTONE_DUST),
+                        new BlockMatchTest(Blocks.WATER),
+                        Blocks.WATER.defaultBlockState()
+                ))
+                .add(new ProcessorRule(
+                        new RandomBlockMatchTest(Blocks.END_STONE_BRICKS, 0.03f),
+                        AlwaysTrueTest.INSTANCE,
+                        EndBlocks.SHADOW_GRASS_PATH.defaultBlockState()
+                ))
+                .add(new ProcessorRule(
+                        new RandomBlockMatchTest(Blocks.END_STONE_BRICKS, 0.2f),
+                        AlwaysTrueTest.INSTANCE,
+                        EndBlocks.END_STONE_BRICK_VARIATIONS.getBlock(StoneSlots.CRACKED).defaultBlockState()
+                ))
+                .add(new ProcessorRule(
+                        new RandomBlockMatchTest(Blocks.END_STONE_BRICKS, 0.1f),
+                        AlwaysTrueTest.INSTANCE,
+                        EndBlocks.END_STONE_BRICK_VARIATIONS.getBlock(StoneSlots.WEATHERED).defaultBlockState()
+                ))
+                .endRule().register();
     }
 
     @Override

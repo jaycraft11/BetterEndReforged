@@ -37,7 +37,7 @@ import com.google.common.collect.Sets;
 import java.util.List;
 import java.util.Set;
 
-public abstract class EndCaveFeature extends DefaultFeature {
+public abstract class EndCaveFeatures extends DefaultFeature {
     private static int errCounter = 0;
     protected static final BlockState CAVE_AIR = Blocks.CAVE_AIR.defaultBlockState();
     protected static final BlockState END_STONE = Blocks.END_STONE.defaultBlockState();

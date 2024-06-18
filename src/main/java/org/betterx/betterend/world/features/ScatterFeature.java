@@ -3,12 +3,14 @@ package org.betterx.betterend.world.features;
 import org.betterx.bclib.api.v2.levelgen.features.features.DefaultFeature;
 import org.betterx.bclib.util.BlocksHelper;
 import org.betterx.bclib.util.MHelper;
+import org.betterx.betterend.BetterEnd;
 import org.betterx.betterend.util.GlobalState;
 import org.betterx.wover.tag.api.predefined.CommonBlockTags;
 
 import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.levelgen.feature.Feature;
@@ -63,32 +65,36 @@ public abstract class ScatterFeature<FC extends ScatterFeatureConfig> extends Fe
         final MutableBlockPos POS = GlobalState.stateForThread().POS;
         final RandomSource random = featureConfig.random();
         BlockPos center = featureConfig.origin();
-        final WorldGenLevel world = featureConfig.level();
-        center = getCenterGround(cfg, world, center);
+        if (featureConfig.level() instanceof ServerLevel world) {
+            //final WorldGenLevel world = featureConfig.level();
+            center = getCenterGround(cfg, world, center);
 
-        if (!canSpawn(cfg, world, center)) {
-            return false;
-        }
-
-        float r = MHelper.randRange(cfg.radius * 0.5F, cfg.radius, random);
-        int count = MHelper.floor(r * r * MHelper.randRange(1.5F, 3F, random));
-        for (int i = 0; i < count; i++) {
-            float pr = r * (float) Math.sqrt(random.nextFloat());
-            float theta = random.nextFloat() * MHelper.PI2;
-            float x = pr * (float) Math.cos(theta);
-            float z = pr * (float) Math.sin(theta);
-
-            POS.set(center.getX() + x, center.getY() + getYOffset(), center.getZ() + z);
-            if (getGroundPlant(cfg, world, POS) && canGenerate(
-                    cfg,
-                    world,
-                    random,
-                    center,
-                    POS,
-                    r
-            ) && (getChance() < 2 || random.nextInt(getChance()) == 0)) {
-                generate(cfg, world, random, POS);
+            if (!canSpawn(cfg, world, center)) {
+                return false;
             }
+
+            float r = MHelper.randRange(cfg.radius * 0.5F, cfg.radius, random);
+            int count = MHelper.floor(r * r * MHelper.randRange(1.5F, 3F, random));
+            for (int i = 0; i < count; i++) {
+                float pr = r * (float) Math.sqrt(random.nextFloat());
+                float theta = random.nextFloat() * MHelper.PI2;
+                float x = pr * (float) Math.cos(theta);
+                float z = pr * (float) Math.sin(theta);
+
+                POS.set(center.getX() + x, center.getY() + getYOffset(), center.getZ() + z);
+                if (getGroundPlant(cfg, world, POS) && canGenerate(
+                        cfg,
+                        world,
+                        random,
+                        center,
+                        POS,
+                        r
+                ) && (getChance() < 2 || random.nextInt(getChance()) == 0)) {
+                    generate(cfg, world, random, POS);
+                }
+            }
+        } else {
+            BetterEnd.LOGGER.verboseWarning("INTERNAL: Failed to place scatter feature due to invalid world datatype.");
         }
 
         return true;

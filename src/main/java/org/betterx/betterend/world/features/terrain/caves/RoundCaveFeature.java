@@ -17,7 +17,7 @@ import com.google.common.collect.Sets;
 import java.util.Set;
 import java.util.stream.IntStream;
 
-public class RoundCaveFeature extends EndCaveFeature {
+public class RoundCaveFeature extends EndCaveFeatures {
     @Override
     protected Set<BlockPos> generate(WorldGenLevel world, BlockPos center, int radius, RandomSource random) {
         OpenSimplexNoise noise = new OpenSimplexNoise(MHelper.getSeed(534, center.getX(), center.getZ()));

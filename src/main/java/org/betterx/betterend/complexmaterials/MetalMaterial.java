@@ -20,6 +20,7 @@ import org.betterx.betterend.registry.EndItems;
 import org.betterx.betterend.registry.EndTemplates;
 import org.betterx.worlds.together.tag.v3.TagManager;
 
+import net.minecraft.core.Holder;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
@@ -83,7 +84,7 @@ public class MetalMaterial {
             String name,
             MapColor color,
             Tier material,
-            ArmorMaterial armor,
+            Holder<ArmorMaterial> armor,
             int anvilAndToolLevel,
             SmithingTemplateItem swordHandleTemplate
     ) {
@@ -150,7 +151,7 @@ public class MetalMaterial {
             float hardness,
             float resistance,
             Tier material,
-            ArmorMaterial armor,
+            Holder<ArmorMaterial> armor,
             int anvilAndToolLevel,
             SmithingTemplateItem swordHandleTemplate
     ) {
@@ -177,7 +178,7 @@ public class MetalMaterial {
             FabricBlockSettings settings,
             Properties itemSettings,
             Tier material,
-            ArmorMaterial armor,
+            Holder<ArmorMaterial> armor,
             int anvilAndToolLevel,
             SmithingTemplateItem swordHandleTemplate
     ) {

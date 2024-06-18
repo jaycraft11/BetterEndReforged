@@ -1,7 +1,6 @@
 package org.betterx.betterend;
 
 import org.betterx.bclib.api.v2.dataexchange.DataExchangeAPI;
-import org.betterx.bclib.api.v2.levelgen.biomes.BiomeAPI;
 import org.betterx.betterend.advancements.BECriteria;
 import org.betterx.betterend.api.BetterEndPlugin;
 import org.betterx.betterend.commands.CommandRegistry;
@@ -21,8 +20,6 @@ import org.betterx.worlds.together.world.WorldConfig;
 import org.betterx.wover.core.api.Logger;
 import org.betterx.wover.core.api.ModCore;
 import org.betterx.wover.generator.api.biomesource.end.BiomeDecider;
-
-import net.minecraft.world.level.biome.Biomes;
 
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.loader.api.FabricLoader;
@@ -72,12 +69,6 @@ public class BetterEnd implements ModInitializer {
         if (GeneratorOptions.useNewGenerator()) {
             BiomeDecider.registerHighPriorityDecider(C.mk("end_land"), new EndLandBiomeDecider());
         }
-
-        BiomeAPI.registerEndBiomeModification((biomeID, biome) -> {
-            if (!biomeID.equals(Biomes.THE_VOID.location())) {
-                EndFeatures.addBiomeFeatures(biomeID, biome);
-            }
-        });
 
         DataExchangeAPI.registerDescriptors(List.of(
                 RitualUpdate.DESCRIPTOR

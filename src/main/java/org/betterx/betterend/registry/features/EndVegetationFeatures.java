@@ -1,29 +1,31 @@
-package org.betterx.betterend.registry;
+package org.betterx.betterend.registry.features;
 
 import org.betterx.betterend.BetterEnd;
+import org.betterx.wover.feature.api.placed.PlacedConfiguredFeatureKey;
 import org.betterx.wover.feature.api.placed.PlacedFeatureKey;
 import org.betterx.wover.feature.api.placed.PlacedFeatureManager;
 
+import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
 
 public class EndVegetationFeatures {
     //Trees
-    public static final PlacedFeatureKey MOSSY_GLOWSHROOM = createVegetationKey("mossy_glowshroom");
-    public static final PlacedFeatureKey PYTHADENDRON_TREE = createVegetationKey("pythadendron_tree");
-    public static final PlacedFeatureKey LACUGROVE = createVegetationKey("lacugrove");
-    public static final PlacedFeatureKey DRAGON_TREE = createVegetationKey("dragon_tree");
-    public static final PlacedFeatureKey TENANEA = createVegetationKey("tenanea");
-    public static final PlacedFeatureKey HELIX_TREE = createVegetationKey("helix_tree");
-    public static final PlacedFeatureKey UMBRELLA_TREE = createVegetationKey("umbrella_tree");
-    public static final PlacedFeatureKey JELLYSHROOM = createVegetationKey("jellyshroom");
-    public static final PlacedFeatureKey GIGANTIC_AMARANITA = createVegetationKey("gigantic_amaranita");
-    public static final PlacedFeatureKey LUCERNIA = createVegetationKey("lucernia");
+    public static final PlacedConfiguredFeatureKey MOSSY_GLOWSHROOM = PlacedFeatureManager.createKey(EndConfiguredVegetation.MOSSY_GLOWSHROOM);
+    public static final PlacedConfiguredFeatureKey PYTHADENDRON_TREE = PlacedFeatureManager.createKey(EndConfiguredVegetation.PYTHADENDRON_TREE);
+    public static final PlacedConfiguredFeatureKey LACUGROVE = PlacedFeatureManager.createKey(EndConfiguredVegetation.LACUGROVE);
+    public static final PlacedConfiguredFeatureKey DRAGON_TREE = PlacedFeatureManager.createKey(EndConfiguredVegetation.DRAGON_TREE);
+    public static final PlacedConfiguredFeatureKey TENANEA = PlacedFeatureManager.createKey(EndConfiguredVegetation.TENANEA);
+    public static final PlacedConfiguredFeatureKey HELIX_TREE = PlacedFeatureManager.createKey(EndConfiguredVegetation.HELIX_TREE);
+    public static final PlacedConfiguredFeatureKey UMBRELLA_TREE = PlacedFeatureManager.createKey(EndConfiguredVegetation.UMBRELLA_TREE);
+    public static final PlacedConfiguredFeatureKey JELLYSHROOM = PlacedFeatureManager.createKey(EndConfiguredVegetation.JELLYSHROOM);
+    public static final PlacedConfiguredFeatureKey GIGANTIC_AMARANITA = PlacedFeatureManager.createKey(EndConfiguredVegetation.GIGANTIC_AMARANITA);
+    public static final PlacedConfiguredFeatureKey LUCERNIA = PlacedFeatureManager.createKey(EndConfiguredVegetation.LUCERNIA);
 
     //Bushes
-    public static final PlacedFeatureKey TENANEA_BUSH = createVegetationKey("tenanea_bush");
-    public static final PlacedFeatureKey LUMECORN = createVegetationKey("lumecorn");
-    public static final PlacedFeatureKey LARGE_AMARANITA = createVegetationKey("large_amaranita");
+    public static final PlacedConfiguredFeatureKey TENANEA_BUSH = PlacedFeatureManager.createKey(EndConfiguredVegetation.TENANEA_BUSH);
+    public static final PlacedConfiguredFeatureKey LUMECORN = PlacedFeatureManager.createKey(EndConfiguredVegetation.LUMECORN);
+    public static final PlacedConfiguredFeatureKey LARGE_AMARANITA = PlacedFeatureManager.createKey(EndConfiguredVegetation.LARGE_AMARANITA);
     public static final PlacedFeatureKey NEON_CACTUS = createVegetationKey("neon_cactus");
     public static final PlacedFeatureKey PYTHADENDRON_BUSH = createVegetationKey("pythadendron_bush");
     public static final PlacedFeatureKey DRAGON_TREE_BUSH = createVegetationKey("dragon_tree_bush");
@@ -121,6 +123,8 @@ public class EndVegetationFeatures {
     private static <F extends Feature<FC>, FC extends FeatureConfiguration> PlacedFeatureKey createVegetationKey(
             String name
     ) {
-        return PlacedFeatureManager.createKey(BetterEnd.C.mk(name));
+        return PlacedFeatureManager
+                .createKey(BetterEnd.C.mk(name))
+                .setDecoration(GenerationStep.Decoration.VEGETAL_DECORATION);
     }
 }

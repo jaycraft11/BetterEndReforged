@@ -54,6 +54,10 @@ public class EndBiome extends WoverBiomeData implements SurfaceMaterialProvider 
         this.surfMatProv = surface;
     }
 
+    public void datagenSetup() {
+
+    }
+
     private boolean hasCaves = true;
 
     void setHasCaves(boolean v) {

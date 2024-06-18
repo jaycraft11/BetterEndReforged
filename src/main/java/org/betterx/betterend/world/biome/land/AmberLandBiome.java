@@ -1,9 +1,15 @@
 package org.betterx.betterend.world.biome.land;
 
-import org.betterx.bclib.api.v2.levelgen.biomes.BCLBiomeBuilder;
 import org.betterx.bclib.interfaces.SurfaceMaterialProvider;
-import org.betterx.betterend.registry.*;
+import org.betterx.betterend.registry.EndBlocks;
+import org.betterx.betterend.registry.EndEntities;
+import org.betterx.betterend.registry.EndParticles;
+import org.betterx.betterend.registry.EndSounds;
+import org.betterx.betterend.registry.features.EndLakeFeatures;
+import org.betterx.betterend.registry.features.EndOreFeatures;
+import org.betterx.betterend.registry.features.EndVegetationFeatures;
 import org.betterx.betterend.world.biome.EndBiome;
+import org.betterx.betterend.world.biome.EndBiomeBuilder;
 
 import net.minecraft.tags.BiomeTags;
 import net.minecraft.world.entity.EntityType;
@@ -15,7 +21,7 @@ public class AmberLandBiome extends EndBiome.Config {
     }
 
     @Override
-    protected void addCustomBuildData(BCLBiomeBuilder builder) {
+    public void addCustomBuildData(EndBiomeBuilder builder) {
         builder
                 .fogColor(255, 184, 71)
                 .fogDensity(2.0F)
@@ -24,24 +30,24 @@ public class AmberLandBiome extends EndBiome.Config {
                 .music(EndSounds.MUSIC_FOREST)
                 .loop(EndSounds.AMBIENT_AMBER_LAND)
                 .particles(EndParticles.AMBER_SPHERE, 0.001F)
-                .feature(EndFeatures.AMBER_ORE)
-                .feature(EndFeatures.END_LAKE_RARE)
-                .feature(EndFeatures.HELIX_TREE)
-                .feature(EndFeatures.LANCELEAF)
-                .feature(EndFeatures.GLOW_PILLAR)
-                .feature(EndFeatures.AMBER_GRASS)
-                .feature(EndFeatures.AMBER_ROOT)
-                .feature(EndFeatures.BULB_MOSS)
-                .feature(EndFeatures.BULB_MOSS_WOOD)
-                .feature(EndFeatures.CHARNIA_ORANGE)
-                .feature(EndFeatures.CHARNIA_RED)
+                .feature(EndOreFeatures.AMBER_ORE)
+                .feature(EndLakeFeatures.END_LAKE_RARE)
+                .feature(EndVegetationFeatures.HELIX_TREE)
+                .feature(EndVegetationFeatures.LANCELEAF)
+                .feature(EndVegetationFeatures.GLOW_PILLAR)
+                .feature(EndVegetationFeatures.AMBER_GRASS)
+                .feature(EndVegetationFeatures.AMBER_ROOT)
+                .feature(EndVegetationFeatures.BULB_MOSS)
+                .feature(EndVegetationFeatures.BULB_MOSS_WOOD)
+                .feature(EndVegetationFeatures.CHARNIA_ORANGE)
+                .feature(EndVegetationFeatures.CHARNIA_RED)
                 .structure(BiomeTags.HAS_END_CITY)
                 .spawn(EntityType.ENDERMAN, 50, 1, 4)
-                .spawn(EndEntities.END_SLIME, 30, 1, 2);
+                .spawn(EndEntities.END_SLIME.type(), 30, 1, 2);
     }
 
     @Override
-    protected SurfaceMaterialProvider surfaceMaterial() {
+    public SurfaceMaterialProvider surfaceMaterial() {
         return new EndBiome.DefaultSurfaceMaterialProvider() {
             @Override
             public BlockState getTopMaterial() {

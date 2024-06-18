@@ -2,7 +2,8 @@ package org.betterx.datagen.betterend.tags;
 
 import org.betterx.betterend.registry.EndBlocks;
 import org.betterx.betterend.registry.EndTags;
-import org.betterx.betterend.world.biome.EndBiomeBuilder;
+import org.betterx.betterend.world.biome.EndBiome;
+import org.betterx.datagen.betterend.worldgen.EndBiomesProvider;
 import org.betterx.wover.core.api.ModCore;
 import org.betterx.wover.datagen.api.WoverTagProvider;
 import org.betterx.wover.tag.api.event.context.TagBootstrapContext;
@@ -47,6 +48,14 @@ public class BlockTagProvider extends WoverTagProvider.ForBlocks {
 
         context.add(EndTags.BONEMEAL_TARGET_WATER_GRASS, CommonBlockTags.END_STONES);
 
-        EndBiomeBuilder.registerAllSurfaceBlocksTo(context, CommonBlockTags.END_STONES);
+        EndBiomesProvider
+                .BIOMES
+                .values()
+                .stream()
+                .filter(info -> info.config() instanceof EndBiome.Config)
+                .map(info -> (EndBiome.Config) info.config())
+                .forEach(config -> {
+                    config.surfaceMaterial().addBiomeSurfaceToEndGroup(context, CommonBlockTags.END_STONES);
+                });
     }
 }

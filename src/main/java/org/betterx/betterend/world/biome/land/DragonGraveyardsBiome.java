@@ -1,9 +1,15 @@
 package org.betterx.betterend.world.biome.land;
 
-import org.betterx.bclib.api.v2.levelgen.biomes.BCLBiomeBuilder;
 import org.betterx.bclib.interfaces.SurfaceMaterialProvider;
-import org.betterx.betterend.registry.*;
+import org.betterx.betterend.registry.EndBlocks;
+import org.betterx.betterend.registry.EndParticles;
+import org.betterx.betterend.registry.EndSounds;
+import org.betterx.betterend.registry.EndStructures;
+import org.betterx.betterend.registry.features.EndOreFeatures;
+import org.betterx.betterend.registry.features.EndTerrainFeatures;
+import org.betterx.betterend.registry.features.EndVegetationFeatures;
 import org.betterx.betterend.world.biome.EndBiome;
+import org.betterx.betterend.world.biome.EndBiomeBuilder;
 
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -14,7 +20,7 @@ public class DragonGraveyardsBiome extends EndBiome.Config {
     }
 
     @Override
-    protected void addCustomBuildData(BCLBiomeBuilder builder) {
+    public void addCustomBuildData(EndBiomeBuilder builder) {
         builder
                 .genChance(0.1f)
                 .fogColor(244, 46, 79)
@@ -24,21 +30,21 @@ public class DragonGraveyardsBiome extends EndBiome.Config {
                 .loop(EndSounds.AMBIENT_GLOWING_GRASSLANDS)
                 .waterAndFogColor(203, 59, 167)
                 .plantsColor(244, 46, 79)
-                .feature(EndFeatures.OBSIDIAN_PILLAR_BASEMENT)
-                .feature(EndFeatures.DRAGON_BONE_BLOCK_ORE)
-                .feature(EndFeatures.FALLEN_PILLAR)
-                .feature(EndFeatures.OBSIDIAN_BOULDER)
-                .feature(EndFeatures.GIGANTIC_AMARANITA)
-                .feature(EndFeatures.LARGE_AMARANITA)
-                .feature(EndFeatures.SMALL_AMARANITA)
-                .feature(EndFeatures.GLOBULAGUS)
-                .feature(EndFeatures.CLAWFERN)
+                .feature(EndTerrainFeatures.OBSIDIAN_PILLAR_BASEMENT)
+                .feature(EndOreFeatures.DRAGON_BONE_BLOCK_ORE)
+                .feature(EndTerrainFeatures.FALLEN_PILLAR)
+                .feature(EndTerrainFeatures.OBSIDIAN_BOULDER)
+                .feature(EndVegetationFeatures.GIGANTIC_AMARANITA)
+                .feature(EndVegetationFeatures.LARGE_AMARANITA)
+                .feature(EndVegetationFeatures.SMALL_AMARANITA)
+                .feature(EndVegetationFeatures.GLOBULAGUS)
+                .feature(EndVegetationFeatures.CLAWFERN)
                 .structure(EndStructures.ETERNAL_PORTAL)
                 .spawn(EntityType.ENDERMAN, 50, 1, 2);
     }
 
     @Override
-    protected SurfaceMaterialProvider surfaceMaterial() {
+    public SurfaceMaterialProvider surfaceMaterial() {
         return new EndBiome.DefaultSurfaceMaterialProvider() {
             @Override
             public BlockState getTopMaterial() {

@@ -1,13 +1,13 @@
 package org.betterx.betterend.world.biome.cave;
 
-import org.betterx.bclib.api.v2.levelgen.biomes.BCLBiomeSettings;
 import org.betterx.bclib.interfaces.SurfaceMaterialProvider;
 import org.betterx.bclib.util.WeightedList;
 import org.betterx.betterend.registry.EndBlocks;
-import org.betterx.betterend.registry.EndFeatures;
 import org.betterx.betterend.registry.EndParticles;
+import org.betterx.betterend.registry.features.EndConfiguredCaveFeatures;
 import org.betterx.betterend.world.biome.EndBiome;
 import org.betterx.betterend.world.biome.EndBiomeBuilder;
+import org.betterx.betterend.world.biome.EndBiomeKey;
 
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.Holder;
@@ -21,19 +21,18 @@ import java.util.List;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class LushSmaragdantCaveBiome extends EndCaveBiome.Config {
+public class LushSmaragdantCaveBiome extends EndCaveBiome.Config<LushSmaragdantCaveBiome> {
     public static final MapCodec<Biome> CODEC = EndCaveBiome.simpleCaveBiomeCodec(
             LushSmaragdantCaveBiome.Biome::new);
     public static final KeyDispatchDataCodec<LushSmaragdantCaveBiome.Biome> KEY_CODEC = KeyDispatchDataCodec.of(CODEC);
 
     public static class Biome extends EndCaveBiome {
-        public Biome(ResourceKey<net.minecraft.world.level.biome.Biome> biomeID, BCLBiomeSettings settings) {
-            super(biomeID, settings);
+        @Override
+        public void datagenSetup() {
+            this.addFloorFeature(EndConfiguredCaveFeatures.SMARAGDANT_CRYSTAL, 1);
+            this.addFloorFeature(EndConfiguredCaveFeatures.SMARAGDANT_CRYSTAL_SHARD, 20);
 
-            this.addFloorFeature(EndFeatures.SMARAGDANT_CRYSTAL.configuredFeature, 1);
-            this.addFloorFeature(EndFeatures.SMARAGDANT_CRYSTAL_SHARD.configuredFeature, 20);
-
-            this.addCeilFeature(EndFeatures.END_STONE_STALACTITE.configuredFeature, 1);
+            this.addCeilFeature(EndConfiguredCaveFeatures.END_STONE_STALACTITE, 1);
         }
 
         @Override
@@ -75,8 +74,8 @@ public class LushSmaragdantCaveBiome extends EndCaveBiome.Config {
         }
     }
 
-    public LushSmaragdantCaveBiome() {
-        super();
+    public LushSmaragdantCaveBiome(EndBiomeKey<LushSmaragdantCaveBiome, ?> key) {
+        super(key);
     }
 
     @Override

@@ -16,7 +16,7 @@ public class VanillaVariantStoneMaterial extends StoneComplexMaterial {
             Block sourceBlock,
             MapColor color
     ) {
-        super(BetterEnd.MOD_ID, baseName, "", sourceBlock, color);
+        super(BetterEnd.C, baseName, "", sourceBlock, color);
     }
 
     public VanillaVariantStoneMaterial init() {

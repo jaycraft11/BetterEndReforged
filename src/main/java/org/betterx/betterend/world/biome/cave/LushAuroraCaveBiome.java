@@ -1,13 +1,13 @@
 package org.betterx.betterend.world.biome.cave;
 
-import org.betterx.bclib.api.v2.levelgen.biomes.BCLBiomeSettings;
 import org.betterx.bclib.interfaces.SurfaceMaterialProvider;
 import org.betterx.bclib.util.WeightedList;
 import org.betterx.betterend.registry.EndBlocks;
-import org.betterx.betterend.registry.EndFeatures;
 import org.betterx.betterend.registry.EndParticles;
+import org.betterx.betterend.registry.features.EndConfiguredCaveFeatures;
 import org.betterx.betterend.world.biome.EndBiome;
 import org.betterx.betterend.world.biome.EndBiomeBuilder;
+import org.betterx.betterend.world.biome.EndBiomeKey;
 import org.betterx.wover.block.api.BlockProperties;
 
 import com.mojang.serialization.MapCodec;
@@ -23,24 +23,23 @@ import java.util.List;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class LushAuroraCaveBiome extends EndCaveBiome.Config {
+public class LushAuroraCaveBiome extends EndCaveBiome.Config<LushAuroraCaveBiome> {
     public static final MapCodec<Biome> CODEC = EndCaveBiome.simpleCaveBiomeCodec(LushAuroraCaveBiome.Biome::new);
     public static final KeyDispatchDataCodec<LushAuroraCaveBiome.Biome> KEY_CODEC = KeyDispatchDataCodec.of(CODEC);
 
     public static class Biome extends EndCaveBiome {
-        public Biome(ResourceKey<net.minecraft.world.level.biome.Biome> biomeID, BCLBiomeSettings settings) {
-            super(biomeID, settings);
+        @Override
+        public void datagenSetup() {
+            this.addFloorFeature(EndConfiguredCaveFeatures.BIG_AURORA_CRYSTAL, 1);
+            this.addFloorFeature(EndConfiguredCaveFeatures.CAVE_BUSH, 5);
+            this.addFloorFeature(EndConfiguredCaveFeatures.CAVE_GRASS, 40);
+            this.addFloorFeature(EndConfiguredCaveFeatures.END_STONE_STALAGMITE_CAVEMOSS, 5);
 
-            this.addFloorFeature(EndFeatures.BIG_AURORA_CRYSTAL.configuredFeature, 1);
-            this.addFloorFeature(EndFeatures.CAVE_BUSH.configuredFeature, 5);
-            this.addFloorFeature(EndFeatures.CAVE_GRASS.configuredFeature, 40);
-            this.addFloorFeature(EndFeatures.END_STONE_STALAGMITE_CAVEMOSS.configuredFeature, 5);
-
-            this.addCeilFeature(EndFeatures.CAVE_BUSH.configuredFeature, 1);
-            this.addCeilFeature(EndFeatures.CAVE_PUMPKIN.configuredFeature, 1);
-            this.addCeilFeature(EndFeatures.RUBINEA.configuredFeature, 3);
-            this.addCeilFeature(EndFeatures.MAGNULA.configuredFeature, 1);
-            this.addCeilFeature(EndFeatures.END_STONE_STALACTITE_CAVEMOSS.configuredFeature, 10);
+            this.addCeilFeature(EndConfiguredCaveFeatures.CAVE_BUSH, 1);
+            this.addCeilFeature(EndConfiguredCaveFeatures.CAVE_PUMPKIN, 1);
+            this.addCeilFeature(EndConfiguredCaveFeatures.RUBINEA, 3);
+            this.addCeilFeature(EndConfiguredCaveFeatures.MAGNULA, 1);
+            this.addCeilFeature(EndConfiguredCaveFeatures.END_STONE_STALACTITE_CAVEMOSS, 10);
         }
 
         @Override
@@ -88,8 +87,8 @@ public class LushAuroraCaveBiome extends EndCaveBiome.Config {
         }
     }
 
-    public LushAuroraCaveBiome() {
-        super();
+    public LushAuroraCaveBiome(EndBiomeKey<LushAuroraCaveBiome, ?> key) {
+        super(key);
     }
 
     @Override

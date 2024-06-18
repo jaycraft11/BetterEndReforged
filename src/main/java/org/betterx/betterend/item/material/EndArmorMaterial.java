@@ -1,98 +1,53 @@
 package org.betterx.betterend.item.material;
 
+import org.betterx.betterend.BetterEnd;
 import org.betterx.betterend.registry.EndBlocks;
 import org.betterx.betterend.registry.EndItems;
+import org.betterx.wover.item.api.armor.CustomArmorMaterial;
 
-import net.minecraft.sounds.SoundEvent;
+import net.minecraft.core.Holder;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.util.LazyLoadedValue;
-import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.crafting.Ingredient;
 
-import java.util.function.Supplier;
+public class EndArmorMaterial {
+    public static final Holder<ArmorMaterial> THALLASIUM = CustomArmorMaterial
+            .start(BetterEnd.C.mk("thallasium"))
+            .defense(1, 4, 5, 2, 12)
+            .enchantmentValue(17)
+            .equipSound(SoundEvents.ARMOR_EQUIP_IRON)
+            .toughness(0.0f)
+            .knockbackResistance(0.0f)
+            .repairIngredientSupplier(() -> Ingredient.of(EndBlocks.THALLASIUM.ingot))
+            .buildAndRegister();
 
-public enum EndArmorMaterial implements ArmorMaterial {
-    THALLASIUM("thallasium", 17, new int[]{1, 4, 5, 2}, 12, SoundEvents.ARMOR_EQUIP_IRON, 0.0F, 0.0F, () -> {
-        return Ingredient.of(EndBlocks.THALLASIUM.ingot);
-    }), TERMINITE("terminite", 26, new int[]{3, 6, 7, 3}, 14, SoundEvents.ARMOR_EQUIP_IRON, 1.0F, 0.05F, () -> {
-        return Ingredient.of(EndBlocks.TERMINITE.ingot);
-    }), AETERNIUM("aeternium", 40, new int[]{4, 7, 9, 4}, 18, SoundEvents.ARMOR_EQUIP_NETHERITE, 3.5F, 0.2F, () -> {
-        return Ingredient.of(EndItems.AETERNIUM_INGOT);
-    }), CRYSTALITE("crystalite", 30, new int[]{3, 6, 8, 3}, 24, SoundEvents.ARMOR_EQUIP_DIAMOND, 1.2F, 0.1F, () -> {
-        return Ingredient.of(EndBlocks.TERMINITE.ingot);
-    });
+    public static final Holder<ArmorMaterial> TERMINITE = CustomArmorMaterial
+            .start(BetterEnd.C.mk("terminite"))
+            .defense(3, 6, 7, 3, 14)
+            .enchantmentValue(26)
+            .equipSound(SoundEvents.ARMOR_EQUIP_IRON)
+            .toughness(1.0f)
+            .knockbackResistance(0.05f)
+            .repairIngredientSupplier(() -> Ingredient.of(EndBlocks.TERMINITE.ingot))
+            .buildAndRegister();
 
-    private static final int[] BASE_DURABILITY = new int[]{13, 15, 16, 11};
-    private final String name;
-    private final int durabilityMultiplier;
-    private final int[] protectionAmounts;
-    private final int enchantability;
-    private final SoundEvent equipSound;
-    private final float toughness;
-    private final float knockbackResistance;
-    @SuppressWarnings("deprecation")
-    private final LazyLoadedValue<Ingredient> repairIngredient;
+    public static final Holder<ArmorMaterial> AETERNIUM = CustomArmorMaterial
+            .start(BetterEnd.C.mk("aeternium"))
+            .defense(4, 7, 9, 4, 18)
+            .enchantmentValue(40)
+            .equipSound(SoundEvents.ARMOR_EQUIP_NETHERITE)
+            .toughness(3.5f)
+            .knockbackResistance(0.2f)
+            .repairIngredientSupplier(() -> Ingredient.of(EndItems.AETERNIUM_INGOT))
+            .buildAndRegister();
 
-    @SuppressWarnings("deprecation")
-    EndArmorMaterial(
-            String name,
-            int durabilityMultiplier,
-            int[] protectionAmounts,
-            int enchantability,
-            SoundEvent equipSound,
-            float toughness,
-            float knockbackResistance,
-            Supplier<Ingredient> repairIngredient
-    ) {
-        this.name = name;
-        this.durabilityMultiplier = durabilityMultiplier;
-        this.protectionAmounts = protectionAmounts;
-        this.enchantability = enchantability;
-        this.equipSound = equipSound;
-        this.toughness = toughness;
-        this.knockbackResistance = knockbackResistance;
-        this.repairIngredient = new LazyLoadedValue<>(repairIngredient);
-    }
-
-    @Override
-    public int getDurabilityForType(ArmorItem.Type type) {
-        return BASE_DURABILITY[type.getSlot().getIndex()] * this.durabilityMultiplier;
-    }
-
-    @Override
-    public int getDefenseForType(ArmorItem.Type type) {
-        return this.protectionAmounts[type.getSlot().getIndex()];
-    }
-
-    @Override
-    public int getEnchantmentValue() {
-        return this.enchantability;
-    }
-
-    @Override
-    public SoundEvent getEquipSound() {
-        return this.equipSound;
-    }
-
-    @Override
-    public Ingredient getRepairIngredient() {
-        return this.repairIngredient.get();
-    }
-
-    @Override
-    public String getName() {
-        return this.name;
-    }
-
-    @Override
-    public float getToughness() {
-        return this.toughness;
-    }
-
-    @Override
-    public float getKnockbackResistance() {
-        return this.knockbackResistance;
-    }
-
+    public static final Holder<ArmorMaterial> CRYSTALITE = CustomArmorMaterial
+            .start(BetterEnd.C.mk("crystalite"))
+            .defense(3, 6, 8, 3, 24)
+            .enchantmentValue(30)
+            .equipSound(SoundEvents.ARMOR_EQUIP_DIAMOND)
+            .toughness(1.2f)
+            .knockbackResistance(0.1f)
+            .repairIngredientSupplier(() -> Ingredient.of(EndBlocks.TERMINITE.ingot))
+            .buildAndRegister();
 }
