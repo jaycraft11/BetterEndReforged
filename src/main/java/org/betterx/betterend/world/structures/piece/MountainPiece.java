@@ -1,6 +1,5 @@
 package org.betterx.betterend.world.structures.piece;
 
-import org.betterx.bclib.api.v2.levelgen.biomes.BiomeAPI;
 import org.betterx.bclib.util.MHelper;
 import org.betterx.betterend.noise.OpenSimplexNoise;
 

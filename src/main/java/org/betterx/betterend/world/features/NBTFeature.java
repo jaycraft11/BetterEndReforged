@@ -1,6 +1,5 @@
 package org.betterx.betterend.world.features;
 
-import org.betterx.bclib.api.v2.levelgen.biomes.BiomeAPI;
 import org.betterx.bclib.api.v2.levelgen.features.features.DefaultFeature;
 import org.betterx.bclib.api.v2.levelgen.structures.templatesystem.DestructionStructureProcessor;
 import org.betterx.bclib.util.BlocksHelper;
