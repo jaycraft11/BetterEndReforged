@@ -1,8 +1,5 @@
 package org.betterx.betterend.integration.byg.biomes;
 
-import org.betterx.bclib.BCLib;
-import org.betterx.bclib.api.v2.levelgen.surface.SurfaceRuleBuilder;
-import org.betterx.bclib.api.v2.levelgen.surface.rules.RoughNoiseCondition;
 import org.betterx.bclib.interfaces.SurfaceMaterialProvider;
 import org.betterx.betterend.integration.Integrations;
 import org.betterx.betterend.integration.byg.features.BYGFeatures;
@@ -10,6 +7,9 @@ import org.betterx.betterend.registry.features.EndLakeFeatures;
 import org.betterx.betterend.registry.features.EndVegetationFeatures;
 import org.betterx.betterend.world.biome.EndBiome;
 import org.betterx.betterend.world.biome.EndBiomeBuilder;
+import org.betterx.wover.core.api.ModCore;
+import org.betterx.wover.surface.api.Conditions;
+import org.betterx.wover.surface.api.SurfaceRuleBuilder;
 
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
@@ -43,7 +43,7 @@ public class OldBulbisGardens extends EndBiome.Config {
         builder.fogColor(215, 132, 207)
                .fogDensity(1.8F)
                .waterAndFogColor(40, 0, 56)
-               .foliageColor(122, 17, 155)
+               .foliageColorOverride(122, 17, 155)
                .particles(
                        ParticleTypes.REVERSE_PORTAL,
                        0.002F
@@ -51,7 +51,7 @@ public class OldBulbisGardens extends EndBiome.Config {
                .feature(EndLakeFeatures.END_LAKE_RARE)
                .feature(BYGFeatures.OLD_BULBIS_TREE);
 
-        if (BCLib.isClient()) {
+        if (ModCore.isClient()) {
             Holder<SoundEvent> loop = effects.getAmbientLoopSoundEvent()
                                              .get();
             Holder<SoundEvent> music = effects.getBackgroundMusic()
@@ -132,20 +132,22 @@ public class OldBulbisGardens extends EndBiome.Config {
             public SurfaceRuleBuilder surface() {
                 return SurfaceRuleBuilder
                         .start()
-                        .rule(4, SurfaceRules.sequence(SurfaceRules.ifTrue(
+                        .rule(
+                                SurfaceRules.sequence(SurfaceRules.ifTrue(
                                                 BYGBiomes.BYG_WATER_CHECK,
                                                 SurfaceRules.ifTrue(
                                                         SurfaceRules.ON_FLOOR,
                                                         SurfaceRules.sequence(
                                                                 SurfaceRules.ifTrue(
-                                                                        new RoughNoiseCondition(Noises.NETHERRACK, 0.19),
+                                                                        Conditions.roughNoise(Noises.NETHERRACK, 0.19),
                                                                         SurfaceRules.state(getTopMaterial())
                                                                 ),
                                                                 SurfaceRules.state(getAltTopMaterial())
                                                         )
                                                 )
                                         )
-                                )
+                                ),
+                                4
                         );
             }
         };

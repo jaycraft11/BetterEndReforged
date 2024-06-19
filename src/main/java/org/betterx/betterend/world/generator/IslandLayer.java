@@ -163,7 +163,7 @@ public class IslandLayer {
 				return map;
 			}
 			catch (IOException e) {
-				BetterEnd.LOGGER.warning(e.getMessage());
+				BetterEnd.LOGGER.warn(e.getMessage());
 			}
 		}
 		return null;

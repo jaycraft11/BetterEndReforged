@@ -3,18 +3,18 @@ package org.betterx.betterend.blocks;
 import org.betterx.bclib.blocks.BaseAttachedBlock;
 import org.betterx.bclib.client.render.BCLRenderLayer;
 import org.betterx.bclib.interfaces.RenderLayerProvider;
-import org.betterx.bclib.util.MHelper;
 import org.betterx.betterend.interfaces.survives.SurvivesOnBrimstone;
-import org.betterx.betterend.registry.EndBlocks;
 import org.betterx.betterend.registry.EndItems;
+import org.betterx.wover.loot.api.BlockLootProvider;
+import org.betterx.wover.loot.api.LootLookupProvider;
 
+import net.minecraft.advancements.critereon.StatePropertiesPredicate;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
@@ -31,22 +31,30 @@ import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.material.MapColor;
-import net.minecraft.world.level.storage.loot.LootParams;
-import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
+import net.minecraft.world.level.storage.loot.LootPool;
+import net.minecraft.world.level.storage.loot.LootTable;
+import net.minecraft.world.level.storage.loot.entries.LootItem;
+import net.minecraft.world.level.storage.loot.functions.ApplyBonusCount;
+import net.minecraft.world.level.storage.loot.functions.ApplyExplosionDecay;
+import net.minecraft.world.level.storage.loot.functions.LootItemConditionalFunction;
+import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
+import net.minecraft.world.level.storage.loot.predicates.AllOfCondition;
+import net.minecraft.world.level.storage.loot.predicates.InvertedLootItemCondition;
+import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
+import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
+import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
-import java.util.Collections;
 import java.util.EnumMap;
-import java.util.List;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 @SuppressWarnings("deprecation")
-public class SulphurCrystalBlock extends BaseAttachedBlock.Glass implements RenderLayerProvider, SimpleWaterloggedBlock, LiquidBlockContainer, SurvivesOnBrimstone {
+public class SulphurCrystalBlock extends BaseAttachedBlock.Glass implements RenderLayerProvider, SimpleWaterloggedBlock, LiquidBlockContainer, SurvivesOnBrimstone, BlockLootProvider {
     private static final EnumMap<Direction, VoxelShape> BOUNDING_SHAPES = Maps.newEnumMap(Direction.class);
     public static final IntegerProperty AGE = IntegerProperty.create("age", 0, 2);
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
@@ -71,37 +79,61 @@ public class SulphurCrystalBlock extends BaseAttachedBlock.Glass implements Rend
         return BCLRenderLayer.CUTOUT;
     }
 
+    private LootItemConditionalFunction.@NotNull Builder<?> applyAgeBonus(@NotNull LootLookupProvider provider, int i) {
+        return ApplyBonusCount
+                .addUniformBonusCount(provider.fortune(), i)
+                .when(ageCondition(i));
+    }
+
+    private LootItemBlockStatePropertyCondition.@NotNull Builder ageCondition(int i) {
+        return LootItemBlockStatePropertyCondition
+                .hasBlockStateProperties(this)
+                .setProperties(StatePropertiesPredicate.Builder
+                        .properties()
+                        .hasProperty(AGE, i));
+    }
+
     @Override
-    public List<ItemStack> getDrops(BlockState state, LootParams.Builder builder) {
-        final ItemStack tool = builder.getParameter(LootContextParams.TOOL);
-        if (tool != null && !tool.isEmpty()) {
-            final int fortuneLevel = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.BLOCK_FORTUNE, tool) + 1;
-            final int age = state.getValue(AGE);
-
-            final int min;
-            final int max;
-            if (age < 2) {
-                min = 1;
-                max = 1 + age * fortuneLevel;
-            } else {
-                min = fortuneLevel + 1;
-                max = 2 + age * fortuneLevel;
-            }
-
-            if (tool.isCorrectToolForDrops(state) && EnchantmentHelper.hasSilkTouch(tool)) {
-                final ItemStack drop = new ItemStack(
-                        EndBlocks.SULPHUR_CRYSTAL,
-                        MHelper.randRange(min, max, MHelper.RANDOM_SOURCE)
+    public LootTable.Builder registerBlockLoot(
+            @NotNull ResourceLocation location,
+            @NotNull LootLookupProvider provider,
+            @NotNull ResourceKey<LootTable> tableKey
+    ) {
+        return LootTable
+                .lootTable()
+                .withPool(
+                        LootPool.lootPool()
+                                .when(provider.hasSilkTouch())
+                                .setRolls(ConstantValue.exactly(1))
+                                .add(LootItem.lootTableItem(this)
+                                             .apply(SetItemCountFunction
+                                                     .setCount(UniformGenerator.between(1, 3))
+                                                     .when(ageCondition(3))
+                                             )
+                                             .apply(SetItemCountFunction
+                                                     .setCount(ConstantValue.exactly(1))
+                                                     .when(InvertedLootItemCondition.invert(ageCondition(3)))
+                                             )
+                                             .apply(ApplyBonusCount
+                                                     .addOreBonusCount(provider.fortune())
+                                                     .when(ageCondition(3))
+                                             )
+                                             .apply(applyAgeBonus(provider, 2))
+                                             .apply(applyAgeBonus(provider, 1))
+                                             .apply(ApplyExplosionDecay.explosionDecay())
+                                )
+                )
+                .withPool(
+                        LootPool.lootPool()
+                                .when(AllOfCondition.allOf(InvertedLootItemCondition.invert(provider.hasSilkTouch()), ageCondition(3)))
+                                .setRolls(ConstantValue.exactly(1))
+                                .add(LootItem.lootTableItem(EndItems.CRYSTALLINE_SULPHUR)
+                                             .apply(SetItemCountFunction
+                                                     .setCount(UniformGenerator.between(1, 3))
+                                             )
+                                             .apply(ApplyExplosionDecay.explosionDecay())
+                                )
                 );
-                return List.of(drop);
-            }
-        }
-
-        if (state.getValue(AGE) < 2) return Collections.emptyList();
-        return Lists.newArrayList(new ItemStack(
-                EndItems.CRYSTALLINE_SULPHUR,
-                MHelper.randRange(1, 3, MHelper.RANDOM_SOURCE)
-        ));
     }
 
     @Override
@@ -112,7 +144,7 @@ public class SulphurCrystalBlock extends BaseAttachedBlock.Glass implements Rend
             BlockState blockState,
             Fluid fluid
     ) {
-        return !state.getValue(WATERLOGGED);
+        return !blockState.getValue(WATERLOGGED);
     }
 
     @Override
@@ -133,12 +165,12 @@ public class SulphurCrystalBlock extends BaseAttachedBlock.Glass implements Rend
     }
 
     @Override
-    public FluidState getFluidState(BlockState state) {
+    public @NotNull FluidState getFluidState(BlockState state) {
         return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : Fluids.EMPTY.defaultFluidState();
     }
 
     @Override
-    public VoxelShape getShape(BlockState state, BlockGetter view, BlockPos pos, CollisionContext ePos) {
+    public @NotNull VoxelShape getShape(BlockState state, BlockGetter view, BlockPos pos, CollisionContext ePos) {
         return BOUNDING_SHAPES.get(state.getValue(FACING));
     }
 

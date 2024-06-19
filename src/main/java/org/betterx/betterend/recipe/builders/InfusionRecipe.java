@@ -209,7 +209,7 @@ public class InfusionRecipe implements Recipe<InfusionRitual>, UnknownReceipBook
         @Override
         protected boolean checkRecipe() {
             if (time < 0) {
-                BCLib.LOGGER.warning(
+                BCLib.LOGGER.warn(
                         "Time should be positive, recipe {} will be ignored!",
                         id
                 );

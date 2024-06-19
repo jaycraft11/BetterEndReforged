@@ -1,17 +1,16 @@
 package org.betterx.betterend.entity;
 
-import org.betterx.bclib.api.v2.levelgen.biomes.BCLBiome;
-import org.betterx.bclib.api.v2.levelgen.biomes.BCLBiomeRegistry;
-import org.betterx.bclib.api.v2.levelgen.biomes.BiomeAPI;
 import org.betterx.bclib.util.BlocksHelper;
 import org.betterx.bclib.util.MHelper;
 import org.betterx.betterend.interfaces.ISlime;
 import org.betterx.betterend.registry.EndBiomes;
 import org.betterx.betterend.util.GlobalState;
+import org.betterx.wover.enchantment.api.EnchantmentUtils;
 import org.betterx.wover.tag.api.predefined.CommonBlockTags;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
+import net.minecraft.core.Holder;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -39,13 +38,15 @@ import net.minecraft.world.entity.monster.Slime;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Blocks;
 
 import java.util.EnumSet;
+import org.jetbrains.annotations.Nullable;
 
 public class EndSlimeEntity extends Slime {
     private static final EntityDataAccessor<Byte> VARIANT = SynchedEntityData.defineId(
@@ -86,22 +87,23 @@ public class EndSlimeEntity extends Slime {
                 .add(Attributes.MOVEMENT_SPEED, 0.15D);
     }
 
+    @Nullable
     @Override
     public SpawnGroupData finalizeSpawn(
             ServerLevelAccessor world,
             DifficultyInstance difficulty,
             MobSpawnType spawnReason,
-            SpawnGroupData entityData,
-            CompoundTag entityTag
+            @Nullable SpawnGroupData entityData
     ) {
-        SpawnGroupData data = super.finalizeSpawn(world, difficulty, spawnReason, entityData, entityTag);
-        BCLBiome biome = BiomeAPI.getBiome(world.getBiome(blockPosition()));
-        if (!BCLBiomeRegistry.isEmptyBiome(biome)) {
-            if (biome.equals(EndBiomes.FOGGY_MUSHROOMLAND)) {
+        SpawnGroupData data = super.finalizeSpawn(world, difficulty, spawnReason, entityData);
+
+        Holder<Biome> biome = world.getBiome(blockPosition());
+        if (biome.unwrapKey().isPresent()) {
+            if (biome.is(EndBiomes.FOGGY_MUSHROOMLAND.key)) {
                 this.setMossy();
-            } else if (biome.equals(EndBiomes.MEGALAKE) || biome.equals(EndBiomes.MEGALAKE_GROVE)) {
+            } else if (biome.is(EndBiomes.MEGALAKE.key) || biome.is(EndBiomes.MEGALAKE_GROVE.key)) {
                 this.setLake();
-            } else if (biome.equals(EndBiomes.AMBER_LAND)) {
+            } else if (biome.is(EndBiomes.AMBER_LAND.key)) {
                 this.setAmber();
             }
             this.refreshDimensions();
@@ -110,9 +112,9 @@ public class EndSlimeEntity extends Slime {
     }
 
     @Override
-    protected void defineSynchedData() {
-        super.defineSynchedData();
-        this.entityData.define(VARIANT, (byte) 0);
+    protected void defineSynchedData(SynchedEntityData.Builder builder) {
+        super.defineSynchedData(builder);
+        this.entityData.set(VARIANT, (byte) 0);
     }
 
     @Override
@@ -181,7 +183,7 @@ public class EndSlimeEntity extends Slime {
             minCount = 1;
         }
         if (causedByPlayer && this.lastHurtByPlayer != null) {
-            int looting = EnchantmentHelper.getMobLooting(this.lastHurtByPlayer);
+            int looting = EnchantmentUtils.getItemEnchantmentLevel(this.lastHurtByPlayer.level(), Enchantments.LOOTING, this.lastHurtByPlayer);
             minCount += looting;
         }
         int count = minCount < maxCount ? MHelper.randRange(minCount, maxCount, random) : maxCount;
@@ -235,8 +237,8 @@ public class EndSlimeEntity extends Slime {
         if (!world.getBlockState(pos.below()).is(CommonBlockTags.END_STONES)) {
             return false;
         }
-        BCLBiome biome = BiomeAPI.getBiome(world.getBiome(pos));
-        if (!BCLBiomeRegistry.isEmptyBiome(biome)) {
+        Holder<Biome> biome = world.getBiome(pos);
+        if (biome.unwrapKey().isPresent()) {
             if (biome.equals(EndBiomes.CHORUS_FOREST) || biome.equals(EndBiomes.MEGALAKE)) {
                 return true;
             }

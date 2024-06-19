@@ -4,21 +4,18 @@ import org.betterx.bclib.behaviours.interfaces.BehaviourIce;
 import org.betterx.bclib.client.render.BCLRenderLayer;
 import org.betterx.bclib.interfaces.RenderLayerProvider;
 import org.betterx.bclib.interfaces.RuntimeBlockModelProvider;
+import org.betterx.wover.enchantment.api.EnchantmentUtils;
 import org.betterx.wover.loot.api.BlockLootProvider;
 import org.betterx.wover.loot.api.LootLookupProvider;
 
 import net.minecraft.client.renderer.block.model.BlockModel;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Holder;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LightLayer;
@@ -55,13 +52,7 @@ public class EmeraldIceBlock extends HalfTransparentBlock implements RenderLayer
             ItemStack stack
     ) {
         super.playerDestroy(world, player, pos, state, blockEntity, stack);
-        final Holder<Enchantment> silkTouch = world
-                .registryAccess()
-                .registry(Registries.ENCHANTMENT)
-                .flatMap(r -> r.getHolder(Enchantments.SILK_TOUCH))
-                .orElse(null);
-
-        if (EnchantmentHelper.getItemEnchantmentLevel(silkTouch, stack) == 0) {
+        if (EnchantmentUtils.getItemEnchantmentLevel(world, Enchantments.SILK_TOUCH, stack) == 0) {
             if (world.dimensionType().ultraWarm()) {
                 world.removeBlock(pos, false);
                 return;

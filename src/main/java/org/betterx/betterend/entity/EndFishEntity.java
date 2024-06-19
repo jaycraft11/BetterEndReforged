@@ -1,11 +1,11 @@
 package org.betterx.betterend.entity;
 
-import org.betterx.bclib.api.v2.levelgen.biomes.BCLBiome;
-import org.betterx.bclib.api.v2.levelgen.biomes.BCLBiomeRegistry;
-import org.betterx.bclib.api.v2.levelgen.biomes.BiomeAPI;
 import org.betterx.betterend.registry.EndBiomes;
 import org.betterx.betterend.registry.EndItems;
+import org.betterx.wover.enchantment.api.EnchantmentUtils;
 
+import net.minecraft.core.Holder;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -28,11 +28,14 @@ import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Blocks;
+
+import org.jetbrains.annotations.NotNull;
 
 public class EndFishEntity extends AbstractSchoolingFish {
     public static final int VARIANTS_NORMAL = 5;
@@ -56,23 +59,13 @@ public class EndFishEntity extends AbstractSchoolingFish {
             ServerLevelAccessor world,
             DifficultyInstance difficulty,
             MobSpawnType spawnReason,
-            SpawnGroupData entityData,
-            CompoundTag entityTag
+            SpawnGroupData entityData
     ) {
-        SpawnGroupData data = super.finalizeSpawn(world, difficulty, spawnReason, entityData, entityTag);
+        SpawnGroupData data = super.finalizeSpawn(world, difficulty, spawnReason, entityData);
 
-        BCLBiome biome = BiomeAPI.getBiome(world.getBiome(blockPosition()));
-        if (!BCLBiomeRegistry.isEmptyBiome(biome) && biome.equals(EndBiomes.SULPHUR_SPRINGS)) {
+        Holder<Biome> biome = world.getBiome(blockPosition());
+        if (biome.is(EndBiomes.SULPHUR_SPRINGS.key)) {
             this.entityData.set(VARIANT, (byte) (random.nextInt(VARIANTS_SULPHUR) + VARIANTS_NORMAL));
-        }
-
-        if (entityTag != null) {
-            if (entityTag.contains("Variant")) {
-                this.entityData.set(VARIANT, entityTag.getByte("variant"));
-            }
-            if (entityTag.contains("Scale")) {
-                this.entityData.set(SCALE, entityTag.getByte("scale"));
-            }
         }
 
         this.refreshDimensions();
@@ -80,10 +73,10 @@ public class EndFishEntity extends AbstractSchoolingFish {
     }
 
     @Override
-    protected void defineSynchedData() {
-        super.defineSynchedData();
-        this.entityData.define(VARIANT, (byte) this.getRandom().nextInt(VARIANTS_NORMAL));
-        this.entityData.define(SCALE, (byte) this.getRandom().nextInt(16));
+    protected void defineSynchedData(SynchedEntityData.Builder builder) {
+        super.defineSynchedData(builder);
+        this.entityData.set(VARIANT, (byte) this.getRandom().nextInt(VARIANTS_NORMAL));
+        this.entityData.set(SCALE, (byte) this.getRandom().nextInt(16));
     }
 
     @Override
@@ -105,16 +98,26 @@ public class EndFishEntity extends AbstractSchoolingFish {
     }
 
     @Override
-    public ItemStack getBucketItemStack() {
+    public void saveToBucketTag(ItemStack itemStack) {
+        super.saveToBucketTag(itemStack);
+        CustomData.update(DataComponents.BUCKET_ENTITY_DATA, itemStack, (tag) -> {
+            tag.putByte("variant", entityData.get(VARIANT));
+            tag.putByte("scale", entityData.get(SCALE));
+        });
+    }
+
+    @Override
+    public @NotNull ItemStack getBucketItemStack() {
         ItemStack bucket = EndItems.BUCKET_END_FISH.getDefaultInstance();
-        CompoundTag tag = bucket.getOrCreateTag();
-        tag.putByte("variant", entityData.get(VARIANT));
-        tag.putByte("scale", entityData.get(SCALE));
+//        CustomData.update(DataComponents.BUCKET_ENTITY_DATA, bucket, (tag) -> {
+//            tag.putByte("variant", entityData.get(VARIANT));
+//            tag.putByte("scale", entityData.get(SCALE));
+//        });
         return bucket;
     }
 
     @Override
-    protected SoundEvent getFlopSound() {
+    protected @NotNull SoundEvent getFlopSound() {
         return SoundEvents.TROPICAL_FISH_FLOP;
     }
 
@@ -136,7 +139,7 @@ public class EndFishEntity extends AbstractSchoolingFish {
     @Override
     public void tick() {
         super.tick();
-        if (random.nextInt(8) == 0 && getFeetBlockState().is(Blocks.WATER)) {
+        if (random.nextInt(8) == 0 && getInBlockState().is(Blocks.WATER)) {
             double x = getX() + random.nextGaussian() * 0.2;
             double y = getY() + random.nextGaussian() * 0.2;
             double z = getZ() + random.nextGaussian() * 0.2;
@@ -144,7 +147,7 @@ public class EndFishEntity extends AbstractSchoolingFish {
         }
     }
 
-    public static AttributeSupplier.Builder createMobAttributes() {
+    public static AttributeSupplier.@NotNull Builder createMobAttributes() {
         return LivingEntity
                 .createLivingAttributes()
                 .add(Attributes.MAX_HEALTH, 2.0)
@@ -169,7 +172,11 @@ public class EndFishEntity extends AbstractSchoolingFish {
         Item item = source.is(DamageTypeTags.IS_FIRE) ? EndItems.END_FISH_COOKED : EndItems.END_FISH_RAW;
         if (causedByPlayer) {
             ItemStack handItem = ((Player) source.getEntity()).getItemInHand(InteractionHand.MAIN_HAND);
-            if (EnchantmentHelper.getItemEnchantmentLevel(Enchantments.FIRE_ASPECT, handItem) > 0) {
+            if (EnchantmentUtils.getItemEnchantmentLevel(
+                    source.getEntity().level(),
+                    Enchantments.FIRE_ASPECT,
+                    handItem
+            ) > 0) {
                 item = EndItems.END_FISH_COOKED;
             }
         }

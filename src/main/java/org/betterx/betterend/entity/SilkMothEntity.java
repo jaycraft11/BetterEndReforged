@@ -7,6 +7,7 @@ import org.betterx.betterend.blocks.EndBlockProperties;
 import org.betterx.betterend.registry.EndBlocks;
 import org.betterx.betterend.registry.EndEntities;
 import org.betterx.betterend.registry.EndItems;
+import org.betterx.wover.enchantment.api.EnchantmentUtils;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
@@ -36,11 +37,11 @@ import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.pathfinder.BlockPathTypes;
+import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.EnumSet;
@@ -55,8 +56,8 @@ public class SilkMothEntity extends Animal implements FlyingAnimal {
         super(entityType, world);
         this.moveControl = new FlyingMoveControl(this, 20, true);
         this.lookControl = new MothLookControl(this);
-        this.setPathfindingMalus(BlockPathTypes.WATER, -1.0F);
-        this.setPathfindingMalus(BlockPathTypes.DANGER_FIRE, -1.0F);
+        this.setPathfindingMalus(PathType.WATER, -1.0F);
+        this.setPathfindingMalus(PathType.DANGER_FIRE, -1.0F);
         this.xpReward = 1;
     }
 
@@ -75,7 +76,7 @@ public class SilkMothEntity extends Animal implements FlyingAnimal {
     }
 
     @Override
-    public boolean canBeLeashed(Player player) {
+    public boolean canBeLeashed() {
         return true;
     }
 
@@ -92,12 +93,12 @@ public class SilkMothEntity extends Animal implements FlyingAnimal {
     public void readAdditionalSaveData(CompoundTag tag) {
         super.readAdditionalSaveData(tag);
         if (tag.contains("HivePos")) {
-            hivePos = NbtUtils.readBlockPos(tag.getCompound("HivePos"));
-            ResourceLocation worldID = new ResourceLocation(tag.getString("HiveWorld"));
+            hivePos = NbtUtils.readBlockPos(tag, "HivePos").orElse(BlockPos.ZERO);
+            ResourceLocation worldID = ResourceLocation.parse(tag.getString("HiveWorld"));
             try {
                 hiveWorld = level().getServer().getLevel(ResourceKey.create(Registries.DIMENSION, worldID));
             } catch (Exception e) {
-                BetterEnd.LOGGER.warning("Silk Moth Hive World {} is missing!", worldID);
+                BetterEnd.LOGGER.warn("Silk Moth Hive World {} is missing!", worldID);
                 hivePos = null;
             }
         }
@@ -166,7 +167,7 @@ public class SilkMothEntity extends Animal implements FlyingAnimal {
         int minCount = 0;
         int maxCount = 1;
         if (causedByPlayer && this.lastHurtByPlayer != null) {
-            int looting = EnchantmentHelper.getMobLooting(this.lastHurtByPlayer);
+            int looting = EnchantmentUtils.getItemEnchantmentLevel(this.lastHurtByPlayer.level(), Enchantments.LOOTING, this.lastHurtByPlayer);
             minCount += looting;
             maxCount += looting;
             if (maxCount > 2) {

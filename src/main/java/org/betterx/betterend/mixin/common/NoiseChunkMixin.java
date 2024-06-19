@@ -35,7 +35,7 @@ public class NoiseChunkMixin implements BETargetChecker {
     ) {
         var o = BETargetChecker.class.cast(noiseGeneratorSettings);
         if (o != null) be_isEndGenerator = o.be_isTarget();
-        else BCLib.LOGGER.warning(noiseGeneratorSettings + " has unknown implementation.");
+        else BCLib.LOGGER.warn(noiseGeneratorSettings + " has unknown implementation.");
     }
 
     @Override

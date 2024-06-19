@@ -1,11 +1,10 @@
 package org.betterx.betterend.entity;
 
-import org.betterx.bclib.api.v2.levelgen.biomes.BCLBiome;
-import org.betterx.bclib.api.v2.levelgen.biomes.BCLBiomeRegistry;
-import org.betterx.bclib.api.v2.levelgen.biomes.BiomeAPI;
 import org.betterx.betterend.registry.EndBiomes;
 import org.betterx.betterend.registry.EndItems;
 
+import net.minecraft.core.Holder;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.game.ClientboundGameEventPacket;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -25,11 +24,15 @@ import net.minecraft.world.entity.animal.AbstractSchoolingFish;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.biome.Biome;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public class CubozoaEntity extends AbstractSchoolingFish {
-    public static final int VARIANTS = 2;
     private static final EntityDataAccessor<Byte> VARIANT = SynchedEntityData.defineId(
             CubozoaEntity.class,
             EntityDataSerializers.BYTE
@@ -43,28 +46,19 @@ public class CubozoaEntity extends AbstractSchoolingFish {
         super(entityType, world);
     }
 
+    @Nullable
     @Override
     public SpawnGroupData finalizeSpawn(
             ServerLevelAccessor world,
             DifficultyInstance difficulty,
             MobSpawnType spawnReason,
-            SpawnGroupData entityData,
-            CompoundTag entityTag
+            @Nullable SpawnGroupData entityData
     ) {
-        SpawnGroupData data = super.finalizeSpawn(world, difficulty, spawnReason, entityData, entityTag);
+        SpawnGroupData data = super.finalizeSpawn(world, difficulty, spawnReason, entityData);
 
-        BCLBiome biome = BiomeAPI.getBiome(world.getBiome(blockPosition()));
-        if (!BCLBiomeRegistry.isEmptyBiome(biome) && biome.is(EndBiomes.SULPHUR_SPRINGS)) {
+        Holder<Biome> biome = world.getBiome(blockPosition());
+        if (biome.is(EndBiomes.SULPHUR_SPRINGS.key)) {
             this.entityData.set(VARIANT, (byte) 1);
-        }
-
-        if (entityTag != null) {
-            if (entityTag.contains("Variant")) {
-                this.entityData.set(VARIANT, entityTag.getByte("Variant"));
-            }
-            if (entityTag.contains("Scale")) {
-                this.entityData.set(SCALE, entityTag.getByte("Scale"));
-            }
         }
 
         this.refreshDimensions();
@@ -72,10 +66,10 @@ public class CubozoaEntity extends AbstractSchoolingFish {
     }
 
     @Override
-    protected void defineSynchedData() {
-        super.defineSynchedData();
-        this.entityData.define(VARIANT, (byte) 0);
-        this.entityData.define(SCALE, (byte) this.getRandom().nextInt(16));
+    protected void defineSynchedData(SynchedEntityData.Builder builder) {
+        super.defineSynchedData(builder);
+        this.entityData.set(VARIANT, (byte) 0);
+        this.entityData.set(SCALE, (byte) this.getRandom().nextInt(16));
     }
 
     @Override
@@ -97,15 +91,25 @@ public class CubozoaEntity extends AbstractSchoolingFish {
     }
 
     @Override
-    public ItemStack getBucketItemStack() {
+    public void saveToBucketTag(ItemStack itemStack) {
+        super.saveToBucketTag(itemStack);
+        CustomData.update(DataComponents.BUCKET_ENTITY_DATA, itemStack, (tag) -> {
+            tag.putByte("Variant", entityData.get(VARIANT));
+            tag.putByte("Scale", entityData.get(SCALE));
+        });
+    }
+
+    @Override
+    public @NotNull ItemStack getBucketItemStack() {
         ItemStack bucket = EndItems.BUCKET_CUBOZOA.getDefaultInstance();
-        CompoundTag tag = bucket.getOrCreateTag();
-        tag.putByte("Variant", entityData.get(VARIANT));
-        tag.putByte("Scale", entityData.get(SCALE));
+//        CustomData.update(DataComponents.BUCKET_ENTITY_DATA, bucket, (tag) -> {
+//            tag.putByte("Variant", entityData.get(VARIANT));
+//            tag.putByte("Scale", entityData.get(SCALE));
+//        });
         return bucket;
     }
 
-    public static AttributeSupplier.Builder createMobAttributes() {
+    public static AttributeSupplier.@NotNull Builder createMobAttributes() {
         return LivingEntity
                 .createLivingAttributes()
                 .add(Attributes.MAX_HEALTH, 2.0)
@@ -126,7 +130,7 @@ public class CubozoaEntity extends AbstractSchoolingFish {
     }
 
     protected float getStandingEyeHeight(Pose pose, EntityDimensions dimensions) {
-        return dimensions.height * 0.5F;
+        return dimensions.height() * 0.5F;
     }
 
     @Override

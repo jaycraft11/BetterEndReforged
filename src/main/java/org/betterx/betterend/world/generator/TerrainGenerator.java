@@ -1,15 +1,15 @@
 package org.betterx.betterend.world.generator;
 
-import org.betterx.bclib.api.v2.generator.BCLibEndBiomeSource;
-import org.betterx.bclib.api.v2.generator.config.BCLEndBiomeSourceConfig;
-import org.betterx.bclib.api.v2.levelgen.biomes.BCLBiome;
-import org.betterx.bclib.api.v2.levelgen.biomes.BiomeAPI;
 import org.betterx.bclib.util.MHelper;
 import org.betterx.betterend.interfaces.BETargetChecker;
 import org.betterx.betterend.mixin.common.NoiseBasedChunkGeneratorAccessor;
 import org.betterx.betterend.mixin.common.NoiseChunkAccessor;
 import org.betterx.betterend.mixin.common.NoiseInterpolatorAccessor;
 import org.betterx.betterend.noise.OpenSimplexNoise;
+import org.betterx.wover.biome.api.BiomeManager;
+import org.betterx.wover.generator.api.biomesource.WoverBiomeData;
+import org.betterx.wover.generator.api.biomesource.end.WoverEndConfig;
+import org.betterx.wover.generator.impl.biomesource.end.WoverEndBiomeSource;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
@@ -71,8 +71,8 @@ public class TerrainGenerator {
         mediumIslands.clearCache();
         smallIslands.clearCache();
 
-        int x = Mth.floor(posX / scaleXZ);
-        int z = Mth.floor(posZ / scaleXZ);
+        int x = posX / scaleXZ;
+        int z = posZ / scaleXZ;
         double distortion1 = noise1.eval(x * 0.1, z * 0.1) * 20 + noise2.eval(
                 x * 0.2,
                 z * 0.2
@@ -96,9 +96,9 @@ public class TerrainGenerator {
             dist = dist > 1 ? dist : MHelper.max(dist, mediumIslands.getDensity(px, py, pz, height));
             dist = dist > 1 ? dist : MHelper.max(dist, smallIslands.getDensity(px, py, pz, height));
             if (dist > -0.5F) {
-                dist += noise1.eval(px * 0.01, py * 0.01, pz * 0.01) * 0.02 + 0.02;
-                dist += noise2.eval(px * 0.05, py * 0.05, pz * 0.05) * 0.01 + 0.01;
-                dist += noise1.eval(px * 0.1, py * 0.1, pz * 0.1) * 0.005 + 0.005;
+                dist += (float) (noise1.eval(px * 0.01, py * 0.01, pz * 0.01) * 0.02 + 0.02);
+                dist += (float) (noise2.eval(px * 0.05, py * 0.05, pz * 0.05) * 0.01 + 0.01);
+                dist += (float) (noise1.eval(px * 0.1, py * 0.1, pz * 0.1) * 0.005 + 0.005);
             }
 
             if (py >= maxHeight) dist = -1;
@@ -115,22 +115,25 @@ public class TerrainGenerator {
         if (biomeSource == null) {
             return 0;
         }
-        BCLBiome biome = getBiome(biomeSource, x, z);
-        if (biome != null && biome.settings.getTerrainHeight() < 0.1F) {
+        WoverBiomeData biome = getBiomeData(biomeSource, x, z);
+        if (biome != null && biome.terrainHeight < 0.1F) {
             return 0F;
         }
         float depth = 0F;
         for (int i = 0; i < OFFS.length; i++) {
             int px = x + OFFS[i].x;
             int pz = z + OFFS[i].y;
-            biome = getBiome(biomeSource, px, pz);
-            depth += biome == null ? 0 : (biome.settings.getTerrainHeight() * COEF[i]);
+            biome = getBiomeData(biomeSource, px, pz);
+            depth += biome == null ? 0 : (biome.terrainHeight * COEF[i]);
         }
         return depth;
     }
 
-    private static @Nullable BCLBiome getBiome(BiomeSource biomeSource, int x, int z) {
-        return BiomeAPI.getBiome(biomeSource.getNoiseBiome(x, 0, z, sampler));
+    private static @Nullable WoverBiomeData getBiomeData(BiomeSource biomeSource, int x, int z) {
+        if (BiomeManager.biomeDataForHolder(biomeSource.getNoiseBiome(x, 0, z, sampler)) instanceof WoverBiomeData biome) {
+            return biome;
+        }
+        return null;
     }
 
     static {
@@ -200,9 +203,9 @@ public class TerrainGenerator {
             dist = dist > 1 ? dist : MHelper.max(dist, mediumIslands.getDensity(px, py, pz));
             dist = dist > 1 ? dist : MHelper.max(dist, smallIslands.getDensity(px, py, pz));
             if (dist > -0.5F) {
-                dist += noise1.eval(px * 0.01, py * 0.01, pz * 0.01) * 0.02 + 0.02;
-                dist += noise2.eval(px * 0.05, py * 0.05, pz * 0.05) * 0.01 + 0.01;
-                dist += noise1.eval(px * 0.1, py * 0.1, pz * 0.1) * 0.005 + 0.005;
+                dist += (float) (noise1.eval(px * 0.01, py * 0.01, pz * 0.01) * 0.02 + 0.02);
+                dist += (float) (noise2.eval(px * 0.05, py * 0.05, pz * 0.05) * 0.01 + 0.01);
+                dist += (float) (noise1.eval(px * 0.1, py * 0.1, pz * 0.1) * 0.005 + 0.005);
             }
             if (dist > -0.01) {
                 result = true;
@@ -222,10 +225,10 @@ public class TerrainGenerator {
             if (chunkGenerator instanceof NoiseBasedChunkGenerator) {
                 Holder<NoiseGeneratorSettings> sHolder = ((NoiseBasedChunkGeneratorAccessor) chunkGenerator)
                         .be_getSettings();
-                if (chunkGenerator.getBiomeSource() instanceof BCLibEndBiomeSource bcl) {
+                if (chunkGenerator.getBiomeSource() instanceof WoverEndBiomeSource bcl) {
                     BETargetChecker.class
                             .cast(sHolder.value())
-                            .be_setTarget(bcl.getTogetherConfig().generatorVersion == BCLEndBiomeSourceConfig.EndBiomeGeneratorType.PAULEVS);
+                            .be_setTarget(bcl.getBiomeSourceConfig().generatorVersion == WoverEndConfig.EndBiomeGeneratorType.PAULEVS);
                 } else {
                     BETargetChecker.class
                             .cast(sHolder.value())
@@ -249,12 +252,14 @@ public class TerrainGenerator {
             int i = blockPos.getX();
             int j = blockPos.getY() - 2;
             int k = blockPos.getZ();
-            BlockPos.betweenClosed(i - 2, j + 1, k - 2, i + 2, j + 3, k + 2).forEach((blockPosx) -> {
-                serverLevel.setBlockAndUpdate(blockPosx, Blocks.AIR.defaultBlockState());
-            });
-            BlockPos.betweenClosed(i - 2, j, k - 2, i + 2, j, k + 2).forEach((blockPosx) -> {
-                serverLevel.setBlockAndUpdate(blockPosx, Blocks.OBSIDIAN.defaultBlockState());
-            });
+
+            BlockPos
+                    .betweenClosed(i - 2, j + 1, k - 2, i + 2, j + 3, k + 2)
+                    .forEach((blockPosx) -> serverLevel.setBlockAndUpdate(blockPosx, Blocks.AIR.defaultBlockState()));
+
+            BlockPos
+                    .betweenClosed(i - 2, j, k - 2, i + 2, j, k + 2)
+                    .forEach((blockPosx) -> serverLevel.setBlockAndUpdate(blockPosx, Blocks.OBSIDIAN.defaultBlockState()));
             info.cancel();
         }
     }

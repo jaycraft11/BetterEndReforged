@@ -1,12 +1,19 @@
 package org.betterx.datagen.betterend.recipes;
 
 import org.betterx.bclib.complexmaterials.WoodenComplexMaterial;
+import org.betterx.betterend.registry.EndBiomes;
 import org.betterx.betterend.registry.EndBlocks;
 import org.betterx.betterend.registry.EndItems;
 import org.betterx.betterend.registry.EndTemplates;
 import org.betterx.betterend.util.LootTableUtil;
+import org.betterx.wover.biome.api.BiomeKey;
+import org.betterx.wover.core.api.ModCore;
+import org.betterx.wover.datagen.api.provider.WoverLootTableProvider;
 
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.advancements.critereon.LocationPredicate;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.HolderSet;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.storage.loot.LootPool;
@@ -16,114 +23,20 @@ import net.minecraft.world.level.storage.loot.functions.EnchantWithLevelsFunctio
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.functions.SetItemDamageFunction;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
+import net.minecraft.world.level.storage.loot.predicates.LocationCheck;
+import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceCondition;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 
-import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
-import net.fabricmc.fabric.api.datagen.v1.provider.SimpleFabricLootTableProvider;
-
 import java.util.function.BiConsumer;
+import org.jetbrains.annotations.NotNull;
 
-public class EndChestLootTableProvider extends SimpleFabricLootTableProvider {
-
+public class EndChestLootTableProvider extends WoverLootTableProvider {
     public EndChestLootTableProvider(
-            FabricDataOutput output
+            ModCore modCore
     ) {
-        super(output, LootContextParamSets.CHEST);
-    }
-
-
-    @Override
-    public void generate(BiConsumer<ResourceLocation, LootTable.Builder> biConsumer) {
-        biConsumer.accept(
-                LootTableUtil.VILLAGE_LOOT,
-                LootTable.lootTable()
-                         .withPool(simpleVillageLoot())
-                         .withPool(plateUpgradeLootPool())
-        );
-
-        biConsumer.accept(
-                LootTableUtil.VILLAGE_TEMPLATE_LOOT,
-                LootTable.lootTable()
-                         .withPool(simpleVillageLoot())
-                         .withPool(handleLootPool())
-                         .withPool(leatherHandleLootPool())
-                         .withPool(plateUpgradeLootPool())
-                         .withPool(upgradeLootPool())
-        );
-
-        biConsumer.accept(
-                LootTableUtil.VILLAGE_BONUS_LOOT,
-                LootTable.lootTable()
-                         .withPool(leatherHandleLootPool())
-                         .withPool(plateUpgradeLootPool())
-                         .withPool(villageBonusLoot())
-                         .withPool(elytraLoot(0.2f))
-        );
-
-        biConsumer.accept(
-                LootTableUtil.FISHING_FISH,
-                LootTable.lootTable()
-                         .withPool(fishing())
-        );
-
-        biConsumer.accept(
-                LootTableUtil.FISHING_JUNK,
-                LootTable.lootTable()
-                         .withPool(fishingJunk())
-        );
-
-        biConsumer.accept(
-                LootTableUtil.FISHING_TREASURE,
-                LootTable.lootTable()
-                         .withPool(fishingTreasure())
-        );
-
-        biConsumer.accept(
-                LootTableUtil.FOGGY_MUSHROOMLAND,
-                includeCommonItems(LootTable.lootTable())
-                        .withPool(foggyMushroomland())
-        );
-
-        biConsumer.accept(
-                LootTableUtil.CHORUS_FOREST,
-                includeCommonItems(LootTable.lootTable())
-                        .withPool(chorusForest())
-        );
-
-        biConsumer.accept(
-                LootTableUtil.SHADOW_FOREST,
-                includeCommonItems(LootTable.lootTable())
-                        .withPool(shadowForest())
-        );
-
-        biConsumer.accept(
-                LootTableUtil.LANTERN_WOODS,
-                includeCommonItems(LootTable.lootTable())
-                        .withPool(lanternWoods())
-        );
-
-        biConsumer.accept(
-                LootTableUtil.UMBRELLA_JUNGLE,
-                includeCommonItems(LootTable.lootTable())
-                        .withPool(umbrellaJungle())
-        );
-
-        biConsumer.accept(
-                LootTableUtil.BIOME_CHEST,
-                includeCommonItems(LootTable.lootTable())
-                        .withPool(umbrellaJungle().when(LootTableUtil.IN_UMBRELLA_JUNGLE))
-                        .withPool(lanternWoods().when(LootTableUtil.IN_LANTERN_WOODS))
-                        .withPool(shadowForest().when(LootTableUtil.IN_SHADOW_FOREST))
-                        .withPool(chorusForest().when(LootTableUtil.IN_CHORUS_FOREST))
-                        .withPool(foggyMushroomland().when(LootTableUtil.IN_FOGGY_MUSHROOMLAND))
-        );
-
-        biConsumer.accept(
-                LootTableUtil.COMMON,
-                includeCommonItems(LootTable.lootTable())
-        );
+        super(modCore, LootContextParamSets.CHEST);
     }
 
     private LootPool.Builder fishing() {
@@ -142,12 +55,12 @@ public class EndChestLootTableProvider extends SimpleFabricLootTableProvider {
                 .add(LootItem.lootTableItem(Items.CHORUS_FRUIT))
                 .add(LootItem.lootTableItem(EndItems.GELATINE))
                 .add(LootItem.lootTableItem(EndItems.CRYSTAL_SHARDS))
-                .add(LootItem.lootTableItem(EndItems.HYDRALUX_PETAL).when(LootTableUtil.IN_SULPHUR_SPRINGS));
+                .add(LootItem.lootTableItem(EndItems.HYDRALUX_PETAL).when(IN_SULPHUR_SPRINGS));
         addCharnia(builder);
         return builder;
     }
 
-    private LootPool.Builder fishingTreasure() {
+    private LootPool.Builder fishingTreasure(HolderLookup.@NotNull Provider lookup) {
         return LootPool
                 .lootPool()
                 .setRolls(ConstantValue.exactly(1))
@@ -156,15 +69,12 @@ public class EndChestLootTableProvider extends SimpleFabricLootTableProvider {
                 .add(LootItem.lootTableItem(EndBlocks.MENGER_SPONGE))
                 .add(LootItem.lootTableItem(Items.BOW)
                              .apply(SetItemDamageFunction.setDamage(UniformGenerator.between(0.0F, 0.25F)))
-                             .apply(EnchantWithLevelsFunction.enchantWithLevels(ConstantValue.exactly(30.0F))
-                                                             .allowTreasure()))
+                             .apply(EnchantWithLevelsFunction.enchantWithLevels(lookup, ConstantValue.exactly(30.0F))))
                 .add(LootItem.lootTableItem(Items.FISHING_ROD)
                              .apply(SetItemDamageFunction.setDamage(UniformGenerator.between(0.0F, 0.25F)))
-                             .apply(EnchantWithLevelsFunction.enchantWithLevels(ConstantValue.exactly(30.0F))
-                                                             .allowTreasure()))
+                             .apply(EnchantWithLevelsFunction.enchantWithLevels(lookup, ConstantValue.exactly(30.0F))))
                 .add(LootItem.lootTableItem(Items.BOOK)
-                             .apply(EnchantWithLevelsFunction.enchantWithLevels(ConstantValue.exactly(30.0F))
-                                                             .allowTreasure()));
+                             .apply(EnchantWithLevelsFunction.enchantWithLevels(lookup, ConstantValue.exactly(30.0F))));
     }
 
     private LootPool.Builder foggyMushroomland() {
@@ -359,28 +269,27 @@ public class EndChestLootTableProvider extends SimpleFabricLootTableProvider {
 
     private static void addCharnia(LootPool.Builder pool) {
         pool.add(LootItem.lootTableItem(EndBlocks.CHARNIA_CYAN)
-                         .when(LootTableUtil.IN_GLOWING_GRASSLANDS.or(LootTableUtil.IN_MEGALAKE)
-                                                                  .or(LootTableUtil.IN_MEGALAKE_GROVE)
-                                                                  .or(
-                                                                          LootTableUtil.IN_NEON_OASIS)));
+                         .when(IN_GLOWING_GRASSLANDS.or(IN_MEGALAKE)
+                                                    .or(IN_MEGALAKE_GROVE)
+                                                    .or(
+                                                            IN_NEON_OASIS)));
         pool.add(LootItem.lootTableItem(EndBlocks.CHARNIA_LIGHT_BLUE)
-                         .when(LootTableUtil.IN_FOGGY_MUSHROOMLAND.or(LootTableUtil.IN_GLOWING_GRASSLANDS)
-                                                                  .or(LootTableUtil.IN_MEGALAKE)
-                                                                  .or(LootTableUtil.IN_MEGALAKE_GROVE)
-                                                                  .or(LootTableUtil.IN_UMBRELLA_JUNGLE)));
+                         .when(IN_FOGGY_MUSHROOMLAND.or(IN_GLOWING_GRASSLANDS)
+                                                    .or(IN_MEGALAKE)
+                                                    .or(IN_MEGALAKE_GROVE)
+                                                    .or(IN_UMBRELLA_JUNGLE)));
         pool.add(LootItem.lootTableItem(EndBlocks.CHARNIA_GREEN)
-                         .when(LootTableUtil.IN_GLOWING_GRASSLANDS.or(LootTableUtil.IN_NEON_OASIS)
-                                                                  .or(LootTableUtil.IN_SULPHUR_SPRINGS)
-                                                                  .or(
-                                                                          LootTableUtil.IN_UMBRELLA_JUNGLE)));
+                         .when(IN_GLOWING_GRASSLANDS.or(IN_NEON_OASIS)
+                                                    .or(IN_SULPHUR_SPRINGS)
+                                                    .or(IN_UMBRELLA_JUNGLE)));
         pool.add(LootItem.lootTableItem(EndBlocks.CHARNIA_RED)
-                         .when(LootTableUtil.IN_AMBER_LAND.or(LootTableUtil.IN_LANTERN_WOODS)
-                                                          .or(LootTableUtil.IN_NEON_OASIS)));
+                         .when(IN_AMBER_LAND.or(IN_LANTERN_WOODS)
+                                            .or(IN_NEON_OASIS)));
         pool.add(LootItem.lootTableItem(EndBlocks.CHARNIA_ORANGE)
-                         .when(LootTableUtil.IN_AMBER_LAND.or(LootTableUtil.IN_LANTERN_WOODS)
-                                                          .or(LootTableUtil.IN_SULPHUR_SPRINGS)));
+                         .when(IN_AMBER_LAND.or(IN_LANTERN_WOODS)
+                                            .or(IN_SULPHUR_SPRINGS)));
         pool.add(LootItem.lootTableItem(EndBlocks.CHARNIA_PURPLE)
-                         .when(LootTableUtil.IN_CHORUS_FOREST.or(LootTableUtil.IN_SHADOW_FOREST)));
+                         .when(IN_CHORUS_FOREST.or(IN_SHADOW_FOREST)));
     }
 
     private static LootTable.Builder includeCommonItems(LootTable.Builder table) {
@@ -425,5 +334,128 @@ public class EndChestLootTableProvider extends SimpleFabricLootTableProvider {
         return table;
     }
 
+    private static LootItemCondition.Builder biomePredicate(HolderLookup.@NotNull Provider lookup, BiomeKey<?> key) {
+        return LocationCheck.checkLocation(LocationPredicate.Builder
+                .location()
+                .setBiomes(HolderSet.direct(key.getHolder(lookup))));
+    }
 
+    private static LootItemCondition.Builder IN_FOGGY_MUSHROOMLAND;
+    private static LootItemCondition.Builder IN_CHORUS_FOREST;
+    private static LootItemCondition.Builder IN_AMBER_LAND;
+    private static LootItemCondition.Builder IN_GLOWING_GRASSLANDS;
+    private static LootItemCondition.Builder IN_LANTERN_WOODS;
+    private static LootItemCondition.Builder IN_MEGALAKE;
+    private static LootItemCondition.Builder IN_MEGALAKE_GROVE;
+    private static LootItemCondition.Builder IN_NEON_OASIS;
+    private static LootItemCondition.Builder IN_SHADOW_FOREST;
+    private static LootItemCondition.Builder IN_SULPHUR_SPRINGS;
+    private static LootItemCondition.Builder IN_UMBRELLA_JUNGLE;
+
+    @Override
+    protected void boostrap(
+            HolderLookup.@NotNull Provider lookup,
+            @NotNull BiConsumer<ResourceKey<LootTable>, LootTable.Builder> biConsumer
+    ) {
+        IN_FOGGY_MUSHROOMLAND = biomePredicate(lookup, EndBiomes.FOGGY_MUSHROOMLAND);
+        IN_CHORUS_FOREST = biomePredicate(lookup, EndBiomes.CHORUS_FOREST);
+        IN_AMBER_LAND = biomePredicate(lookup, EndBiomes.AMBER_LAND);
+        IN_GLOWING_GRASSLANDS = biomePredicate(lookup, EndBiomes.GLOWING_GRASSLANDS);
+        IN_LANTERN_WOODS = biomePredicate(lookup, EndBiomes.LANTERN_WOODS);
+        IN_MEGALAKE = biomePredicate(lookup, EndBiomes.MEGALAKE);
+        IN_MEGALAKE_GROVE = biomePredicate(lookup, EndBiomes.MEGALAKE_GROVE);
+        IN_NEON_OASIS = biomePredicate(lookup, EndBiomes.NEON_OASIS);
+        IN_SHADOW_FOREST = biomePredicate(lookup, EndBiomes.SHADOW_FOREST);
+        IN_SULPHUR_SPRINGS = biomePredicate(lookup, EndBiomes.SULPHUR_SPRINGS);
+        IN_UMBRELLA_JUNGLE = biomePredicate(lookup, EndBiomes.UMBRELLA_JUNGLE);
+
+        biConsumer.accept(
+                LootTableUtil.VILLAGE_LOOT,
+                LootTable.lootTable()
+                         .withPool(simpleVillageLoot())
+                         .withPool(plateUpgradeLootPool())
+        );
+
+        biConsumer.accept(
+                LootTableUtil.VILLAGE_TEMPLATE_LOOT,
+                LootTable.lootTable()
+                         .withPool(simpleVillageLoot())
+                         .withPool(handleLootPool())
+                         .withPool(leatherHandleLootPool())
+                         .withPool(plateUpgradeLootPool())
+                         .withPool(upgradeLootPool())
+        );
+
+        biConsumer.accept(
+                LootTableUtil.VILLAGE_BONUS_LOOT,
+                LootTable.lootTable()
+                         .withPool(leatherHandleLootPool())
+                         .withPool(plateUpgradeLootPool())
+                         .withPool(villageBonusLoot())
+                         .withPool(elytraLoot(0.2f))
+        );
+
+        biConsumer.accept(
+                LootTableUtil.FISHING_FISH,
+                LootTable.lootTable()
+                         .withPool(fishing())
+        );
+
+        biConsumer.accept(
+                LootTableUtil.FISHING_JUNK,
+                LootTable.lootTable()
+                         .withPool(fishingJunk())
+        );
+
+        biConsumer.accept(
+                LootTableUtil.FISHING_TREASURE,
+                LootTable.lootTable()
+                         .withPool(fishingTreasure(lookup))
+        );
+
+        biConsumer.accept(
+                LootTableUtil.FOGGY_MUSHROOMLAND,
+                includeCommonItems(LootTable.lootTable())
+                        .withPool(foggyMushroomland())
+        );
+
+        biConsumer.accept(
+                LootTableUtil.CHORUS_FOREST,
+                includeCommonItems(LootTable.lootTable())
+                        .withPool(chorusForest())
+        );
+
+        biConsumer.accept(
+                LootTableUtil.SHADOW_FOREST,
+                includeCommonItems(LootTable.lootTable())
+                        .withPool(shadowForest())
+        );
+
+        biConsumer.accept(
+                LootTableUtil.LANTERN_WOODS,
+                includeCommonItems(LootTable.lootTable())
+                        .withPool(lanternWoods())
+        );
+
+        biConsumer.accept(
+                LootTableUtil.UMBRELLA_JUNGLE,
+                includeCommonItems(LootTable.lootTable())
+                        .withPool(umbrellaJungle())
+        );
+
+        biConsumer.accept(
+                LootTableUtil.BIOME_CHEST,
+                includeCommonItems(LootTable.lootTable())
+                        .withPool(umbrellaJungle().when(IN_UMBRELLA_JUNGLE))
+                        .withPool(lanternWoods().when(IN_LANTERN_WOODS))
+                        .withPool(shadowForest().when(IN_SHADOW_FOREST))
+                        .withPool(chorusForest().when(IN_CHORUS_FOREST))
+                        .withPool(foggyMushroomland().when(IN_FOGGY_MUSHROOMLAND))
+        );
+
+        biConsumer.accept(
+                LootTableUtil.COMMON,
+                includeCommonItems(LootTable.lootTable())
+        );
+    }
 }

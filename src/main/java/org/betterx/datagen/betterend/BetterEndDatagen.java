@@ -37,13 +37,13 @@ public class BetterEndDatagen extends WoverDataGenEntryPoint {
         globalPack.addMultiProvider(TerrainFeatureProvider::new);
         globalPack.addMultiProvider(CaveFeatureProvider::new);
         globalPack.addProvider(EndBiomeModificationProvider::new);
+        globalPack.addProvider(EndChestLootTableProvider::new);
 
 
         globalPack.callOnInitializeDatapack((generator, pack, location) -> {
             if (location == null) {
                 pack.addProvider(EndRecipeDataProvider::new);
                 pack.addProvider(EndAdvancementDataProvider::new);
-                pack.addProvider(EndChestLootTableProvider::new);
                 pack.addProvider(EndBlockLootTableProvider::new);
             }
         });

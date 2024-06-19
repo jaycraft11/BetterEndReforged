@@ -4,8 +4,6 @@ import org.betterx.bclib.particles.BCLParticleType;
 import org.betterx.betterend.BetterEnd;
 import org.betterx.betterend.particle.*;
 
-import com.mojang.serialization.Codec;
-import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.core.particles.SimpleParticleType;
 
@@ -14,11 +12,8 @@ import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 public class EndParticles {
     public static final SimpleParticleType GLOWING_SPHERE = register("glowing_sphere");
     public static final SimpleParticleType PORTAL_SPHERE = register("portal_sphere");
-    public static final ParticleType<InfusionParticleType> INFUSION = register(
-            "infusion",
-            InfusionParticleType.PARAMETERS_FACTORY,
-            InfusionParticleType.CODEC
-    );
+    public static final ParticleType<InfusionParticleType> INFUSION = BCLParticleType.register(BetterEnd.C.mk("infusion"), InfusionParticleType.CODEC, InfusionParticleType.STREAM_CODEC);
+
     public static final SimpleParticleType SULPHUR_PARTICLE = register("sulphur_particle");
     public static final SimpleParticleType GEYSER_PARTICLE = registerFar("geyser_particle");
     public static final SimpleParticleType SNOWFLAKE = register("snowflake");
@@ -50,14 +45,6 @@ public class EndParticles {
 
     private static SimpleParticleType registerFar(String name) {
         return BCLParticleType.register(BetterEnd.C.mk(name), true);
-    }
-
-    private static <T extends ParticleOptions> ParticleType<T> register(
-            String name,
-            ParticleOptions.Deserializer<T> type,
-            Codec<T> codec
-    ) {
-        return BCLParticleType.register(BetterEnd.C.mk(name), type, codec);
     }
 
     public static void ensureStaticallyLoadedServerside() {

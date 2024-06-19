@@ -377,7 +377,7 @@ public class FlowerPotBlock extends BaseBlockNotFull implements RenderLayerProvi
                 }
 
                 if (list == null) {
-                    BetterEnd.LOGGER.warning("Incorrect json for pot plant " + objSource + ", no matching variants");
+                    BetterEnd.LOGGER.warn("Incorrect json for pot plant " + objSource + ", no matching variants");
                     continue;
                 }
 
@@ -388,7 +388,7 @@ public class FlowerPotBlock extends BaseBlockNotFull implements RenderLayerProvi
                 }
 
                 if (path == null) {
-                    BetterEnd.LOGGER.warning("Incorrect json for pot plant " + objSource + ", no matching variants");
+                    BetterEnd.LOGGER.warn("Incorrect json for pot plant " + objSource + ", no matching variants");
                     continue;
                 }
 

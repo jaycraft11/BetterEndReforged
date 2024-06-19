@@ -12,7 +12,7 @@ import net.minecraft.world.level.block.Blocks;
 
 public class DebugHelpers {
     public static void generateDebugItems() {
-        BetterEnd.LOGGER.warning("Generating Debug Helpers");
+        BetterEnd.LOGGER.warn("Generating Debug Helpers");
 
         EndItems.registerEndItem(
                 "debug/village_loot",
