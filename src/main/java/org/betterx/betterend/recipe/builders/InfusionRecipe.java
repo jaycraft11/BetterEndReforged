@@ -7,17 +7,18 @@ import org.betterx.bclib.recipes.BCLRecipeManager;
 import org.betterx.bclib.util.ItemUtil;
 import org.betterx.betterend.BetterEnd;
 import org.betterx.betterend.rituals.InfusionRitual;
+import org.betterx.wover.enchantment.api.EnchantmentUtils;
 
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.item.EnchantedBookItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
@@ -81,18 +82,16 @@ public class InfusionRecipe implements Recipe<InfusionRitual>, UnknownReceipBook
         return new Builder(id, output);
     }
 
-    public static Builder create(String id, Enchantment enchantment, int level) {
+    public static Builder create(String id, ResourceKey<Enchantment> enchantment, int level) {
         return create(BetterEnd.C.mk(id), enchantment, level);
     }
 
-    public static Builder create(ResourceLocation id, Enchantment enchantment, int level) {
+    public static Builder create(ResourceLocation id, ResourceKey<Enchantment> enchantment, int level) {
         return new Builder(id, createEnchantedBook(enchantment, level));
     }
 
-    public static ItemStack createEnchantedBook(Enchantment enchantment, int level) {
-        ItemStack book = new ItemStack(Items.ENCHANTED_BOOK);
-        EnchantedBookItem.addEnchantment(book, new EnchantmentInstance(enchantment, level));
-        return book;
+    public static ItemStack createEnchantedBook(ResourceKey<Enchantment> enchantment, int level) {
+        return EnchantedBookItem.createForEnchantment(new EnchantmentInstance(EnchantmentUtils.getEnchantment(enchantment), level));
     }
 
     public int getInfusionTime() {

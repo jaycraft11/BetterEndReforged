@@ -4,12 +4,14 @@ import org.betterx.betterend.recipe.builders.InfusionRecipe;
 import org.betterx.betterend.registry.EndBlocks;
 import org.betterx.betterend.registry.EndItems;
 
+import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.block.Blocks;
 
 public class InfusionRecipes {
-    public static void register() {
+    public static void register(RecipeOutput context) {
+        
         InfusionRecipe.create("runed_flavolite", EndBlocks.FLAVOLITE_RUNED)
                       .setPrimaryInput(EndBlocks.FLAVOLITE.polished)
                       .addCatalyst(InfusionRecipe.Catalysts.NORTH, EndItems.CRYSTAL_SHARDS)
@@ -96,7 +98,7 @@ public class InfusionRecipes {
 
         InfusionRecipe.create(
                               "protection_book",
-                              Enchantments.ALL_DAMAGE_PROTECTION, 1
+                              Enchantments.PROTECTION, 1
                       )
                       .setPrimaryInputAndUnlock(Items.BOOK)
                       .addCatalyst(InfusionRecipe.Catalysts.NORTH, EndItems.ENCHANTED_PETAL)
@@ -126,7 +128,7 @@ public class InfusionRecipes {
                       .build();
         InfusionRecipe.create(
                               "feather_falling_book",
-                              Enchantments.FALL_PROTECTION, 1
+                              Enchantments.FEATHER_FALLING, 1
                       )
                       .setPrimaryInputAndUnlock(Items.BOOK)
                       .addCatalyst(InfusionRecipe.Catalysts.NORTH, EndItems.ENCHANTED_PETAL)
@@ -162,9 +164,9 @@ public class InfusionRecipes {
                       )
                       .setPrimaryInputAndUnlock(Items.BOOK)
                       .addCatalyst(InfusionRecipe.Catalysts.NORTH, EndItems.ENCHANTED_PETAL)
-                      .addCatalyst(InfusionRecipe.Catalysts.EAST, Items.SCUTE)
+                      .addCatalyst(InfusionRecipe.Catalysts.EAST, Items.TURTLE_SCUTE)
                       .addCatalyst(InfusionRecipe.Catalysts.SOUTH, Items.SHIELD)
-                      .addCatalyst(InfusionRecipe.Catalysts.WEST, Items.SCUTE)
+                      .addCatalyst(InfusionRecipe.Catalysts.WEST, Items.TURTLE_SCUTE)
                       .addCatalyst(InfusionRecipe.Catalysts.NORTH_EAST, Items.LAPIS_LAZULI)
                       .addCatalyst(InfusionRecipe.Catalysts.SOUTH_EAST, Items.LAPIS_LAZULI)
                       .addCatalyst(InfusionRecipe.Catalysts.SOUTH_WEST, Items.LAPIS_LAZULI)
@@ -324,7 +326,7 @@ public class InfusionRecipes {
                       .setGroup("enchantment")
                       .setTime(300)
                       .build();
-        InfusionRecipe.create("looting_book", Enchantments.MOB_LOOTING, 1)
+        InfusionRecipe.create("looting_book", Enchantments.LOOTING, 1)
                       .setPrimaryInputAndUnlock(Items.BOOK)
                       .addCatalyst(InfusionRecipe.Catalysts.NORTH, EndItems.ENCHANTED_PETAL)
                       .addCatalyst(InfusionRecipe.Catalysts.EAST, Items.EMERALD)
@@ -350,7 +352,7 @@ public class InfusionRecipes {
                       .setGroup("enchantment")
                       .setTime(300)
                       .build();
-        InfusionRecipe.create("efficiency_book", Enchantments.BLOCK_EFFICIENCY, 1)
+        InfusionRecipe.create("efficiency_book", Enchantments.EFFICIENCY, 1)
                       .setPrimaryInputAndUnlock(Items.BOOK)
                       .addCatalyst(InfusionRecipe.Catalysts.NORTH, EndItems.ENCHANTED_PETAL)
                       .addCatalyst(InfusionRecipe.Catalysts.EAST, EndItems.AMBER_GEM)
@@ -389,7 +391,7 @@ public class InfusionRecipes {
                       .setGroup("enchantment")
                       .setTime(300)
                       .build();
-        InfusionRecipe.create("fortune_book", Enchantments.BLOCK_FORTUNE, 1)
+        InfusionRecipe.create("fortune_book", Enchantments.FORTUNE, 1)
                       .setPrimaryInputAndUnlock(Items.BOOK)
                       .addCatalyst(InfusionRecipe.Catalysts.NORTH, EndItems.ENCHANTED_PETAL)
                       .addCatalyst(InfusionRecipe.Catalysts.EAST, Items.EMERALD)
@@ -402,7 +404,7 @@ public class InfusionRecipes {
                       .setGroup("enchantment")
                       .setTime(300)
                       .build();
-        InfusionRecipe.create("power_book", Enchantments.POWER_ARROWS, 1)
+        InfusionRecipe.create("power_book", Enchantments.POWER, 1)
                       .setPrimaryInputAndUnlock(Items.BOOK)
                       .addCatalyst(InfusionRecipe.Catalysts.NORTH, EndItems.ENCHANTED_PETAL)
                       .addCatalyst(InfusionRecipe.Catalysts.EAST, EndItems.AMBER_GEM)
@@ -415,7 +417,7 @@ public class InfusionRecipes {
                       .setGroup("enchantment")
                       .setTime(300)
                       .build();
-        InfusionRecipe.create("punch_book", Enchantments.PUNCH_ARROWS, 1)
+        InfusionRecipe.create("punch_book", Enchantments.PUNCH, 1)
                       .setPrimaryInputAndUnlock(Items.BOOK)
                       .addCatalyst(InfusionRecipe.Catalysts.NORTH, EndItems.ENCHANTED_PETAL)
                       .addCatalyst(InfusionRecipe.Catalysts.EAST, Items.POPPED_CHORUS_FRUIT)
@@ -428,7 +430,7 @@ public class InfusionRecipes {
                       .setGroup("enchantment")
                       .setTime(300)
                       .build();
-        InfusionRecipe.create("flame_book", Enchantments.FLAMING_ARROWS, 1)
+        InfusionRecipe.create("flame_book", Enchantments.FLAME, 1)
                       .setPrimaryInputAndUnlock(Items.BOOK)
                       .addCatalyst(InfusionRecipe.Catalysts.NORTH, EndItems.ENCHANTED_PETAL)
                       .addCatalyst(InfusionRecipe.Catalysts.EAST, Items.BLAZE_POWDER)
@@ -441,7 +443,7 @@ public class InfusionRecipes {
                       .setGroup("enchantment")
                       .setTime(300)
                       .build();
-        InfusionRecipe.create("infinity_book", Enchantments.INFINITY_ARROWS, 1)
+        InfusionRecipe.create("infinity_book", Enchantments.INFINITY, 1)
                       .setPrimaryInputAndUnlock(Items.BOOK)
                       .addCatalyst(InfusionRecipe.Catalysts.NORTH, EndItems.ENCHANTED_PETAL)
                       .addCatalyst(InfusionRecipe.Catalysts.EAST, Items.SPECTRAL_ARROW)
@@ -454,7 +456,7 @@ public class InfusionRecipes {
                       .setGroup("enchantment")
                       .setTime(375)
                       .build();
-        InfusionRecipe.create("luck_of_sea_book", Enchantments.FISHING_LUCK, 1)
+        InfusionRecipe.create("luck_of_sea_book", Enchantments.LUCK_OF_THE_SEA, 1)
                       .setPrimaryInputAndUnlock(Items.BOOK)
                       .addCatalyst(InfusionRecipe.Catalysts.NORTH, EndItems.ENCHANTED_PETAL)
                       .addCatalyst(InfusionRecipe.Catalysts.EAST, Items.EMERALD)
@@ -467,7 +469,7 @@ public class InfusionRecipes {
                       .setGroup("enchantment")
                       .setTime(300)
                       .build();
-        InfusionRecipe.create("lure_book", Enchantments.FISHING_SPEED, 1)
+        InfusionRecipe.create("lure_book", Enchantments.LURE, 1)
                       .setPrimaryInputAndUnlock(Items.BOOK)
                       .addCatalyst(InfusionRecipe.Catalysts.NORTH, EndItems.ENCHANTED_PETAL)
                       .addCatalyst(InfusionRecipe.Catalysts.EAST, Items.GOLD_NUGGET)
