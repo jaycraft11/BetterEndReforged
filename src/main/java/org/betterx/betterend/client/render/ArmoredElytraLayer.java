@@ -68,7 +68,7 @@ public class ArmoredElytraLayer<T extends LivingEntity, M extends EntityModel<T>
                     false,
                     itemStack.hasFoil()
             );
-            elytraModel.renderToBuffer(poseStack, vertexConsumer, i, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+            elytraModel.renderToBuffer(poseStack, vertexConsumer, i, OverlayTexture.NO_OVERLAY, 0xffffffff);
             poseStack.popPose();
         }
     }

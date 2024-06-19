@@ -93,10 +93,7 @@ public class CubozoaEntityModel extends EntityModel<CubozoaEntity> {
             VertexConsumer vertices,
             int light,
             int overlay,
-            float red,
-            float green,
-            float blue,
-            float alpha
+            int color
     ) {
         matrices.pushPose();
         matrices.scale(scaleXZ, scaleY, scaleXZ);

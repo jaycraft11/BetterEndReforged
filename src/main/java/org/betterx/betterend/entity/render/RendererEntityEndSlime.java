@@ -51,10 +51,7 @@ public class RendererEntityEndSlime extends MobRenderer<EndSlimeEntity, EndSlime
                             vertexConsumer,
                             15728640,
                             OverlayTexture.NO_OVERLAY,
-                            1.0F,
-                            1.0F,
-                            1.0F,
-                            1.0F
+                            0xffffffff
                     );
                 if (entity.isLake()) {
                     this.getParentModel().renderFlower(matrices, vertexConsumer, 15728640, OverlayTexture.NO_OVERLAY);
@@ -150,10 +147,7 @@ public class RendererEntityEndSlime extends MobRenderer<EndSlimeEntity, EndSlime
                         vertexConsumer,
                         i,
                         LivingEntityRenderer.getOverlayCoords(livingEntity, 0.0F),
-                        1.0F,
-                        1.0F,
-                        1.0F,
-                        1.0F
+                        0xffffffff
                 );
             }
         }

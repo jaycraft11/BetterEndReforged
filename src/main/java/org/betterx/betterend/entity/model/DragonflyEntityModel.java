@@ -138,10 +138,7 @@ public class DragonflyEntityModel extends EntityModel<DragonflyEntity> {
             VertexConsumer vertices,
             int light,
             int overlay,
-            float red,
-            float green,
-            float blue,
-            float alpha
+            int color
     ) {
         model.render(matrices, vertices, light, overlay);
     }

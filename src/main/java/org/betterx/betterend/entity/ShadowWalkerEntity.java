@@ -4,6 +4,7 @@ import org.betterx.bclib.util.MHelper;
 import org.betterx.betterend.registry.EndSounds;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ColorParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
@@ -70,7 +71,7 @@ public class ShadowWalkerEntity extends Monster {
                 0
         );
         level().addParticle(
-                ParticleTypes.ENTITY_EFFECT,
+                ColorParticleOption.create(ParticleTypes.ENTITY_EFFECT, 0xFFFFFFFF),
                 getX() + random.nextGaussian() * 0.2,
                 getY() + random.nextGaussian() * 0.5 + 1,
                 getZ() + random.nextGaussian() * 0.2,

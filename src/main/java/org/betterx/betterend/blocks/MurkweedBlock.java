@@ -5,6 +5,7 @@ import org.betterx.betterend.blocks.basis.EndPlantBlock;
 import org.betterx.betterend.interfaces.survives.SurvivesOnShadowGrass;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ColorParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -34,7 +35,7 @@ public class MurkweedBlock extends EndPlantBlock implements SurvivesOnShadowGras
         double y = pos.getY() + random.nextDouble() * 0.5 + 0.5;
         double z = pos.getZ() + random.nextDouble();
         double v = random.nextDouble() * 0.1;
-        world.addParticle(ParticleTypes.ENTITY_EFFECT, x, y, z, v, v, v);
+        world.addParticle(ColorParticleOption.create(ParticleTypes.ENTITY_EFFECT, 0xFFFFFFFF), x, y, z, v, v, v);
     }
 
     @Override

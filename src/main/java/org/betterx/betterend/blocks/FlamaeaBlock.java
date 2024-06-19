@@ -2,9 +2,9 @@ package org.betterx.betterend.blocks;
 
 import org.betterx.bclib.behaviours.BehaviourBuilders;
 import org.betterx.bclib.behaviours.interfaces.BehaviourShearablePlant;
-import org.betterx.bclib.interfaces.CustomItemProvider;
 import org.betterx.bclib.interfaces.SurvivesOnWater;
 import org.betterx.betterend.blocks.basis.EndPlantBlock;
+import org.betterx.wover.block.api.CustomBlockItemProvider;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
@@ -25,7 +25,7 @@ import com.google.common.collect.Lists;
 
 import java.util.List;
 
-public class FlamaeaBlock extends EndPlantBlock implements CustomItemProvider, BehaviourShearablePlant, SurvivesOnWater {
+public class FlamaeaBlock extends EndPlantBlock implements CustomBlockItemProvider, BehaviourShearablePlant, SurvivesOnWater {
     private static final VoxelShape SHAPE = Block.box(0, 0, 0, 16, 1, 16);
 
     public FlamaeaBlock() {
@@ -50,9 +50,10 @@ public class FlamaeaBlock extends EndPlantBlock implements CustomItemProvider, B
         return false;
     }
 
+
     @Override
-    public BlockItem getCustomItem(ResourceLocation resourceLocation, Item.Properties itemSettings) {
-        return new PlaceOnWaterBlockItem(this, itemSettings);
+    public BlockItem getCustomBlockItem(ResourceLocation blockID, Item.Properties settings) {
+        return new PlaceOnWaterBlockItem(this, settings);
     }
 
     @Override
