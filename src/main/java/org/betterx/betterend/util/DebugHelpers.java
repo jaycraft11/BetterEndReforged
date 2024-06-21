@@ -41,14 +41,14 @@ public class DebugHelpers {
 
         EndItems.registerEndItem(
                 "debug/jigsaw_street_entrance",
-                DebugDataItem.forHouseEntranceJigSaw(BetterEnd.MOD_ID, VillagePools.HOUSES_KEY, Items.IRON_DOOR)
+                DebugDataItem.forHouseEntranceJigSaw(BetterEnd.MOD_ID, VillagePools.HOUSES_KEY.key, Items.IRON_DOOR)
         );
 
         EndItems.registerEndItem(
                 "debug/jigsaw_street",
                 DebugDataItem.forSteetJigSaw(
                         BetterEnd.MOD_ID,
-                        VillagePools.STREET_KEY,
+                        VillagePools.STREET_KEY.key,
                         Items.ENDER_PEARL
                 )
         );
@@ -57,7 +57,7 @@ public class DebugHelpers {
                 "debug/jigsaw_street_deco",
                 DebugDataItem.forStreetDecorationJigSaw(
                         BetterEnd.MOD_ID,
-                        VillagePools.STREET_DECO_KEY,
+                        VillagePools.STREET_DECO_KEY.key,
                         Items.ENDER_EYE
                 )
         );
@@ -65,7 +65,7 @@ public class DebugHelpers {
                 "debug/jigsaw_street_big_deco",
                 DebugDataItem.forDecorationJigSaw(
                         BetterEnd.MOD_ID,
-                        VillagePools.DECORATIONS_KEY,
+                        VillagePools.DECORATIONS_KEY.key,
                         Items.SLIME_BALL
                 )
         );

@@ -29,10 +29,11 @@ import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import com.google.common.collect.Lists;
 
 import java.util.Queue;
+import org.jetbrains.annotations.NotNull;
 
 @SuppressWarnings("deprecation")
 public class MengerSpongeBlock extends BaseBlockNotFull implements RenderLayerProvider, AddMineableHoe {
-    private static final VoxelShape SHAPE;
+    public static final VoxelShape SHAPE;
 
     public MengerSpongeBlock() {
         super(FabricBlockSettings.copyOf(Blocks.SPONGE).noOcclusion());
@@ -43,10 +44,11 @@ public class MengerSpongeBlock extends BaseBlockNotFull implements RenderLayerPr
         if (absorbWater(world, pos)) {
             world.setBlockAndUpdate(pos, EndBlocks.MENGER_SPONGE_WET.defaultBlockState());
         }
+
     }
 
     @Override
-    public BlockState updateShape(
+    public @NotNull BlockState updateShape(
             BlockState state,
             Direction facing,
             BlockState neighborState,
@@ -77,7 +79,7 @@ public class MengerSpongeBlock extends BaseBlockNotFull implements RenderLayerPr
                 if (fluidState.is(FluidTags.WATER)) {
                     if (blockState.getBlock() instanceof BucketPickup
                             && !((BucketPickup) blockState.getBlock())
-                            .pickupBlock(world, blockPos2, blockState)
+                            .pickupBlock(null, world, blockPos2, blockState)
                             .isEmpty()
                     ) {
                         ++i;
@@ -116,7 +118,7 @@ public class MengerSpongeBlock extends BaseBlockNotFull implements RenderLayerPr
     }
 
     @Override
-    public VoxelShape getShape(
+    public @NotNull VoxelShape getShape(
             BlockState blockState,
             BlockGetter blockGetter,
             BlockPos blockPos,

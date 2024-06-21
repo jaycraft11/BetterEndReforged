@@ -167,7 +167,11 @@ public class PortalBuilder {
         return !BlocksHelper.replaceableOrPlant(state);
     }
 
-    public Optional<BlockUtil.FoundRectangle> findPortalAround(BlockPos blockPos, WorldBorder worldBorder) {
+    public record FoundPortalRect(BlockUtil.FoundRectangle rect, BlockPos pos) {
+
+    }
+
+    public Optional<FoundPortalRect> findPortalAround(BlockPos blockPos, WorldBorder worldBorder) {
         PoiManager poiManager = this.targetLevel.getPoiManager();
         poiManager.ensureLoadedAndValid(this.targetLevel, blockPos, SPIRAL_SEARCH_RADIUS);
 
@@ -181,14 +185,14 @@ public class PortalBuilder {
         return oPos.map(poiPos -> {
             this.targetLevel.getChunkSource().addRegionTicket(TicketType.PORTAL, new ChunkPos(poiPos), 3, poiPos);
             BlockState blockState = this.targetLevel.getBlockState(poiPos);
-            return BlockUtil.getLargestRectangleAround(
+            return new FoundPortalRect(BlockUtil.getLargestRectangleAround(
                     poiPos,
                     blockState.getValue(BlockStateProperties.HORIZONTAL_AXIS),
                     21,
                     Direction.Axis.Y,
                     21,
                     bp -> this.targetLevel.getBlockState(bp) == blockState
-            );
+            ), poiPos);
         });
     }
 

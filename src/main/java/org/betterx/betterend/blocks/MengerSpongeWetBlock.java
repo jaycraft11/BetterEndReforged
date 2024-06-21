@@ -91,7 +91,7 @@ public class MengerSpongeWetBlock extends BaseBlockNotFull implements RenderLaye
     }
 
     @Override
-    public void playerWillDestroy(Level world, BlockPos pos, BlockState state, Player player) {
+    public BlockState playerWillDestroy(Level world, BlockPos pos, BlockState state, Player player) {
         BlocksHelper.setWithUpdate(world, pos, Blocks.AIR);
         if (!world.isClientSide()) {
             world.levelEvent(2001, pos, getId(state));
@@ -106,6 +106,7 @@ public class MengerSpongeWetBlock extends BaseBlockNotFull implements RenderLaye
             );
             world.addFreshEntity(drop);
         }
+        return state;
     }
 
     @Override
@@ -125,6 +126,6 @@ public class MengerSpongeWetBlock extends BaseBlockNotFull implements RenderLaye
             BlockPos blockPos,
             CollisionContext collisionContext
     ) {
-        return EndBlocks.MENGER_SPONGE.getShape(blockState, blockGetter, blockPos, collisionContext);
+        return MengerSpongeBlock.SHAPE;
     }
 }

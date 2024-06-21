@@ -1,9 +1,9 @@
 package org.betterx.betterend.world.features;
 
 import org.betterx.bclib.blocks.BaseVineBlock;
+import org.betterx.bclib.util.BlocksHelper;
 import org.betterx.wover.block.api.BlockProperties;
 import org.betterx.wover.block.api.BlockProperties.TripleShape;
-import org.betterx.bclib.util.BlocksHelper;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;
@@ -55,7 +55,7 @@ public class VineFeature extends InvertedScatterFeature<VineFeatureConfig> {
             return vineBlock.canGenerate(state, world, blockPos);
         } else {
             vine = false;
-            return plant.getBlock().canSurvive(state, world, blockPos);
+            return state.canSurvive(world, blockPos);
         }
     }
 

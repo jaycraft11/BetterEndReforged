@@ -92,10 +92,10 @@ public abstract class ServerLevelMixin extends Level {
         TerrainGenerator.makeObsidianPlatform(serverLevel, info);
     }
 
-    @ModifyArg(method = "tickChunk", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/level/ServerLevel;setBlockAndUpdate(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;)Z"))
+    @ModifyArg(method = "tickPrecipitation", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/level/ServerLevel;setBlockAndUpdate(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;)Z"))
     private BlockState be_modifyTickState(BlockPos pos, BlockState state) {
         if (state.is(Blocks.ICE)) {
-            ResourceLocation biome = BiomeAPI.getBiomeID(getBiome(pos));
+            ResourceLocation biome = getBiome(pos).unwrapKey().orElseThrow().location();
             if (biome.getNamespace().equals(BetterEnd.MOD_ID)) {
                 state = EndBlocks.EMERALD_ICE.defaultBlockState();
             }

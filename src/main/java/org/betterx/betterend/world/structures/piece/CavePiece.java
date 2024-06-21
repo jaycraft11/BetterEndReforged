@@ -99,7 +99,7 @@ public class CavePiece extends BasePiece {
 
     @Override
     protected void fromNbt(CompoundTag tag) {
-        center = NbtUtils.readBlockPos(tag.getCompound("center"));
+        center = NbtUtils.readBlockPos(tag, "center").orElse(BlockPos.ZERO);
         radius = tag.getFloat("radius");
         noise = new OpenSimplexNoise(MHelper.getSeed(534, center.getX(), center.getZ()));
     }

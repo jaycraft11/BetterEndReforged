@@ -1,9 +1,9 @@
 package org.betterx.betterend.client.render;
 
+import de.ambertation.wunderlib.ui.ColorHelper;
 import org.betterx.bclib.util.MHelper;
 import org.betterx.betterend.BetterEnd;
 import org.betterx.betterend.blocks.AuroraCrystalBlock;
-import org.betterx.ui.ColorUtil;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -34,20 +34,18 @@ public class EternalCrystalRenderer {
             int light
     ) {
         VertexConsumer vertexConsumer = vertexConsumerProvider.getBuffer(RENDER_LAYER);
-        float[] colors = colors(age);
+        int color = colors(age);
         float rotation = (age + tickDelta) / 25.0F + 6.0F;
         matrices.pushPose();
         matrices.scale(0.6F, 0.6F, 0.6F);
         matrices.mulPose(Axis.YP.rotation(rotation));
+
         CORE.render(
                 matrices,
                 vertexConsumer,
                 light,
                 OverlayTexture.NO_OVERLAY,
-                colors[0],
-                colors[1],
-                colors[2],
-                colors[3]
+                color
         );
 
         for (int i = 0; i < 4; i++) {
@@ -59,10 +57,7 @@ public class EternalCrystalRenderer {
                     vertexConsumer,
                     light,
                     OverlayTexture.NO_OVERLAY,
-                    colors[0],
-                    colors[1],
-                    colors[2],
-                    colors[3]
+                    color
             );
             matrices.popPose();
         }
@@ -70,7 +65,7 @@ public class EternalCrystalRenderer {
         matrices.popPose();
     }
 
-    public static float[] colors(int age) {
+    public static int colors(int age) {
         double delta = age * 0.01;
         int index = MHelper.floor(delta);
         int index2 = (index + 1) & 3;
@@ -84,7 +79,7 @@ public class EternalCrystalRenderer {
         int g = MHelper.floor(Mth.lerp(delta, color1.getY(), color2.getY()));
         int b = MHelper.floor(Mth.lerp(delta, color1.getZ(), color2.getZ()));
 
-        return ColorUtil.toFloatArray(ColorUtil.color(r, g, b));
+        return ColorHelper.color(r, g, b);
     }
 
     public static LayerDefinition getTexturedModelData() {

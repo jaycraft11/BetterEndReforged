@@ -19,7 +19,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -124,7 +124,7 @@ public class SilkMothNestBlock extends BaseBlock implements RenderLayerProvider,
     }
 
     @Override
-    public void playerWillDestroy(Level world, BlockPos pos, BlockState state, Player player) {
+    public BlockState playerWillDestroy(Level world, BlockPos pos, BlockState state, Player player) {
         if (!state.getValue(ACTIVE) && player.isCreative()) {
             BlocksHelper.setWithUpdate(world, pos.below(), Blocks.AIR);
         }
@@ -132,7 +132,7 @@ public class SilkMothNestBlock extends BaseBlock implements RenderLayerProvider,
         if (up.is(this) && !up.getValue(ACTIVE)) {
             BlocksHelper.setWithUpdate(world, pos.above(), Blocks.AIR);
         }
-        super.playerWillDestroy(world, pos, state, player);
+        return super.playerWillDestroy(world, pos, state, player);
     }
 
     @Override
@@ -162,10 +162,10 @@ public class SilkMothNestBlock extends BaseBlock implements RenderLayerProvider,
         world.addFreshEntity(moth);
         world.playSound(null, pos, SoundEvents.BEEHIVE_EXIT, SoundSource.BLOCKS, 1, 1);
     }
-
+    
     @Override
-    @SuppressWarnings("deprecation")
-    public InteractionResult use(
+    protected ItemInteractionResult useItemOn(
+            ItemStack stack,
             BlockState state,
             Level world,
             BlockPos pos,
@@ -174,7 +174,6 @@ public class SilkMothNestBlock extends BaseBlock implements RenderLayerProvider,
             BlockHitResult hit
     ) {
         if (hand == InteractionHand.MAIN_HAND) {
-            ItemStack stack = player.getMainHandItem();
             if (BaseShearsItem.isShear(stack) && state.getValue(ACTIVE) && state.getValue(FULLNESS) == 3) {
                 BlocksHelper.setWithUpdate(world, pos, state.setValue(FULLNESS, 0));
                 Direction dir = state.getValue(FACING);
@@ -190,9 +189,9 @@ public class SilkMothNestBlock extends BaseBlock implements RenderLayerProvider,
                 if (!player.isCreative()) {
                     stack.setDamageValue(stack.getDamageValue() + 1);
                 }
-                return InteractionResult.SUCCESS;
+                return ItemInteractionResult.SUCCESS;
             }
         }
-        return InteractionResult.FAIL;
+        return ItemInteractionResult.FAIL;
     }
 }

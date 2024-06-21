@@ -17,6 +17,7 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
@@ -56,7 +57,7 @@ public class HelixTreeFeature extends DefaultFeature {
         SDF rotated = new SDFRotation().setRotation(Axis.YP, (float) Math.PI).setSource(sdf);
         sdf = new SDFUnion().setSourceA(rotated).setSourceB(sdf);
 
-        Vector3f lastPoint = spline.get(spline.size() - 1);
+        Vector3f lastPoint = spline.getLast();
         List<Vector3f> spline2 = SplineHelper.makeSpline(0, 0, 0, 0, 20, 0, 5);
         SDF stem = SplineHelper.buildSDF(
                 spline2,
@@ -76,8 +77,8 @@ public class HelixTreeFeature extends DefaultFeature {
                    world,
                    pos,
                    new AABB(
-                           pos.offset((int) -dx, (int) dy1, (int) -dx),
-                           pos.offset((int) dx, (int) dy2, (int) dx)
+                           pos.offset((int) -dx, (int) dy1, (int) -dx).getCenter(),
+                           pos.offset((int) dx, (int) dy2, (int) dx).getCenter()
                    )
            );
         SplineHelper.scale(spline, scale);
@@ -86,7 +87,7 @@ public class HelixTreeFeature extends DefaultFeature {
                 world,
                 EndBlocks.HELIX_TREE.getBark().defaultBlockState(),
                 pos,
-                (state) -> state.canBeReplaced()
+                BlockBehaviour.BlockStateBase::canBeReplaced
         );
         SplineHelper.rotateSpline(spline, (float) Math.PI);
         SplineHelper.fillSplineForce(
@@ -94,7 +95,7 @@ public class HelixTreeFeature extends DefaultFeature {
                 world,
                 EndBlocks.HELIX_TREE.getBark().defaultBlockState(),
                 pos,
-                (state) -> state.canBeReplaced()
+                BlockBehaviour.BlockStateBase::canBeReplaced
         );
         SplineHelper.scale(spline2, scale);
         BlockPos leafStart = pos.offset(
@@ -107,7 +108,7 @@ public class HelixTreeFeature extends DefaultFeature {
                 world,
                 EndBlocks.HELIX_TREE.getLog().defaultBlockState(),
                 leafStart,
-                (state) -> state.canBeReplaced()
+                BlockBehaviour.BlockStateBase::canBeReplaced
         );
 
         spline.clear();
@@ -127,7 +128,7 @@ public class HelixTreeFeature extends DefaultFeature {
 
         Vector3f start = new Vector3f();
         Vector3f end = new Vector3f();
-        lastPoint = spline.get(0);
+        lastPoint = spline.getFirst();
         BlockState leaf = EndBlocks.HELIX_TREE_LEAVES.defaultBlockState();
         for (int i = 1; i < spline.size(); i++) {
             Vector3f point = spline.get(i);
@@ -197,7 +198,7 @@ public class HelixTreeFeature extends DefaultFeature {
             bPos.set(x + pos.getX(), y + pos.getY(), z + pos.getZ());
             int color = MHelper.floor((float) i / (float) count * 7F + 0.5F) + offset;
             color = Mth.clamp(color, 0, 7);
-            if (world.getBlockState(bPos).canBeReplaced()){
+            if (world.getBlockState(bPos).canBeReplaced()) {
                 BlocksHelper.setWithoutUpdate(world, bPos, state.setValue(HelixTreeLeavesBlock.COLOR, color));
             }
             x += dx;
@@ -205,7 +206,7 @@ public class HelixTreeFeature extends DefaultFeature {
             z += dz;
         }
         bPos.set(end.x() + pos.getX(), end.y() + pos.getY(), end.z() + pos.getZ());
-        if (world.getBlockState(bPos).canBeReplaced()){
+        if (world.getBlockState(bPos).canBeReplaced()) {
             BlocksHelper.setWithoutUpdate(world, bPos, state.setValue(HelixTreeLeavesBlock.COLOR, 7));
         }
     }

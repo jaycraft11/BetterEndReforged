@@ -6,7 +6,7 @@ import org.betterx.betterend.BetterEnd;
 import org.betterx.betterend.blocks.*;
 import org.betterx.betterend.blocks.basis.*;
 import org.betterx.betterend.complexmaterials.*;
-import org.betterx.betterend.item.material.EndArmorMaterial;
+import org.betterx.betterend.item.material.EndArmorTier;
 import org.betterx.betterend.item.material.EndToolMaterial;
 import org.betterx.wover.block.api.BlockRegistry;
 import org.betterx.wover.tag.api.predefined.CommonBlockTags;
@@ -651,8 +651,9 @@ public class EndBlocks {
             "thallasium",
             MapColor.COLOR_BLUE,
             EndToolMaterial.THALLASIUM,
-            EndArmorMaterial.THALLASIUM,
+            EndArmorTier.THALLASIUM,
             EndToolMaterial.THALLASIUM.getLevel(),
+            EndTags.ANVIL_IRON_TOOL,
             EndTemplates.THALLASIUM_UPGRADE
     );
 
@@ -662,8 +663,9 @@ public class EndBlocks {
             7F,
             9F,
             EndToolMaterial.TERMINITE,
-            EndArmorMaterial.TERMINITE,
+            EndArmorTier.TERMINITE,
             EndToolMaterial.TERMINITE.getLevel(),
+            EndTags.ANVIL_DIAMOND_TOOL,
             EndTemplates.TERMINITE_UPGRADE
     );
     public static final Block AETERNIUM_BLOCK = registerBlock("aeternium_block", new AeterniumBlock());
@@ -753,8 +755,9 @@ public class EndBlocks {
         return getBlockRegistry().allBlocks().toList();
     }
 
+    @SafeVarargs
     public static Block registerBlock(String name, Block block, TagKey<Block>... tags) {
-        return registerBlock(name, block, tags);
+        return getBlockRegistry().register(name, block, tags);
     }
 
     public static Block registerEndBlockOnly(String name, Block block) {

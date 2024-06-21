@@ -1,8 +1,6 @@
 package org.betterx.betterend.blocks;
 
 import org.betterx.bclib.blocks.BaseBlock;
-import org.betterx.wover.block.api.BlockProperties;
-import org.betterx.wover.block.api.BlockProperties.TripleShape;
 import org.betterx.bclib.client.render.BCLRenderLayer;
 import org.betterx.bclib.interfaces.CustomColorProvider;
 import org.betterx.bclib.interfaces.RenderLayerProvider;
@@ -11,6 +9,8 @@ import org.betterx.betterend.particle.InfusionParticleType;
 import org.betterx.betterend.registry.EndBlocks;
 import org.betterx.betterend.registry.EndItems;
 import org.betterx.ui.ColorUtil;
+import org.betterx.wover.block.api.BlockProperties;
+import org.betterx.wover.block.api.BlockProperties.TripleShape;
 
 import net.minecraft.client.color.block.BlockColor;
 import net.minecraft.client.color.item.ItemColor;
@@ -22,7 +22,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
@@ -129,7 +129,7 @@ public class RespawnObeliskBlock extends BaseBlock.Stone implements CustomColorP
     }
 
     @Override
-    public void playerWillDestroy(Level world, BlockPos pos, BlockState state, Player player) {
+    public BlockState playerWillDestroy(Level world, BlockPos pos, BlockState state, Player player) {
         if (player.isCreative()) {
             TripleShape shape = state.getValue(SHAPE);
             if (shape == TripleShape.MIDDLE) {
@@ -138,7 +138,7 @@ public class RespawnObeliskBlock extends BaseBlock.Stone implements CustomColorP
                 BlocksHelper.setWithUpdate(world, pos.below(2), Blocks.AIR);
             }
         }
-        super.playerWillDestroy(world, pos, state, player);
+        return super.playerWillDestroy(world, pos, state, player);
     }
 
     @Override
@@ -169,7 +169,8 @@ public class RespawnObeliskBlock extends BaseBlock.Stone implements CustomColorP
 
     @Override
     @SuppressWarnings("deprecation")
-    public InteractionResult use(
+    public ItemInteractionResult useItemOn(
+            ItemStack itemStack,
             BlockState state,
             Level world,
             BlockPos pos,
@@ -177,7 +178,6 @@ public class RespawnObeliskBlock extends BaseBlock.Stone implements CustomColorP
             InteractionHand hand,
             BlockHitResult hit
     ) {
-        ItemStack itemStack = player.getItemInHand(hand);
         boolean canActivate = itemStack.getItem() == EndItems.AMBER_GEM && itemStack.getCount() > 5;
         if (hand != InteractionHand.MAIN_HAND || !canActivate) {
             if (!world.isClientSide && !(itemStack.getItem() instanceof BlockItem) && !player.isCreative()) {
@@ -187,7 +187,7 @@ public class RespawnObeliskBlock extends BaseBlock.Stone implements CustomColorP
                         true
                 );
             }
-            return InteractionResult.FAIL;
+            return ItemInteractionResult.FAIL;
         } else if (!world.isClientSide) {
             ServerPlayer serverPlayerEntity = (ServerPlayer) player;
             serverPlayerEntity.setRespawnPosition(world.dimension(), pos, 0.0F, false, false);
@@ -216,6 +216,8 @@ public class RespawnObeliskBlock extends BaseBlock.Stone implements CustomColorP
                 itemStack.shrink(6);
             }
         }
-        return player.isCreative() ? InteractionResult.PASS : InteractionResult.sidedSuccess(world.isClientSide);
+        return player.isCreative()
+                ? ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION
+                : ItemInteractionResult.sidedSuccess(world.isClientSide);
     }
 }

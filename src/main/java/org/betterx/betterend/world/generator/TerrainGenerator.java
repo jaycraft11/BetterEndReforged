@@ -7,6 +7,7 @@ import org.betterx.betterend.mixin.common.NoiseChunkAccessor;
 import org.betterx.betterend.mixin.common.NoiseInterpolatorAccessor;
 import org.betterx.betterend.noise.OpenSimplexNoise;
 import org.betterx.wover.biome.api.BiomeManager;
+import org.betterx.wover.block.api.BlockHelper;
 import org.betterx.wover.generator.api.biomesource.WoverBiomeData;
 import org.betterx.wover.generator.api.biomesource.end.WoverEndConfig;
 import org.betterx.wover.generator.impl.biomesource.end.WoverEndBiomeSource;
@@ -17,6 +18,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.biome.BiomeSource;
 import net.minecraft.world.level.biome.Climate.Sampler;
 import net.minecraft.world.level.block.Blocks;
@@ -244,7 +246,7 @@ public class TerrainGenerator {
         }
     }
 
-    public static void makeObsidianPlatform(ServerLevel serverLevel, CallbackInfo info) {
+    public static void makeObsidianPlatform(ServerLevelAccessor serverLevel, CallbackInfo info) {
         if (!GeneratorOptions.generateObsidianPlatform()) {
             info.cancel();
         } else if (GeneratorOptions.changeSpawn()) {
@@ -255,11 +257,11 @@ public class TerrainGenerator {
 
             BlockPos
                     .betweenClosed(i - 2, j + 1, k - 2, i + 2, j + 3, k + 2)
-                    .forEach((blockPosx) -> serverLevel.setBlockAndUpdate(blockPosx, Blocks.AIR.defaultBlockState()));
+                    .forEach((blockPosx) -> serverLevel.setBlock(blockPosx, Blocks.AIR.defaultBlockState(), BlockHelper.SET_OBSERV));
 
             BlockPos
                     .betweenClosed(i - 2, j, k - 2, i + 2, j, k + 2)
-                    .forEach((blockPosx) -> serverLevel.setBlockAndUpdate(blockPosx, Blocks.OBSIDIAN.defaultBlockState()));
+                    .forEach((blockPosx) -> serverLevel.setBlock(blockPosx, Blocks.OBSIDIAN.defaultBlockState(), BlockHelper.SET_OBSERV));
             info.cancel();
         }
     }

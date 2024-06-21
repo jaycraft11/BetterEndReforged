@@ -1,6 +1,5 @@
 package org.betterx.betterend.world.features;
 
-import org.betterx.bclib.api.v2.levelgen.features.features.DefaultFeature;
 import org.betterx.bclib.util.BlocksHelper;
 import org.betterx.bclib.util.MHelper;
 import org.betterx.betterend.blocks.basis.EndPlantWithAgeBlock;
@@ -32,7 +31,7 @@ public class BlueVineFeature extends ScatterFeature<ScatterFeatureConfig> {
                 center.getZ() - blockPos.getZ()
         ) / radius * 0.6F + random.nextFloat() * 0.4F;
         small = d > 0.5F;
-        return EndBlocks.BLUE_VINE_SEED.canSurvive(DefaultFeature.AIR, world, blockPos);
+        return EndBlocks.BLUE_VINE_SEED.defaultBlockState().canSurvive(world, blockPos);
     }
 
     @Override

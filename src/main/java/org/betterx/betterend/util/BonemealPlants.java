@@ -5,9 +5,6 @@ import org.betterx.bclib.api.v3.bonemeal.WaterGrassSpreader;
 import org.betterx.betterend.registry.EndBlocks;
 import org.betterx.betterend.registry.EndTags;
 import org.betterx.betterend.registry.features.EndConfiguredBonemealFeature;
-import org.betterx.worlds.together.tag.v3.TagManager;
-
-import net.minecraft.world.level.block.Block;
 
 public class BonemealPlants {
     public static void init() {
@@ -76,18 +73,6 @@ public class BonemealPlants {
                 EndConfiguredBonemealFeature.BONEMEAL_AMBER_MOSS
         );
 
-        Block[] charnias = new Block[]{
-                EndBlocks.CHARNIA_CYAN,
-                EndBlocks.CHARNIA_GREEN,
-                EndBlocks.CHARNIA_ORANGE,
-                EndBlocks.CHARNIA_LIGHT_BLUE,
-                EndBlocks.CHARNIA_PURPLE,
-                EndBlocks.CHARNIA_RED
-        };
-
-        for (Block charnia : charnias) {
-            TagManager.BLOCKS.add(EndTags.BONEMEAL_SOURCE_WATER_GRASS, charnia);
-        }
 
         BonemealAPI.INSTANCE.addSpreadableBlocks(
                 EndTags.BONEMEAL_TARGET_WATER_GRASS,

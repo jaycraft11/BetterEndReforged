@@ -1,16 +1,16 @@
 package org.betterx.betterend.blocks;
 
 import org.betterx.bclib.blocks.BaseBlock;
-import org.betterx.wover.block.api.BlockProperties;
 import org.betterx.bclib.util.BlocksHelper;
 import org.betterx.betterend.registry.EndBlocks;
 import org.betterx.betterend.registry.EndItems;
+import org.betterx.wover.block.api.BlockProperties;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -43,16 +43,15 @@ public class UmbrellaTreeClusterBlock extends BaseBlock.Wood {
     }
 
     @Override
-    @SuppressWarnings("deprecation")
-    public InteractionResult use(
+    protected ItemInteractionResult useItemOn(
+            ItemStack stack,
             BlockState state,
             Level world,
             BlockPos pos,
             Player player,
             InteractionHand hand,
-            BlockHitResult hit
+            BlockHitResult blockHitResult
     ) {
-        ItemStack stack = player.getMainHandItem();
         if (stack.getItem() == Items.GLASS_BOTTLE) {
             if (!player.isCreative()) {
                 stack.shrink(1);
@@ -74,8 +73,8 @@ public class UmbrellaTreeClusterBlock extends BaseBlock.Wood {
                     pos,
                     EndBlocks.UMBRELLA_TREE_CLUSTER_EMPTY.defaultBlockState().setValue(NATURAL, state.getValue(NATURAL))
             );
-            return InteractionResult.SUCCESS;
+            return ItemInteractionResult.SUCCESS;
         }
-        return InteractionResult.FAIL;
+        return ItemInteractionResult.FAIL;
     }
 }

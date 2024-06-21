@@ -18,14 +18,22 @@ import org.betterx.betterend.item.tool.EndPickaxe;
 import org.betterx.betterend.registry.EndBlocks;
 import org.betterx.betterend.registry.EndItems;
 import org.betterx.betterend.registry.EndTemplates;
-import org.betterx.worlds.together.tag.v3.TagManager;
+import org.betterx.wover.complex.api.equipment.ArmorSlot;
+import org.betterx.wover.complex.api.equipment.ArmorTier;
+import org.betterx.wover.recipe.api.RecipeBuilder;
+import org.betterx.wover.tag.api.TagManager;
+import org.betterx.wover.tag.api.event.context.ItemTagBootstrapContext;
+import org.betterx.wover.tag.api.event.context.TagBootstrapContext;
 
-import net.minecraft.core.Holder;
+import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
-import net.minecraft.world.item.*;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Item.Properties;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.SmithingTemplateItem;
+import net.minecraft.world.item.Tier;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
@@ -33,9 +41,9 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.properties.BlockSetType;
 import net.minecraft.world.level.material.MapColor;
 
-import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
+import java.util.function.Supplier;
 
-public class MetalMaterial {
+public class MetalMaterial implements MaterialManager.Material {
     public final Block ore;
     public final Block block;
     public final Block tile;
@@ -80,122 +88,92 @@ public class MetalMaterial {
     public final TagKey<Item> alloyingOre;
     public final SmithingTemplateItem swordHandleTemplate;
 
-    public static MetalMaterial makeNormal(
-            String name,
-            MapColor color,
-            Tier material,
-            Holder<ArmorMaterial> armor,
-            int anvilAndToolLevel,
-            SmithingTemplateItem swordHandleTemplate
-    ) {
-        return new MetalMaterial(
-                name,
-                true,
-                FabricBlockSettings.copyOf(Blocks.IRON_BLOCK).mapColor(color),
-                EndItems.makeEndItemSettings(),
-                material,
-                armor,
-                anvilAndToolLevel,
-                swordHandleTemplate
-        );
-    }
-
-    public static MetalMaterial makeNormal(
-            String name,
-            MapColor color,
-            float hardness,
-            float resistance,
-            Tier material,
-            ArmorMaterial armor,
-            int anvilAndToolLevel,
-            SmithingTemplateItem swordHandleTemplate
-    ) {
-        return new MetalMaterial(
-                name,
-                true,
-                FabricBlockSettings.copyOf(Blocks.IRON_BLOCK)
-                                   .mapColor(color)
-                                   .hardness(hardness)
-                                   .resistance(resistance),
-                EndItems.makeEndItemSettings(),
-                material,
-                armor,
-                anvilAndToolLevel,
-                swordHandleTemplate
-        );
-    }
-
-    public static MetalMaterial makeOreless(
-            String name,
-            MapColor color,
-            Tier material,
-            ArmorMaterial armor,
-            int anvilAndToolLevel,
-            SmithingTemplateItem swordHandleTemplate
-    ) {
-        return new MetalMaterial(
-                name,
-                false,
-                FabricBlockSettings.copyOf(Blocks.IRON_BLOCK).mapColor(color),
-                EndItems.makeEndItemSettings(),
-                material,
-                armor,
-                anvilAndToolLevel,
-                swordHandleTemplate
-        );
-    }
-
-    public static MetalMaterial makeOreless(
-            String name,
-            MapColor color,
-            float hardness,
-            float resistance,
-            Tier material,
-            Holder<ArmorMaterial> armor,
-            int anvilAndToolLevel,
-            SmithingTemplateItem swordHandleTemplate
-    ) {
-        return new MetalMaterial(
-                name,
-                false,
-                FabricBlockSettings.copyOf(Blocks.IRON_BLOCK)
-                                   .mapColor(color)
-                                   .hardness(hardness)
-                                   .resistance(resistance),
-                EndItems.makeEndItemSettings(),
-                material,
-                armor,
-                anvilAndToolLevel,
-                swordHandleTemplate
-        );
-    }
-
+    public final boolean hasOre;
     public final String name;
+    public final int anvilLevel;
+    public final TagKey<Item> anvilTools;
+
+    public static MetalMaterial makeNormal(
+            String name,
+            MapColor color,
+            Tier material,
+            ArmorTier armor,
+            int anvilLevel,
+            TagKey<Item> anvilTools,
+            SmithingTemplateItem swordHandleTemplate
+    ) {
+        return new MetalMaterial(
+                name,
+                true,
+                () -> BlockBehaviour.Properties
+                        .ofFullCopy(Blocks.IRON_BLOCK)
+                        .mapColor(color),
+                EndItems.makeEndItemSettings(),
+                material,
+                armor,
+                anvilLevel,
+                anvilTools,
+                swordHandleTemplate
+        );
+    }
+
+
+    public static MetalMaterial makeOreless(
+            String name,
+            MapColor color,
+            float hardness,
+            float resistance,
+            Tier material,
+            ArmorTier armor,
+            int anvilLevel,
+            TagKey<Item> anvilTools,
+            SmithingTemplateItem swordHandleTemplate
+    ) {
+        return new MetalMaterial(
+                name,
+                false,
+                () -> BlockBehaviour.Properties
+                        .ofFullCopy(Blocks.IRON_BLOCK)
+                        .mapColor(color)
+                        .destroyTime(hardness)
+                        .explosionResistance(resistance),
+                EndItems.makeEndItemSettings(),
+                material,
+                armor,
+                anvilLevel,
+                anvilTools,
+                swordHandleTemplate
+        );
+    }
 
     private MetalMaterial(
             String name,
             boolean hasOre,
-            FabricBlockSettings settings,
+            Supplier<BlockBehaviour.Properties> settingsSupplier,
             Properties itemSettings,
             Tier material,
-            Holder<ArmorMaterial> armor,
-            int anvilAndToolLevel,
+            ArmorTier armor,
+            int anvilLevel,
+            TagKey<Item> anvilTools,
             SmithingTemplateItem swordHandleTemplate
     ) {
-        BlockBehaviour.Properties lanternProperties = FabricBlockSettings.copyOf(settings)
-                                                                         .hardness(1)
-                                                                         .resistance(1)
-                                                                         .lightLevel((bs) -> 15)
-                                                                         .sound(SoundType.LANTERN);
-        final int level = material.getLevel();
+        final BlockBehaviour.Properties settings = settingsSupplier.get();
+        final BlockBehaviour.Properties lanternProperties = settingsSupplier
+                .get()
+                .destroyTime(1)
+                .explosionResistance(1)
+                .lightLevel((bs) -> 15)
+                .sound(SoundType.LANTERN);
+
+        this.anvilLevel = anvilLevel;
+        this.anvilTools = anvilTools;
+        this.hasOre = hasOre;
         this.name = name;
         this.swordHandleTemplate = swordHandleTemplate;
         rawOre = hasOre ? EndItems.registerEndItem(name + "_raw", new ModelProviderItem(itemSettings)) : null;
         ore = hasOre ? EndBlocks.registerBlock(name + "_ore", new BaseOreBlock(() -> rawOre, 1, 3, 1)) : null;
-        alloyingOre = hasOre ? TagManager.ITEMS.makeTag(BetterEnd.MOD_ID, name + "_alloying") : null;
-        if (hasOre) {
-            TagManager.ITEMS.add(alloyingOre, ore.asItem(), rawOre);
-        }
+        alloyingOre = hasOre ? TagManager.ITEMS.makeTag(BetterEnd.C, name + "_alloying") : null;
+
 
         block = EndBlocks.registerBlock(name + "_block", new BaseBlock.Metal(settings));
         tile = EndBlocks.registerBlock(name + "_tile", new BaseBlock.Metal(settings));
@@ -231,266 +209,282 @@ public class MetalMaterial {
         hoe = EndItems.registerEndTool(name + "_hoe", new BaseHoeItem(material, -3, 0.0F, itemSettings));
         hammer = EndItems.registerEndTool(
                 name + "_hammer",
-                new EndHammerItem(material, 5.0F, -3.2F, 0.3D, itemSettings)
+                new EndHammerItem(material, 5.0F, -3.2F, 0.3f, itemSettings)
         );
 
         forgedPlate = EndItems.registerEndItem(name + "_forged_plate");
         helmet = EndItems.registerEndItem(
                 name + "_helmet",
-                new EndArmorItem(armor, ArmorItem.Type.HELMET, itemSettings)
+                new EndArmorItem(armor, ArmorSlot.HELMET_SLOT, itemSettings)
         );
         chestplate = EndItems.registerEndItem(
                 name + "_chestplate",
-                new EndArmorItem(armor, ArmorItem.Type.CHESTPLATE, itemSettings)
+                new EndArmorItem(armor, ArmorSlot.CHESTPLATE_SLOT, itemSettings)
         );
         leggings = EndItems.registerEndItem(
                 name + "_leggings",
-                new EndArmorItem(armor, ArmorItem.Type.LEGGINGS, itemSettings)
+                new EndArmorItem(armor, ArmorSlot.LEGGINGS_SLOT, itemSettings)
         );
-        boots = EndItems.registerEndItem(name + "_boots", new EndArmorItem(armor, ArmorItem.Type.BOOTS, itemSettings));
+        boots = EndItems.registerEndItem(name + "_boots", new EndArmorItem(armor, ArmorSlot.BOOTS_SLOT, itemSettings));
 
         anvilBlock = EndBlocks.registerBlock(
                 name + "_anvil",
-                new EndAnvilBlock(this, block.defaultMapColor(), anvilAndToolLevel)
+                new EndAnvilBlock(this, block.defaultMapColor(), anvilLevel)
         );
 
+        MaterialManager.register(this);
+    }
+
+    @Override
+    public void registerRecipes(RecipeOutput context) {
         if (hasOre) {
-            BCLRecipeBuilder.smelting(BetterEnd.C.mk(name + "_ingot_furnace_ore"), ingot)
-                            .setPrimaryInputAndUnlock(ore)
-                            .buildWithBlasting();
-            BCLRecipeBuilder.smelting(BetterEnd.C.mk(name + "_ingot_furnace_raw"), ingot)
-                            .setPrimaryInputAndUnlock(rawOre)
-                            .buildWithBlasting();
+            RecipeBuilder.blasting(BetterEnd.C.mk(name + "_ingot_furnace_ore"), ingot)
+                         .input(ore)
+                         .build(context);
+            RecipeBuilder.blasting(BetterEnd.C.mk(name + "_ingot_furnace_raw"), ingot)
+                         .input(rawOre)
+                         .build(context);
             BCLRecipeBuilder.alloying(BetterEnd.C.mk(name + "_ingot_alloy"), ingot)
                             .setInput(alloyingOre, alloyingOre)
-                            .setOutputCount(3)
+                            .outputCount(3)
                             .setExperience(2.1F)
-                            .build();
+                            .build(context);
         }
 
         // Basic recipes
-        BCLRecipeBuilder.crafting(BetterEnd.C.mk(name + "_ingot_from_nuggets"), ingot)
-                        .setShape("###", "###", "###")
-                        .addMaterial('#', nugget)
-                        .setGroup("end_metal_ingots_nug")
-                        .build();
-        BCLRecipeBuilder.crafting(BetterEnd.C.mk(name + "_nuggets_from_ingot"), nugget)
-                        .setOutputCount(9)
-                        .shapeless()
-                        .addMaterial('#', ingot)
-                        .setGroup("end_metal_nuggets_ing")
-                        .build();
-        BCLRecipeBuilder.crafting(BetterEnd.C.mk(name + "_block"), block)
-                        .setShape("###", "###", "###")
-                        .addMaterial('#', ingot)
-                        .setGroup("end_metal_blocks")
-                        .build();
-        BCLRecipeBuilder.crafting(BetterEnd.C.mk(name + "_ingot_from_block"), ingot)
-                        .setOutputCount(9)
-                        .shapeless()
-                        .addMaterial('#', block)
-                        .setGroup("end_metal_ingots")
-                        .build();
+        RecipeBuilder.crafting(BetterEnd.C.mk(name + "_ingot_from_nuggets"), ingot)
+                     .shape("###", "###", "###")
+                     .addMaterial('#', nugget)
+                     .group("end_metal_ingots_nug")
+                     .build(context);
+        RecipeBuilder.crafting(BetterEnd.C.mk(name + "_nuggets_from_ingot"), nugget)
+                     .outputCount(9)
+                     .shapeless()
+                     .addMaterial('#', ingot)
+                     .group("end_metal_nuggets_ing")
+                     .build(context);
+        RecipeBuilder.crafting(BetterEnd.C.mk(name + "_block"), block)
+                     .shape("###", "###", "###")
+                     .addMaterial('#', ingot)
+                     .group("end_metal_blocks")
+                     .build(context);
+        RecipeBuilder.crafting(BetterEnd.C.mk(name + "_ingot_from_block"), ingot)
+                     .outputCount(9)
+                     .shapeless()
+                     .addMaterial('#', block)
+                     .group("end_metal_ingots")
+                     .build(context);
 
         // Block recipes
-        BCLRecipeBuilder.crafting(BetterEnd.C.mk(name + "_tile"), tile)
-                        .setOutputCount(4)
-                        .setShape("##", "##")
-                        .addMaterial('#', block)
-                        .setGroup("end_metal_tiles")
-                        .build();
-        BCLRecipeBuilder.crafting(BetterEnd.C.mk(name + "_bars"), bars)
-                        .setOutputCount(16)
-                        .setShape("###", "###")
-                        .addMaterial('#', ingot)
-                        .setGroup("end_metal_bars")
-                        .build();
-        BCLRecipeBuilder.crafting(BetterEnd.C.mk(name + "_pressure_plate"), pressurePlate)
-                        .setShape("##")
-                        .addMaterial('#', ingot)
-                        .setGroup("end_metal_plates")
-                        .build();
-        BCLRecipeBuilder.crafting(BetterEnd.C.mk(name + "_door"), door)
-                        .setOutputCount(3)
-                        .setShape("##", "##", "##")
-                        .addMaterial('#', ingot)
-                        .setGroup("end_metal_doors")
-                        .build();
-        BCLRecipeBuilder.crafting(BetterEnd.C.mk(name + "_trapdoor"), trapdoor)
-                        .setShape("##", "##")
-                        .addMaterial('#', ingot)
-                        .setGroup("end_metal_trapdoors")
-                        .build();
-        BCLRecipeBuilder.crafting(BetterEnd.C.mk(name + "_stairs"), stairs)
-                        .setOutputCount(4)
-                        .setShape("#  ", "## ", "###")
-                        .addMaterial('#', block, tile)
-                        .setGroup("end_metal_stairs")
-                        .build();
-        BCLRecipeBuilder.crafting(BetterEnd.C.mk(name + "_slab"), slab)
-                        .setOutputCount(6)
-                        .setShape("###")
-                        .addMaterial('#', block, tile)
-                        .setGroup("end_metal_slabs")
-                        .build();
-        BCLRecipeBuilder.crafting(BetterEnd.C.mk(name + "_chain"), chain)
-                        .setShape("N", "#", "N")
-                        .addMaterial('#', ingot)
-                        .addMaterial('N', nugget)
-                        .setGroup("end_metal_chain")
-                        .build();
-        BCLRecipeBuilder.crafting(BetterEnd.C.mk(name + "_anvil"), anvilBlock)
-                        .setShape("###", " I ", "III")
-                        .addMaterial('#', block, tile)
-                        .addMaterial('I', ingot)
-                        .setGroup("end_metal_anvil")
-                        .build();
-        BCLRecipeBuilder.crafting(BetterEnd.C.mk(name + "_bulb_lantern"), bulb_lantern)
-                        .setShape("C", "I", "#")
-                        .addMaterial('C', chain)
-                        .addMaterial('I', ingot)
-                        .addMaterial('#', EndItems.GLOWING_BULB)
-                        .build();
+        RecipeBuilder.crafting(BetterEnd.C.mk(name + "_tile"), tile)
+                     .outputCount(4)
+                     .shape("##", "##")
+                     .addMaterial('#', block)
+                     .group("end_metal_tiles")
+                     .build(context);
+        RecipeBuilder.crafting(BetterEnd.C.mk(name + "_bars"), bars)
+                     .outputCount(16)
+                     .shape("###", "###")
+                     .addMaterial('#', ingot)
+                     .group("end_metal_bars")
+                     .build(context);
+        RecipeBuilder.crafting(BetterEnd.C.mk(name + "_pressure_plate"), pressurePlate)
+                     .shape("##")
+                     .addMaterial('#', ingot)
+                     .group("end_metal_plates")
+                     .build(context);
+        RecipeBuilder.crafting(BetterEnd.C.mk(name + "_door"), door)
+                     .outputCount(3)
+                     .shape("##", "##", "##")
+                     .addMaterial('#', ingot)
+                     .group("end_metal_doors")
+                     .build(context);
+        RecipeBuilder.crafting(BetterEnd.C.mk(name + "_trapdoor"), trapdoor)
+                     .shape("##", "##")
+                     .addMaterial('#', ingot)
+                     .group("end_metal_trapdoors")
+                     .build(context);
+        RecipeBuilder.crafting(BetterEnd.C.mk(name + "_stairs"), stairs)
+                     .outputCount(4)
+                     .shape("#  ", "## ", "###")
+                     .addMaterial('#', block, tile)
+                     .group("end_metal_stairs")
+                     .build(context);
+        RecipeBuilder.crafting(BetterEnd.C.mk(name + "_slab"), slab)
+                     .outputCount(6)
+                     .shape("###")
+                     .addMaterial('#', block, tile)
+                     .group("end_metal_slabs")
+                     .build(context);
+        RecipeBuilder.crafting(BetterEnd.C.mk(name + "_chain"), chain)
+                     .shape("N", "#", "N")
+                     .addMaterial('#', ingot)
+                     .addMaterial('N', nugget)
+                     .group("end_metal_chain")
+                     .build(context);
+        RecipeBuilder.crafting(BetterEnd.C.mk(name + "_anvil"), anvilBlock)
+                     .shape("###", " I ", "III")
+                     .addMaterial('#', block, tile)
+                     .addMaterial('I', ingot)
+                     .group("end_metal_anvil")
+                     .build(context);
+        RecipeBuilder.crafting(BetterEnd.C.mk(name + "_bulb_lantern"), bulb_lantern)
+                     .shape("C", "I", "#")
+                     .addMaterial('C', chain)
+                     .addMaterial('I', ingot)
+                     .addMaterial('#', EndItems.GLOWING_BULB)
+                     .build(context);
 
-        BCLRecipeBuilder.crafting(BetterEnd.C.mk(name + "_chandelier"), chandelier)
-                        .setShape("I#I", " # ")
-                        .addMaterial('#', ingot)
-                        .addMaterial('I', EndItems.LUMECORN_ROD)
-                        .setGroup("end_metal_chandelier")
-                        .build();
+        RecipeBuilder.crafting(BetterEnd.C.mk(name + "_chandelier"), chandelier)
+                     .shape("I#I", " # ")
+                     .addMaterial('#', ingot)
+                     .addMaterial('I', EndItems.LUMECORN_ROD)
+                     .group("end_metal_chandelier")
+                     .build(context);
 
         // Tools & armor into nuggets
-        BCLRecipeBuilder.smelting(BetterEnd.C.mk(name + "_axe_nugget"), nugget)
-                        .setPrimaryInputAndUnlock(axe)
-                        .buildWithBlasting();
-        BCLRecipeBuilder.smelting(BetterEnd.C.mk(name + "_hoe_nugget"), nugget)
-                        .setPrimaryInputAndUnlock(hoe)
-                        .buildWithBlasting();
-        BCLRecipeBuilder.smelting(BetterEnd.C.mk(name + "_pickaxe_nugget"), nugget)
-                        .setPrimaryInputAndUnlock(pickaxe)
-                        .buildWithBlasting();
-        BCLRecipeBuilder.smelting(BetterEnd.C.mk(name + "_sword_nugget"), nugget)
-                        .setPrimaryInputAndUnlock(sword)
-                        .buildWithBlasting();
-        BCLRecipeBuilder.smelting(BetterEnd.C.mk(name + "_hammer_nugget"), nugget)
-                        .setPrimaryInputAndUnlock(hammer)
-                        .buildWithBlasting();
-        BCLRecipeBuilder.smelting(BetterEnd.C.mk(name + "_helmet_nugget"), nugget)
-                        .setPrimaryInputAndUnlock(helmet)
-                        .buildWithBlasting();
-        BCLRecipeBuilder.smelting(BetterEnd.C.mk(name + "_chestplate_nugget"), nugget)
-                        .setPrimaryInputAndUnlock(chestplate)
-                        .buildWithBlasting();
-        BCLRecipeBuilder.smelting(BetterEnd.C.mk(name + "_leggings_nugget"), nugget)
-                        .setPrimaryInputAndUnlock(leggings)
-                        .buildWithBlasting();
-        BCLRecipeBuilder.smelting(BetterEnd.C.mk(name + "_boots_nugget"), nugget)
-                        .setPrimaryInputAndUnlock(boots)
-                        .buildWithBlasting();
+        RecipeBuilder.blasting(BetterEnd.C.mk(name + "_axe_nugget"), nugget)
+                     .input(axe)
+                     .build(context);
+        RecipeBuilder.blasting(BetterEnd.C.mk(name + "_hoe_nugget"), nugget)
+                     .input(hoe)
+                     .build(context);
+        RecipeBuilder.blasting(BetterEnd.C.mk(name + "_pickaxe_nugget"), nugget)
+                     .input(pickaxe)
+                     .build(context);
+        RecipeBuilder.blasting(BetterEnd.C.mk(name + "_sword_nugget"), nugget)
+                     .input(sword)
+                     .build(context);
+        RecipeBuilder.blasting(BetterEnd.C.mk(name + "_hammer_nugget"), nugget)
+                     .input(hammer)
+                     .build(context);
+        RecipeBuilder.blasting(BetterEnd.C.mk(name + "_helmet_nugget"), nugget)
+                     .input(helmet)
+                     .build(context);
+        RecipeBuilder.blasting(BetterEnd.C.mk(name + "_chestplate_nugget"), nugget)
+                     .input(chestplate)
+                     .build(context);
+        RecipeBuilder.blasting(BetterEnd.C.mk(name + "_leggings_nugget"), nugget)
+                     .input(leggings)
+                     .build(context);
+        RecipeBuilder.blasting(BetterEnd.C.mk(name + "_boots_nugget"), nugget)
+                     .input(boots)
+                     .build(context);
 
         // Tool parts from ingots
         BCLRecipeBuilder.anvil(BetterEnd.C.mk(name + "_shovel_head"), shovelHead)
                         .setPrimaryInput(ingot)
-                        .setAnvilLevel(anvilAndToolLevel)
-                        .setToolLevel(level)
-                        .setDamage(level)
-                        .build();
+                        .setAnvilLevel(this.anvilLevel)
+                        .setAllowedTools(this.anvilTools)
+                        .setDamage(this.anvilLevel)
+                        .build(context);
         BCLRecipeBuilder.anvil(BetterEnd.C.mk(name + "_pickaxe_head"), pickaxeHead)
                         .setPrimaryInput(ingot)
                         .setInputCount(3)
-                        .setAnvilLevel(anvilAndToolLevel)
-                        .setToolLevel(level)
-                        .setDamage(level)
-                        .build();
+                        .setAnvilLevel(this.anvilLevel)
+                        .setAllowedTools(this.anvilTools)
+                        .setDamage(this.anvilLevel)
+                        .build(context);
         BCLRecipeBuilder.anvil(BetterEnd.C.mk(name + "_axe_head"), axeHead)
                         .setPrimaryInput(ingot)
                         .setInputCount(3)
-                        .setAnvilLevel(anvilAndToolLevel)
-                        .setToolLevel(level)
-                        .setDamage(level)
-                        .build();
+                        .setAnvilLevel(this.anvilLevel)
+                        .setAllowedTools(this.anvilTools)
+                        .setDamage(this.anvilLevel)
+                        .build(context);
         BCLRecipeBuilder.anvil(BetterEnd.C.mk(name + "_hoe_head"), hoeHead)
                         .setPrimaryInput(ingot)
                         .setInputCount(2)
-                        .setAnvilLevel(anvilAndToolLevel)
-                        .setToolLevel(level)
-                        .setDamage(level)
-                        .build();
+                        .setAnvilLevel(this.anvilLevel)
+                        .setAllowedTools(this.anvilTools)
+                        .setDamage(this.anvilLevel)
+                        .build(context);
         BCLRecipeBuilder.anvil(BetterEnd.C.mk(name + "_sword_blade"), swordBlade)
                         .setPrimaryInput(ingot)
-                        .setAnvilLevel(anvilAndToolLevel)
-                        .setToolLevel(level)
-                        .setDamage(level)
-                        .build();
+                        .setAnvilLevel(this.anvilLevel)
+                        .setAllowedTools(this.anvilTools)
+                        .setDamage(this.anvilLevel)
+                        .build(context);
         BCLRecipeBuilder.anvil(BetterEnd.C.mk(name + "_forged_plate"), forgedPlate)
                         .setPrimaryInput(ingot)
-                        .setAnvilLevel(anvilAndToolLevel)
-                        .setToolLevel(level)
-                        .setDamage(level)
-                        .build();
+                        .setAnvilLevel(this.anvilLevel)
+                        .setAllowedTools(this.anvilTools)
+                        .setDamage(this.anvilLevel)
+                        .build(context);
 
         // Tools from parts
-        BCLRecipeBuilder.smithing(BetterEnd.C.mk(name + "_hammer"), hammer)
-                        .setTemplate(EndTemplates.HANDLE_ATTACHMENT)
-                        .setPrimaryInputAndUnlock(block)
-                        .setAddition(Items.STICK)
-                        .build();
-        BCLRecipeBuilder.smithing(BetterEnd.C.mk(name + "_axe"), axe)
-                        .setTemplate(EndTemplates.HANDLE_ATTACHMENT)
-                        .setPrimaryInputAndUnlock(axeHead)
-                        .setAddition(Items.STICK)
-                        .build();
-        BCLRecipeBuilder.smithing(BetterEnd.C.mk(name + "_pickaxe"), pickaxe)
-                        .setTemplate(EndTemplates.HANDLE_ATTACHMENT)
-                        .setPrimaryInputAndUnlock(pickaxeHead)
-                        .setAddition(Items.STICK)
-                        .build();
-        BCLRecipeBuilder.smithing(BetterEnd.C.mk(name + "_hoe"), hoe)
-                        .setTemplate(EndTemplates.HANDLE_ATTACHMENT)
-                        .setPrimaryInputAndUnlock(hoeHead)
-                        .setAddition(Items.STICK)
-                        .build();
-        BCLRecipeBuilder.smithing(BetterEnd.C.mk(name + "_sword_handle"), swordHandle)
-                        .setTemplate(this.swordHandleTemplate)
-                        .setPrimaryInputAndUnlock(Items.STICK)
-                        .setAddition(ingot)
-                        .build();
-        BCLRecipeBuilder.smithing(BetterEnd.C.mk(name + "_sword"), sword)
-                        .setTemplate(EndTemplates.TOOL_ASSEMBLY)
-                        .setPrimaryInputAndUnlock(swordBlade)
-                        .setAddition(swordHandle)
-                        .build();
-        BCLRecipeBuilder.smithing(BetterEnd.C.mk(name + "_shovel"), shovel)
-                        .setTemplate(EndTemplates.HANDLE_ATTACHMENT)
-                        .setPrimaryInputAndUnlock(shovelHead)
-                        .setAddition(Items.STICK)
-                        .build();
+        RecipeBuilder.smithing(BetterEnd.C.mk(name + "_hammer"), hammer)
+                     .template(EndTemplates.HANDLE_ATTACHMENT)
+                     .base(block)
+                     .addon(Items.STICK)
+                     .build(context);
+        RecipeBuilder.smithing(BetterEnd.C.mk(name + "_axe"), axe)
+                     .template(EndTemplates.HANDLE_ATTACHMENT)
+                     .base(axeHead)
+                     .addon(Items.STICK)
+                     .build(context);
+        RecipeBuilder.smithing(BetterEnd.C.mk(name + "_pickaxe"), pickaxe)
+                     .template(EndTemplates.HANDLE_ATTACHMENT)
+                     .base(pickaxeHead)
+                     .addon(Items.STICK)
+                     .build(context);
+        RecipeBuilder.smithing(BetterEnd.C.mk(name + "_hoe"), hoe)
+                     .template(EndTemplates.HANDLE_ATTACHMENT)
+                     .base(hoeHead)
+                     .addon(Items.STICK)
+                     .build(context);
+        RecipeBuilder.smithing(BetterEnd.C.mk(name + "_sword_handle"), swordHandle)
+                     .template(this.swordHandleTemplate)
+                     .base(Items.STICK)
+                     .addon(ingot)
+                     .build(context);
+        RecipeBuilder.smithing(BetterEnd.C.mk(name + "_sword"), sword)
+                     .template(EndTemplates.TOOL_ASSEMBLY)
+                     .base(swordBlade)
+                     .addon(swordHandle)
+                     .build(context);
+        RecipeBuilder.smithing(BetterEnd.C.mk(name + "_shovel"), shovel)
+                     .template(EndTemplates.HANDLE_ATTACHMENT)
+                     .base(shovelHead)
+                     .addon(Items.STICK)
+                     .build(context);
 
         // Armor crafting
-        BCLRecipeBuilder.crafting(BetterEnd.C.mk(name + "_helmet"), helmet)
-                        .setShape("###", "# #")
-                        .addMaterial('#', forgedPlate)
-                        .setGroup("end_metal_helmets")
-                        .build();
-        BCLRecipeBuilder.crafting(BetterEnd.C.mk(name + "_chestplate"), chestplate)
-                        .setShape("# #", "###", "###")
-                        .addMaterial('#', forgedPlate)
-                        .setGroup("end_metal_chestplates")
-                        .build();
-        BCLRecipeBuilder.crafting(BetterEnd.C.mk(name + "_leggings"), leggings)
-                        .setShape("###", "# #", "# #")
-                        .addMaterial('#', forgedPlate)
-                        .setGroup("end_metal_leggings")
-                        .build();
-        BCLRecipeBuilder.crafting(BetterEnd.C.mk(name + "_boots"), boots)
-                        .setShape("# #", "# #")
-                        .addMaterial('#', forgedPlate)
-                        .setGroup("end_metal_boots")
-                        .build();
+        RecipeBuilder.crafting(BetterEnd.C.mk(name + "_helmet"), helmet)
+                     .shape("###", "# #")
+                     .addMaterial('#', forgedPlate)
+                     .group("end_metal_helmets")
+                     .build(context);
+        RecipeBuilder.crafting(BetterEnd.C.mk(name + "_chestplate"), chestplate)
+                     .shape("# #", "###", "###")
+                     .addMaterial('#', forgedPlate)
+                     .group("end_metal_chestplates")
+                     .build(context);
+        RecipeBuilder.crafting(BetterEnd.C.mk(name + "_leggings"), leggings)
+                     .shape("###", "# #", "# #")
+                     .addMaterial('#', forgedPlate)
+                     .group("end_metal_leggings")
+                     .build(context);
+        RecipeBuilder.crafting(BetterEnd.C.mk(name + "_boots"), boots)
+                     .shape("# #", "# #")
+                     .addMaterial('#', forgedPlate)
+                     .group("end_metal_boots")
+                     .build(context);
 
-        TagManager.BLOCKS.add(BlockTags.ANVIL, anvilBlock);
-        TagManager.BLOCKS.add(BlockTags.BEACON_BASE_BLOCKS, block);
-        TagManager.ITEMS.add(ItemTags.BEACON_PAYMENT_ITEMS, ingot);
-        TagManager.BLOCKS.add(BlockTags.DRAGON_IMMUNE, ore, bars);
+    }
+
+    @Override
+    public void registerBlockTags(TagBootstrapContext<Block> context) {
+        context.add(BlockTags.ANVIL, anvilBlock);
+        context.add(BlockTags.BEACON_BASE_BLOCKS, block);
+        context.add(BlockTags.DRAGON_IMMUNE, ore, bars);
+    }
+
+    @Override
+    public void registerItemTags(ItemTagBootstrapContext context) {
+        context.add(ItemTags.BEACON_PAYMENT_ITEMS, ingot);
+        if (alloyingOre != null) {
+            context.add(alloyingOre, ore.asItem(), rawOre);
+        }
     }
 }

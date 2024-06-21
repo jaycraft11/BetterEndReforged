@@ -1,5 +1,6 @@
 package org.betterx.betterend.client.render;
 
+import de.ambertation.wunderlib.ui.ColorHelper;
 import org.betterx.betterend.blocks.EternalPedestal;
 import org.betterx.betterend.blocks.basis.PedestalBlock;
 import org.betterx.betterend.blocks.entities.PedestalBlockEntity;
@@ -62,7 +63,7 @@ public class PedestalItemRenderer<T extends PedestalBlockEntity> implements Bloc
         }
         int age = getGemAge();
         if (state.is(EndBlocks.ETERNAL_PEDESTAL) && state.getValue(EternalPedestal.ACTIVATED)) {
-            float[] colors = EternalCrystalRenderer.colors(age);
+            float[] colors = ColorHelper.toFloatArrayRGBA(EternalCrystalRenderer.colors(age));
             int y = blockEntity.getBlockPos().getY();
 
             BeamRenderer.renderLightBeam(

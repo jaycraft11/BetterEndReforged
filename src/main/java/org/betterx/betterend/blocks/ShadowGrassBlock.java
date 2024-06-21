@@ -1,25 +1,18 @@
 package org.betterx.betterend.blocks;
 
-import org.betterx.bclib.interfaces.TagProvider;
 import org.betterx.betterend.blocks.basis.EndTerrainBlock;
 import org.betterx.betterend.registry.EndParticles;
-import org.betterx.wover.tag.api.predefined.CommonBlockTags;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.tags.TagKey;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.MapColor;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 
-import java.util.List;
-
-public class ShadowGrassBlock extends EndTerrainBlock implements TagProvider {
+public class ShadowGrassBlock extends EndTerrainBlock {
     public ShadowGrassBlock() {
         super(MapColor.COLOR_BLACK);
     }
@@ -38,10 +31,5 @@ public class ShadowGrassBlock extends EndTerrainBlock implements TagProvider {
                     0.0D
             );
         }
-    }
-
-    @Override
-    public void addTags(List<TagKey<Block>> blockTags, List<TagKey<Item>> itemTags) {
-        blockTags.add(CommonBlockTags.END_STONES);
     }
 }

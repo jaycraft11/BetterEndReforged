@@ -9,6 +9,7 @@ import org.betterx.bclib.client.models.PatternsHelper;
 import org.betterx.bclib.client.render.BCLRenderLayer;
 import org.betterx.bclib.interfaces.PostInitable;
 import org.betterx.bclib.interfaces.RenderLayerProvider;
+import org.betterx.bclib.interfaces.RuntimeBlockModelProvider;
 import org.betterx.bclib.util.BlocksHelper;
 import org.betterx.bclib.util.JsonFactory;
 import org.betterx.betterend.BetterEnd;
@@ -31,7 +32,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
@@ -65,7 +66,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-public class FlowerPotBlock extends BaseBlockNotFull implements RenderLayerProvider, PostInitable {
+public class FlowerPotBlock extends BaseBlockNotFull implements RenderLayerProvider, PostInitable, RuntimeBlockModelProvider {
     private static final IntegerProperty PLANT_ID = EndBlockProperties.PLANT_ID;
     private static final IntegerProperty SOIL_ID = EndBlockProperties.SOIL_ID;
     private static final IntegerProperty POT_LIGHT = EndBlockProperties.POT_LIGHT;
@@ -209,7 +210,8 @@ public class FlowerPotBlock extends BaseBlockNotFull implements RenderLayerProvi
 
     @Override
     @SuppressWarnings("deprecation")
-    public InteractionResult use(
+    public ItemInteractionResult useItemOn(
+            ItemStack itemStack,
             BlockState state,
             Level level,
             BlockPos pos,
@@ -218,13 +220,12 @@ public class FlowerPotBlock extends BaseBlockNotFull implements RenderLayerProvi
             BlockHitResult hit
     ) {
         if (level.isClientSide) {
-            return InteractionResult.CONSUME;
+            return ItemInteractionResult.CONSUME;
         }
-        ItemStack itemStack = player.getItemInHand(hand);
         int soilID = state.getValue(SOIL_ID);
         if (soilID == 0 || soilID > soils.length || soils[soilID - 1] == null) {
             if (!(itemStack.getItem() instanceof BlockItem)) {
-                return InteractionResult.PASS;
+                return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
             }
             Block block = ((BlockItem) itemStack.getItem()).getBlock();
             for (int i = 0; i < soils.length; i++) {
@@ -243,10 +244,10 @@ public class FlowerPotBlock extends BaseBlockNotFull implements RenderLayerProvi
                             1,
                             1
                     );
-                    return InteractionResult.SUCCESS;
+                    return ItemInteractionResult.SUCCESS;
                 }
             }
-            return InteractionResult.PASS;
+            return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
         }
 
         int plantID = state.getValue(PLANT_ID);
@@ -254,22 +255,22 @@ public class FlowerPotBlock extends BaseBlockNotFull implements RenderLayerProvi
             if (plantID > 0 && plantID <= plants.length && plants[plantID - 1] != null) {
                 BlocksHelper.setWithUpdate(level, pos, state.setValue(PLANT_ID, 0).setValue(POT_LIGHT, 0));
                 player.addItem(new ItemStack(plants[plantID - 1]));
-                return InteractionResult.SUCCESS;
+                return ItemInteractionResult.SUCCESS;
             }
             if (soilID > 0 && soilID <= soils.length && soils[soilID - 1] != null) {
                 BlocksHelper.setWithUpdate(level, pos, state.setValue(SOIL_ID, 0));
                 player.addItem(new ItemStack(soils[soilID - 1]));
             }
-            return InteractionResult.PASS;
+            return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
         }
         if (!(itemStack.getItem() instanceof BlockItem)) {
-            return InteractionResult.PASS;
+            return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
         }
         BlockItem item = (BlockItem) itemStack.getItem();
         for (int i = 0; i < plants.length; i++) {
             if (item.getBlock() == plants[i]) {
                 if (!((PottablePlant) plants[i]).canPlantOn(soils[soilID - 1])) {
-                    return InteractionResult.PASS;
+                    return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
                 }
                 int light = plants[i].defaultBlockState().getLightEmission() / 5;
                 BlocksHelper.setWithUpdate(level, pos, state.setValue(PLANT_ID, i + 1).setValue(POT_LIGHT, light));
@@ -286,10 +287,10 @@ public class FlowerPotBlock extends BaseBlockNotFull implements RenderLayerProvi
                 if (!player.isCreative()) {
                     itemStack.shrink(1);
                 }
-                return InteractionResult.SUCCESS;
+                return ItemInteractionResult.SUCCESS;
             }
         }
-        return InteractionResult.PASS;
+        return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
     }
 
     @Override
@@ -300,14 +301,13 @@ public class FlowerPotBlock extends BaseBlockNotFull implements RenderLayerProvi
     }
 
     @Override
-    @Environment(EnvType.CLIENT)
     public UnbakedModel getModelVariant(
-            ResourceLocation stateId,
+            ModelResourceLocation stateId,
             BlockState blockState,
             Map<ResourceLocation, UnbakedModel> modelCache
     ) {
         MultiPartBuilder model = MultiPartBuilder.create(stateDefinition);
-        model.part(new ModelResourceLocation(stateId.getNamespace(), stateId.getPath(), "inventory")).add();
+        model.part(new ModelResourceLocation(stateId.id(), "inventory")).add();
         Transformation offset = new Transformation(new Vector3f(0, 7.5F / 16F, 0), null, null, null);
 
         for (int i = 0; i < plants.length; i++) {
@@ -317,13 +317,13 @@ public class FlowerPotBlock extends BaseBlockNotFull implements RenderLayerProvi
 
             final int compareID = i + 1;
             ResourceLocation modelPath = BuiltInRegistries.BLOCK.getKey(plants[i]);
-            ResourceLocation objSource = new ResourceLocation(
+            ResourceLocation objSource = ResourceLocation.fromNamespaceAndPath(
                     modelPath.getNamespace(),
                     "models/block/" + modelPath.getPath() + "_potted.json"
             );
 
             if (Minecraft.getInstance().getResourceManager().getResource(objSource).isPresent()) {
-                objSource = new ResourceLocation(modelPath.getNamespace(), "block/" + modelPath.getPath() + "_potted");
+                objSource = ResourceLocation.fromNamespaceAndPath(modelPath.getNamespace(), "block/" + modelPath.getPath() + "_potted");
                 model.part(objSource)
                      .setTransformation(offset)
                      .setCondition(state -> state.getValue(PLANT_ID) == compareID)
@@ -331,7 +331,7 @@ public class FlowerPotBlock extends BaseBlockNotFull implements RenderLayerProvi
                 continue;
             } else if (plants[i] instanceof SaplingBlock) {
                 ResourceLocation loc = BuiltInRegistries.BLOCK.getKey(plants[i]);
-                modelPath = new ResourceLocation(loc.getNamespace(), "block/" + loc.getPath() + "_potted");
+                modelPath = ResourceLocation.fromNamespaceAndPath(loc.getNamespace(), "block/" + loc.getPath() + "_potted");
                 Map<String, String> textures = Maps.newHashMap();
                 textures.put("%modid%", loc.getNamespace());
                 textures.put("%texture%", loc.getPath());
@@ -345,7 +345,7 @@ public class FlowerPotBlock extends BaseBlockNotFull implements RenderLayerProvi
                 continue;
             } else if (plants[i] instanceof PottableLeavesBlock) {
                 ResourceLocation loc = BuiltInRegistries.BLOCK.getKey(plants[i]);
-                modelPath = new ResourceLocation(loc.getNamespace(), "block/" + loc.getPath() + "_potted");
+                modelPath = ResourceLocation.fromNamespaceAndPath(loc.getNamespace(), "block/" + loc.getPath() + "_potted");
                 Map<String, String> textures = Maps.newHashMap();
                 textures.put("%leaves%", loc.getPath().contains("lucernia") ? loc.getPath() + "_1" : loc.getPath());
                 textures.put("%stem%", loc.getPath().replace("_leaves", "_log_side"));
@@ -359,7 +359,7 @@ public class FlowerPotBlock extends BaseBlockNotFull implements RenderLayerProvi
                 continue;
             }
 
-            objSource = new ResourceLocation(modelPath.getNamespace(), "blockstates/" + modelPath.getPath() + ".json");
+            objSource = ResourceLocation.fromNamespaceAndPath(modelPath.getNamespace(), "blockstates/" + modelPath.getPath() + ".json");
             JsonObject obj = JsonFactory.getJsonObject(objSource);
             if (obj != null) {
                 JsonElement variants = obj.get("variants");
@@ -392,13 +392,13 @@ public class FlowerPotBlock extends BaseBlockNotFull implements RenderLayerProvi
                     continue;
                 }
 
-                model.part(new ResourceLocation(path))
+                model.part(ResourceLocation.parse(path))
                      .setTransformation(offset)
                      .setCondition(state -> state.getValue(PLANT_ID) == compareID)
                      .add();
             } else {
                 ResourceLocation loc = BuiltInRegistries.BLOCK.getKey(plants[i]);
-                modelPath = new ResourceLocation(loc.getNamespace(), "block/" + loc.getPath() + "_potted");
+                modelPath = ResourceLocation.fromNamespaceAndPath(loc.getNamespace(), "block/" + loc.getPath() + "_potted");
                 Map<String, String> textures = Maps.newHashMap();
                 textures.put("%modid%", loc.getNamespace());
                 textures.put("%texture%", loc.getPath());
@@ -432,7 +432,7 @@ public class FlowerPotBlock extends BaseBlockNotFull implements RenderLayerProvi
         }
 
         UnbakedModel result = model.build();
-        modelCache.put(stateId, result);
+        modelCache.put(stateId.id(), result);
         return result;
     }
 

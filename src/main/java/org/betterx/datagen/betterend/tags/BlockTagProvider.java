@@ -1,5 +1,6 @@
 package org.betterx.datagen.betterend.tags;
 
+import org.betterx.betterend.complexmaterials.MaterialManager;
 import org.betterx.betterend.registry.EndBlocks;
 import org.betterx.betterend.registry.EndTags;
 import org.betterx.betterend.world.biome.EndBiome;
@@ -53,9 +54,25 @@ public class BlockTagProvider extends WoverTagProvider.ForBlocks {
                 .values()
                 .stream()
                 .filter(info -> info.config() instanceof EndBiome.Config)
-                .map(info -> (EndBiome.Config) info.config())
+                .map(info -> info.config())
                 .forEach(config -> {
                     config.surfaceMaterial().addBiomeSurfaceToEndGroup(context, CommonBlockTags.END_STONES);
                 });
+
+        MaterialManager.stream().forEach(m -> m.registerBlockTags(context));
+
+        Block[] charnias = new Block[]{
+                EndBlocks.CHARNIA_CYAN,
+                EndBlocks.CHARNIA_GREEN,
+                EndBlocks.CHARNIA_ORANGE,
+                EndBlocks.CHARNIA_LIGHT_BLUE,
+                EndBlocks.CHARNIA_PURPLE,
+                EndBlocks.CHARNIA_RED
+        };
+
+        for (Block charnia : charnias) {
+            context.add(EndTags.BONEMEAL_SOURCE_WATER_GRASS, charnia);
+        }
+
     }
 }

@@ -47,10 +47,7 @@ public class RendererEntityCubozoa extends MobRenderer<CubozoaEntity, CubozoaEnt
                             vertexConsumer,
                             15728640,
                             OverlayTexture.NO_OVERLAY,
-                            1.0F,
-                            1.0F,
-                            1.0F,
-                            1.0F
+                            0xffffffff
                     );
             }
         });

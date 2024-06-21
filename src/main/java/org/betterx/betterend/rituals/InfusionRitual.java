@@ -14,6 +14,8 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeHolder;
+import net.minecraft.world.item.crafting.RecipeInput;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.chunk.LevelChunk.EntityCreationType;
@@ -22,8 +24,9 @@ import net.minecraft.world.phys.Vec3;
 import java.awt.*;
 import java.util.Arrays;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-public class InfusionRitual implements Container {
+public class InfusionRitual implements Container, RecipeInput {
     private static final Point[] PEDESTALS_MAP = new Point[]{
             new Point(0, 3),
             new Point(2, 2),
@@ -37,7 +40,7 @@ public class InfusionRitual implements Container {
 
     private Level world;
     private BlockPos worldPos;
-    private InfusionRecipe activeRecipe;
+    private RecipeHolder<InfusionRecipe> activeRecipe;
     private boolean isDirty = false;
     private boolean hasRecipe = false;
     private int progress = 0;
@@ -70,12 +73,15 @@ public class InfusionRitual implements Container {
 
     public boolean checkRecipe() {
         if (!isValid()) return false;
-        InfusionRecipe recipe = world.getRecipeManager().getRecipeFor(InfusionRecipe.TYPE, this, world).orElse(null);
+        RecipeHolder<InfusionRecipe> recipe = world
+                .getRecipeManager()
+                .getRecipeFor(InfusionRecipe.TYPE, this, world)
+                .orElse(null);
         if (hasRecipe()) {
             if (recipe == null) {
                 reset();
                 return false;
-            } else if (activeRecipe == null || recipe.getInfusionTime() != time) {
+            } else if (activeRecipe == null || recipe.value().getInfusionTime() != time) {
                 updateRecipe(recipe);
             }
             return true;
@@ -87,7 +93,7 @@ public class InfusionRitual implements Container {
         return false;
     }
 
-    private void updateRecipe(InfusionRecipe recipe) {
+    private void updateRecipe(RecipeHolder<InfusionRecipe> recipe) {
         activeRecipe = recipe;
         hasRecipe = true;
         resetTimer();
@@ -95,7 +101,7 @@ public class InfusionRitual implements Container {
     }
 
     private void resetTimer() {
-        time = activeRecipe != null ? activeRecipe.getInfusionTime() : 0;
+        time = activeRecipe != null ? activeRecipe.value().getInfusionTime() : 0;
         progress = 0;
     }
 
@@ -115,7 +121,7 @@ public class InfusionRitual implements Container {
         progress++;
         if (progress == time) {
             clearContent();
-            input.setItem(0, activeRecipe.assemble(this, world.registryAccess()));
+            input.setItem(0, activeRecipe.value().assemble(this, world.registryAccess()));
             if (world instanceof ServerLevel sl) {
                 sl.getPlayers(p -> p.position()
                                     .subtract(new Vec3(worldPos.getX(), worldPos.getY(), worldPos.getZ()))
@@ -190,7 +196,7 @@ public class InfusionRitual implements Container {
     }
 
     @Override
-    public ItemStack getItem(int slot) {
+    public @NotNull ItemStack getItem(int slot) {
         if (slot > 8) return ItemStack.EMPTY;
         if (slot == 0) {
             return input.getItem(0);
@@ -200,12 +206,17 @@ public class InfusionRitual implements Container {
     }
 
     @Override
-    public ItemStack removeItem(int slot, int amount) {
+    public int size() {
+        return this.getContainerSize();
+    }
+
+    @Override
+    public @NotNull ItemStack removeItem(int slot, int amount) {
         return removeItemNoUpdate(slot);
     }
 
     @Override
-    public ItemStack removeItemNoUpdate(int slot) {
+    public @NotNull ItemStack removeItemNoUpdate(int slot) {
         if (slot > 8) return ItemStack.EMPTY;
         if (slot == 0) {
             return input.removeItemNoUpdate(0);

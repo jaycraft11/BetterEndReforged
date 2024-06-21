@@ -1,4 +1,4 @@
-package org.betterx.datagen.betterend.worldgen;
+package org.betterx.datagen.betterend.tags;
 
 import org.betterx.betterend.BetterEnd;
 import org.betterx.wover.block.api.BlockRegistry;

@@ -31,12 +31,12 @@ public class WallPlantFeature extends WallScatterFeature<WallPlantFeatureConfig>
         Block block = plant.getBlock();
         if (block instanceof BaseWallPlantBlock) {
             BlockState state = plant.setValue(BaseWallPlantBlock.FACING, dir);
-            return block.canSurvive(state, world, pos);
+            return state.canSurvive(world, pos);
         } else if (block instanceof BaseAttachedBlock) {
             BlockState state = plant.setValue(BlockStateProperties.FACING, dir);
-            return block.canSurvive(state, world, pos);
+            return state.canSurvive(world, pos);
         }
-        return block.canSurvive(plant, world, pos);
+        return plant.canSurvive(world, pos);
     }
 
     @Override

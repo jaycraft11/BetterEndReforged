@@ -1,12 +1,12 @@
 package org.betterx.betterend.world.structures.features;
 
-import org.betterx.bclib.api.v2.levelgen.structures.BCLStructure;
 import org.betterx.bclib.api.v2.levelgen.structures.StructurePlacementType;
 import org.betterx.bclib.api.v2.levelgen.structures.TemplateStructure;
 import org.betterx.bclib.util.StructureHelper;
 import org.betterx.betterend.BetterEnd;
 import org.betterx.betterend.registry.EndStructures;
 import org.betterx.betterend.world.structures.piece.NBTPiece;
+import org.betterx.wover.structure.api.StructureUtils;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
@@ -36,7 +36,7 @@ public class EternalPortalStructure extends TemplateStructure {
 
     @Override
     public Optional<GenerationStub> findGenerationPoint(GenerationContext context) {
-        if (!BCLStructure.isValidBiome(context)) return Optional.empty();
+        if (!StructureUtils.isValidBiome(context)) return Optional.empty();
 
         final ChunkPos chunkPos = context.chunkPos();
         final ChunkGenerator chunkGenerator = context.chunkGenerator();

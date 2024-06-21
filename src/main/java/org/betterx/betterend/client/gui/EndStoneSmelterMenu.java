@@ -1,6 +1,7 @@
 package org.betterx.betterend.client.gui;
 
 import org.betterx.bclib.recipes.AlloyingRecipe;
+import org.betterx.bclib.recipes.AlloyingRecipeInput;
 import org.betterx.betterend.blocks.entities.EndStoneSmelterBlockEntity;
 import org.betterx.betterend.client.gui.slot.SmelterFuelSlot;
 import org.betterx.betterend.client.gui.slot.SmelterOutputSlot;
@@ -13,7 +14,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.StackedContents;
 import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
 
 import net.fabricmc.api.EnvType;
@@ -21,8 +22,10 @@ import net.fabricmc.api.Environment;
 
 import org.anti_ad.mc.ipn.api.IPNIgnore;
 
+import org.jetbrains.annotations.NotNull;
+
 @IPNIgnore
-public class EndStoneSmelterMenu extends RecipeBookMenu<Container> {
+public class EndStoneSmelterMenu extends RecipeBookMenu<AlloyingRecipeInput, AlloyingRecipe> {
     public static final int INGREDIENT_SLOT_A = 0;
     public static final int INGREDIENT_SLOT_B = 1;
     public static final int FUEL_SLOT = 2;
@@ -70,7 +73,7 @@ public class EndStoneSmelterMenu extends RecipeBookMenu<Container> {
     }
 
     @Override
-    public MenuType<?> getType() {
+    public @NotNull MenuType<?> getType() {
         return EndMenuTypes.END_STONE_SMELTER;
     }
 
@@ -89,8 +92,10 @@ public class EndStoneSmelterMenu extends RecipeBookMenu<Container> {
     }
 
     @Override
-    public boolean recipeMatches(Recipe<? super Container> recipe) {
-        return recipe.matches(inventory, world);
+    public boolean recipeMatches(RecipeHolder<AlloyingRecipe> recipeHolder) {
+        return recipeHolder
+                .value()
+                .matches(new AlloyingRecipeInput(this.inventory.getItem(INGREDIENT_SLOT_A), this.inventory.getItem(INGREDIENT_SLOT_B)), this.world);
     }
 
     @Override
@@ -114,7 +119,7 @@ public class EndStoneSmelterMenu extends RecipeBookMenu<Container> {
     }
 
     @Override
-    public RecipeBookType getRecipeBookType() {
+    public @NotNull RecipeBookType getRecipeBookType() {
         return RecipeBookType.BLAST_FURNACE;
     }
 
@@ -130,7 +135,7 @@ public class EndStoneSmelterMenu extends RecipeBookMenu<Container> {
 
     protected boolean isSmeltable(ItemStack itemStack) {
         return world.getRecipeManager()
-                    .getRecipeFor(AlloyingRecipe.TYPE, new SimpleContainer(itemStack), world)
+                    .getRecipeFor(AlloyingRecipe.TYPE, new AlloyingRecipeInput(itemStack), world)
                     .isPresent();
     }
 
@@ -139,9 +144,9 @@ public class EndStoneSmelterMenu extends RecipeBookMenu<Container> {
     }
 
     @Override
-    public ItemStack quickMoveStack(Player player, int index) {
+    public @NotNull ItemStack quickMoveStack(Player player, int index) {
         Slot slot = slots.get(index);
-        if (slot == null || !slot.hasItem()) return ItemStack.EMPTY;
+        if (!slot.hasItem()) return ItemStack.EMPTY;
 
         ItemStack slotStack = slot.getItem();
         ItemStack itemStack = slotStack.copy();

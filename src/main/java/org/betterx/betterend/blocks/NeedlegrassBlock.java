@@ -1,31 +1,32 @@
 package org.betterx.betterend.blocks;
 
 import org.betterx.bclib.behaviours.BehaviourBuilders;
-import org.betterx.bclib.items.tool.BaseShearsItem;
-import org.betterx.bclib.util.MHelper;
 import org.betterx.betterend.blocks.basis.EndPlantBlock;
 import org.betterx.betterend.interfaces.survives.SurvivesOnShadowGrass;
+import org.betterx.wover.loot.api.BlockLootProvider;
+import org.betterx.wover.loot.api.LootLookupProvider;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.minecraft.world.item.enchantment.Enchantments;
-import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.pathfinder.PathComputationType;
-import net.minecraft.world.level.storage.loot.LootParams;
-import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
+import net.minecraft.world.level.storage.loot.LootPool;
+import net.minecraft.world.level.storage.loot.LootTable;
+import net.minecraft.world.level.storage.loot.entries.LootItem;
+import net.minecraft.world.level.storage.loot.functions.ApplyExplosionDecay;
+import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
+import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 
-import com.google.common.collect.Lists;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-import java.util.List;
-
-public class NeedlegrassBlock extends EndPlantBlock implements SurvivesOnShadowGrass {
+public class NeedlegrassBlock extends EndPlantBlock implements SurvivesOnShadowGrass, BlockLootProvider {
     public NeedlegrassBlock() {
         super(BehaviourBuilders
                 .createGrass(MapColor.COLOR_BLACK)
@@ -43,21 +44,28 @@ public class NeedlegrassBlock extends EndPlantBlock implements SurvivesOnShadowG
     }
 
     @Override
-    public List<ItemStack> getDrops(BlockState state, LootParams.Builder builder) {
-        ItemStack tool = builder.getParameter(LootContextParams.TOOL);
-        if (tool != null && BaseShearsItem.isShear(tool) || EnchantmentHelper.getItemEnchantmentLevel(
-                Enchantments.SILK_TOUCH,
-                tool
-        ) > 0) {
-            return Lists.newArrayList(new ItemStack(this));
-        } else {
-            return Lists.newArrayList(new ItemStack(Items.STICK, MHelper.randRange(0, 2, MHelper.RANDOM_SOURCE)));
-        }
+    public @Nullable LootTable.Builder registerBlockLoot(
+            @NotNull ResourceLocation location,
+            @NotNull LootLookupProvider provider,
+            @NotNull ResourceKey<LootTable> tableKey
+    ) {
+        return LootTable.lootTable().withPool(
+                LootPool.lootPool()
+                        .when(provider.hasSilkTouch())
+                        .setRolls(ConstantValue.exactly(1))
+                        .add(LootItem.lootTableItem(this).apply(ApplyExplosionDecay.explosionDecay()))
+        ).withPool(
+                LootPool.lootPool()
+                        .when(provider.hasSilkTouch())
+                        .setRolls(UniformGenerator.between(0, 2))
+                        .add(LootItem.lootTableItem(Items.STICK)
+                                     .apply(ApplyExplosionDecay.explosionDecay())
+                        )
+        );
     }
 
     @Override
-    @SuppressWarnings("deprecation")
-    public boolean isPathfindable(BlockState state, BlockGetter world, BlockPos pos, PathComputationType type) {
+    protected boolean isPathfindable(BlockState blockState, PathComputationType pathComputationType) {
         return false;
     }
 

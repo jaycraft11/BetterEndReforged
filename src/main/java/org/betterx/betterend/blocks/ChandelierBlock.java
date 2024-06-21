@@ -9,6 +9,7 @@ import org.betterx.betterend.client.models.Patterns;
 
 import net.minecraft.client.renderer.block.model.BlockModel;
 import net.minecraft.client.resources.model.BlockModelRotation;
+import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.client.resources.model.UnbakedModel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -77,9 +78,8 @@ public class ChandelierBlock extends BaseAttachedBlock.Metal implements RenderLa
     }
 
     @Override
-    @Environment(EnvType.CLIENT)
     public UnbakedModel getModelVariant(
-            ResourceLocation stateId,
+            ModelResourceLocation stateId,
             BlockState blockState,
             Map<ResourceLocation, UnbakedModel> modelCache
     ) {
@@ -104,9 +104,9 @@ public class ChandelierBlock extends BaseAttachedBlock.Metal implements RenderLa
             default:
                 break;
         }
-        ResourceLocation modelId = new ResourceLocation(stateId.getNamespace(), "block/" + stateId.getPath() + state);
+        ModelResourceLocation modelId = new ModelResourceLocation(stateId.id().withPrefix("block/"), state);
         registerBlockModel(stateId, modelId, blockState, modelCache);
-        return ModelsHelper.createMultiVariant(modelId, rotation.getRotation(), false);
+        return ModelsHelper.createMultiVariant(modelId.id(), rotation.getRotation(), false);
     }
 
     static {

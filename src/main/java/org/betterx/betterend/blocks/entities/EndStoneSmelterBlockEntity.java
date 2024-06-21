@@ -1,6 +1,7 @@
 package org.betterx.betterend.blocks.entities;
 
 import org.betterx.bclib.recipes.AlloyingRecipe;
+import org.betterx.bclib.recipes.AlloyingRecipeInput;
 import org.betterx.betterend.BetterEnd;
 import org.betterx.betterend.blocks.EndStoneSmelter;
 import org.betterx.betterend.client.gui.EndStoneSmelterMenu;
@@ -27,6 +28,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.BlastingRecipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.SingleRecipeInput;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.AbstractFurnaceBlockEntity;
@@ -44,6 +46,7 @@ import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import org.jetbrains.annotations.NotNull;
 
 public class EndStoneSmelterBlockEntity extends BaseContainerBlockEntity implements WorldlyContainer, RecipeCraftingHolder, StackedContentsCompatible {
     private static final int[] TOP_SLOTS = new int[]{
@@ -119,17 +122,17 @@ public class EndStoneSmelterBlockEntity extends BaseContainerBlockEntity impleme
     }
 
     @Override
-    public ItemStack getItem(int slot) {
+    public @NotNull ItemStack getItem(int slot) {
         return inventory.get(slot);
     }
 
     @Override
-    public ItemStack removeItem(int slot, int amount) {
+    public @NotNull ItemStack removeItem(int slot, int amount) {
         return ContainerHelper.removeItem(inventory, slot, amount);
     }
 
     @Override
-    public ItemStack removeItemNoUpdate(int slot) {
+    public @NotNull ItemStack removeItemNoUpdate(int slot) {
         return ContainerHelper.takeItem(inventory, slot);
     }
 
@@ -152,16 +155,28 @@ public class EndStoneSmelterBlockEntity extends BaseContainerBlockEntity impleme
 
     protected int getSmeltTime() {
         if (level == null) return 200;
+        final AlloyingRecipeInput input = new AlloyingRecipeInput(
+                this.inventory.get(EndStoneSmelterMenu.INGREDIENT_SLOT_A),
+                this.inventory.get(EndStoneSmelterMenu.INGREDIENT_SLOT_B)
+        );
         int smeltTime = level.getRecipeManager()
-                             .getRecipeFor(AlloyingRecipe.TYPE, this, level)
-                             .map(AlloyingRecipe::getSmeltTime)
+                             .getRecipeFor(
+                                     AlloyingRecipe.TYPE,
+                                     input,
+                                     level
+                             )
+                             .map(r -> r.value().getSmeltTime())
                              .orElse(0);
         if (smeltTime == 0) {
             smeltTime = level.getRecipeManager()
-                             .getRecipeFor(RecipeType.BLASTING, this, level)
-                             .map(BlastingRecipe::getCookingTime)
+                             .getRecipeFor(
+                                     RecipeType.BLASTING,
+                                     new SingleRecipeInput(input.any()),
+                                     level
+                             )
+                             .map(r -> r.value().getCookingTime())
                              .orElse(200);
-            smeltTime /= 1.5;
+            smeltTime = (int) (smeltTime / 1.5f);
         }
         return smeltTime;
     }
@@ -216,12 +231,22 @@ public class EndStoneSmelterBlockEntity extends BaseContainerBlockEntity impleme
     }
 
     @Override
-    protected Component getDefaultName() {
+    protected @NotNull Component getDefaultName() {
         return Component.translatable(String.format("block.%s.%s", BetterEnd.MOD_ID, EndStoneSmelter.ID));
     }
 
     @Override
-    protected AbstractContainerMenu createMenu(int syncId, Inventory playerInventory) {
+    protected @NotNull NonNullList<ItemStack> getItems() {
+        return this.inventory;
+    }
+
+    @Override
+    protected void setItems(NonNullList<ItemStack> nonNullList) {
+        this.inventory = nonNullList;
+    }
+
+    @Override
+    protected @NotNull AbstractContainerMenu createMenu(int syncId, Inventory playerInventory) {
         return new EndStoneSmelterMenu(syncId, playerInventory, this, propertyDelegate);
     }
 
@@ -241,20 +266,23 @@ public class EndStoneSmelterBlockEntity extends BaseContainerBlockEntity impleme
         boolean burning = initialBurning;
         if (!tickLevel.isClientSide) {
             ItemStack fuel = blockEntity.inventory.get(EndStoneSmelterMenu.FUEL_SLOT);
-            if (!burning && (fuel.isEmpty()
-                    || blockEntity.inventory.get(EndStoneSmelterMenu.INGREDIENT_SLOT_A).isEmpty()
-                    && blockEntity.inventory.get(EndStoneSmelterMenu.INGREDIENT_SLOT_B).isEmpty())
+            AlloyingRecipeInput input = new AlloyingRecipeInput(
+                    blockEntity.inventory.get(EndStoneSmelterMenu.INGREDIENT_SLOT_A),
+                    blockEntity.inventory.get(EndStoneSmelterMenu.INGREDIENT_SLOT_B)
+            );
+
+            if (!burning && (fuel.isEmpty() || (input.first().isEmpty() && input.second().isEmpty()))
             ) {
                 if (blockEntity.smeltTime > 0) {
                     blockEntity.smeltTime = Mth.clamp(blockEntity.smeltTime - 2, 0, blockEntity.smeltTimeTotal);
                 }
             } else {
-                RecipeHolder<AlloyingRecipe> recipe = tickLevel.getRecipeManager()
-                                                               .getRecipeFor(AlloyingRecipe.TYPE, blockEntity, tickLevel)
-                                                               .orElse(null);
+                RecipeHolder<?> recipe = tickLevel.getRecipeManager()
+                                                  .getRecipeFor(AlloyingRecipe.TYPE, input, tickLevel)
+                                                  .orElse(null);
                 if (recipe == null) {
                     recipe = tickLevel.getRecipeManager()
-                                      .getRecipeFor(RecipeType.BLASTING, blockEntity, tickLevel)
+                                      .getRecipeFor(RecipeType.BLASTING, new SingleRecipeInput(input.any()), tickLevel)
                                       .orElse(null);
                 }
                 boolean accepted = blockEntity.canAcceptRecipeOutput(recipe, tickLevel.registryAccess());
@@ -333,7 +361,7 @@ public class EndStoneSmelterBlockEntity extends BaseContainerBlockEntity impleme
     private void craftRecipe(RecipeHolder<?> recipe, RegistryAccess acc) {
         if (recipe == null || !canAcceptRecipeOutput(recipe, acc)) return;
 
-        ItemStack result = recipe.getResultItem(acc);
+        ItemStack result = recipe.value().getResultItem(acc);
         ItemStack output = inventory.get(EndStoneSmelterMenu.RESULT_SLOT);
         if (output.isEmpty()) {
             inventory.set(EndStoneSmelterMenu.RESULT_SLOT, result.copy());
@@ -346,15 +374,14 @@ public class EndStoneSmelterBlockEntity extends BaseContainerBlockEntity impleme
             setRecipeUsed(recipe);
         }
 
-        if (recipe instanceof AlloyingRecipe) {
-            inventory.get(EndStoneSmelterMenu.INGREDIENT_SLOT_A).shrink(1);
-            inventory.get(EndStoneSmelterMenu.INGREDIENT_SLOT_B).shrink(1);
+        AlloyingRecipeInput input = new AlloyingRecipeInput(
+                inventory.get(EndStoneSmelterMenu.INGREDIENT_SLOT_A),
+                inventory.get(EndStoneSmelterMenu.INGREDIENT_SLOT_B)
+        );
+        if (recipe.value() instanceof AlloyingRecipe) {
+            input.shrinkBoth();
         } else {
-            if (!inventory.get(EndStoneSmelterMenu.INGREDIENT_SLOT_A).isEmpty()) {
-                inventory.get(EndStoneSmelterMenu.INGREDIENT_SLOT_A).shrink(1);
-            } else {
-                inventory.get(EndStoneSmelterMenu.INGREDIENT_SLOT_B).shrink(1);
-            }
+            input.any().shrink(1);
         }
     }
 
@@ -380,9 +407,7 @@ public class EndStoneSmelterBlockEntity extends BaseContainerBlockEntity impleme
     }
 
     @Override
-    public int[] getSlotsForFace(Direction side) {
-//        var facing = getBlockState().getValue(EndStoneSmelter.FACING);
-//        if (side == facing) return JUST_A;
+    public int @NotNull [] getSlotsForFace(Direction side) {
         return switch (side) {
             case DOWN -> BOTTOM_SLOTS;
             case UP -> TOP_SLOTS;

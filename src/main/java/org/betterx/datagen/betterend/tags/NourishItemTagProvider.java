@@ -1,27 +1,30 @@
-package org.betterx.betterend.integration;
+package org.betterx.datagen.betterend.tags;
 
-import org.betterx.bclib.integration.ModIntegration;
 import org.betterx.betterend.BetterEnd;
 import org.betterx.betterend.registry.EndItems;
-import org.betterx.worlds.together.tag.v3.TagManager;
+import org.betterx.wover.core.api.ModCore;
+import org.betterx.wover.datagen.api.WoverTagProvider;
+import org.betterx.wover.tag.api.TagManager;
+import org.betterx.wover.tag.api.event.context.ItemTagBootstrapContext;
 
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 
-public class NourishIntegration extends ModIntegration {
-    public NourishIntegration() {
-        super(BetterEnd.NOURISH);
+public class NourishItemTagProvider extends WoverTagProvider.ForItems {
+    public NourishItemTagProvider(ModCore modCore) {
+        super(modCore);
     }
 
     @Override
-    public void init() {
-        TagKey<Item> fats = getItemTag("fats");
-        TagKey<Item> fruit = getItemTag("fruit");
-        TagKey<Item> protein = getItemTag("protein");
-        TagKey<Item> sweets = getItemTag("sweets");
+    protected void prepareTags(ItemTagBootstrapContext context) {
+        TagKey<Item> fats = TagManager.ITEMS.makeTag(BetterEnd.NOURISH, "fats");
+        TagKey<Item> fruit = TagManager.ITEMS.makeTag(BetterEnd.NOURISH, "fruit");
+        TagKey<Item> protein = TagManager.ITEMS.makeTag(BetterEnd.NOURISH, "protein");
+        TagKey<Item> sweets = TagManager.ITEMS.makeTag(BetterEnd.NOURISH, "sweets");
 
-        TagManager.ITEMS.add(fats, EndItems.END_FISH_RAW, EndItems.END_FISH_COOKED);
-        TagManager.ITEMS.add(
+
+        context.add(fats, EndItems.END_FISH_RAW, EndItems.END_FISH_COOKED);
+        context.add(
                 fruit,
                 EndItems.SHADOW_BERRY_RAW,
                 EndItems.SHADOW_BERRY_COOKED,
@@ -34,7 +37,7 @@ public class NourishIntegration extends ModIntegration {
                 EndItems.CHORUS_MUSHROOM_COOKED,
                 EndItems.BOLUX_MUSHROOM_COOKED
         );
-        TagManager.ITEMS.add(
+        context.add(
                 protein,
                 EndItems.END_FISH_RAW,
                 EndItems.END_FISH_COOKED,
@@ -42,7 +45,7 @@ public class NourishIntegration extends ModIntegration {
                 EndItems.BOLUX_MUSHROOM_COOKED,
                 EndItems.CAVE_PUMPKIN_PIE
         );
-        TagManager.ITEMS.add(
+        context.add(
                 sweets,
                 EndItems.SHADOW_BERRY_JELLY,
                 EndItems.SWEET_BERRY_JELLY,

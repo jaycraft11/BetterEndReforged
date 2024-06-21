@@ -1,8 +1,6 @@
 package org.betterx.betterend.blocks;
 
 import org.betterx.bclib.blocks.BaseBlockNotFull;
-import org.betterx.wover.block.api.BlockProperties;
-import org.betterx.wover.block.api.BlockProperties.TripleShape;
 import org.betterx.bclib.client.render.BCLRenderLayer;
 import org.betterx.bclib.interfaces.RenderLayerProvider;
 import org.betterx.bclib.util.BlocksHelper;
@@ -10,6 +8,8 @@ import org.betterx.bclib.util.MHelper;
 import org.betterx.betterend.blocks.EndBlockProperties.CactusBottom;
 import org.betterx.betterend.interfaces.PottablePlant;
 import org.betterx.betterend.registry.EndBlocks;
+import org.betterx.wover.block.api.BlockProperties;
+import org.betterx.wover.block.api.BlockProperties.TripleShape;
 import org.betterx.wover.tag.api.predefined.CommonBlockTags;
 
 import net.minecraft.core.BlockPos;
@@ -318,12 +318,7 @@ public class NeonCactusPlantBlock extends BaseBlockNotFull implements SimpleWate
     }
 
     @Override
-    public boolean isPathfindable(
-            BlockState blockState,
-            BlockGetter blockGetter,
-            BlockPos blockPos,
-            PathComputationType pathComputationType
-    ) {
+    protected boolean isPathfindable(BlockState blockState, PathComputationType pathComputationType) {
         return false;
     }
 

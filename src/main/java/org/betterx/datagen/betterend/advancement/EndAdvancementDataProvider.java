@@ -30,7 +30,7 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 public class EndAdvancementDataProvider extends AdvancementDataProvider {
-    protected EndAdvancementDataProvider(
+    public EndAdvancementDataProvider(
             FabricDataOutput output,
             CompletableFuture<HolderLookup.Provider> registryLookup
     ) {

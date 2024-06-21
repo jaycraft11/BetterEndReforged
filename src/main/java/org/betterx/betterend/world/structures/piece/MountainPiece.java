@@ -6,8 +6,10 @@ import org.betterx.betterend.noise.OpenSimplexNoise;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.core.Holder;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
@@ -29,7 +31,7 @@ public abstract class MountainPiece extends BasePiece {
     protected float radius;
     protected float height;
     protected float r2;
-    protected ResourceLocation biomeID;
+    protected ResourceKey<Biome> biomeID;
     protected int seed1;
     protected int seed2;
 
@@ -50,7 +52,7 @@ public abstract class MountainPiece extends BasePiece {
         this.seed2 = random.nextInt();
         this.noise1 = new OpenSimplexNoise(this.seed1);
         this.noise2 = new OpenSimplexNoise(this.seed2);
-        this.biomeID = BiomeAPI.getBiomeID(biome);
+        this.biomeID = biome.unwrapKey().orElse(null);
         makeBoundingBox();
     }
 
@@ -64,17 +66,17 @@ public abstract class MountainPiece extends BasePiece {
         tag.put("center", NbtUtils.writeBlockPos(center));
         tag.putFloat("radius", radius);
         tag.putFloat("height", height);
-        tag.putString("biome", biomeID.toString());
+        tag.putString("biome", biomeID.location().toString());
         tag.putInt("seed1", seed1);
         tag.putInt("seed2", seed2);
     }
 
     @Override
     protected void fromNbt(CompoundTag tag) {
-        center = NbtUtils.readBlockPos(tag.getCompound("center"));
+        center = NbtUtils.readBlockPos(tag, "center").orElse(BlockPos.ZERO);
         radius = tag.getFloat("radius");
         height = tag.getFloat("height");
-        biomeID = new ResourceLocation(tag.getString("biome"));
+        biomeID = ResourceKey.create(Registries.BIOME, ResourceLocation.parse(tag.getString("biome")));
         r2 = radius * radius;
         seed1 = tag.getInt("seed1");
         seed2 = tag.getInt("seed2");
@@ -89,7 +91,7 @@ public abstract class MountainPiece extends BasePiece {
             return h;
         }
 
-        if (!BiomeAPI.getBiomeID(world.getBiome(pos)).equals(biomeID)) {
+        if (!world.getBiome(pos).is(biomeID)) {
             heightmap.put(p, -10);
             return -10;
         }

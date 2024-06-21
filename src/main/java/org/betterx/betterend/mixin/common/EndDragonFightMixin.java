@@ -72,7 +72,10 @@ public class EndDragonFightMixin {
                 BlockPos central = BlockPos.ZERO.relative(dir, 4);
                 List<EndCrystal> crystalList = level.getEntitiesOfClass(
                         EndCrystal.class,
-                        new AABB(central.below(255).south().west(), central.above(255).north().east())
+                        new AABB(
+                                central.below(255).south().west().getCenter(),
+                                central.above(255).north().east().getCenter()
+                        )
                 );
 
                 int count = crystalList.size();

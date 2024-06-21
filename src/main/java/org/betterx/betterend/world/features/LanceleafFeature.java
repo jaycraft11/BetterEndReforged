@@ -1,6 +1,5 @@
 package org.betterx.betterend.world.features;
 
-import org.betterx.bclib.api.v2.levelgen.features.features.DefaultFeature;
 import org.betterx.betterend.blocks.basis.EndPlantWithAgeBlock;
 import org.betterx.betterend.registry.EndBlocks;
 
@@ -23,7 +22,7 @@ public class LanceleafFeature extends ScatterFeature<ScatterFeatureConfig> {
             float radius
     ) {
         //noinspection deprecation
-        return EndBlocks.LANCELEAF_SEED.canSurvive(DefaultFeature.AIR, world, blockPos);
+        return EndBlocks.LANCELEAF_SEED.defaultBlockState().canSurvive(world, blockPos);
     }
 
     @Override

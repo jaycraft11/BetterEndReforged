@@ -5,6 +5,7 @@ import org.betterx.betterend.BetterEnd;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.ImageButton;
+import net.minecraft.client.gui.components.WidgetSprites;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.recipebook.RecipeBookComponent;
 import net.minecraft.client.gui.screens.recipebook.RecipeUpdateListener;
@@ -36,22 +37,21 @@ public class EndStoneSmelterScreen extends AbstractContainerScreen<EndStoneSmelt
         narrow = width < 379;
         recipeBook.init(width, height, minecraft, narrow, menu);
         leftPos = recipeBook.updateScreenPosition(width, imageWidth);
-        addRenderableWidget(new ImageButton(
+        final var button = new ImageButton(
                 leftPos + 20,
                 height / 2 - 49,
                 20,
                 18,
-                0,
-                0,
-                19,
-                RECIPE_BUTTON_TEXTURE,
+                new WidgetSprites(RECIPE_BUTTON_TEXTURE, RECIPE_BUTTON_TEXTURE),
                 (buttonWidget) -> {
                     recipeBook.initVisuals();
                     recipeBook.toggleVisibility();
                     leftPos = recipeBook.updateScreenPosition(width, imageWidth);
-                    ((ImageButton) buttonWidget).setPosition(leftPos + 20, height / 2 - 49);
+                    buttonWidget.setPosition(leftPos + 20, height / 2 - 49);
                 }
-        ));
+        );
+
+        addRenderableWidget(button);
         titleLabelX = (imageWidth - font.width(title)) / 2;
     }
 
@@ -64,7 +64,7 @@ public class EndStoneSmelterScreen extends AbstractContainerScreen<EndStoneSmelt
 
     @Override
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float delta) {
-        renderBackground(guiGraphics);
+        renderBackground(guiGraphics, mouseX, mouseY, delta);
         if (recipeBook.isVisible() && narrow) {
             renderBg(guiGraphics, delta, mouseX, mouseY);
             recipeBook.render(guiGraphics, mouseX, mouseY, delta);

@@ -1,6 +1,7 @@
 package org.betterx.datagen.betterend.tags;
 
 import org.betterx.bclib.api.v2.ComposterAPI;
+import org.betterx.betterend.complexmaterials.MaterialManager;
 import org.betterx.betterend.item.tool.EndHammerItem;
 import org.betterx.betterend.registry.EndBlocks;
 import org.betterx.betterend.registry.EndItems;
@@ -43,5 +44,23 @@ public class ItemTagProvider extends WoverTagProvider.ForItems {
         context.add(EndTags.ALLOYING_COPPER, Items.COPPER_ORE, Items.DEEPSLATE_COPPER_ORE, Items.RAW_COPPER);
 
         context.add(ItemTags.FISHES, EndItems.END_FISH_RAW, EndItems.END_FISH_COOKED);
+
+/*
+THALLASIUM = IRON
+TERMINITE = DIAMOND
+AETERNIUM > NETHERITE
+ */
+        context.add(EndTags.ANVIL_AETERNIUM_TOOL, EndItems.AETERNIUM_HAMMER);
+
+        context.add(EndTags.ANVIL_NETHERITE_TOOL, EndTags.ANVIL_AETERNIUM_TOOL);
+        context.add(EndTags.ANVIL_NETHERITE_TOOL, EndItems.NETHERITE_HAMMER);
+
+        context.add(EndTags.ANVIL_DIAMOND_TOOL, EndTags.ANVIL_NETHERITE_TOOL);
+        context.add(EndTags.ANVIL_DIAMOND_TOOL, EndItems.DIAMOND_HAMMER, EndBlocks.TERMINITE.hammer);
+        
+        context.add(EndTags.ANVIL_IRON_TOOL, EndTags.ANVIL_DIAMOND_TOOL);
+        context.add(EndTags.ANVIL_IRON_TOOL, EndItems.IRON_HAMMER, EndItems.GOLDEN_HAMMER, EndBlocks.THALLASIUM.hammer);
+
+        MaterialManager.stream().forEach(m -> m.registerItemTags(context));
     }
 }

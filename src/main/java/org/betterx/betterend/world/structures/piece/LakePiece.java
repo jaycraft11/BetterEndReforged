@@ -13,8 +13,10 @@ import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
 import net.minecraft.core.SectionPos;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
@@ -46,7 +48,7 @@ public class LakePiece extends BasePiece {
     private float depth;
     private int seed;
 
-    private ResourceLocation biomeID;
+    private ResourceKey<Biome> biomeID;
 
     public LakePiece(BlockPos center, float radius, float depth, RandomSource random, Holder<Biome> biome) {
         super(EndStructures.LAKE_PIECE, random.nextInt(), null);
@@ -56,7 +58,7 @@ public class LakePiece extends BasePiece {
         this.seed = random.nextInt();
         this.noise = new OpenSimplexNoise(this.seed);
         this.aspect = radius / depth;
-        this.biomeID = BiomeAPI.getBiomeID(biome.value());
+        this.biomeID = biome.unwrapKey().orElse(null);
         makeBoundingBox();
     }
 
@@ -76,13 +78,13 @@ public class LakePiece extends BasePiece {
 
     @Override
     protected void fromNbt(CompoundTag tag) {
-        center = NbtUtils.readBlockPos(tag.getCompound("center"));
+        center = NbtUtils.readBlockPos(tag, "center").orElse(BlockPos.ZERO);
         radius = tag.getFloat("radius");
         depth = tag.getFloat("depth");
         seed = tag.getInt("seed");
         noise = new OpenSimplexNoise(seed);
         aspect = radius / depth;
-        biomeID = new ResourceLocation(tag.getString("biome"));
+        biomeID = ResourceKey.create(Registries.BIOME, ResourceLocation.parse(tag.getString("biome")));
     }
 
     @Override
@@ -243,7 +245,7 @@ public class LakePiece extends BasePiece {
             return h;
         }
 
-        if (!BiomeAPI.getBiomeID(world.getBiome(pos)).equals(biomeID)) {
+        if (!world.getBiome(pos).is(biomeID)) {
             heightmap.put(p, (byte) 0);
             return 0;
         }

@@ -2,14 +2,8 @@ package org.betterx.datagen.betterend;
 
 import org.betterx.betterend.BetterEnd;
 import org.betterx.datagen.betterend.advancement.EndAdvancementDataProvider;
-import org.betterx.datagen.betterend.recipes.EndBlockLootTableProvider;
-import org.betterx.datagen.betterend.recipes.EndChestLootTableProvider;
-import org.betterx.datagen.betterend.recipes.EndRecipeDataProvider;
-import org.betterx.datagen.betterend.recipes.JukeboxRegistryProvider;
-import org.betterx.datagen.betterend.tags.BiomeTagProvider;
-import org.betterx.datagen.betterend.tags.BlockTagProvider;
-import org.betterx.datagen.betterend.tags.ItemTagProvider;
-import org.betterx.datagen.betterend.worldgen.BYGBlockTagsProvider;
+import org.betterx.datagen.betterend.recipes.*;
+import org.betterx.datagen.betterend.tags.*;
 import org.betterx.datagen.betterend.worldgen.EndBiomeModificationProvider;
 import org.betterx.datagen.betterend.worldgen.EndBiomesProvider;
 import org.betterx.datagen.betterend.worldgen.StructureDataProvider;
@@ -38,11 +32,17 @@ public class BetterEndDatagen extends WoverDataGenEntryPoint {
         globalPack.addMultiProvider(CaveFeatureProvider::new);
         globalPack.addProvider(EndBiomeModificationProvider::new);
         globalPack.addProvider(EndChestLootTableProvider::new);
+        globalPack.addProvider(EndCraftingRecipesProvider::new);
+        globalPack.addProvider(EndFurnaceRecipeProvider::new);
+        globalPack.addProvider(SmithingRecipesProvider::new);
+        globalPack.addProvider(AlloyingRecipesProvider::new);
+        globalPack.addProvider(AnvilRecipesProvider::new);
+        globalPack.addProvider(InfusionRecipesProvider::new);
+        globalPack.addProvider(EndMaterialRecipesProvider::new);
 
 
         globalPack.callOnInitializeDatapack((generator, pack, location) -> {
             if (location == null) {
-                pack.addProvider(EndRecipeDataProvider::new);
                 pack.addProvider(EndAdvancementDataProvider::new);
                 pack.addProvider(EndBlockLootTableProvider::new);
             }
@@ -54,6 +54,14 @@ public class BetterEndDatagen extends WoverDataGenEntryPoint {
         addDatapack(BetterEnd.BYG_ADDITIONS_PACK)
                 .addMultiProvider(BYGFeatureProvider::new)
                 .addProvider(BYGBlockTagsProvider::new);
+
+        //Add providers for the nourish integration
+        addDatapack(BetterEnd.NOURISH_ADDITIONS_PACK)
+                .addProvider(NourishItemTagProvider::new);
+
+        //Add providers for the patchouli integration
+        addDatapack(BetterEnd.PATCHOULI_ADDITIONS_PACK)
+                .addProvider(PatchouliBookProvider::new);
     }
 
     @Override

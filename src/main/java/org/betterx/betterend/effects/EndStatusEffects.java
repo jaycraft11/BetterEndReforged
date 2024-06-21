@@ -3,6 +3,7 @@ package org.betterx.betterend.effects;
 import org.betterx.betterend.BetterEnd;
 import org.betterx.betterend.effects.status.EndVeilEffect;
 
+import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.effect.MobEffect;
@@ -35,9 +36,9 @@ public class EndStatusEffects {
             true
     );
 
-    public final static MobEffect END_VEIL = registerEffect("end_veil", new EndVeilEffect());
+    public final static Holder<MobEffect> END_VEIL = registerEffect("end_veil", new EndVeilEffect());
 
-    public static <E extends MobEffect> MobEffect registerEffect(String name, E effect) {
-        return Registry.register(BuiltInRegistries.MOB_EFFECT, BetterEnd.C.mk(name), effect);
+    public static <E extends MobEffect> Holder<MobEffect> registerEffect(String name, E effect) {
+        return Registry.registerForHolder(BuiltInRegistries.MOB_EFFECT, BetterEnd.C.mk(name), effect);
     }
 }

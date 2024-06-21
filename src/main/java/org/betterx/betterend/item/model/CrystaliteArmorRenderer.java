@@ -1,6 +1,7 @@
 package org.betterx.betterend.item.model;
 
 import org.betterx.bclib.client.render.HumanoidArmorRenderer;
+import org.betterx.betterend.BetterEnd;
 import org.betterx.betterend.registry.EndItems;
 
 import net.minecraft.client.model.HumanoidModel;
@@ -17,9 +18,9 @@ import org.jetbrains.annotations.NotNull;
 
 @Environment(EnvType.CLIENT)
 public class CrystaliteArmorRenderer extends HumanoidArmorRenderer {
-    private final static ResourceLocation FIRST_LAYER = new ResourceLocation(
+    private final static ResourceLocation FIRST_LAYER = BetterEnd.C.mk(
             "textures/models/armor/crystalite_layer_1.png");
-    private final static ResourceLocation SECOND_LAYER = new ResourceLocation(
+    private final static ResourceLocation SECOND_LAYER = BetterEnd.C.mk(
             "textures/models/armor/crystalite_layer_2.png");
     private final static CrystaliteHelmetModel HELMET_MODEL = CrystaliteHelmetModel.createModel(null);
     private final static CrystaliteChestplateModel CHEST_MODEL = CrystaliteChestplateModel.createRegularModel(null);
@@ -54,7 +55,7 @@ public class CrystaliteArmorRenderer extends HumanoidArmorRenderer {
         if (slot == EquipmentSlot.LEGS) return LEGGINGS_MODEL;
         if (slot == EquipmentSlot.FEET) return BOOTS_MODEL;
         if (slot == EquipmentSlot.CHEST) {
-            if (entity instanceof AbstractClientPlayer acp && acp.getModelName().equals("slim")) {
+            if (entity instanceof AbstractClientPlayer acp && acp.getSkin().model().id().equals("slim")) {
                 return CHEST_MODEL_SLIM;
             } else {
                 return CHEST_MODEL;

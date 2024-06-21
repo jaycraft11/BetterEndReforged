@@ -9,7 +9,7 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeHolder;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -37,12 +37,13 @@ public class EndStoneSmelterRecipeBookScreen extends BlastingRecipeBookComponent
     }
 
     @Override
-    public void setupGhostRecipe(Recipe<?> recipe, List<Slot> slots) {
+    public void setupGhostRecipe(RecipeHolder<?> recipe, List<Slot> slots) {
+
         this.ghostRecipe.clear();
-        ItemStack result = recipe.getResultItem(Minecraft.getInstance().level.registryAccess());
+        ItemStack result = recipe.value().getResultItem(Minecraft.getInstance().level.registryAccess());
         this.ghostRecipe.setRecipe(recipe);
         this.ghostRecipe.addIngredient(Ingredient.of(result), (slots.get(3)).x, (slots.get(3)).y);
-        NonNullList<Ingredient> inputs = recipe.getIngredients();
+        NonNullList<Ingredient> inputs = recipe.value().getIngredients();
 
         this.fuelSlot = slots.get(2);
         if (fuelSlot.getItem().isEmpty()) {

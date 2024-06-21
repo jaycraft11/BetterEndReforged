@@ -37,7 +37,7 @@ public class SinglePlantFeature extends ScatterFeature<SinglePlantFeatureConfig>
     ) {
         this.plant = cfg.getPlantState(random, blockPos);
         //noinspection deprecation
-        return plant.getBlock().canSurvive(plant, world, blockPos);
+        return plant.canSurvive(world, blockPos);
     }
 
     @Override

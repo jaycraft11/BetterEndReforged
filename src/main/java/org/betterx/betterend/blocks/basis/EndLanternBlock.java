@@ -2,8 +2,10 @@ package org.betterx.betterend.blocks.basis;
 
 import org.betterx.bclib.blocks.BaseBlockNotFull;
 import org.betterx.bclib.client.models.ModelsHelper;
+import org.betterx.bclib.interfaces.RuntimeBlockModelProvider;
 import org.betterx.wover.block.api.BlockProperties;
 
+import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.client.resources.model.UnbakedModel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -33,7 +35,7 @@ import java.util.Map;
 import org.jetbrains.annotations.Nullable;
 
 @SuppressWarnings("deprecation")
-public class EndLanternBlock extends BaseBlockNotFull.Wood implements SimpleWaterloggedBlock, LiquidBlockContainer {
+public class EndLanternBlock extends BaseBlockNotFull.Wood implements SimpleWaterloggedBlock, LiquidBlockContainer, RuntimeBlockModelProvider {
     public static final BooleanProperty IS_FLOOR = BlockProperties.IS_FLOOR;
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 
@@ -136,13 +138,13 @@ public class EndLanternBlock extends BaseBlockNotFull.Wood implements SimpleWate
     @Override
     @Environment(EnvType.CLIENT)
     public UnbakedModel getModelVariant(
-            ResourceLocation stateId,
+            ModelResourceLocation stateId,
             BlockState blockState,
             Map<ResourceLocation, UnbakedModel> modelCache
     ) {
         String floor = blockState.getValue(IS_FLOOR) ? "_floor" : "";
-        ResourceLocation modelId = ResourceLocation.fromNamespaceAndPath(stateId.getNamespace(), "block/" + stateId.getPath() + floor);
+        ModelResourceLocation modelId = new ModelResourceLocation(stateId.id().withPrefix("block/"), floor);
         registerBlockModel(stateId, modelId, blockState, modelCache);
-        return ModelsHelper.createBlockSimple(modelId);
+        return ModelsHelper.createBlockSimple(modelId.id());
     }
 }

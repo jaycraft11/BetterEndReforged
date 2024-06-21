@@ -1,9 +1,8 @@
 package org.betterx.betterend.blocks.basis;
 
 import org.betterx.bclib.blocks.BaseBlockNotFull;
-import org.betterx.wover.block.api.BlockProperties;
 import org.betterx.bclib.client.models.ModelsHelper;
-import org.betterx.bclib.interfaces.TagProvider;
+import org.betterx.bclib.interfaces.RuntimeBlockModelProvider;
 import org.betterx.betterend.blocks.EndBlockProperties;
 import org.betterx.betterend.blocks.EndBlockProperties.PedestalState;
 import org.betterx.betterend.blocks.InfusionPedestal;
@@ -12,8 +11,12 @@ import org.betterx.betterend.blocks.entities.PedestalBlockEntity;
 import org.betterx.betterend.client.models.Patterns;
 import org.betterx.betterend.registry.EndTags;
 import org.betterx.betterend.rituals.InfusionRitual;
+import org.betterx.wover.block.api.BlockProperties;
+import org.betterx.wover.block.api.BlockTagProvider;
+import org.betterx.wover.tag.api.event.context.TagBootstrapContext;
 
 import net.minecraft.client.renderer.block.model.BlockModel;
+import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.client.resources.model.UnbakedModel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
@@ -21,11 +24,9 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.tags.TagKey;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
@@ -34,6 +35,7 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
@@ -47,7 +49,6 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -57,9 +58,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.ToIntFunction;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class PedestalBlock extends BaseBlockNotFull implements EntityBlock, TagProvider {
+public class PedestalBlock extends BaseBlockNotFull implements EntityBlock, BlockTagProvider, RuntimeBlockModelProvider {
     public final static EnumProperty<PedestalState> STATE = EndBlockProperties.PEDESTAL_STATE;
     public static final BooleanProperty HAS_ITEM = EndBlockProperties.HAS_ITEM;
     public static final BooleanProperty HAS_LIGHT = BlockProperties.HAS_LIGHT;
@@ -75,7 +77,7 @@ public class PedestalBlock extends BaseBlockNotFull implements EntityBlock, TagP
     protected float height = 1.0F;
 
     public PedestalBlock(Block parent) {
-        super(FabricBlockSettings.copyOf(parent).luminance(getLuminance(parent.defaultBlockState())));
+        super(BlockBehaviour.Properties.ofFullCopy(parent).lightLevel(getLuminance(parent.defaultBlockState())));
         this.registerDefaultState(
                 stateDefinition
                         .any()
@@ -102,8 +104,8 @@ public class PedestalBlock extends BaseBlockNotFull implements EntityBlock, TagP
     }
 
     @Override
-    @SuppressWarnings("deprecation")
-    public InteractionResult use(
+    public @NotNull ItemInteractionResult useItemOn(
+            ItemStack itemStack,
             BlockState state,
             Level level,
             BlockPos pos,
@@ -112,30 +114,28 @@ public class PedestalBlock extends BaseBlockNotFull implements EntityBlock, TagP
             BlockHitResult hit
     ) {
         if (!state.is(this) || !isPlaceable(state)) {
-            return InteractionResult.PASS;
+            return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
         }
         BlockEntity blockEntity = level.getBlockEntity(pos);
-        if (blockEntity instanceof PedestalBlockEntity) {
-            PedestalBlockEntity pedestal = (PedestalBlockEntity) blockEntity;
+        if (blockEntity instanceof PedestalBlockEntity pedestal) {
             if (pedestal.isEmpty()) {
-                ItemStack itemStack = player.getItemInHand(hand);
-                if (itemStack.isEmpty()) return InteractionResult.CONSUME;
+                if (itemStack.isEmpty()) return ItemInteractionResult.CONSUME;
                 pedestal.setItem(0, itemStack);
                 level.blockEntityChanged(pos);
                 checkRitual(level, player, pos);
-                return InteractionResult.sidedSuccess(level.isClientSide());
+                return ItemInteractionResult.sidedSuccess(level.isClientSide());
             } else {
-                ItemStack itemStack = pedestal.getItem(0);
-                if (player.addItem(itemStack)) {
+                ItemStack stack = pedestal.getItem(0);
+                if (player.addItem(stack)) {
                     pedestal.removeItemNoUpdate(0);
                     level.blockEntityChanged(pos);
                     checkRitual(level, player, pos);
-                    return InteractionResult.sidedSuccess(level.isClientSide());
+                    return ItemInteractionResult.sidedSuccess(level.isClientSide());
                 }
-                return InteractionResult.FAIL;
+                return ItemInteractionResult.FAIL;
             }
         }
-        return InteractionResult.PASS;
+        return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
     }
 
     @Override
@@ -146,8 +146,7 @@ public class PedestalBlock extends BaseBlockNotFull implements EntityBlock, TagP
             BlockState state = levelAccessor.getBlockState(posMutable);
             if (state.getBlock() instanceof InfusionPedestal) {
                 BlockEntity blockEntity = levelAccessor.getBlockEntity(posMutable);
-                if (blockEntity instanceof InfusionPedestalEntity) {
-                    InfusionPedestalEntity pedestal = (InfusionPedestalEntity) blockEntity;
+                if (blockEntity instanceof InfusionPedestalEntity pedestal) {
                     if (pedestal.hasRitual()) {
                         pedestal.getRitual().setDirty();
                     }
@@ -194,8 +193,7 @@ public class PedestalBlock extends BaseBlockNotFull implements EntityBlock, TagP
     }
 
     @Override
-    @SuppressWarnings("deprecation")
-    public BlockState updateShape(
+    public @NotNull BlockState updateShape(
             BlockState state,
             Direction direction,
             BlockState newState,
@@ -258,8 +256,7 @@ public class PedestalBlock extends BaseBlockNotFull implements EntityBlock, TagP
         if (state.is(this)) {
             if (isPlaceable(state)) {
                 BlockEntity blockEntity = builder.getOptionalParameter(LootContextParams.BLOCK_ENTITY);
-                if (blockEntity instanceof PedestalBlockEntity) {
-                    PedestalBlockEntity pedestal = (PedestalBlockEntity) blockEntity;
+                if (blockEntity instanceof PedestalBlockEntity pedestal) {
                     if (!pedestal.isEmpty()) {
                         drop.add(pedestal.getItem(0));
                     }
@@ -273,8 +270,7 @@ public class PedestalBlock extends BaseBlockNotFull implements EntityBlock, TagP
 
     private void moveStoredStack(LevelAccessor world, BlockState state, BlockPos pos) {
         BlockEntity blockEntity = world.getBlockEntity(pos);
-        if (blockEntity instanceof PedestalBlockEntity && state.is(this)) {
-            PedestalBlockEntity pedestal = (PedestalBlockEntity) blockEntity;
+        if (blockEntity instanceof PedestalBlockEntity pedestal && state.is(this)) {
             ItemStack stack = pedestal.removeItemNoUpdate(0);
             if (!stack.isEmpty()) {
                 moveStoredStack(blockEntity, world, stack, pos.above());
@@ -290,8 +286,7 @@ public class PedestalBlock extends BaseBlockNotFull implements EntityBlock, TagP
             moveStoredStack(blockEntity, world, stack, pos.above());
         } else if (!isPlaceable(state)) {
             dropStoredStack(blockEntity, stack, pos);
-        } else if (blockEntity instanceof PedestalBlockEntity) {
-            PedestalBlockEntity pedestal = (PedestalBlockEntity) blockEntity;
+        } else if (blockEntity instanceof PedestalBlockEntity pedestal) {
             if (pedestal.isEmpty()) {
                 pedestal.setItem(0, stack);
             } else {
@@ -421,19 +416,17 @@ public class PedestalBlock extends BaseBlockNotFull implements EntityBlock, TagP
     }
 
     @Override
-    @Environment(EnvType.CLIENT)
     public UnbakedModel getModelVariant(
-            ResourceLocation stateId,
+            ModelResourceLocation stateId,
             BlockState blockState,
             Map<ResourceLocation, UnbakedModel> modelCache
     ) {
         PedestalState state = blockState.getValue(STATE);
-        ResourceLocation modelId = new ResourceLocation(
-                stateId.getNamespace(),
-                "block/" + stateId.getPath() + "_" + state
+        ModelResourceLocation modelId = new ModelResourceLocation(
+                stateId.id().withPrefix("block/"), "_" + state
         );
         registerBlockModel(stateId, modelId, blockState, modelCache);
-        return ModelsHelper.createBlockSimple(modelId);
+        return ModelsHelper.createBlockSimple(modelId.id());
     }
 
     protected Map<String, String> createTexturesMap() {
@@ -468,13 +461,7 @@ public class PedestalBlock extends BaseBlockNotFull implements EntityBlock, TagP
     }
 
     @Override
-    public void addTags(List<TagKey<Block>> blockTags, List<TagKey<Item>> itemTags) {
-        blockTags.add(EndTags.PEDESTALS);
+    public void registerBlockTags(ResourceLocation location, TagBootstrapContext<Block> context) {
+        context.add(EndTags.PEDESTALS, this);
     }
-	
-	/*@Override
-	@Nullable
-	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState blockState, BlockEntityType<T> blockEntityType) {
-		return level.isClientSide() ? PedestalBlockEntity::tick : null;
-	}*/
 }

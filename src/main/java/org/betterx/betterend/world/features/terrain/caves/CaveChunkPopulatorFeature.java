@@ -42,7 +42,7 @@ public class CaveChunkPopulatorFeature extends Feature<CaveChunkPopulatorFeature
         MutableBlockPos max = new MutableBlockPos().set(pos);
         fillSets(sx, sz, world.getChunk(pos), floorPositions, ceilPositions, min, max);
         EndCaveBiome biome = cfg.getCaveBiome();
-        if (BCLBiomeRegistry.isEmptyBiome(biome)) {
+        if (biome == null) {
             return false;
         }
         BlockState surfaceBlock = Blocks.END_STONE.defaultBlockState(); //biome.getBiome().getGenerationSettings().getSurfaceBuilderConfig().getTopMaterial();

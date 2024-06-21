@@ -191,7 +191,7 @@ public abstract class EndCaveFeatures extends DefaultFeature {
     }
 
     protected void setBiome(WorldGenLevel world, BlockPos pos, WoverBiomePicker.PickableBiome biome) {
-        BiomeAPI.setBiome(world, pos, biome.biome);
+        BiomeManager.setBiome(world, pos, biome.biome);
     }
 
     private BlockPos findPos(WorldGenLevel world, BlockPos pos, int radius, RandomSource random) {

@@ -1,11 +1,10 @@
 package org.betterx.betterend.commands;
 
-import org.betterx.bclib.api.v2.levelgen.biomes.BCLBiome;
 import org.betterx.bclib.api.v2.poi.BCLPoiType;
 import org.betterx.bclib.util.BlocksHelper;
 import org.betterx.betterend.registry.EndPoiTypes;
-import org.betterx.betterend.world.biome.EndBiome;
 import org.betterx.worlds.together.world.event.WorldBootstrap;
+import org.betterx.wover.state.api.WorldState;
 
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.CommandDispatcher;
@@ -30,6 +29,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.commands.LocateCommand;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.tags.BiomeTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Blocks;
@@ -42,6 +42,7 @@ import com.google.common.base.Stopwatch;
 import org.joml.Vector3d;
 
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
@@ -102,14 +103,21 @@ public class CommandRegistry {
 
     private static int teleportToNextBiome(CommandContext<CommandSourceStack> ctx) throws CommandSyntaxException {
         final CommandSourceStack source = ctx.getSource();
-        List<BCLBiome> biomes = EndBiome.getAllBeBiomes();
+        final var biomeIterator = WorldState
+                .registryAccess()
+                .registry(Registries.BIOME)
+                .orElseThrow()
+                .getTagOrEmpty(BiomeTags.IS_END);
+        final List<Holder<Biome>> biomes = new LinkedList<>();
+        for (Holder<Biome> biome : biomeIterator) biomes.add(biome);
+
 
         if (biomeIndex < 0 || biomeIndex >= biomes.size()) {
             source.sendFailure(Component.literal("Failed to find the next Biome...")
                                         .setStyle(Style.EMPTY.withColor(ChatFormatting.RED)));
             return 0;
         }
-        final BCLBiome biome = biomes.get(biomeIndex);
+        final Holder<Biome> biome = biomes.get(biomeIndex);
         source.sendSuccess(() -> Component.literal("Locating Biome " + biome)
                                           .setStyle(Style.EMPTY.withColor(ChatFormatting.DARK_GREEN)), false);
         biomeIndex = (biomeIndex + 1) % biomes.size();
@@ -121,7 +129,7 @@ public class CommandRegistry {
         );
         final BlockPos biomePosition = source.getLevel()
                                              .findClosestBiome3d(
-                                                     b -> b.unwrapKey().orElseThrow().location().equals(biome.getID()),
+                                                     b -> b.is(biome),
                                                      currentPosition,
                                                      MAX_SEARCH_RADIUS,
                                                      SAMPLE_RESOLUTION_HORIZONTAL,
@@ -162,7 +170,7 @@ public class CommandRegistry {
             ResourceOrTagKeyArgument.Result result = new ResourceOrTagKeyArgument.Result() {
                 @Override
                 public Either<ResourceKey, TagKey> unwrap() {
-                    return Either.left(biome.getBiomeKey());
+                    return Either.left(biome.unwrap().orThrow());
                 }
 
                 @Override
@@ -180,7 +188,7 @@ public class CommandRegistry {
                     return false;
                 }
             };
-            ResourceKey<Biome> a = biome.getBiomeKey();
+            ResourceKey<Biome> a = biome.unwrapKey().orElseThrow();
             if (WorldBootstrap.getLastRegistryAccess() != null) {
                 Stopwatch stopwatch = Stopwatch.createStarted(Util.TICKER);
                 Holder<Biome> h = WorldBootstrap.getLastRegistryAccess()

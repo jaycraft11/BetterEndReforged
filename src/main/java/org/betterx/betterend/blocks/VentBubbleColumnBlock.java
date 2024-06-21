@@ -33,6 +33,7 @@ import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class VentBubbleColumnBlock extends Block implements BucketPickup, LiquidBlockContainer {
@@ -41,7 +42,12 @@ public class VentBubbleColumnBlock extends Block implements BucketPickup, Liquid
     }
 
     @Override
-    public ItemStack pickupBlock(LevelAccessor world, BlockPos pos, BlockState state) {
+    public @NotNull ItemStack pickupBlock(
+            @Nullable Player player,
+            LevelAccessor world,
+            BlockPos pos,
+            BlockState state
+    ) {
         world.setBlock(pos, Blocks.AIR.defaultBlockState(), 11);
         return new ItemStack(Items.WATER_BUCKET);
     }

@@ -9,7 +9,6 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 
-import org.joml.Matrix3f;
 import org.joml.Matrix4f;
 
 public class BeamRenderer {
@@ -117,7 +116,7 @@ public class BeamRenderer {
     ) {
         PoseStack.Pose entry = matrices.last();
         Matrix4f matrix4f = entry.pose();
-        Matrix3f matrix3f = entry.normal();
+        PoseStack.Pose matrix3f = entry;
         renderBeam(
                 matrix4f,
                 matrix3f,
@@ -198,7 +197,7 @@ public class BeamRenderer {
 
     private static void renderBeam(
             Matrix4f matrix4f,
-            Matrix3f matrix3f,
+            PoseStack.Pose matrix3f,
             VertexConsumer vertexConsumer,
             float red,
             float green,
@@ -223,7 +222,7 @@ public class BeamRenderer {
 
     private static void addVertex(
             Matrix4f matrix4f,
-            Matrix3f matrix3f,
+            PoseStack.Pose matrix3f,
             VertexConsumer vertexConsumer,
             float red,
             float green,
@@ -235,12 +234,11 @@ public class BeamRenderer {
             float u,
             float v
     ) {
-        vertexConsumer.vertex(matrix4f, x, y, d)
-                      .color(red, green, blue, alpha)
-                      .uv(u, v)
-                      .overlayCoords(OverlayTexture.NO_OVERLAY)
-                      .uv2(15728880)
-                      .normal(matrix3f, 0.0F, 1.0F, 0.0F)
-                      .endVertex();
+        vertexConsumer.addVertex(matrix4f, x, y, d)
+                      .setColor(red, green, blue, alpha)
+                      .setUv(u, v)
+                      .setOverlay(OverlayTexture.NO_OVERLAY)
+                      .setLight(15728880)
+                      .setNormal(matrix3f, 0.0F, 1.0F, 0.0F);
     }
 }

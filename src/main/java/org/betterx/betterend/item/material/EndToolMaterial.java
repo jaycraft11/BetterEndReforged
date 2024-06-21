@@ -64,8 +64,7 @@ public enum EndToolMaterial implements Tier {
     public @NotNull TagKey<Block> getIncorrectBlocksForDrops() {
         return this.incorrectBlocksForDrops;
     }
-
-    @Deprecated(forRemoval = true)
+    
     public int getLevel() {
         return level;
     }

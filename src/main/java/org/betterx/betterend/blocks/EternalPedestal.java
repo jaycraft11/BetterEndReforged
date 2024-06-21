@@ -1,6 +1,7 @@
 package org.betterx.betterend.blocks;
 
 import de.ambertation.wunderlib.math.Float3;
+import de.ambertation.wunderlib.ui.ColorHelper;
 import org.betterx.bclib.behaviours.interfaces.BehaviourStone;
 import org.betterx.bclib.interfaces.ClientLevelAccess;
 import org.betterx.betterend.blocks.basis.PedestalBlock;
@@ -182,7 +183,7 @@ public class EternalPedestal extends PedestalBlock implements BehaviourStone {
                                 .sub(start)
                                 .normalized()
                                 .mul(powerUp ? 0.2 : 0.05);
-                        float[] color = EternalCrystalRenderer.colors(PedestalItemRenderer.getGemAge());
+                        float[] color = ColorHelper.toFloatArrayRGBA(EternalCrystalRenderer.colors(PedestalItemRenderer.getGemAge()));
 
                         if (powerUp) {
                             for (int i = 0; i < 30; i++) {
