@@ -3,7 +3,6 @@ package org.betterx.betterend.registry;
 import org.betterx.bclib.api.v2.spawning.SpawnRuleBuilder;
 import org.betterx.bclib.entity.BCLEntityWrapper;
 import org.betterx.betterend.BetterEnd;
-import org.betterx.betterend.config.Configs;
 import org.betterx.betterend.entity.*;
 import org.betterx.ui.ColorUtil;
 
@@ -123,10 +122,8 @@ public class EndEntities {
                 .create(group, entity)
                 .dimensions(EntityDimensions.fixed(width, height))
                 .build();
-        if (Configs.ENTITY_CONFIG.getBooleanRoot(id.getPath(), true)) {
-            return Registry.register(BuiltInRegistries.ENTITY_TYPE, id, type);
-        }
-        return type;
+
+        return Registry.register(BuiltInRegistries.ENTITY_TYPE, id, type);
     }
 
     private static <T extends Mob> BCLEntityWrapper<T> register(
@@ -151,6 +148,6 @@ public class EndEntities {
         EndItems.registerEndEgg("spawn_egg_" + name, type, eggColor, dotsColor);
         Registry.register(BuiltInRegistries.ENTITY_TYPE, BetterEnd.C.mk(name), type);
 
-        return new BCLEntityWrapper<>(type, Configs.ENTITY_CONFIG.getBooleanRoot(id.getPath(), true));
+        return new BCLEntityWrapper<>(type, true);
     }
 }

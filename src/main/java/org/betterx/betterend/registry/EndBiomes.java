@@ -2,7 +2,6 @@ package org.betterx.betterend.registry;
 
 import org.betterx.bclib.api.v2.LifeCycleAPI;
 import org.betterx.betterend.BetterEnd;
-import org.betterx.betterend.config.Configs;
 import org.betterx.betterend.world.biome.EndBiome;
 import org.betterx.betterend.world.biome.EndBiomeBuilder;
 import org.betterx.betterend.world.biome.EndBiomeKey;
@@ -124,12 +123,12 @@ public class EndBiomes {
      * @param parent - {@link ResourceLocation} parent id
      */
     public static void addSubBiomeIntegration(EndBiome biome, ResourceLocation parent) {
-        if (Configs.BIOME_CONFIG.getBoolean(biome.getID(), "enabled", true)) {
-            BCLBiome parentBiome = BiomeAPI.getBiome(parent);
-            if (!BCLBiomeRegistry.isEmptyBiome(parentBiome) && biome.getParentBiome().getID().equals(biome.getID())) {
-                parentBiome.addSubBiome(biome);
-            }
+
+        BCLBiome parentBiome = BiomeAPI.getBiome(parent);
+        if (!BCLBiomeRegistry.isEmptyBiome(parentBiome) && biome.getParentBiome().getID().equals(biome.getID())) {
+            parentBiome.addSubBiome(biome);
         }
+
     }
 
     public static WoverBiomePicker.PickableBiome getCaveBiome(int x, int z) {

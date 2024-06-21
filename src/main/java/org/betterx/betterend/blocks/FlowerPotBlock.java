@@ -15,7 +15,6 @@ import org.betterx.bclib.util.JsonFactory;
 import org.betterx.betterend.BetterEnd;
 import org.betterx.betterend.blocks.basis.PottableLeavesBlock;
 import org.betterx.betterend.client.models.Patterns;
-import org.betterx.betterend.config.Configs;
 import org.betterx.betterend.interfaces.PottablePlant;
 import org.betterx.betterend.interfaces.PottableTerrain;
 import org.betterx.betterend.registry.EndBlocks;
@@ -166,7 +165,6 @@ public class FlowerPotBlock extends BaseBlockNotFull implements RenderLayerProvi
                 processBlock(soils, block, "flower_pots.soils", reservedSoilIDs);
             }
         });
-        Configs.BLOCK_CONFIG.saveChanges();
 
         FlowerPotBlock.plants = new Block[maxNotNull(plants) + 1];
         System.arraycopy(plants, 0, FlowerPotBlock.plants, 0, FlowerPotBlock.plants.length);
@@ -201,7 +199,6 @@ public class FlowerPotBlock extends BaseBlockNotFull implements RenderLayerProvi
                 if (!idMap.containsValue(i)) {
                     target[i] = block;
                     idMap.put(location.getPath(), i);
-                    Configs.BLOCK_CONFIG.getInt(path, location.getPath(), i);
                     break;
                 }
             }
