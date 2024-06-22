@@ -1,9 +1,11 @@
 package org.betterx.betterend.world.generator;
 
+import de.ambertation.wunderlib.configs.AbstractConfig;
 import org.betterx.betterend.config.Configs;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.util.Mth;
+
+import org.jetbrains.annotations.Nullable;
 
 public class GeneratorOptions {
     private static int biomeSizeCaves;
@@ -28,57 +30,41 @@ public class GeneratorOptions {
     private static int circleRadiusSqr;
 
     public static void init() {
-        biomeSizeCaves = Configs.GENERATOR_CONFIG.getInt("biomeMap", "biomeSizeCaves", 32);
-        hasPortal = Configs.GENERATOR_CONFIG.getBoolean("portal", "hasPortal", true);
-        hasPillars = Configs.GENERATOR_CONFIG.getBoolean("spikes", "hasSpikes", true);
-        hasDragonFights = Configs.GENERATOR_CONFIG.getBooleanRoot("hasDragonFights", true);
-        changeChorusPlant = Configs.GENERATOR_CONFIG.getBoolean("chorusPlant", "changeChorusPlant", true);
-        newGenerator = Configs.GENERATOR_CONFIG.getBoolean("customGenerator", "useNewGenerator", true);
-        generateCentralIsland = Configs.GENERATOR_CONFIG.getBoolean("customGenerator", "generateCentralIsland", true);
-        endCityFailChance = Configs.GENERATOR_CONFIG.getInt("customGenerator", "endCityFailChance", 5);
-        generateObsidianPlatform = Configs.GENERATOR_CONFIG.getBooleanRoot("generateObsidianPlatform", true);
-        bigOptions = new LayerOptions(
-                "customGenerator.layers.bigIslands",
-                Configs.GENERATOR_CONFIG,
-                300,
-                200,
-                70f / 128,
-                10f / 128,
-                false
+        Configs.GENERATOR_CONFIG.getAllValues().forEach(
+                v -> {
+                    v.notifyAfterChange(GeneratorOptions::updatedValue);
+
+                }
         );
-        mediumOptions = new LayerOptions(
-                "customGenerator.layers.mediumIslands",
-                Configs.GENERATOR_CONFIG,
-                150,
-                100,
-                70f / 128,
-                20f / 128,
-                true
-        );
-        smallOptions = new LayerOptions(
-                "customGenerator.layers.smallIslands",
-                Configs.GENERATOR_CONFIG,
-                60,
-                50,
-                70f / 128,
-                30f / 128,
-                false
-        );
-        changeSpawn = Configs.GENERATOR_CONFIG.getBoolean("spawn", "changeSpawn", false);
-        spawn = new BlockPos(
-                Configs.GENERATOR_CONFIG.getInt("spawn.point", "x", 20),
-                Configs.GENERATOR_CONFIG.getInt("spawn.point", "y", 65),
-                Configs.GENERATOR_CONFIG.getInt("spawn.point", "z", 0)
-        );
-        replacePortal = Configs.GENERATOR_CONFIG.getBoolean("portal", "customEndPortal", true);
-        replacePillars = Configs.GENERATOR_CONFIG.getBoolean("spikes", "customObsidianSpikes", true);
-        circleRadius = Configs.GENERATOR_CONFIG.getInt("customGenerator", "voidRingSize", 1000);
+        updatedValue(null);
+    }
+
+    private static void updatedValue(@Nullable AbstractConfig<?>.Value<?, ?> o) {
+        biomeSizeCaves = Configs.GENERATOR_CONFIG.biomeSizeCaves.getClamped();
+        hasPortal = Configs.GENERATOR_CONFIG.hasPortal.get();
+        hasPillars = Configs.GENERATOR_CONFIG.hasPillars.get();
+        hasDragonFights = Configs.GENERATOR_CONFIG.hasDragonFights.get();
+        changeChorusPlant = Configs.GENERATOR_CONFIG.changeChorusPlant.get();
+        newGenerator = Configs.GENERATOR_CONFIG.newGenerator.get();
+        generateCentralIsland = Configs.GENERATOR_CONFIG.generateCentralIsland.get();
+        endCityFailChance = Configs.GENERATOR_CONFIG.endCityFailChance.get();
+        generateObsidianPlatform = Configs.GENERATOR_CONFIG.generateObsidianPlatform.get();
+
+        bigOptions = Configs.GENERATOR_CONFIG.bigOptions.get();
+        mediumOptions = Configs.GENERATOR_CONFIG.mediumOptions.get();
+        smallOptions = Configs.GENERATOR_CONFIG.smallOptions.get();
+
+        changeSpawn = Configs.GENERATOR_CONFIG.changeSpawn.get();
+        spawn = Configs.GENERATOR_CONFIG.spawn.get();
+        replacePortal = Configs.GENERATOR_CONFIG.replacePortal.get();
+        replacePillars = Configs.GENERATOR_CONFIG.replacePillars.get();
+        circleRadius = Configs.GENERATOR_CONFIG.circleRadius.get();
         circleRadiusSqr = circleRadius * circleRadius;
         islandDistChunk = (circleRadius >> 3); // Twice bigger than normal
     }
 
     public static int getBiomeSizeCaves() {
-        return Mth.clamp(biomeSizeCaves, 1, 8192);
+        return biomeSizeCaves;
     }
 
     public static boolean hasPortal() {

@@ -21,6 +21,7 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemp
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
@@ -60,7 +61,7 @@ public class EndPodiumFeatureMixin {
         }
     }
 
-    @ModifyVariable(method = "place", ordinal = 0, at = @At("HEAD"))
+    @ModifyVariable(method = "place", ordinal = 0, at = @At("HEAD"), argsOnly = true)
     private FeaturePlaceContext<NoneFeatureConfiguration> be_setPosOnGround(FeaturePlaceContext<NoneFeatureConfiguration> featurePlaceContext) {
         WorldGenLevel world = featurePlaceContext.level();
         BlockPos pos = be_updatePortalPos(world);
@@ -74,9 +75,10 @@ public class EndPodiumFeatureMixin {
         );
     }
 
+    @Unique
     private BlockPos be_updatePortalPos(WorldGenLevel world) {
-        CompoundTag compound = WorldConfig.getRootTag(BetterEnd.MOD_ID).getCompound("portal");
-        be_portalPosition = NbtUtils.readBlockPos(compound);
+        CompoundTag compound = WorldConfig.getRootTag(BetterEnd.MOD_ID);
+        be_portalPosition = NbtUtils.readBlockPos(compound, "portal").orElse(new BlockPos(0, 0, 0));
 
         if (be_portalPosition.getY() == 0) {
 			/*if (GeneratorOptions.useNewGenerator()) {

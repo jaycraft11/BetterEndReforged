@@ -17,7 +17,6 @@ import org.betterx.wover.state.api.WorldState;
 
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.Biomes;
@@ -90,9 +89,7 @@ public class EndBiomes {
                             .map(k -> dataRegistry.get(k.location()))
                             .filter(Objects::nonNull)
                     ).ifPresent(
-                            list -> list.forEach(data -> {
-                                CAVE_BIOMES.addBiome(data);
-                            })
+                            list -> list.forEach(data -> CAVE_BIOMES.addBiome(data))
                     );
 
             CAVE_BIOMES.rebuild();
@@ -103,32 +100,6 @@ public class EndBiomes {
             caveBiomeMap = new HexBiomeMap(seed, GeneratorOptions.getBiomeSizeCaves(), CAVE_BIOMES);
             lastSeed = seed;
         }
-    }
-
-    /**
-     * Put integration sub-biome {@link EndBiome} into subbiomes list and registers it.
-     *
-     * @param biomeConfig - {@link EndBiome.Config} instance
-     * @return registered {@link EndBiome}
-     */
-    public static EndBiome registerSubBiomeIntegration(EndBiome.Config biomeConfig) {
-        //TODO: 1.19.3 this was don on runtime, but biomes are now created in DataGen, so we need a fix...
-        return EndBiome.create(biomeConfig, BiomeAPI.BiomeType.END_LAND);
-    }
-
-    /**
-     * Link integration sub-biome with parent.
-     *
-     * @param biome  - {@link EndBiome} instance
-     * @param parent - {@link ResourceLocation} parent id
-     */
-    public static void addSubBiomeIntegration(EndBiome biome, ResourceLocation parent) {
-
-        BCLBiome parentBiome = BiomeAPI.getBiome(parent);
-        if (!BCLBiomeRegistry.isEmptyBiome(parentBiome) && biome.getParentBiome().getID().equals(biome.getID())) {
-            parentBiome.addSubBiome(biome);
-        }
-
     }
 
     public static WoverBiomePicker.PickableBiome getCaveBiome(int x, int z) {

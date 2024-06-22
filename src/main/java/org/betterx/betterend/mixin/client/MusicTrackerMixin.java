@@ -1,6 +1,6 @@
 package org.betterx.betterend.mixin.client;
 
-import org.betterx.betterend.client.ClientOptions;
+import org.betterx.betterend.config.Configs;
 import org.betterx.betterend.world.biome.EndBiome;
 import org.betterx.wover.biome.api.BiomeManager;
 
@@ -17,6 +17,7 @@ import net.minecraft.world.level.biome.Biome;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -43,7 +44,7 @@ public abstract class MusicTrackerMixin {
 
     @Inject(method = "tick", at = @At("HEAD"), cancellable = true)
     public void be_onTick(CallbackInfo info) {
-        if (ClientOptions.blendBiomeMusic()) {
+        if (Configs.CLENT_CONFIG.blendBiomeMusic.get()) {
             Music musicSound = minecraft.getSituationalMusic();
             if (be_checkNullSound(musicSound) && volume > 0 && be_shouldChangeSound(musicSound) && be_isCorrectBiome()) {
                 if (volume > 0) {
@@ -88,11 +89,11 @@ public abstract class MusicTrackerMixin {
         if (minecraft.level == null) {
             return false;
         }
-        Holder<Biome> biome = minecraft.level.getBiome(minecraft.player.blockPosition())
-                                             .value();
+        Holder<Biome> biome = minecraft.level.getBiome(minecraft.player.blockPosition());
         return BiomeManager.biomeDataForHolder(biome) instanceof EndBiome;
     }
 
+    @Unique
     private boolean be_shouldChangeSound(Music musicSound) {
         return currentMusic != null && !musicSound
                 .getEvent()
@@ -101,6 +102,7 @@ public abstract class MusicTrackerMixin {
                 .equals(this.currentMusic.getLocation()) && musicSound.replaceCurrentMusic();
     }
 
+    @Unique
     private boolean be_checkNullSound(Music musicSound) {
         return musicSound != null && musicSound.getEvent() != null;
     }

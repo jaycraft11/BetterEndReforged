@@ -2,6 +2,7 @@ package org.betterx.betterend.client;
 
 import org.betterx.betterend.BetterEnd;
 import org.betterx.betterend.client.render.BetterEndSkyRenderer;
+import org.betterx.betterend.config.Configs;
 import org.betterx.betterend.events.ItemTooltipCallback;
 import org.betterx.betterend.interfaces.MultiModelItem;
 import org.betterx.betterend.item.CrystaliteArmor;
@@ -28,7 +29,6 @@ public class BetterEndClient implements ClientModInitializer {
         EndEntitiesRenders.register();
         EndModelProviders.register();
         MultiModelItem.register();
-        ClientOptions.init();
         registerTooltips();
 
         ResourceLocation checkFlowerId = ResourceLocation.withDefaultNamespace("item/chorus_flower");
@@ -47,7 +47,7 @@ public class BetterEndClient implements ClientModInitializer {
             return null;
         });
 
-        if (ClientOptions.isCustomSky()) {
+        if (Configs.CLENT_CONFIG.customSky.get()) {
             DimensionRenderingRegistry.registerSkyRenderer(Level.END, new BetterEndSkyRenderer());
         }
         if (BetterEnd.TRINKETS_CORE.isLoaded()) {

@@ -1,14 +1,14 @@
 package org.betterx.betterend.world.generator;
 
-import org.betterx.bclib.config.PathConfig;
-
 import net.minecraft.util.Mth;
+
+import com.google.gson.JsonObject;
 
 public class LayerOptions {
     public final float distance;
     public final float scale;
     public final float coverage;
-    public final float center;
+    public final float averageHeight;
     public final float heightVariation;
     public final float minY;
     public final float maxY;
@@ -16,23 +16,38 @@ public class LayerOptions {
     public final boolean hasCentralIsland;
 
     public LayerOptions(
-            String name,
-            PathConfig config,
             float distance,
             float scale,
-            float center,
+            float averageHeight,
             float heightVariation,
             boolean hasCentral
     ) {
-        this.distance = clampDistance(config.getFloat(name, "distance[1-8192]", distance));
-        this.scale = clampScale(config.getFloat(name, "scale[0.1-1024]", scale));
-        this.center = clampCenter(config.getFloat(name, "averageHeight[0-1]", center));
-        this.heightVariation = clampVariation(config.getFloat(name, "heightVariation[0-1]", heightVariation));
-        this.coverage = clampCoverage(config.getFloat(name, "coverage[0-1]", 0.5F));
-        this.minY = this.center - this.heightVariation;
-        this.maxY = this.center + this.heightVariation;
+        this.distance = distance;
+        this.scale = scale;
+        this.averageHeight = averageHeight;
+        this.heightVariation = heightVariation;
+        this.coverage = 0.5f;
+        this.hasCentralIsland = hasCentral;
+
+        this.minY = this.averageHeight - this.heightVariation;
+        this.maxY = this.averageHeight + this.heightVariation;
         this.centerDist = Mth.floor(1000 / this.distance);
-        this.hasCentralIsland = config.getBoolean(name, "hasCentralIsland", hasCentral);
+    }
+
+    public LayerOptions(
+            JsonObject config
+    ) {
+        this.distance = clampDistance(config.get("distance").getAsFloat());
+        this.scale = clampScale(config.get("scale").getAsFloat());
+        this.averageHeight = clampAverageHeight(config.get("average_height").getAsFloat());
+        this.heightVariation = clampVariation(config.get("height_variation").getAsFloat());
+        this.coverage = clampCoverage(config.get("coverage").getAsFloat());
+        this.hasCentralIsland = config.get("contains_central_island").getAsBoolean();
+
+        this.minY = this.averageHeight - this.heightVariation;
+        this.maxY = this.averageHeight + this.heightVariation;
+        this.centerDist = Mth.floor(1000 / this.distance);
+
     }
 
     private float clampDistance(float value) {
@@ -47,11 +62,22 @@ public class LayerOptions {
         return 0.9999F - Mth.clamp(value, 0, 1) * 2;
     }
 
-    private float clampCenter(float value) {
+    private float clampAverageHeight(float value) {
         return Mth.clamp(value, 0, 1.0f);
     }
 
     private float clampVariation(float value) {
         return Mth.clamp(value, 0, 1.0f);
+    }
+
+    public JsonObject toJson() {
+        JsonObject obj = new JsonObject();
+        obj.addProperty("distance", clampDistance(this.distance));
+        obj.addProperty("scale", clampScale(this.scale));
+        obj.addProperty("average_height", clampAverageHeight(this.averageHeight));
+        obj.addProperty("height_variation", clampVariation(this.heightVariation));
+        obj.addProperty("coverage", clampCoverage(this.coverage));
+        obj.addProperty("contains_central_island", this.hasCentralIsland);
+        return obj;
     }
 }

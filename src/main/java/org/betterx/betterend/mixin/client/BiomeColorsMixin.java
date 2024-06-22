@@ -1,7 +1,7 @@
 package org.betterx.betterend.mixin.client;
 
 import org.betterx.bclib.util.MHelper;
-import org.betterx.betterend.client.ClientOptions;
+import org.betterx.betterend.config.Configs;
 import org.betterx.betterend.registry.EndBlocks;
 import org.betterx.ui.ColorUtil;
 
@@ -31,7 +31,7 @@ public class BiomeColorsMixin {
 
     @Inject(method = "getAverageWaterColor", at = @At("RETURN"), cancellable = true)
     private static void be_getWaterColor(BlockAndTintGetter world, BlockPos pos, CallbackInfoReturnable<Integer> info) {
-        if (ClientOptions.useSulfurWaterColor()) {
+        if (Configs.CLENT_CONFIG.sulfurWaterColor.get()) {
             BlockAndTintGetter view = HAS_SODIUM ? Minecraft.getInstance().level : world;
             MutableBlockPos mut = new MutableBlockPos();
             mut.setY(pos.getY());

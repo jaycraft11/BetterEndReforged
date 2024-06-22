@@ -4,6 +4,7 @@ import org.betterx.betterend.BetterEnd;
 import org.betterx.datagen.betterend.advancement.EndAdvancementDataProvider;
 import org.betterx.datagen.betterend.recipes.*;
 import org.betterx.datagen.betterend.tags.*;
+import org.betterx.datagen.betterend.worldgen.BYGBiomeProvider;
 import org.betterx.datagen.betterend.worldgen.EndBiomeModificationProvider;
 import org.betterx.datagen.betterend.worldgen.EndBiomesProvider;
 import org.betterx.datagen.betterend.worldgen.StructureDataProvider;
@@ -53,7 +54,8 @@ public class BetterEndDatagen extends WoverDataGenEntryPoint {
         //Add providers for the byg integration
         addDatapack(BetterEnd.BYG_ADDITIONS_PACK)
                 .addMultiProvider(BYGFeatureProvider::new)
-                .addProvider(BYGBlockTagsProvider::new);
+                .addProvider(BYGBlockTagsProvider::new)
+                .addMultiProvider(BYGBiomeProvider::new);
 
         //Add providers for the nourish integration
         addDatapack(BetterEnd.NOURISH_ADDITIONS_PACK)
