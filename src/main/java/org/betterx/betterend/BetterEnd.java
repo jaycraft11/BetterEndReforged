@@ -1,6 +1,6 @@
 package org.betterx.betterend;
 
-import org.betterx.bclib.api.v2.dataexchange.DataExchangeAPI;
+import de.ambertation.wunderlib.network.ClientBoundPacketHandler;
 import org.betterx.betterend.advancements.BECriteria;
 import org.betterx.betterend.api.BetterEndPlugin;
 import org.betterx.betterend.commands.CommandRegistry;
@@ -25,8 +25,6 @@ import net.minecraft.resources.ResourceLocation;
 
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.loader.api.FabricLoader;
-
-import java.util.List;
 
 public class BetterEnd implements ModInitializer {
     public static final ModCore C = ModCore.create("betterend");
@@ -82,9 +80,7 @@ public class BetterEnd implements ModInitializer {
             BiomeDecider.registerHighPriorityDecider(C.mk("end_land"), new EndLandBiomeDecider());
         }
 
-        DataExchangeAPI.registerDescriptors(List.of(
-                RitualUpdate.DESCRIPTOR
-        ));
+        ClientBoundPacketHandler.register(RitualUpdate.CHANNEL, RitualUpdate.Payload::new);
 
         if (TRINKETS_CORE.isLoaded()) {
             Elytra.register();

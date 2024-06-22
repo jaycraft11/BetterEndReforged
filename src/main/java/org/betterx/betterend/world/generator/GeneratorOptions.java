@@ -1,6 +1,5 @@
 package org.betterx.betterend.world.generator;
 
-import de.ambertation.wunderlib.configs.AbstractConfig;
 import org.betterx.betterend.config.Configs;
 
 import net.minecraft.core.BlockPos;
@@ -30,16 +29,15 @@ public class GeneratorOptions {
     private static int circleRadiusSqr;
 
     public static void init() {
-        Configs.GENERATOR_CONFIG.getAllValues().forEach(
-                v -> {
-                    v.notifyAfterChange(GeneratorOptions::updatedValue);
-
-                }
-        );
+//        Configs.GENERATOR_CONFIG.getAllValues().forEach(
+//                v -> {
+//                    v.notifyAfterChange(GeneratorOptions::updatedValue);
+//                }
+//        );
         updatedValue(null);
     }
 
-    private static void updatedValue(@Nullable AbstractConfig<?>.Value<?, ?> o) {
+    private static void updatedValue(@Nullable Object o) {
         biomeSizeCaves = Configs.GENERATOR_CONFIG.biomeSizeCaves.getClamped();
         hasPortal = Configs.GENERATOR_CONFIG.hasPortal.get();
         hasPillars = Configs.GENERATOR_CONFIG.hasPillars.get();

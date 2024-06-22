@@ -86,12 +86,6 @@ public abstract class ServerLevelMixin extends Level {
         TerrainGenerator.onServerLevelInit(ServerLevel.class.cast(this), levelStem, seed);
     }
 
-
-    @Inject(method = "makeObsidianPlatform", at = @At("HEAD"), cancellable = true)
-    private static void be_createObsidianPlatform(ServerLevel serverLevel, CallbackInfo info) {
-        TerrainGenerator.makeObsidianPlatform(serverLevel, info);
-    }
-
     @ModifyArg(method = "tickPrecipitation", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/level/ServerLevel;setBlockAndUpdate(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;)Z"))
     private BlockState be_modifyTickState(BlockPos pos, BlockState state) {
         if (state.is(Blocks.ICE)) {

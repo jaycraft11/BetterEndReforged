@@ -17,7 +17,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
 
 import net.fabricmc.api.ClientModInitializer;
-import net.fabricmc.fabric.api.client.model.ModelLoadingRegistry;
+import net.fabricmc.fabric.api.client.model.loading.v1.ModelLoadingPlugin;
 import net.fabricmc.fabric.api.client.rendering.v1.DimensionRenderingRegistry;
 
 public class BetterEndClient implements ClientModInitializer {
@@ -36,15 +36,18 @@ public class BetterEndClient implements ClientModInitializer {
         ResourceLocation toLoadFlowerId = BetterEnd.C.mk("item/custom_chorus_flower");
         ResourceLocation toLoadPlantId = BetterEnd.C.mk("item/custom_chorus_plant");
 
-        ModelLoadingRegistry.INSTANCE.registerResourceProvider(manager -> (resourceId, context) -> {
-            if (GeneratorOptions.changeChorusPlant()) {
-                if (resourceId.equals(checkFlowerId)) {
-                    return context.loadModel(toLoadFlowerId);
-                } else if (resourceId.equals(checkPlantId)) {
-                    return context.loadModel(toLoadPlantId);
+
+        ModelLoadingPlugin.register(pluginContext -> {
+            pluginContext.resolveModel().register((context) -> {
+                if (GeneratorOptions.changeChorusPlant()) {
+                    if (context.id().equals(checkFlowerId)) {
+                        return context.getOrLoadModel(toLoadFlowerId);
+                    } else if (context.id().equals(checkPlantId)) {
+                        return context.getOrLoadModel(toLoadPlantId);
+                    }
                 }
-            }
-            return null;
+                return null;
+            });
         });
 
         if (Configs.CLENT_CONFIG.customSky.get()) {

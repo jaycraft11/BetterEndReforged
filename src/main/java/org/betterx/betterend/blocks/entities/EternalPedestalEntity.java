@@ -45,11 +45,11 @@ public class EternalPedestalEntity extends PedestalBlockEntity {
     }
 
     @Override
-    protected void fromTag(CompoundTag tag) {
-        super.fromTag(tag);
+    protected void loadAdditional(CompoundTag tag, HolderLookup.Provider provider) {
         if (tag.contains("ritual")) {
             linkedRitual = new EternalRitual(level);
             linkedRitual.fromTag(tag.getCompound("ritual"));
         }
+        super.loadAdditional(tag, provider);
     }
 }

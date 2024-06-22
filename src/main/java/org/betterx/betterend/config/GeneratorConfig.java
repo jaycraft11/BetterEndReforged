@@ -136,11 +136,11 @@ public class GeneratorConfig extends ConfigFile {
             super(path, key, defaultValue, isDeprecated);
         }
 
-        public LayerOptionsValue(ConfigToken token) {
+        public LayerOptionsValue(ConfigToken<LayerOptions> token) {
             super(token);
         }
 
-        public LayerOptionsValue(ConfigToken token, boolean isDeprecated) {
+        public LayerOptionsValue(ConfigToken<LayerOptions> token, boolean isDeprecated) {
             super(token, isDeprecated);
         }
 

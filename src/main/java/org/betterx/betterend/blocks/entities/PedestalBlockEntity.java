@@ -15,6 +15,8 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 
+import org.jetbrains.annotations.NotNull;
+
 public class PedestalBlockEntity extends BlockEntity implements Container {
     private ItemStack activeItem = ItemStack.EMPTY;
 
@@ -24,19 +26,6 @@ public class PedestalBlockEntity extends BlockEntity implements Container {
 
     public PedestalBlockEntity(BlockEntityType<?> blockEntityType, BlockPos blockPos, BlockState blockState) {
         super(blockEntityType, blockPos, blockState);
-    }
-
-    protected void toTag(CompoundTag tag) {
-        if (activeItem != ItemStack.EMPTY) {
-            tag.put("active_item", activeItem.save(new CompoundTag()));
-        }
-    }
-
-    protected void fromTag(CompoundTag tag) {
-        if (tag.contains("active_item")) {
-            CompoundTag itemTag = tag.getCompound("active_item");
-            activeItem = ItemStack.of(itemTag);
-        }
     }
 
     @Override
@@ -50,12 +39,12 @@ public class PedestalBlockEntity extends BlockEntity implements Container {
     }
 
     @Override
-    public ItemStack getItem(int slot) {
+    public @NotNull ItemStack getItem(int slot) {
         return activeItem;
     }
 
     @Override
-    public ItemStack removeItem(int slot, int amount) {
+    public @NotNull ItemStack removeItem(int slot, int amount) {
         return removeItemNoUpdate(slot);
     }
 
@@ -71,7 +60,7 @@ public class PedestalBlockEntity extends BlockEntity implements Container {
     }
 
     @Override
-    public ItemStack removeItemNoUpdate(int slot) {
+    public @NotNull ItemStack removeItemNoUpdate(int slot) {
         ItemStack stored = activeItem;
         clearContent();
         return stored;
@@ -105,12 +94,17 @@ public class PedestalBlockEntity extends BlockEntity implements Container {
     @Override
     protected void loadAdditional(CompoundTag tag, HolderLookup.Provider provider) {
         super.loadAdditional(tag, provider);
-        fromTag(tag);
+        if (tag.contains("active_item")) {
+            CompoundTag itemTag = tag.getCompound("active_item");
+            activeItem = ItemStack.parse(provider, itemTag).orElse(ItemStack.EMPTY);
+        }
     }
 
     @Override
     protected void saveAdditional(CompoundTag tag, HolderLookup.Provider provider) {
-        toTag(tag);
+        if (activeItem != ItemStack.EMPTY) {
+            tag.put("active_item", activeItem.save(provider, new CompoundTag()));
+        }
         super.saveAdditional(tag, provider);
     }
 
@@ -120,7 +114,7 @@ public class PedestalBlockEntity extends BlockEntity implements Container {
     }
 
     @Override
-    public CompoundTag getUpdateTag(HolderLookup.Provider provider) {
+    public @NotNull CompoundTag getUpdateTag(HolderLookup.Provider provider) {
         return this.saveWithoutMetadata(provider);
     }
 }

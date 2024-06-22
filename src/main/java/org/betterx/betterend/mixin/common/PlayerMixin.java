@@ -1,17 +1,17 @@
 package org.betterx.betterend.mixin.common;
 
-import org.betterx.wover.block.api.BlockProperties;
-import org.betterx.wover.block.api.BlockProperties.TripleShape;
 import org.betterx.bclib.util.BlocksHelper;
 import org.betterx.bclib.util.MHelper;
 import org.betterx.betterend.registry.EndBlocks;
+import org.betterx.wover.block.api.BlockProperties;
+import org.betterx.wover.block.api.BlockProperties.TripleShape;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
@@ -23,7 +23,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.Optional;
 
-@Mixin(value = Player.class, priority = 200)
+@Mixin(value = ServerPlayer.class, priority = 200)
 public abstract class PlayerMixin extends LivingEntity {
     protected PlayerMixin(EntityType<? extends LivingEntity> entityType, Level level) {
         super(entityType, level);
@@ -31,23 +31,28 @@ public abstract class PlayerMixin extends LivingEntity {
 
     private static Direction[] horizontal;
 
-    @Inject(method = "findRespawnPositionAndUseSpawnBlock", at = @At(value = "HEAD"), cancellable = true)
-    private static void be_findRespawnPositionAndUseSpawnBlock(
+    @Inject(method = "findRespawnAndUseSpawnBlock", at = @At(value = "HEAD"), cancellable = true)
+    private static void be_findRespawnAndUseSpawnBlock(
             ServerLevel world,
             BlockPos pos,
-            float f,
+            float angle,
             boolean bl,
             boolean bl2,
-            CallbackInfoReturnable<Optional<Vec3>> info
+            CallbackInfoReturnable<Optional<ServerPlayer.RespawnPosAngle>> info
     ) {
         BlockState blockState = world.getBlockState(pos);
         if (blockState.is(EndBlocks.RESPAWN_OBELISK)) {
-            info.setReturnValue(be_obeliskRespawnPosition(world, pos, blockState));
+            info.setReturnValue(be_obeliskRespawnPosition(world, pos, angle, blockState));
             info.cancel();
         }
     }
 
-    private static Optional<Vec3> be_obeliskRespawnPosition(ServerLevel world, BlockPos pos, BlockState state) {
+    private static Optional<ServerPlayer.RespawnPosAngle> be_obeliskRespawnPosition(
+            ServerLevel world,
+            BlockPos pos,
+            float angle,
+            BlockState state
+    ) {
         if (state.getValue(BlockProperties.TRIPLE_SHAPE) == TripleShape.TOP) {
             pos = pos.below(2);
         } else if (state.getValue(BlockProperties.TRIPLE_SHAPE) == TripleShape.MIDDLE) {
@@ -61,7 +66,7 @@ public abstract class PlayerMixin extends LivingEntity {
             BlockPos p = pos.relative(dir);
             BlockState state2 = world.getBlockState(p);
             if (!state2.blocksMotion() && state2.getCollisionShape(world, pos).isEmpty()) {
-                return Optional.of(Vec3.atLowerCornerOf(p).add(0.5, 0, 0.5));
+                return Optional.of(new ServerPlayer.RespawnPosAngle(Vec3.atLowerCornerOf(p).add(0.5, 0, 0.5), angle));
             }
         }
         return Optional.empty();

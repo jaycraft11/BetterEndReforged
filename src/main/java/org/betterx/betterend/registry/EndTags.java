@@ -22,7 +22,7 @@ public class EndTags {
     public static final TagKey<Item> ALLOYING_GOLD = TagManager.ITEMS.makeTag(BetterEnd.C, "alloying_gold");
     public static final TagKey<Item> ALLOYING_COPPER = TagManager.ITEMS.makeTag(BetterEnd.C, "alloying_copper");
 
-    public static final TagKey<Item> ANVIL_AETERNIUM_TOOL = TagManager.ITEMS.makeTag(BetterEnd.C, "anvil_tool/Aaeternium");
+    public static final TagKey<Item> ANVIL_AETERNIUM_TOOL = TagManager.ITEMS.makeTag(BetterEnd.C, "anvil_tool/aeternium");
     public static final TagKey<Item> ANVIL_IRON_TOOL = TagManager.ITEMS.makeTag(BetterEnd.C, "anvil_tool/iron");
     public static final TagKey<Item> ANVIL_NETHERITE_TOOL = TagManager.ITEMS.makeTag(BetterEnd.C, "anvil_tool/netherite");
     public static final TagKey<Item> ANVIL_DIAMOND_TOOL = TagManager.ITEMS.makeTag(BetterEnd.C, "anvil_tool/diamond");

@@ -22,7 +22,7 @@ public class JellyLucerniaWoodMaterial extends EndWoodenComplexMaterial {
 
     @Override
     protected SlotMap<WoodenComplexMaterial> createMaterialSlots() {
-        return SlotMap.of(new HangingSign() {
+        return SlotMap.<WoodenComplexMaterial>of(new HangingSign() {
             @Override
             public void addRecipeEntry(WoodenComplexMaterial parentMaterial, Consumer<RecipeEntry> adder) {
                 adder.accept(new RecipeEntry(suffix, (ctx, mat, id) ->

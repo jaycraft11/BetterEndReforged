@@ -7,12 +7,13 @@ import net.minecraft.client.resources.model.ModelBakery;
 import net.minecraft.resources.ResourceLocation;
 
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
 
 @Mixin(ModelBakery.class)
 public abstract class ModelLoaderMixin {
-    @ModifyArg(method = "loadModel", at = @At(value = "INVOKE", target = "Lnet/minecraft/resources/FileToIdConverter;idToFile(Lnet/minecraft/resources/ResourceLocation;)Lnet/minecraft/resources/ResourceLocation;"))
+    @ModifyArg(method = "loadBlockModel", at = @At(value = "INVOKE", target = "Lnet/minecraft/resources/FileToIdConverter;idToFile(Lnet/minecraft/resources/ResourceLocation;)Lnet/minecraft/resources/ResourceLocation;"))
     public ResourceLocation be_switchModelOnLoad(ResourceLocation loc) {
         //this should allways be a block state, as it is supplied a BLOCKSTATE_LISTER
         if (GeneratorOptions.changeChorusPlant() && be_changeModel(loc)) {
@@ -22,6 +23,7 @@ public abstract class ModelLoaderMixin {
         return loc;
     }
 
+    @Unique
     private boolean be_changeModel(ResourceLocation id) {
         if (id.getNamespace().equals("minecraft")) {
             if (id.getPath().contains("chorus") && !id.getPath().contains("custom_")) {

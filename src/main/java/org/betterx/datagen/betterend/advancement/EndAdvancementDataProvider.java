@@ -10,18 +10,19 @@ import org.betterx.betterend.registry.EndBlocks;
 import org.betterx.betterend.registry.EndItems;
 import org.betterx.betterend.registry.EndStructures;
 import org.betterx.betterend.registry.EndTemplates;
-import org.betterx.betterend.world.biome.EndBiome;
 
 import net.minecraft.advancements.AdvancementRequirements.Strategy;
 import net.minecraft.advancements.AdvancementType;
 import net.minecraft.advancements.critereon.ChangeDimensionTrigger;
 import net.minecraft.advancements.critereon.LocationPredicate;
 import net.minecraft.advancements.critereon.PlayerTrigger;
+import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.levelgen.structure.Structure;
 
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
@@ -38,8 +39,10 @@ public class EndAdvancementDataProvider extends AdvancementDataProvider {
     }
 
     @Override
+    @SuppressWarnings("removal")
     protected void bootstrap(HolderLookup.Provider lookup) {
         final HolderLookup.RegistryLookup<Structure> structures = lookup.lookupOrThrow(Registries.STRUCTURE);
+        final HolderLookup.RegistryLookup<Biome> biomeLookup = lookup.lookupOrThrow(Registries.BIOME);
         ResourceLocation root = AdvancementManager.Builder
                 .create(BetterEnd.C.mk("root"))
                 .startDisplay(EndBlocks.END_MYCELIUM)
@@ -49,7 +52,7 @@ public class EndAdvancementDataProvider extends AdvancementDataProvider {
                 .endDisplay()
                 .addCriterion(
                         "welcome",
-                        PlayerTrigger.TriggerInstance.located(LocationPredicate.ANY)
+                        PlayerTrigger.TriggerInstance.located(LocationPredicate.Builder.location())
                 )
                 .requirements(Strategy.OR)
                 .build();
@@ -97,26 +100,37 @@ public class EndAdvancementDataProvider extends AdvancementDataProvider {
                 .requirements(Strategy.OR)
                 .build();
 
-        ResourceLocation allTheBiomes = AdvancementManager.Builder
-                .create(BetterEnd.C.mk("all_the_biomes"))
-                .parent(enterEnd)
-                .startDisplay(EndItems.AETERNIUM_BOOTS)
-                .frame(AdvancementType.CHALLENGE)
-                .endDisplay()
-                .addVisitBiomesCriterion(EndBiome.getAllBeBiomes().stream().map(b -> b.getBiomeKey()).toList())
-                .requirements(Strategy.AND)
-                .rewardXP(1500)
-                .build();
+        final var biomes = biomeLookup
+                .listElementIds()
+                .filter(id -> id.location().getNamespace().equals(BetterEnd.C.modId))
+                .toList();
 
-        ResourceLocation village = AdvancementManager.Builder
-                .create(BetterEnd.C.mk("village"))
-                .parent(allTheBiomes)
-                .startDisplay(EndBlocks.TENANEA.getBlock(WoodSlots.DOOR))
-                .frame(AdvancementType.GOAL)
-                .endDisplay()
-                .addAtStructureCriterion("end_village", EndStructures.END_VILLAGE.getHolder(structures))
-                .requirements(Strategy.OR)
-                .build();
+        if (!biomes.isEmpty()) {
+            ResourceLocation allTheBiomes = AdvancementManager.Builder
+                    .create(BetterEnd.C.mk("all_the_biomes"))
+                    .parent(enterEnd)
+                    .startDisplay(EndItems.AETERNIUM_BOOTS)
+                    .frame(AdvancementType.CHALLENGE)
+                    .endDisplay()
+                    .addVisitBiomesCriterion(biomes
+                            .stream()
+                            .map(key -> (Holder<Biome>) biomeLookup.get(key).orElseThrow())
+                            .toList())
+                    .requirements(Strategy.AND)
+                    .rewardXP(1500)
+                    .build();
+
+
+            ResourceLocation village = AdvancementManager.Builder
+                    .create(BetterEnd.C.mk("village"))
+                    .parent(allTheBiomes)
+                    .startDisplay(EndBlocks.TENANEA.getBlock(WoodSlots.DOOR))
+                    .frame(AdvancementType.GOAL)
+                    .endDisplay()
+                    .addAtStructureCriterion("end_village", EndStructures.END_VILLAGE.getHolder(structures))
+                    .requirements(Strategy.OR)
+                    .build();
+        }
 
         ResourceLocation allElytras = AdvancementManager.Builder
                 .create(BetterEnd.C.mk("all_elytras"))

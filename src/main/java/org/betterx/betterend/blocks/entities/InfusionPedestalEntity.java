@@ -49,9 +49,10 @@ public class InfusionPedestalEntity extends PedestalBlockEntity {
         super.saveAdditional(tag, provider);
     }
 
+
     @Override
-    protected void fromTag(CompoundTag tag) {
-        super.fromTag(tag);
+    protected void loadAdditional(CompoundTag tag, HolderLookup.Provider provider) {
+        super.loadAdditional(tag, provider);
         if (tag.contains("ritual")) {
             if (!hasRitual()) {
                 linkedRitual = new InfusionRitual(this, level, worldPosition);
