@@ -74,7 +74,9 @@ public class BetterEndSkyRenderer implements DimensionRenderingRegistry.SkyRende
         Matrix4f projectionMatrix = context.projectionMatrix();
         PoseStack matrices = context.matrixStack();
 
-        float time = ((context.world().getDayTime() + context.tickDelta()) % 360000) * 0.000017453292F;
+        float time = ((context.world().getDayTime() + context
+                .tickCounter()
+                .getRealtimeDeltaTicks()) % 360000) * 0.000017453292F;
         float time2 = time * 2;
         float time3 = time * 3;
 

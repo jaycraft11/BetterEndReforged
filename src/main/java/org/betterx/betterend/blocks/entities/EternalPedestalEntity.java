@@ -4,6 +4,7 @@ import org.betterx.betterend.registry.EndBlockEntities;
 import org.betterx.betterend.rituals.EternalRitual;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
@@ -36,11 +37,11 @@ public class EternalPedestalEntity extends PedestalBlockEntity {
     }
 
     @Override
-    public void saveAdditional(CompoundTag tag) {
+    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider provider) {
         if (hasRitual()) {
             tag.put("ritual", linkedRitual.toTag(new CompoundTag()));
         }
-        super.saveAdditional(tag);
+        super.saveAdditional(tag, provider);
     }
 
     @Override

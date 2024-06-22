@@ -1,7 +1,5 @@
 package org.betterx.betterend.rituals;
 
-import org.betterx.bclib.api.v2.dataexchange.DataExchangeAPI;
-import org.betterx.wover.block.api.BlockProperties;
 import org.betterx.betterend.BetterEnd;
 import org.betterx.betterend.advancements.BECriteria;
 import org.betterx.betterend.blocks.EndPortalBlock;
@@ -11,8 +9,8 @@ import org.betterx.betterend.network.RitualUpdate;
 import org.betterx.betterend.portal.PortalBuilder;
 import org.betterx.betterend.registry.EndBlocks;
 import org.betterx.betterend.registry.EndPortals;
+import org.betterx.wover.block.api.BlockProperties;
 
-import net.minecraft.BlockUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.BlockParticleOption;
@@ -137,7 +135,10 @@ public class EternalRitual {
     public void updateActiveStateOnPedestals() {
         if (world == null) return;
         updateActiveStateOnPedestals(center, axis, active, willActivate, world, this);
-        DataExchangeAPI.send(new RitualUpdate(this));
+        if (world instanceof ServerLevel serverLevel) {
+            new RitualUpdate(this).sendToClient(serverLevel);
+        }
+
     }
 
     public static void updateActiveStateOnPedestals(
@@ -246,12 +247,12 @@ public class EternalRitual {
             ServerLevel targetLevel = (ServerLevel) getTargetWorld(portalId);
             PortalBuilder builder = new PortalBuilder(world, targetLevel);
             final WorldBorder worldBorder = targetLevel.getWorldBorder();
-            final Optional<BlockUtil.FoundRectangle> foundRectangle = builder.findPortalAround(
+            final Optional<PortalBuilder.FoundPortalRect> foundRectangle = builder.findPortalAround(
                     this.center,
                     worldBorder
             );
 
-            if (!foundRectangle.isPresent()) {
+            if (foundRectangle.isEmpty()) {
                 Optional<BlockPos> centerPos;
                 centerPos = builder.createPortal(
                         PortalBuilder.getStartingPos(sourceWorld, targetLevel, player, worldBorder),
@@ -502,13 +503,13 @@ public class EternalRitual {
 
     public void fromTag(CompoundTag tag) {
         axis = Direction.Axis.byName(tag.getString("axis"));
-        center = NbtUtils.readBlockPos(tag.getCompound("center"));
+        center = NbtUtils.readBlockPos(tag, "center").orElse(BlockPos.ZERO);
         active = tag.getBoolean("active");
         if (tag.contains("exit")) {
-            exit = NbtUtils.readBlockPos(tag.getCompound("exit"));
+            exit = NbtUtils.readBlockPos(tag, "exit").orElse(BlockPos.ZERO);
         }
         if (tag.contains("key_item")) {
-            targetWorldId = new ResourceLocation(tag.getString("key_item"));
+            targetWorldId = ResourceLocation.parse(tag.getString("key_item"));
         }
     }
 

@@ -6,6 +6,7 @@ import org.betterx.bclib.client.render.BCLRenderLayer;
 import org.betterx.bclib.interfaces.RenderLayerProvider;
 import org.betterx.betterend.registry.EndBlocks;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -16,6 +17,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -25,13 +27,23 @@ import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.material.MapColor;
 
 public class CrystalMossCoverBlock extends MultifaceBlock implements BonemealableBlock, SimpleWaterloggedBlock, RenderLayerProvider, BehaviourShearablePlant {
+    public static final MapCodec<CrystalMossCoverBlock> CODEC = simpleCodec(CrystalMossCoverBlock::new);
     private static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
     private final MultifaceSpreader spreader = new MultifaceSpreader(this);
 
     public CrystalMossCoverBlock(MapColor color) {
-        super(BehaviourBuilders.createPlantCover(color)
-                               .lightLevel(GlowLichenBlock.emission(7)));
+        this(BehaviourBuilders.createPlantCover(color)
+                              .lightLevel(GlowLichenBlock.emission(7)));
+    }
+
+    private CrystalMossCoverBlock(BlockBehaviour.Properties properties) {
+        super(properties);
         this.registerDefaultState(this.defaultBlockState().setValue(WATERLOGGED, false));
+    }
+
+    @Override
+    protected MapCodec<? extends MultifaceBlock> codec() {
+        return CODEC;
     }
 
     @Override

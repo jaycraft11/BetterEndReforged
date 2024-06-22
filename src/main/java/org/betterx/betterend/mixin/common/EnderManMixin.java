@@ -19,7 +19,7 @@ public abstract class EnderManMixin {
     private void be_isLookingAtMe(Player player, CallbackInfoReturnable<Boolean> info) {
         if (player.isCreative() || player.hasEffect(EndStatusEffects.END_VEIL) || EnchantmentUtils.getItemEnchantmentLevel(
                 player.level(),
-                EndEnchantments.END_VEIL,
+                EndEnchantments.END_VEIL.key(),
                 player.getItemBySlot(EquipmentSlot.HEAD)
         ) > 0) {
             info.setReturnValue(false);

@@ -3,6 +3,7 @@ package org.betterx.betterend.world.features;
 import org.betterx.bclib.api.v2.levelgen.features.features.DefaultFeature;
 import org.betterx.bclib.api.v2.levelgen.structures.templatesystem.DestructionStructureProcessor;
 import org.betterx.bclib.util.BlocksHelper;
+import org.betterx.betterend.world.biome.EndBiome;
 import org.betterx.wover.tag.api.predefined.CommonBlockTags;
 
 import com.mojang.serialization.Codec;
@@ -11,6 +12,7 @@ import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Vec3i;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.StringRepresentable;
@@ -53,8 +55,8 @@ public abstract class NBTFeature<FC extends NBTFeatureConfig> extends Feature<FC
 
     protected BlockPos getGround(WorldGenLevel world, BlockPos center) {
         Holder<Biome> biome = world.getBiome(center);
-        ResourceLocation id = BiomeAPI.getBiomeID(biome);
-        if (id.getNamespace().contains("moutain") || id.getNamespace().contains("lake")) {
+        ResourceLocation id = biome.unwrapKey().map(ResourceKey::location).orElse(null);
+        if (id != null && (id.getNamespace().contains("moutain") || id.getNamespace().contains("lake"))) {
             int y = getAverageY(world, center);
             return new BlockPos(center.getX(), y, center.getZ());
         } else {
@@ -152,8 +154,8 @@ public abstract class NBTFeature<FC extends NBTFeatureConfig> extends Feature<FC
                                     boolean isTop = mut.getY() == surfMax && state.isSolid();
                                     Holder<Biome> b = world.getBiome(mut);
                                     BlockState top = (isTop
-                                            ? BiomeAPI.findTopMaterial(b)
-                                            : BiomeAPI.findUnderMaterial(b)).orElse(cfg.defaultBlock);
+                                            ? EndBiome.findTopMaterial(b)
+                                            : EndBiome.findUnderMaterial(b));
                                     BlocksHelper.setWithoutUpdate(world, mut, top);
                                 } else {
                                     BlocksHelper.setWithoutUpdate(world, mut, state);
@@ -162,7 +164,7 @@ public abstract class NBTFeature<FC extends NBTFeatureConfig> extends Feature<FC
                                 if (isTerrain(state) && state.isSolid()) {
                                     if (merge == TerrainMerge.SURFACE) {
                                         Holder<Biome> b = world.getBiome(mut);
-                                        BlockState bottom = BiomeAPI.findUnderMaterial(b).orElse(cfg.defaultBlock);
+                                        BlockState bottom = EndBiome.findUnderMaterial(b);
                                         BlocksHelper.setWithoutUpdate(world, mut, bottom);
                                     } else {
                                         BlocksHelper.setWithoutUpdate(world, mut, state);

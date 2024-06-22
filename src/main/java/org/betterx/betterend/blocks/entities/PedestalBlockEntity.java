@@ -5,6 +5,7 @@ import org.betterx.betterend.registry.EndBlockEntities;
 import org.betterx.betterend.registry.EndItems;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.Container;
@@ -102,15 +103,15 @@ public class PedestalBlockEntity extends BlockEntity implements Container {
     }
 
     @Override
-    public void load(CompoundTag tag) {
-        super.load(tag);
+    protected void loadAdditional(CompoundTag tag, HolderLookup.Provider provider) {
+        super.loadAdditional(tag, provider);
         fromTag(tag);
     }
 
     @Override
-    protected void saveAdditional(CompoundTag tag) {
-        super.saveAdditional(tag);
+    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider provider) {
         toTag(tag);
+        super.saveAdditional(tag, provider);
     }
 
     @Override
@@ -119,7 +120,7 @@ public class PedestalBlockEntity extends BlockEntity implements Container {
     }
 
     @Override
-    public CompoundTag getUpdateTag() {
-        return this.saveWithoutMetadata();
+    public CompoundTag getUpdateTag(HolderLookup.Provider provider) {
+        return this.saveWithoutMetadata(provider);
     }
 }

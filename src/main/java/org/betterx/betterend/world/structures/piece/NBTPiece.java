@@ -69,11 +69,11 @@ public class NBTPiece extends BasePiece {
 
     @Override
     protected void fromNbt(CompoundTag tag) {
-        structureID = new ResourceLocation(tag.getString("structureID"));
+        structureID = ResourceLocation.parse(tag.getString("structureID"));
         rotation = Rotation.values()[tag.getInt("rotation")];
         mirror = Mirror.values()[tag.getInt("mirror")];
         erosion = tag.getInt("erosion");
-        pos = NbtUtils.readBlockPos(tag.getCompound("pos"));
+        pos = NbtUtils.readBlockPos(tag, "pos").orElse(BlockPos.ZERO);
         cover = tag.getBoolean("cover");
         structure = StructureHelper.readStructure(structureID);
     }
