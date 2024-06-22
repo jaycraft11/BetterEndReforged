@@ -350,7 +350,8 @@ public class EndItems {
     }
 
     @ApiStatus.Internal
-    public static void register() {
+    public static void ensureStaticallyLoaded() {
+        GuideBookItem.ensureStaticallyLoaded();
         if (BCLib.isDevEnvironment()) {
             DebugHelpers.generateDebugItems();
         }

@@ -11,10 +11,13 @@ import org.betterx.wover.core.api.ModCore;
 import org.betterx.wover.datagen.api.provider.WoverLootTableProvider;
 
 import net.minecraft.advancements.critereon.LocationPredicate;
+import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.HolderSet;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
@@ -335,9 +338,12 @@ public class EndChestLootTableProvider extends WoverLootTableProvider {
     }
 
     private static LootItemCondition.Builder biomePredicate(HolderLookup.@NotNull Provider lookup, BiomeKey<?> key) {
+        final HolderLookup.RegistryLookup<Biome> biomeRegistry = lookup.lookupOrThrow(Registries.BIOME);
+        Holder.Reference<Biome> holder = biomeRegistry.get(key.key).orElse(null);
         return LocationCheck.checkLocation(LocationPredicate.Builder
                 .location()
-                .setBiomes(HolderSet.direct(key.getHolder(lookup))));
+                .setBiomes(HolderSet.direct(holder)));
+
     }
 
     private static LootItemCondition.Builder IN_FOGGY_MUSHROOMLAND;

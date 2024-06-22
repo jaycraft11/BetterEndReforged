@@ -57,10 +57,11 @@ AETERNIUM > NETHERITE
 
         context.add(EndTags.ANVIL_DIAMOND_TOOL, EndTags.ANVIL_NETHERITE_TOOL);
         context.add(EndTags.ANVIL_DIAMOND_TOOL, EndItems.DIAMOND_HAMMER, EndBlocks.TERMINITE.hammer);
-        
+
         context.add(EndTags.ANVIL_IRON_TOOL, EndTags.ANVIL_DIAMOND_TOOL);
         context.add(EndTags.ANVIL_IRON_TOOL, EndItems.IRON_HAMMER, EndItems.GOLDEN_HAMMER, EndBlocks.THALLASIUM.hammer);
 
         MaterialManager.stream().forEach(m -> m.registerItemTags(context));
+        org.betterx.datagen.bclib.worldgen.ItemTagProvider.processBlockItemCommon(context, modCore);
     }
 }

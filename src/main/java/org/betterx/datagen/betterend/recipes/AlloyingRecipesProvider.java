@@ -8,6 +8,7 @@ import org.betterx.betterend.registry.EndTags;
 import org.betterx.wover.core.api.ModCore;
 import org.betterx.wover.datagen.api.provider.WoverRecipeProvider;
 
+import net.minecraft.core.HolderLookup;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
@@ -17,7 +18,7 @@ public class AlloyingRecipesProvider extends WoverRecipeProvider {
         super(modCore, "BetterEnd - Alloying Recipes");
     }
 
-    public void bootstrap(RecipeOutput context) {
+    public void bootstrap(HolderLookup.Provider provider, RecipeOutput context) {
         BCLRecipeBuilder.alloying(BetterEnd.C.mk("additional_iron"), Items.IRON_INGOT)
                         .setInput(EndTags.ALLOYING_IRON, EndTags.ALLOYING_IRON)
                         .outputCount(3)

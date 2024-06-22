@@ -6,6 +6,7 @@ import org.betterx.betterend.registry.EndBiomes;
 import org.betterx.betterend.registry.EndFeatures;
 import org.betterx.betterend.registry.EndTags;
 import org.betterx.betterend.world.biome.EndBiome;
+import org.betterx.betterend.world.biome.EndBiomeBuilder;
 import org.betterx.betterend.world.biome.EndBiomeKey;
 import org.betterx.betterend.world.biome.air.BiomeIceStarfield;
 import org.betterx.betterend.world.biome.cave.*;
@@ -108,7 +109,10 @@ public class EndBiomesProvider extends WoverBiomeProvider {
     @Override
     protected void bootstrap(BiomeBootstrapContext context) {
         for (Map.Entry<EndBiomeKey<?, ?>, BiomeInfo> e : BIOMES.entrySet()) {
-            e.getKey().bootstrap(context, e.getValue().config, e.getValue().tag);
+            final EndBiomeBuilder builder = e.getKey().bootstrap(context, e.getValue().config, e.getValue().tag);
+            if (e.getValue().placed != null)
+                builder.feature(e.getValue().placed);
+            builder.register();
         }
     }
 
@@ -151,7 +155,7 @@ public class EndBiomesProvider extends WoverBiomeProvider {
                     int offsetY = e.get("offsetY").getAsInt();
                     list.add(new BuildingListFeature.StructureInfo(structure, offsetY, terrainMerge));
                 });
-                
+
                 if (!list.isEmpty()) {
                     return list;
                 }

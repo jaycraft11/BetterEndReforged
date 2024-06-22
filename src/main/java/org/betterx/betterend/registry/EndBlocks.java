@@ -774,5 +774,6 @@ public class EndBlocks {
 
     @ApiStatus.Internal
     public static void ensureStaticallyLoaded() {
+
     }
 }

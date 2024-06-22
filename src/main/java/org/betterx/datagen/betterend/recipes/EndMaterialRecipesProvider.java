@@ -4,6 +4,7 @@ import org.betterx.betterend.complexmaterials.MaterialManager;
 import org.betterx.wover.core.api.ModCore;
 import org.betterx.wover.datagen.api.provider.WoverRecipeProvider;
 
+import net.minecraft.core.HolderLookup;
 import net.minecraft.data.recipes.RecipeOutput;
 
 public class EndMaterialRecipesProvider extends WoverRecipeProvider {
@@ -12,7 +13,7 @@ public class EndMaterialRecipesProvider extends WoverRecipeProvider {
     }
 
     @Override
-    protected void bootstrap(RecipeOutput context) {
+    protected void bootstrap(HolderLookup.Provider provider, RecipeOutput context) {
         MaterialManager.stream().forEach(m -> m.registerRecipes(context));
     }
 }

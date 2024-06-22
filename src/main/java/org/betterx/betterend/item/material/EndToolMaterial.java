@@ -11,19 +11,20 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
 
+import java.util.function.Supplier;
 import org.jetbrains.annotations.NotNull;
 
 public enum EndToolMaterial implements Tier {
-    THALLASIUM(Tiers.IRON.getIncorrectBlocksForDrops(), 2, 320, 7.0F, 1.5F, 12, EndBlocks.THALLASIUM.ingot),
-    TERMINITE(Tiers.DIAMOND.getIncorrectBlocksForDrops(), 3, 1230, 8.5F, 3.0F, 14, EndBlocks.TERMINITE.ingot),
-    AETERNIUM(EndTags.INCORRECT_FOR_AETERNIUM_TOOL, 5, 2196, 10.0F, 4.5F, 18, EndItems.AETERNIUM_INGOT);
+    THALLASIUM(Tiers.IRON.getIncorrectBlocksForDrops(), 2, 320, 7.0F, 1.5F, 12, () -> EndBlocks.THALLASIUM.ingot),
+    TERMINITE(Tiers.DIAMOND.getIncorrectBlocksForDrops(), 3, 1230, 8.5F, 3.0F, 14, () -> EndBlocks.TERMINITE.ingot),
+    AETERNIUM(EndTags.INCORRECT_FOR_AETERNIUM_TOOL, 5, 2196, 10.0F, 4.5F, 18, () -> EndItems.AETERNIUM_INGOT);
 
     private final int uses;
     private final float speed;
     private final int level;
     private final int enchantibility;
     private final float damage;
-    private final ItemLike reapair;
+    private final Supplier<ItemLike> reapair;
     public final TagKey<Block> incorrectBlocksForDrops;
 
     EndToolMaterial(
@@ -33,7 +34,7 @@ public enum EndToolMaterial implements Tier {
             float speed,
             float damage,
             int enchantibility,
-            ItemLike reapair
+            Supplier<ItemLike> reapair
     ) {
 
         this.incorrectBlocksForDrops = incorrectBlocksForDrops;
@@ -64,7 +65,7 @@ public enum EndToolMaterial implements Tier {
     public @NotNull TagKey<Block> getIncorrectBlocksForDrops() {
         return this.incorrectBlocksForDrops;
     }
-    
+
     public int getLevel() {
         return level;
     }
@@ -76,7 +77,7 @@ public enum EndToolMaterial implements Tier {
 
     @Override
     public @NotNull Ingredient getRepairIngredient() {
-        return Ingredient.of(reapair);
+        return Ingredient.of(reapair.get());
     }
 
 }

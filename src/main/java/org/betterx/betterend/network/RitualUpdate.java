@@ -19,8 +19,8 @@ import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
 
 public class RitualUpdate extends ClientBoundPacketHandler<RitualUpdate.Payload> {
-    public static final RitualUpdate INSTANCE = new RitualUpdate();
     public static final ResourceLocation CHANNEL = BetterEnd.C.mk("ritual_update");
+    public static final RitualUpdate INSTANCE = new RitualUpdate();
 
     public RitualUpdate() {
         super(

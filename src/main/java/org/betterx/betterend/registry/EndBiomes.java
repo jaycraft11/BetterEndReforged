@@ -54,7 +54,7 @@ public class EndBiomes {
     public static final EndBiomeKey<EmptySmaragdantCaveBiome, ?> EMPTY_SMARAGDANT_CAVE = EndBiomeBuilder.createKey("empty_smaragdant_cave");
     public static final EndBiomeKey<LushSmaragdantCaveBiome, ?> LUSH_SMARAGDANT_CAVE = EndBiomeBuilder.createKey("lush_smaragdant_cave");
     public static final EndBiomeKey<EmptyAuroraCaveBiome, ?> EMPTY_AURORA_CAVE = EndBiomeBuilder.createKey("empty_aurora_cave");
-    public static final EndBiomeKey<LushAuroraCaveBiome, ?> LUSH_AURORA_CAVE = EndBiomeBuilder.createKey("new LushAuroraCaveBiome()");
+    public static final EndBiomeKey<LushAuroraCaveBiome, ?> LUSH_AURORA_CAVE = EndBiomeBuilder.createKey("lush_aurora_cave");
     public static final EndBiomeKey<JadeCaveBiome, ?> JADE_CAVE = EndBiomeBuilder.createKey("jade_cave");
 
 

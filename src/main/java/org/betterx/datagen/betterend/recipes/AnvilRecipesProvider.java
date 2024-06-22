@@ -8,6 +8,7 @@ import org.betterx.betterend.registry.EndTags;
 import org.betterx.wover.core.api.ModCore;
 import org.betterx.wover.datagen.api.provider.WoverRecipeProvider;
 
+import net.minecraft.core.HolderLookup;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.world.item.Items;
 
@@ -16,7 +17,7 @@ public class AnvilRecipesProvider extends WoverRecipeProvider {
         super(modCore, "BetterEnd - Anvil Recipes");
     }
 
-    public void bootstrap(RecipeOutput context) {
+    public void bootstrap(HolderLookup.Provider provider, RecipeOutput context) {
         BCLRecipeBuilder.anvil(BetterEnd.C.mk("ender_pearl_to_dust"), EndItems.ENDER_DUST)
                         .setPrimaryInputAndUnlock(Items.ENDER_PEARL)
                         .setAnvilLevel(EndToolMaterial.THALLASIUM.getLevel())

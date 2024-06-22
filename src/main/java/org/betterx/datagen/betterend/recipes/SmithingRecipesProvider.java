@@ -8,6 +8,7 @@ import org.betterx.wover.core.api.ModCore;
 import org.betterx.wover.datagen.api.provider.WoverRecipeProvider;
 import org.betterx.wover.recipe.api.RecipeBuilder;
 
+import net.minecraft.core.HolderLookup;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
@@ -18,7 +19,7 @@ public class SmithingRecipesProvider extends WoverRecipeProvider {
     }
 
     @Override
-    protected void bootstrap(RecipeOutput context) {
+    protected void bootstrap(HolderLookup.Provider provider, RecipeOutput context) {
         RecipeBuilder.smithing(BetterEnd.C.mk("aeternium_pickaxe"), EndItems.AETERNIUM_PICKAXE)
                      .template(EndTemplates.LEATHER_HANDLE_ATTACHMENT)
                      .base(EndItems.AETERNIUM_PICKAXE_HEAD)

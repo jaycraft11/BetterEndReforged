@@ -7,6 +7,7 @@ import org.betterx.wover.core.api.ModCore;
 import org.betterx.wover.datagen.api.provider.WoverRecipeProvider;
 import org.betterx.wover.recipe.api.RecipeBuilder;
 
+import net.minecraft.core.HolderLookup;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.world.item.Items;
 
@@ -16,7 +17,7 @@ public class PatchouliBookProvider extends WoverRecipeProvider {
     }
 
     @Override
-    protected void bootstrap(RecipeOutput context) {
+    protected void bootstrap(HolderLookup.Provider provider, RecipeOutput context) {
         RecipeBuilder.crafting(BetterEnd.C.mk("guide_book"), GuideBookItem.GUIDE_BOOK)
                      .shape("D", "B", "C")
                      .addMaterial('D', EndItems.ENDER_DUST)

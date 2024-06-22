@@ -15,6 +15,7 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 
 import java.util.List;
+import org.jetbrains.annotations.ApiStatus;
 
 public class GuideBookItem extends ModelProviderItem {
     public static final Item GUIDE_BOOK = EndItems.getItemRegistry().register("guidebook", new GuideBookItem());
@@ -45,5 +46,9 @@ public class GuideBookItem extends ModelProviderItem {
     ) {
         list.add(LangUtil.getText("book.betterend", "subtitle")
                          .withStyle(ChatFormatting.DARK_PURPLE, ChatFormatting.ITALIC));
+    }
+
+    @ApiStatus.Internal
+    public static final void ensureStaticallyLoaded() {
     }
 }

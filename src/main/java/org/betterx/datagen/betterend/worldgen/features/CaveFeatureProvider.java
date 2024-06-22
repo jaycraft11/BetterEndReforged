@@ -27,7 +27,7 @@ public class CaveFeatureProvider extends WoverFeatureProvider {
 
     @Override
     protected void bootstrapConfigured(BootstrapContext<ConfiguredFeature<?, ?>> context) {
-        EndConfiguredCaveFeatures.CAVE_BUSH.bootstrap(context).register();
+        //EndConfiguredCaveFeatures.CAVE_BUSH.bootstrap(context).register();
 
         EndConfiguredCaveFeatures.SMARAGDANT_CRYSTAL.bootstrap(context).register();
 

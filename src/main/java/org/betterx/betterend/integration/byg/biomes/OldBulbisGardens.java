@@ -37,8 +37,7 @@ public class OldBulbisGardens extends EndBiome.Config {
 
     @Override
     public void addCustomBuildData(EndBiomeBuilder builder) {
-        Holder<Biome> biome = Integrations.BYG.getBiome("bulbis_gardens");
-        BiomeSpecialEffects effects = biome.value().getSpecialEffects();
+
 
         builder.fogColor(215, 132, 207)
                .fogDensity(1.8F)
@@ -51,7 +50,12 @@ public class OldBulbisGardens extends EndBiome.Config {
                .feature(EndLakeFeatures.END_LAKE_RARE)
                .feature(BYGFeatures.OLD_BULBIS_TREE);
 
+        Holder<Biome> biome = Integrations.BYG.getBiome("bulbis_gardens");
+        if (biome == null) return;
+
         if (ModCore.isClient()) {
+            BiomeSpecialEffects effects = biome.value().getSpecialEffects();
+
             Holder<SoundEvent> loop = effects.getAmbientLoopSoundEvent()
                                              .get();
             Holder<SoundEvent> music = effects.getBackgroundMusic()

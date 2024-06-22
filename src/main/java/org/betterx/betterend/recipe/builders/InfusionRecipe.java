@@ -79,16 +79,30 @@ public class InfusionRecipe implements Recipe<InfusionRitual>, UnknownReceipBook
         return new BuilderImpl(id, output);
     }
 
-    public static Builder create(String id, ResourceKey<Enchantment> enchantment, int level) {
-        return create(BetterEnd.C.mk(id), enchantment, level);
+    public static Builder create(
+            String id,
+            ResourceKey<Enchantment> enchantment,
+            int level,
+            HolderLookup.RegistryLookup<Enchantment> lookup
+    ) {
+        return create(BetterEnd.C.mk(id), enchantment, level, lookup);
     }
 
-    public static Builder create(ResourceLocation id, ResourceKey<Enchantment> enchantment, int level) {
-        return new BuilderImpl(id, createEnchantedBook(enchantment, level));
+    public static Builder create(
+            ResourceLocation id,
+            ResourceKey<Enchantment> enchantment,
+            int level,
+            HolderLookup.RegistryLookup<Enchantment> lookup
+    ) {
+        return new BuilderImpl(id, createEnchantedBook(enchantment, level, lookup));
     }
 
-    public static ItemStack createEnchantedBook(ResourceKey<Enchantment> enchantment, int level) {
-        return EnchantedBookItem.createForEnchantment(new EnchantmentInstance(EnchantmentUtils.getEnchantment(enchantment), level));
+    public static ItemStack createEnchantedBook(
+            ResourceKey<Enchantment> enchantment,
+            int level,
+            HolderLookup.RegistryLookup<Enchantment> lookup
+    ) {
+        return EnchantedBookItem.createForEnchantment(new EnchantmentInstance(EnchantmentUtils.getEnchantment(lookup, enchantment), level));
     }
 
     public int getInfusionTime() {
@@ -168,7 +182,7 @@ public class InfusionRecipe implements Recipe<InfusionRitual>, UnknownReceipBook
         }
 
         protected BuilderImpl(ResourceLocation id, ItemStack output) {
-            super(id, output);
+            super(id, output, false);
             this.catalysts = new Ingredient[]{
                     Ingredient.EMPTY, Ingredient.EMPTY, Ingredient.EMPTY, Ingredient.EMPTY,
                     Ingredient.EMPTY, Ingredient.EMPTY, Ingredient.EMPTY, Ingredient.EMPTY

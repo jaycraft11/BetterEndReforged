@@ -12,8 +12,6 @@ import org.betterx.wover.surface.api.SurfaceRuleBuilder;
 import net.minecraft.core.Holder;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.BiomeSpecialEffects;
@@ -31,9 +29,6 @@ public class NightshadeRedwoods extends EndBiome.Config {
 
     @Override
     public void addCustomBuildData(EndBiomeBuilder builder) {
-        Holder<Biome> biome = Integrations.BYG.getBiome("nightshade_forest");
-        BiomeSpecialEffects effects = biome.value().getSpecialEffects();
-
         builder.fogColor(140, 108, 47)
                .fogDensity(1.5F)
                .waterAndFogColor(55, 70, 186)
@@ -48,6 +43,10 @@ public class NightshadeRedwoods extends EndBiome.Config {
                .feature(BYGFeatures.NIGHTSHADE_REDWOOD_TREE)
                .feature(BYGFeatures.NIGHTSHADE_MOSS_WOOD)
                .feature(BYGFeatures.NIGHTSHADE_MOSS);
+
+        Holder<Biome> biome = Integrations.BYG.getBiome("nightshade_forest");
+        if (biome == null) return;
+        BiomeSpecialEffects effects = biome.value().getSpecialEffects();
 
         if (BCLib.isClient()) {
             Holder<SoundEvent> loop = effects.getAmbientLoopSoundEvent()
@@ -79,8 +78,8 @@ public class NightshadeRedwoods extends EndBiome.Config {
                                           .getMobSettings()
                                           .getMobs(group)
                                           .unwrap();
-            list.forEach((entry) -> {
-                builder.spawn((EntityType<? extends Mob>) entry.type, 1, entry.minCount, entry.maxCount);
+            list.forEach(entry -> {
+                builder.spawn(entry.type, 1, entry.minCount, entry.maxCount);
             });
         }
     }

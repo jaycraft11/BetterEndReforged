@@ -19,6 +19,13 @@ public class BYGIntegration extends ModIntegration implements EndBiomeIntegratio
     }
 
     @Override
+    public void initDatagen() {
+        BYGBlocks.register();
+        BYGFeatures.register();
+        BYGBiomes.register();
+    }
+
+    @Override
     public void addBiomes() {
         BYGBiomes.addBiomes();
     }

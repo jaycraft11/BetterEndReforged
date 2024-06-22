@@ -17,7 +17,9 @@ public class BYGBiomeProvider extends WoverBiomeProvider {
 
     @Override
     protected void bootstrap(BiomeBootstrapContext context) {
-        BYGBiomes.OLD_BULBIS_GARDENS.bootstrap(context, new OldBulbisGardens(), CommonBiomeTags.IS_END_LAND);
-        BYGBiomes.NIGHTSHADE_REDWOODS.bootstrap(context, new NightshadeRedwoods(), CommonBiomeTags.IS_END_LAND);
+        BYGBiomes.OLD_BULBIS_GARDENS.bootstrap(context, new OldBulbisGardens(), CommonBiomeTags.IS_END_LAND).register();
+        BYGBiomes.NIGHTSHADE_REDWOODS
+                .bootstrap(context, new NightshadeRedwoods(), CommonBiomeTags.IS_END_LAND)
+                .register();
     }
 }

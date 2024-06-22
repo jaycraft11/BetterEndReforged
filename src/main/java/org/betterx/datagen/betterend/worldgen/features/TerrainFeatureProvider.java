@@ -15,9 +15,6 @@ import org.betterx.wover.core.api.ModCore;
 import org.betterx.wover.datagen.api.provider.multi.WoverFeatureProvider;
 import org.betterx.wover.feature.api.placed.PlacedFeatureKey;
 
-import net.minecraft.core.Holder;
-import net.minecraft.core.HolderGetter;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
 import net.minecraft.world.level.block.Blocks;
@@ -96,14 +93,11 @@ public class TerrainFeatureProvider extends WoverFeatureProvider {
                 .register();
 
         // Place chorus village
-        final HolderGetter<ConfiguredFeature<?, ?>> configuredFeatures = context.lookup(Registries.CONFIGURED_FEATURE);
-        final Holder.Reference<ConfiguredFeature<?, ?>> chorusFeature = configuredFeatures.getOrThrow(net.minecraft.data.worldgen.features.EndFeatures.CHORUS_PLANT);
-        PlacementUtils.register(
-                context,
-                VillagePools.CHORUS_VILLAGE.key(),
-                chorusFeature,
-                PlacementUtils.filteredByBlockSurvival(Blocks.CHORUS_PLANT)
-        );
+        VillagePools.CHORUS_VILLAGE
+                .place(context, net.minecraft.data.worldgen.features.EndFeatures.CHORUS_PLANT)
+                .modifier(PlacementUtils.filteredByBlockSurvival(Blocks.CHORUS_PLANT))
+                .register();
+
 
         // Randomly place nbt features from folder
         EndBiomesProvider

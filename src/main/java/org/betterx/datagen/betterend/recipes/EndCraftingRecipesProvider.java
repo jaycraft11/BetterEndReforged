@@ -1,5 +1,6 @@
 package org.betterx.datagen.betterend.recipes;
 
+import org.betterx.bclib.complexmaterials.ComplexMaterial;
 import org.betterx.betterend.BetterEnd;
 import org.betterx.betterend.registry.EndBlocks;
 import org.betterx.betterend.registry.EndItems;
@@ -10,6 +11,7 @@ import org.betterx.wover.recipe.api.RecipeBuilder;
 import org.betterx.wover.tag.api.predefined.CommonItemTags;
 
 import net.minecraft.core.Holder;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.world.item.Item;
@@ -28,7 +30,7 @@ public class EndCraftingRecipesProvider extends WoverRecipeProvider {
     }
 
     @Override
-    protected void bootstrap(RecipeOutput context) {
+    protected void bootstrap(HolderLookup.Provider provider, RecipeOutput context) {
         CraftingRecipeBuilder craftingRecipeBuilder62 = RecipeBuilder.crafting(BetterEnd.C.mk("ender_perl_to_block"), EndBlocks.ENDER_BLOCK);
         craftingRecipeBuilder62.shape("OO", "OO")
                                .addMaterial('O', Items.ENDER_PEARL)
@@ -458,6 +460,9 @@ public class EndCraftingRecipesProvider extends WoverRecipeProvider {
                                .addMaterial('#', EndBlocks.SMARAGDANT_CRYSTAL_SHARD)
                                .addMaterial('G', Blocks.GLASS)
                                .build(context);
+
+
+        ComplexMaterial.provideAllRecipes(context, BetterEnd.C);
     }
 
     private static void registerLantern(RecipeOutput context, String name, Block lantern, Block slab) {
