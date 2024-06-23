@@ -78,6 +78,7 @@ public class ChandelierBlock extends BaseAttachedBlock.Metal implements RenderLa
     }
 
     @Override
+    @Environment(EnvType.CLIENT)
     public UnbakedModel getModelVariant(
             ModelResourceLocation stateId,
             BlockState blockState,
