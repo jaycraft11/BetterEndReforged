@@ -415,6 +415,7 @@ public class PedestalBlock extends BaseBlockNotFull implements EntityBlock, Bloc
         return ModelsHelper.fromPattern(pattern);
     }
 
+    @Environment(EnvType.CLIENT)
     @Override
     public UnbakedModel getModelVariant(
             ModelResourceLocation stateId,

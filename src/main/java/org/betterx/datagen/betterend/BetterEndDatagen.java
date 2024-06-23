@@ -49,6 +49,7 @@ public class BetterEndDatagen extends WoverDataGenEntryPoint {
         globalPack.addProvider(EndMaterialRecipesProvider::new);
         globalPack.addProvider(EndEnchantmentProvider::new);
         globalPack.addProvider(EndChestLootTableProvider::new);
+        //globalPack.addProvider(EndModelProvider::new);
 
 
         globalPack.callOnInitializeDatapack((generator, pack, location) -> {

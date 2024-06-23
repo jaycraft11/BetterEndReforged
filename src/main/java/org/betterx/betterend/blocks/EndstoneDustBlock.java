@@ -26,7 +26,6 @@ import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import org.jetbrains.annotations.NotNull;
 
 public class EndstoneDustBlock extends FallingBlock implements BlockTagProvider, BehaviourSand, BlockLootProvider {
-    @Environment(EnvType.CLIENT)
     private static final int COLOR = ColorUtil.color(226, 239, 168);
 
     public static final MapCodec<EndstoneDustBlock> CODEC = MapCodec.unit(EndstoneDustBlock::new);
