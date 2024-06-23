@@ -1,14 +1,27 @@
 {
-  "feature": "betterend:bulb_vine",
+  "feature": {
+    "type": "betterend:vine_feature",
+    "config": {
+      "max_length": 24,
+      "radius": 6,
+      "state": {
+        "type": "minecraft:simple_state_provider",
+        "state": {
+          "Name": "betterend:bulb_vine",
+          "Properties": {
+            "shape": "bottom"
+          }
+        }
+      }
+    }
+  },
   "placement": [
     {
       "type": "minecraft:count_on_every_layer",
       "count": {
         "type": "minecraft:uniform",
-        "value": {
-          "max_inclusive": 5,
-          "min_inclusive": 0
-        }
+        "max_inclusive": 5,
+        "min_inclusive": 0
       }
     },
     {

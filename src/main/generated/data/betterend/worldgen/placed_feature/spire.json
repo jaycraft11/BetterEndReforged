@@ -1,5 +1,8 @@
 {
-  "feature": "betterend:spire",
+  "feature": {
+    "type": "betterend:spire",
+    "config": {}
+  },
   "placement": [
     {
       "type": "minecraft:rarity_filter",

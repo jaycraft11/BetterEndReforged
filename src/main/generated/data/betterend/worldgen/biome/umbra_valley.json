@@ -40,10 +40,10 @@
     [],
     [],
     [
+      "minecraft:end_gateway_return",
       "betterend:umbralith_arch",
       "betterend:thin_umbralith_arch",
-      "betterend:crashed_ship",
-      "minecraft:end_gateway_return"
+      "betterend:crashed_ship"
     ],
     [],
     [

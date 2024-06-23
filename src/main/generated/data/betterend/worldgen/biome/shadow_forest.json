@@ -42,9 +42,9 @@
     [],
     [],
     [
+      "minecraft:end_gateway_return",
       "betterend:crashed_ship",
-      "betterend:shadow_forest_structures",
-      "minecraft:end_gateway_return"
+      "betterend:shadow_forest_structures"
     ],
     [],
     [

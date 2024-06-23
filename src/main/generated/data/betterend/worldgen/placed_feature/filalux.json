@@ -1,14 +1,17 @@
 {
-  "feature": "betterend:filalux",
+  "feature": {
+    "type": "betterend:filalux_feature",
+    "config": {
+      "radius": 10
+    }
+  },
   "placement": [
     {
       "type": "minecraft:count_on_every_layer",
       "count": {
         "type": "minecraft:uniform",
-        "value": {
-          "max_inclusive": 1,
-          "min_inclusive": 0
-        }
+        "max_inclusive": 1,
+        "min_inclusive": 0
       }
     },
     {

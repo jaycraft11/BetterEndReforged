@@ -8,10 +8,10 @@ import org.betterx.betterend.world.biome.EndBiome;
 import org.betterx.betterend.world.biome.EndBiomeBuilder;
 import org.betterx.betterend.world.biome.EndBiomeKey;
 import org.betterx.betterend.world.features.terrain.caves.CaveChunkPopulatorFeatureConfig;
-import org.betterx.wover.feature.api.configured.ConfiguredFeatureKey;
+import org.betterx.wover.biome.api.BiomeKey;
 import org.betterx.wover.feature.api.placed.PlacedFeatureKey;
 import org.betterx.wover.feature.api.placed.PlacedFeatureManager;
-import org.betterx.wover.state.api.WorldState;
+import org.betterx.wover.generator.api.biomesource.WoverBiomeData;
 
 import com.mojang.datafixers.util.Function13;
 import com.mojang.serialization.Codec;
@@ -54,7 +54,7 @@ public class EndCaveBiome extends EndBiome {
     public static final KeyDispatchDataCodec<EndCaveBiome> KEY_CODEC = KeyDispatchDataCodec.of(CODEC);
 
     @Override
-    public KeyDispatchDataCodec<? extends EndCaveBiome> codec() {
+    public KeyDispatchDataCodec<? extends WoverBiomeData> codec() {
         return KEY_CODEC;
     }
 
@@ -117,6 +117,27 @@ public class EndCaveBiome extends EndBiome {
             return false;
         }
 
+        @Override
+        public @NotNull EndBiome instantiateBiome(
+                float fogDensity,
+                BiomeKey<?> key,
+                List<Climate.ParameterPoint> parameters,
+                float terrainHeight,
+                float genChance,
+                int edgeSize,
+                boolean vertical,
+                @Nullable ResourceKey<Biome> edge,
+                @Nullable ResourceKey<Biome> parent,
+                boolean hasCave,
+                SurfaceMaterialProvider surface
+        ) {
+            return new EndCaveBiome(
+                    fogDensity, key.key, parameters,
+                    terrainHeight, genChance, edgeSize, vertical, edge, parent,
+                    hasCave, surface, new WeightedList<>(), new WeightedList<>()
+            );
+        }
+
     }
 
     private final WeightedList<Holder<? extends ConfiguredFeature<?, ?>>> floorFeatures = new WeightedList<>();
@@ -126,16 +147,8 @@ public class EndCaveBiome extends EndBiome {
         floorFeatures.add(feature, weight);
     }
 
-    public void addFloorFeature(ConfiguredFeatureKey<?> feature, float weight) {
-        floorFeatures.add(feature.getHolder(WorldState.registryAccess()), weight);
-    }
-
     public void addCeilFeature(Holder<? extends ConfiguredFeature<?, ?>> feature, float weight) {
         ceilFeatures.add(feature, weight);
-    }
-
-    public void addCeilFeature(ConfiguredFeatureKey<?> feature, float weight) {
-        ceilFeatures.add(feature.getHolder(WorldState.registryAccess()), weight);
     }
 
     public Holder<? extends ConfiguredFeature<?, ?>> getFloorFeature(RandomSource random) {

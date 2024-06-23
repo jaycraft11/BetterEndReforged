@@ -1,5 +1,8 @@
 {
-  "feature": "betterend:surface_vent",
+  "feature": {
+    "type": "betterend:surface_vent",
+    "config": {}
+  },
   "placement": [
     {
       "type": "minecraft:rarity_filter",

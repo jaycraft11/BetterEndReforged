@@ -87,7 +87,7 @@ public abstract class EndCaveFeatures extends DefaultFeature {
                 });
 
                 BlockState surfaceBlock = EndBiome.findTopMaterial(biome.biome);
-                if (biome.biome instanceof EndCaveBiome caveBiome) {
+                if (biome.biomeData instanceof EndCaveBiome caveBiome) {
                     placeFloor(world, generator, caveBiome, floorPositions, random, surfaceBlock);
                     placeCeil(world, generator, caveBiome, ceilPositions, random);
                     placeWalls(world, generator, caveBiome, caveBlocks, random);
@@ -263,17 +263,25 @@ public abstract class EndCaveFeatures extends DefaultFeature {
     }
 
     protected boolean biomeMissingCaves(WorldGenLevel world, BlockPos pos) {
-        for (int x = -2; x < 3; x++) {
-            for (int z = -2; z < 3; z++) {
-                Holder<Biome> biome = world.getBiome(pos.offset(x << 4, 0, z << 4));
-                final BiomeData biomeData = BiomeManager.biomeDataForHolder(biome);
+        BlockPos testPos;
+        for (int x = -1; x < 1; x++) {
+            for (int z = -1; z < 1; z++) {
+                testPos = pos.offset(x << 4, 0, z << 4);
+                //BetterEnd.LOGGER.debug("Checking biome at " + testPos + " - " + x + "/" + z);
 
-                boolean hasCaves = true;
-                if (biomeData instanceof EndBiome endBiome)
-                    hasCaves = endBiome.hasCaves();
+                Holder<Biome> biome = WoverBiomePicker.getBiomeAt(world, testPos);
+                if (biome != null) {
+                    final BiomeData biomeData = BiomeManager.biomeDataForHolder(biome);
 
-                if (!hasCaves && biome.is(CommonBiomeTags.IS_END_LAND)) {
-                    return true;
+                    boolean hasCaves = true;
+                    if (biomeData instanceof EndBiome endBiome)
+                        hasCaves = endBiome.hasCaves();
+
+                    if (!hasCaves && biome.is(CommonBiomeTags.IS_END_LAND)) {
+                        return true;
+                    }
+                } else {
+                    //BetterEnd.LOGGER.verboseWarning("Biome not found at " + testPos + " - " + x + "/" + z);
                 }
             }
         }

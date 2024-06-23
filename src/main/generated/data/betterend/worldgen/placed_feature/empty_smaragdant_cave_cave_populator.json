@@ -1,5 +1,10 @@
 {
-  "feature": "betterend:empty_smaragdant_cave_cave_populator",
+  "feature": {
+    "type": "betterend:cave_chunk_populator",
+    "config": {
+      "biome": "betterend:empty_smaragdant_cave"
+    }
+  },
   "placement": [
     {
       "type": "minecraft:count",

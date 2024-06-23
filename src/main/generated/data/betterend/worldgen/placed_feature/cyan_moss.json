@@ -1,14 +1,26 @@
 {
-  "feature": "betterend:cyan_moss",
+  "feature": {
+    "type": "betterend:wall_plant_feature",
+    "config": {
+      "radius": 3,
+      "state": {
+        "type": "minecraft:simple_state_provider",
+        "state": {
+          "Name": "betterend:cyan_moss",
+          "Properties": {
+            "facing": "north"
+          }
+        }
+      }
+    }
+  },
   "placement": [
     {
       "type": "minecraft:count_on_every_layer",
       "count": {
         "type": "minecraft:uniform",
-        "value": {
-          "max_inclusive": 15,
-          "min_inclusive": 0
-        }
+        "max_inclusive": 15,
+        "min_inclusive": 0
       }
     },
     {

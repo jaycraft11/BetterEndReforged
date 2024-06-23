@@ -1,0 +1,18 @@
+{
+  "type": "betterend:biome",
+  "biome": "betterend:chorus_forest",
+  "fogDensity": 1.5,
+  "has_caves": true,
+  "surface": {
+    "alt": {
+      "Name": "betterend:chorus_nylium"
+    },
+    "floor_rule": true,
+    "top": {
+      "Name": "betterend:chorus_nylium"
+    },
+    "under": {
+      "Name": "minecraft:end_stone"
+    }
+  }
+}

@@ -12,17 +12,21 @@ import org.betterx.wover.generator.api.biomesource.WoverBiomeBuilder;
 
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.data.worldgen.placement.EndPlacements;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.biome.Climate;
 import net.minecraft.world.level.levelgen.GenerationStep;
 
+import java.util.List;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class EndBiomeBuilder extends WoverBiomeBuilder.AbstractWoverBiomeBuilder<EndBiomeBuilder> {
     protected boolean hasCave = false;
     protected SurfaceMaterialProvider surface;
+    protected BiomeFactory biomeFactory;
 
     protected EndBiomeBuilder(
             BiomeBootstrapContext context,
@@ -58,7 +62,7 @@ public class EndBiomeBuilder extends WoverBiomeBuilder.AbstractWoverBiomeBuilder
         biomeConfig.addCustomBuildData(this);
 
         EndFeatures.addDefaultFeatures(this, biomeConfig.hasCaves());
-
+        this.biomeFactory = biomeConfig;
 
         return this;
     }
@@ -85,13 +89,27 @@ public class EndBiomeBuilder extends WoverBiomeBuilder.AbstractWoverBiomeBuilder
 
     @Override
     public void registerBiomeData(BootstrapContext<BiomeData> dataContext) {
-        final EndBiome biome = new EndBiome(
-                fogDensity, key.key, parameters,
-                terrainHeight, genChance, edgeSize, vertical, edge, parent,
-                hasCave, surface
-        );
-        biome.datagenSetup();
+        final EndBiome biome = biomeFactory.instantiateBiome(fogDensity, key, parameters, terrainHeight, genChance, edgeSize, vertical, edge, parent, hasCave, surface);
+        biome.datagenSetup(dataContext);
         dataContext.register(key.dataKey, biome);
+    }
+
+    @FunctionalInterface
+    public interface BiomeFactory {
+        @NotNull
+        EndBiome instantiateBiome(
+                float fogDensity,
+                BiomeKey<?> key,
+                List<Climate.ParameterPoint> parameters,
+                float terrainHeight,
+                float genChance,
+                int edgeSize,
+                boolean vertical,
+                @Nullable ResourceKey<Biome> edge,
+                @Nullable ResourceKey<Biome> parent,
+                boolean hasCave,
+                SurfaceMaterialProvider surface
+        );
     }
 }
 

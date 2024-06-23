@@ -8,11 +8,14 @@ import org.betterx.betterend.registry.features.EndConfiguredCaveFeatures;
 import org.betterx.betterend.world.biome.EndBiome;
 import org.betterx.betterend.world.biome.EndBiomeBuilder;
 import org.betterx.betterend.world.biome.EndBiomeKey;
+import org.betterx.wover.biome.api.BiomeKey;
+import org.betterx.wover.biome.api.data.BiomeData;
 import org.betterx.wover.block.api.BlockProperties;
 
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
+import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.KeyDispatchDataCodec;
 import net.minecraft.world.level.biome.Climate;
@@ -29,17 +32,17 @@ public class LushAuroraCaveBiome extends EndCaveBiome.Config<LushAuroraCaveBiome
 
     public static class Biome extends EndCaveBiome {
         @Override
-        public void datagenSetup() {
-            this.addFloorFeature(EndConfiguredCaveFeatures.BIG_AURORA_CRYSTAL, 1);
-            this.addFloorFeature(EndConfiguredCaveFeatures.CAVE_BUSH, 5);
-            this.addFloorFeature(EndConfiguredCaveFeatures.CAVE_GRASS, 40);
-            this.addFloorFeature(EndConfiguredCaveFeatures.END_STONE_STALAGMITE_CAVEMOSS, 5);
+        public void datagenSetup(BootstrapContext<BiomeData> dataContext) {
+            this.addFloorFeature(EndConfiguredCaveFeatures.BIG_AURORA_CRYSTAL.getHolder(dataContext), 1);
+            this.addFloorFeature(EndConfiguredCaveFeatures.CAVE_BUSH.getHolder(dataContext), 5);
+            this.addFloorFeature(EndConfiguredCaveFeatures.CAVE_GRASS.getHolder(dataContext), 40);
+            this.addFloorFeature(EndConfiguredCaveFeatures.END_STONE_STALAGMITE_CAVEMOSS.getHolder(dataContext), 5);
 
-            this.addCeilFeature(EndConfiguredCaveFeatures.CAVE_BUSH, 1);
-            this.addCeilFeature(EndConfiguredCaveFeatures.CAVE_PUMPKIN, 1);
-            this.addCeilFeature(EndConfiguredCaveFeatures.RUBINEA, 3);
-            this.addCeilFeature(EndConfiguredCaveFeatures.MAGNULA, 1);
-            this.addCeilFeature(EndConfiguredCaveFeatures.END_STONE_STALACTITE_CAVEMOSS, 10);
+            this.addCeilFeature(EndConfiguredCaveFeatures.CAVE_BUSH.getHolder(dataContext), 1);
+            this.addCeilFeature(EndConfiguredCaveFeatures.CAVE_PUMPKIN.getHolder(dataContext), 1);
+            this.addCeilFeature(EndConfiguredCaveFeatures.RUBINEA.getHolder(dataContext), 3);
+            this.addCeilFeature(EndConfiguredCaveFeatures.MAGNULA.getHolder(dataContext), 1);
+            this.addCeilFeature(EndConfiguredCaveFeatures.END_STONE_STALACTITE_CAVEMOSS.getHolder(dataContext), 10);
         }
 
         @Override
@@ -110,5 +113,23 @@ public class LushAuroraCaveBiome extends EndCaveBiome.Config<LushAuroraCaveBiome
                 return EndBlocks.CAVE_MOSS.defaultBlockState();
             }
         };
+    }
+
+
+    @Override
+    public @NotNull EndBiome instantiateBiome(
+            float fogDensity,
+            BiomeKey<?> key,
+            List<Climate.ParameterPoint> parameters,
+            float terrainHeight,
+            float genChance,
+            int edgeSize,
+            boolean vertical,
+            @Nullable ResourceKey<net.minecraft.world.level.biome.Biome> edge,
+            @Nullable ResourceKey<net.minecraft.world.level.biome.Biome> parent,
+            boolean hasCave,
+            SurfaceMaterialProvider surface
+    ) {
+        return new LushAuroraCaveBiome.Biome(fogDensity, key.key, parameters, terrainHeight, genChance, edgeSize, vertical, edge, parent, hasCave, surface, new WeightedList<>(), new WeightedList<>());
     }
 }

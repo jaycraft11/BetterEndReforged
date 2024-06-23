@@ -42,9 +42,9 @@
     [],
     [],
     [
+      "minecraft:end_gateway_return",
       "betterend:crashed_ship",
-      "betterend:chorus_forest_structures",
-      "minecraft:end_gateway_return"
+      "betterend:chorus_forest_structures"
     ],
     [],
     [

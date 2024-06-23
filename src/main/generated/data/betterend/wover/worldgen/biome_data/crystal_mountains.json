@@ -1,0 +1,17 @@
+{
+  "type": "betterend:biome",
+  "biome": "betterend:crystal_mountains",
+  "has_caves": true,
+  "surface": {
+    "alt": {
+      "Name": "betterend:crystal_moss"
+    },
+    "floor_rule": true,
+    "top": {
+      "Name": "betterend:crystal_moss"
+    },
+    "under": {
+      "Name": "minecraft:end_stone"
+    }
+  }
+}

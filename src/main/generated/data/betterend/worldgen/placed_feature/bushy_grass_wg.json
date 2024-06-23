@@ -1,14 +1,25 @@
 {
-  "feature": "betterend:bushy_grass_wg",
+  "feature": {
+    "type": "betterend:single_plant_feature",
+    "config": {
+      "chance": 1,
+      "radius": 5,
+      "raw_heightmap": true,
+      "state": {
+        "type": "minecraft:simple_state_provider",
+        "state": {
+          "Name": "betterend:bushy_grass"
+        }
+      }
+    }
+  },
   "placement": [
     {
       "type": "minecraft:count_on_every_layer",
       "count": {
         "type": "minecraft:uniform",
-        "value": {
-          "max_inclusive": 8,
-          "min_inclusive": 0
-        }
+        "max_inclusive": 8,
+        "min_inclusive": 0
       }
     },
     {

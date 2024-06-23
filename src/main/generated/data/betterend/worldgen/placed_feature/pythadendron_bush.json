@@ -1,14 +1,36 @@
 {
-  "feature": "betterend:pythadendron_bush",
+  "feature": {
+    "type": "betterend:bush_feature",
+    "config": {
+      "leaves": {
+        "type": "minecraft:simple_state_provider",
+        "state": {
+          "Name": "betterend:pythadendron_leaves",
+          "Properties": {
+            "distance": "7",
+            "persistent": "false",
+            "waterlogged": "false"
+          }
+        }
+      },
+      "stem": {
+        "type": "minecraft:simple_state_provider",
+        "state": {
+          "Name": "betterend:pythadendron_bark",
+          "Properties": {
+            "axis": "y"
+          }
+        }
+      }
+    }
+  },
   "placement": [
     {
       "type": "minecraft:count_on_every_layer",
       "count": {
         "type": "minecraft:uniform",
-        "value": {
-          "max_inclusive": 3,
-          "min_inclusive": 0
-        }
+        "max_inclusive": 3,
+        "min_inclusive": 0
       }
     },
     {

@@ -1,5 +1,8 @@
 {
-  "feature": "betterend:end_lake_rare",
+  "feature": {
+    "type": "betterend:end_lake",
+    "config": {}
+  },
   "placement": [
     {
       "type": "minecraft:rarity_filter",

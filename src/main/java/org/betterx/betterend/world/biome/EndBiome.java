@@ -2,13 +2,17 @@ package org.betterx.betterend.world.biome;
 
 import org.betterx.bclib.interfaces.SurfaceMaterialProvider;
 import org.betterx.betterend.registry.EndBlocks;
+import org.betterx.wover.biome.api.BiomeKey;
+import org.betterx.wover.biome.api.data.BiomeData;
 import org.betterx.wover.generator.api.biomesource.WoverBiomeData;
+import org.betterx.wover.generator.api.biomesource.WoverBiomePicker;
 import org.betterx.wover.surface.api.SurfaceRuleBuilder;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
+import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.KeyDispatchDataCodec;
 import net.minecraft.world.level.WorldGenLevel;
@@ -53,8 +57,13 @@ public class EndBiome extends WoverBiomeData implements SurfaceMaterialProvider 
         this.surfMatProv = surface;
     }
 
-    public void datagenSetup() {
+    public void datagenSetup(BootstrapContext<BiomeData> dataContext) {
 
+    }
+
+    @Override
+    public KeyDispatchDataCodec<? extends WoverBiomeData> codec() {
+        return KEY_CODEC;
     }
 
     private boolean hasCaves = true;
@@ -105,7 +114,7 @@ public class EndBiome extends WoverBiomeData implements SurfaceMaterialProvider 
         }
     }
 
-    public abstract static class Config {
+    public abstract static class Config implements EndBiomeBuilder.BiomeFactory {
         public static final SurfaceMaterialProvider DEFAULT_MATERIAL = new DefaultSurfaceMaterialProvider();
 
         protected static final SurfaceRules.RuleSource END_STONE = SurfaceRules.state(DefaultSurfaceMaterialProvider.END_STONE);
@@ -136,6 +145,26 @@ public class EndBiome extends WoverBiomeData implements SurfaceMaterialProvider 
 
         public SurfaceMaterialProvider surfaceMaterial() {
             return DEFAULT_MATERIAL;
+        }
+
+        public @NotNull EndBiome instantiateBiome(
+                float fogDensity,
+                BiomeKey<?> key,
+                List<Climate.ParameterPoint> parameters,
+                float terrainHeight,
+                float genChance,
+                int edgeSize,
+                boolean vertical,
+                @Nullable ResourceKey<Biome> edge,
+                @Nullable ResourceKey<Biome> parent,
+                boolean hasCave,
+                SurfaceMaterialProvider surface
+        ) {
+            return new EndBiome(
+                    fogDensity, key.key, parameters,
+                    terrainHeight, genChance, edgeSize, vertical, edge, parent,
+                    hasCave, surface
+            );
         }
     }
 
@@ -175,7 +204,7 @@ public class EndBiome extends WoverBiomeData implements SurfaceMaterialProvider 
 
     public static BlockState findTopMaterial(WorldGenLevel world, BlockPos pos) {
         return SurfaceMaterialProvider
-                .findSurfaceMaterialProvider(world, pos)
+                .findSurfaceMaterialProvider(WoverBiomePicker.getBiomeAt(world, pos))
                 .map(SurfaceMaterialProvider::getTopMaterial)
                 .orElse(EndBiome.Config.DEFAULT_MATERIAL.getTopMaterial());
     }

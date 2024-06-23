@@ -2,7 +2,7 @@
   "type": "betterend:building_list_feature",
   "config": {
     "default": {
-      "Name": "minecraft:end_stone"
+      "Name": "betterend:end_moss"
     },
     "structures": [
       {

@@ -41,9 +41,9 @@
     [],
     [],
     [
+      "minecraft:end_gateway_return",
       "betterend:crashed_ship",
-      "betterend:lantern_woods_structures",
-      "minecraft:end_gateway_return"
+      "betterend:lantern_woods_structures"
     ],
     [],
     [

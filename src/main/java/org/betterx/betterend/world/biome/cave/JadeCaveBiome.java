@@ -4,8 +4,10 @@ import org.betterx.bclib.interfaces.SurfaceMaterialProvider;
 import org.betterx.bclib.util.WeightedList;
 import org.betterx.betterend.noise.OpenSimplexNoise;
 import org.betterx.betterend.registry.EndBlocks;
+import org.betterx.betterend.world.biome.EndBiome;
 import org.betterx.betterend.world.biome.EndBiomeBuilder;
 import org.betterx.betterend.world.biome.EndBiomeKey;
+import org.betterx.wover.biome.api.BiomeKey;
 
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
@@ -89,5 +91,24 @@ public class JadeCaveBiome extends EndCaveBiome.Config<JadeCaveBiome> {
                .waterAndFogColor(95, 223, 255);
     }
 
-
+    @Override
+    public @NotNull EndBiome instantiateBiome(
+            float fogDensity,
+            BiomeKey<?> key,
+            List<Climate.ParameterPoint> parameters,
+            float terrainHeight,
+            float genChance,
+            int edgeSize,
+            boolean vertical,
+            @Nullable ResourceKey<net.minecraft.world.level.biome.Biome> edge,
+            @Nullable ResourceKey<net.minecraft.world.level.biome.Biome> parent,
+            boolean hasCave,
+            SurfaceMaterialProvider surface
+    ) {
+        return new JadeCaveBiome.Biome(
+                fogDensity, key.key, parameters,
+                terrainHeight, genChance, edgeSize, vertical, edge, parent,
+                hasCave, surface, new WeightedList<>(), new WeightedList<>()
+        );
+    }
 }

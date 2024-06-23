@@ -1,5 +1,8 @@
 {
-  "feature": "betterend:fallen_pillar",
+  "feature": {
+    "type": "betterend:fallen_pillar",
+    "config": {}
+  },
   "placement": [
     {
       "type": "minecraft:rarity_filter",

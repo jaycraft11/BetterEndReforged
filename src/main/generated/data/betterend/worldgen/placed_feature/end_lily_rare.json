@@ -1,14 +1,17 @@
 {
-  "feature": "betterend:end_lily_rare",
+  "feature": {
+    "type": "betterend:end_lily_feature",
+    "config": {
+      "radius": 3
+    }
+  },
   "placement": [
     {
       "type": "minecraft:count_on_every_layer",
       "count": {
         "type": "minecraft:uniform",
-        "value": {
-          "max_inclusive": 4,
-          "min_inclusive": 0
-        }
+        "max_inclusive": 4,
+        "min_inclusive": 0
       }
     },
     {

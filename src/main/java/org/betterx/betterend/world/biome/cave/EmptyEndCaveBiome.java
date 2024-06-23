@@ -3,11 +3,15 @@ package org.betterx.betterend.world.biome.cave;
 import org.betterx.bclib.interfaces.SurfaceMaterialProvider;
 import org.betterx.bclib.util.WeightedList;
 import org.betterx.betterend.registry.features.EndConfiguredCaveFeatures;
+import org.betterx.betterend.world.biome.EndBiome;
 import org.betterx.betterend.world.biome.EndBiomeBuilder;
 import org.betterx.betterend.world.biome.EndBiomeKey;
+import org.betterx.wover.biome.api.BiomeKey;
+import org.betterx.wover.biome.api.data.BiomeData;
 
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.Holder;
+import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.KeyDispatchDataCodec;
 import net.minecraft.world.level.biome.Climate;
@@ -23,9 +27,9 @@ public class EmptyEndCaveBiome extends EndCaveBiome.Config<EmptyEndCaveBiome> {
 
     public static class Biome extends EndCaveBiome {
         @Override
-        public void datagenSetup() {
-            this.addFloorFeature(EndConfiguredCaveFeatures.END_STONE_STALAGMITE, 1);
-            this.addCeilFeature(EndConfiguredCaveFeatures.END_STONE_STALACTITE, 1);
+        public void datagenSetup(BootstrapContext<BiomeData> dataContext) {
+            this.addFloorFeature(EndConfiguredCaveFeatures.END_STONE_STALAGMITE.getHolder(dataContext), 1);
+            this.addCeilFeature(EndConfiguredCaveFeatures.END_STONE_STALACTITE.getHolder(dataContext), 1);
         }
 
         @Override
@@ -77,4 +81,20 @@ public class EmptyEndCaveBiome extends EndCaveBiome.Config<EmptyEndCaveBiome> {
         builder.fogDensity(2.0F);
     }
 
+    @Override
+    public @NotNull EndBiome instantiateBiome(
+            float fogDensity,
+            BiomeKey<?> key,
+            List<Climate.ParameterPoint> parameters,
+            float terrainHeight,
+            float genChance,
+            int edgeSize,
+            boolean vertical,
+            @Nullable ResourceKey<net.minecraft.world.level.biome.Biome> edge,
+            @Nullable ResourceKey<net.minecraft.world.level.biome.Biome> parent,
+            boolean hasCave,
+            SurfaceMaterialProvider surface
+    ) {
+        return new EmptyEndCaveBiome.Biome(fogDensity, key.key, parameters, terrainHeight, genChance, edgeSize, vertical, edge, parent, hasCave, surface, new WeightedList<>(), new WeightedList<>());
+    }
 }

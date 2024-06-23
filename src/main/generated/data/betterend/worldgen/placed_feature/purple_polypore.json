@@ -1,14 +1,26 @@
 {
-  "feature": "betterend:purple_polypore",
+  "feature": {
+    "type": "betterend:wall_plant_on_log_feature",
+    "config": {
+      "radius": 3,
+      "state": {
+        "type": "minecraft:simple_state_provider",
+        "state": {
+          "Name": "betterend:purple_polypore",
+          "Properties": {
+            "facing": "north"
+          }
+        }
+      }
+    }
+  },
   "placement": [
     {
       "type": "minecraft:count_on_every_layer",
       "count": {
         "type": "minecraft:uniform",
-        "value": {
-          "max_inclusive": 5,
-          "min_inclusive": 0
-        }
+        "max_inclusive": 5,
+        "min_inclusive": 0
       }
     },
     {

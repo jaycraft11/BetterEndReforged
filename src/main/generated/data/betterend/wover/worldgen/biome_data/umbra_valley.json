@@ -1,0 +1,17 @@
+{
+  "type": "betterend:biome",
+  "biome": "betterend:umbra_valley",
+  "has_caves": true,
+  "surface": {
+    "alt": {
+      "Name": "betterend:pallidium_full"
+    },
+    "floor_rule": false,
+    "top": {
+      "Name": "betterend:umbralith"
+    },
+    "under": {
+      "Name": "betterend:umbralith"
+    }
+  }
+}

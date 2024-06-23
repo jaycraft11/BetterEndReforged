@@ -1,5 +1,8 @@
 {
-  "feature": "betterend:tunel_cave",
+  "feature": {
+    "type": "betterend:tunel_cave",
+    "config": {}
+  },
   "placement": [
     {
       "type": "minecraft:count",

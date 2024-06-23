@@ -1,5 +1,8 @@
 {
-  "feature": "betterend:sulphur_hill",
+  "feature": {
+    "type": "betterend:sulphur_hill",
+    "config": {}
+  },
   "placement": [
     {
       "type": "minecraft:rarity_filter",

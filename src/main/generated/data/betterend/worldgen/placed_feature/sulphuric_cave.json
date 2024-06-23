@@ -1,5 +1,8 @@
 {
-  "feature": "betterend:sulphuric_cave",
+  "feature": {
+    "type": "betterend:sulphuric_cave",
+    "config": {}
+  },
   "placement": [
     {
       "type": "minecraft:count",

@@ -1,5 +1,8 @@
 {
-  "feature": "betterend:round_cave",
+  "feature": {
+    "type": "betterend:round_cave",
+    "config": {}
+  },
   "placement": [
     {
       "type": "minecraft:rarity_filter",

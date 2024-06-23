@@ -1,0 +1,18 @@
+{
+  "type": "betterend:biome",
+  "biome": "betterend:lantern_woods",
+  "fogDensity": 1.1,
+  "has_caves": true,
+  "surface": {
+    "alt": {
+      "Name": "betterend:rutiscus"
+    },
+    "floor_rule": true,
+    "top": {
+      "Name": "betterend:rutiscus"
+    },
+    "under": {
+      "Name": "minecraft:end_stone"
+    }
+  }
+}

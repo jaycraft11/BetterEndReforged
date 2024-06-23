@@ -41,9 +41,9 @@
     [],
     [],
     [
+      "minecraft:end_gateway_return",
       "betterend:crashed_ship",
-      "betterend:umbrella_jungle_structures",
-      "minecraft:end_gateway_return"
+      "betterend:umbrella_jungle_structures"
     ],
     [],
     [

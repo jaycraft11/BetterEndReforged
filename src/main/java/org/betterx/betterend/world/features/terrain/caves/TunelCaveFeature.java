@@ -175,8 +175,8 @@ public class TunelCaveFeature extends EndCaveFeatures {
         }
 
         floorSets.forEach((biome, floorPositions) -> {
-            if (biome.biome instanceof EndCaveBiome caveBiome) {
-                BlockState surfaceBlock = EndBiome.findTopMaterial(biome.biome);
+            if (biome.biomeData instanceof EndCaveBiome caveBiome) {
+                BlockState surfaceBlock = caveBiome.getTopMaterial();
                 placeFloor(world, generator, caveBiome, floorPositions, random, surfaceBlock);
             } else if (Configs.MAIN.verboseLogging.get() && tunnelFloorErrCounter < 25) {
                 tunnelFloorErrCounter++;
@@ -187,7 +187,7 @@ public class TunelCaveFeature extends EndCaveFeatures {
             }
         });
         ceilSets.forEach((biome, ceilPositions) -> {
-            if (biome.biome instanceof EndCaveBiome caveBiome) {
+            if (biome.biomeData instanceof EndCaveBiome caveBiome) {
                 placeCeil(world, generator, caveBiome, ceilPositions, random);
             } else if (Configs.MAIN.verboseLogging.get() && tunnelCeilErrCounter < 25) {
                 tunnelCeilErrCounter++;
@@ -198,7 +198,7 @@ public class TunelCaveFeature extends EndCaveFeatures {
             }
         });
         WoverBiomePicker.PickableBiome biome = EndBiomes.getCaveBiome(pos.getX(), pos.getZ());
-        if (biome.biome instanceof EndCaveBiome caveBiome) {
+        if (biome.biomeData instanceof EndCaveBiome caveBiome) {
             placeWalls(world, generator, caveBiome, caveBlocks, random);
         } else if (Configs.MAIN.verboseLogging.get() && tunnelWallErrCounter < 25) {
             tunnelWallErrCounter++;

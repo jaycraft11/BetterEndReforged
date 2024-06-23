@@ -1,5 +1,16 @@
 {
-  "feature": "betterend:umbralith_arch",
+  "feature": {
+    "type": "betterend:arch_feature",
+    "config": {
+      "states": {
+        "type": "minecraft:simple_state_provider",
+        "state": {
+          "Name": "betterend:umbralith"
+        }
+      },
+      "surface_function": "umbra_valley"
+    }
+  },
   "placement": [
     {
       "type": "minecraft:rarity_filter",

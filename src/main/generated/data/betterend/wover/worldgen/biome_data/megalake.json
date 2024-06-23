@@ -1,0 +1,19 @@
+{
+  "type": "betterend:biome",
+  "biome": "betterend:megalake",
+  "fogDensity": 1.75,
+  "has_caves": true,
+  "surface": {
+    "alt": {
+      "Name": "betterend:endstone_dust"
+    },
+    "floor_rule": true,
+    "top": {
+      "Name": "betterend:end_moss"
+    },
+    "under": {
+      "Name": "minecraft:end_stone"
+    }
+  },
+  "terrainHeight": 0.0
+}
