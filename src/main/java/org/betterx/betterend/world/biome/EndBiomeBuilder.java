@@ -52,13 +52,14 @@ public class EndBiomeBuilder extends WoverBiomeBuilder.AbstractWoverBiomeBuilder
         this.surface = biomeConfig.surfaceMaterial();
 
         this.hasCave = biomeConfig.hasCaves();
+        if (biomeConfig.hasReturnGateway()) {
+            this.feature(GenerationStep.Decoration.SURFACE_STRUCTURES, EndPlacements.END_GATEWAY_RETURN);
+        }
         biomeConfig.addCustomBuildData(this);
 
         EndFeatures.addDefaultFeatures(this, biomeConfig.hasCaves());
 
-        if (biomeConfig.hasReturnGateway()) {
-            this.feature(GenerationStep.Decoration.SURFACE_STRUCTURES, EndPlacements.END_GATEWAY_RETURN);
-        }
+
         return this;
     }
 
