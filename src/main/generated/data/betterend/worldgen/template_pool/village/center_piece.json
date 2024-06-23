@@ -19,5 +19,5 @@
       "weight": 1
     }
   ],
-  "fallback": "minecraft:empty"
+  "fallback": "betterend:village/terminators"
 }

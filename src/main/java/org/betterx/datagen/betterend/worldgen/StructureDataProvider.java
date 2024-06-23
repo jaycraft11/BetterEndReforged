@@ -91,6 +91,7 @@ public class StructureDataProvider extends WoverStructureProvider {
 
         VillagePools.START
                 .bootstrap(context)
+                .terminator(VillagePools.TERMINATORS_KEY)
                 .startSingleEnd(BetterEnd.C.mk("village/center/light_pyramid_01"))
                 .weight(2)
                 .emptyProcessor()
