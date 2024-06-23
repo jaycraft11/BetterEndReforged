@@ -25,7 +25,7 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemp
 
 public class CrashedShipFeature extends NBTFeature<NBTFeatureConfig> {
     private static final StructureProcessor REPLACER;
-    private static final String STRUCTURE_PATH = "/data/minecraft/structures/end_city/ship.nbt";
+    private static final String STRUCTURE_PATH = "/data/minecraft/structure/end_city/ship.nbt";
     private StructureTemplate structure;
 
     public CrashedShipFeature() {

@@ -7,42 +7,42 @@
     "structures": [
       {
         "offset_y": 0,
-        "path": "/data/betterend/structures/biome/blossoming_spires/ruins_1.nbt",
+        "path": "/data/betterend/structure/biome/blossoming_spires/ruins_1.nbt",
         "terrain_merger": "SURFACE"
       },
       {
         "offset_y": 0,
-        "path": "/data/betterend/structures/biome/blossoming_spires/ruins_2.nbt",
+        "path": "/data/betterend/structure/biome/blossoming_spires/ruins_2.nbt",
         "terrain_merger": "SURFACE"
       },
       {
         "offset_y": 0,
-        "path": "/data/betterend/structures/biome/blossoming_spires/ruins_3.nbt",
+        "path": "/data/betterend/structure/biome/blossoming_spires/ruins_3.nbt",
         "terrain_merger": "SURFACE"
       },
       {
         "offset_y": 0,
-        "path": "/data/betterend/structures/biome/blossoming_spires/ruins_4.nbt",
+        "path": "/data/betterend/structure/biome/blossoming_spires/ruins_4.nbt",
         "terrain_merger": "SURFACE"
       },
       {
         "offset_y": 0,
-        "path": "/data/betterend/structures/biome/blossoming_spires/ruins_5.nbt",
+        "path": "/data/betterend/structure/biome/blossoming_spires/ruins_5.nbt",
         "terrain_merger": "SURFACE"
       },
       {
         "offset_y": 0,
-        "path": "/data/betterend/structures/biome/blossoming_spires/ruins_6.nbt",
+        "path": "/data/betterend/structure/biome/blossoming_spires/ruins_6.nbt",
         "terrain_merger": "SURFACE"
       },
       {
         "offset_y": 0,
-        "path": "/data/betterend/structures/biome/blossoming_spires/ruins_7.nbt",
+        "path": "/data/betterend/structure/biome/blossoming_spires/ruins_7.nbt",
         "terrain_merger": "SURFACE"
       },
       {
         "offset_y": 0,
-        "path": "/data/betterend/structures/biome/blossoming_spires/ruins_8.nbt",
+        "path": "/data/betterend/structure/biome/blossoming_spires/ruins_8.nbt",
         "terrain_merger": "SURFACE"
       }
     ]

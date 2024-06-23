@@ -139,7 +139,7 @@ public class EndBiomesProvider extends WoverBiomeProvider {
             }
         }
 
-        String path = "/data/" + ns + "/structures/biome/" + nm + "/";
+        String path = "/data/" + ns + "/structure/biome/" + nm + "/";
         InputStream inputstream = EndFeatures.class.getResourceAsStream(path + "structures.json");
         if (inputstream != null) {
             JsonObject obj = JsonFactory.getJsonObject(inputstream);

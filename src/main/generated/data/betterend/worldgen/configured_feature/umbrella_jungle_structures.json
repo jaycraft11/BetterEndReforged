@@ -7,47 +7,47 @@
     "structures": [
       {
         "offset_y": -1,
-        "path": "/data/betterend/structures/biome/umbrella_jungle/jellyshroom_cluster.nbt",
+        "path": "/data/betterend/structure/biome/umbrella_jungle/jellyshroom_cluster.nbt",
         "terrain_merger": "SURFACE"
       },
       {
         "offset_y": -1,
-        "path": "/data/betterend/structures/biome/umbrella_jungle/house_1.nbt",
+        "path": "/data/betterend/structure/biome/umbrella_jungle/house_1.nbt",
         "terrain_merger": "SURFACE"
       },
       {
         "offset_y": 0,
-        "path": "/data/betterend/structures/biome/umbrella_jungle/house_2.nbt",
+        "path": "/data/betterend/structure/biome/umbrella_jungle/house_2.nbt",
         "terrain_merger": "SURFACE"
       },
       {
         "offset_y": -1,
-        "path": "/data/betterend/structures/biome/umbrella_jungle/ruins_1.nbt",
+        "path": "/data/betterend/structure/biome/umbrella_jungle/ruins_1.nbt",
         "terrain_merger": "NONE"
       },
       {
         "offset_y": -1,
-        "path": "/data/betterend/structures/biome/umbrella_jungle/ruins_2.nbt",
+        "path": "/data/betterend/structure/biome/umbrella_jungle/ruins_2.nbt",
         "terrain_merger": "NONE"
       },
       {
         "offset_y": -1,
-        "path": "/data/betterend/structures/biome/umbrella_jungle/ruins_3.nbt",
+        "path": "/data/betterend/structure/biome/umbrella_jungle/ruins_3.nbt",
         "terrain_merger": "NONE"
       },
       {
         "offset_y": -1,
-        "path": "/data/betterend/structures/biome/umbrella_jungle/ruins_4.nbt",
+        "path": "/data/betterend/structure/biome/umbrella_jungle/ruins_4.nbt",
         "terrain_merger": "NONE"
       },
       {
         "offset_y": -1,
-        "path": "/data/betterend/structures/biome/umbrella_jungle/ruins_5.nbt",
+        "path": "/data/betterend/structure/biome/umbrella_jungle/ruins_5.nbt",
         "terrain_merger": "NONE"
       },
       {
         "offset_y": -1,
-        "path": "/data/betterend/structures/biome/umbrella_jungle/ruins_6.nbt",
+        "path": "/data/betterend/structure/biome/umbrella_jungle/ruins_6.nbt",
         "terrain_merger": "NONE"
       }
     ]
