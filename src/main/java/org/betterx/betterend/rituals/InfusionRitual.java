@@ -26,7 +26,19 @@ import java.util.Arrays;
 import java.util.Objects;
 import org.jetbrains.annotations.NotNull;
 
-public class InfusionRitual implements Container, RecipeInput {
+public class InfusionRitual implements Container {
+    public class InfusionInput implements RecipeInput {
+        @Override
+        public @NotNull ItemStack getItem(int slot) {
+            return InfusionRitual.this.getItem(slot);
+        }
+
+        @Override
+        public int size() {
+            return getContainerSize();
+        }
+    }
+
     private static final Point[] PEDESTALS_MAP = new Point[]{
             new Point(0, 3),
             new Point(2, 2),
@@ -75,7 +87,7 @@ public class InfusionRitual implements Container, RecipeInput {
         if (!isValid()) return false;
         RecipeHolder<InfusionRecipe> recipe = world
                 .getRecipeManager()
-                .getRecipeFor(InfusionRecipe.TYPE, this, world)
+                .getRecipeFor(InfusionRecipe.TYPE, new InfusionInput(), world)
                 .orElse(null);
         if (hasRecipe()) {
             if (recipe == null) {
@@ -121,7 +133,7 @@ public class InfusionRitual implements Container, RecipeInput {
         progress++;
         if (progress == time) {
             clearContent();
-            input.setItem(0, activeRecipe.value().assemble(this, world.registryAccess()));
+            input.setItem(0, activeRecipe.value().assemble(new InfusionInput(), world.registryAccess()));
             if (world instanceof ServerLevel sl) {
                 sl.getPlayers(p -> p.position()
                                     .subtract(new Vec3(worldPos.getX(), worldPos.getY(), worldPos.getZ()))
@@ -203,11 +215,6 @@ public class InfusionRitual implements Container, RecipeInput {
         } else {
             return catalysts[slot - 1].getItem(0);
         }
-    }
-
-    @Override
-    public int size() {
-        return this.getContainerSize();
     }
 
     @Override

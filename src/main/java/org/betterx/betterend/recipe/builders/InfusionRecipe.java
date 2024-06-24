@@ -40,7 +40,7 @@ import java.util.Arrays;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class InfusionRecipe implements Recipe<InfusionRitual>, UnknownReceipBookCategory {
+public class InfusionRecipe implements Recipe<InfusionRitual.InfusionInput>, UnknownReceipBookCategory {
     public final static String GROUP = "infusion";
     public final static RecipeType<InfusionRecipe> TYPE = BCLRecipeManager.registerType(BetterEnd.MOD_ID, GROUP);
     public final static Serializer SERIALIZER = BCLRecipeManager.registerSerializer(
@@ -110,7 +110,7 @@ public class InfusionRecipe implements Recipe<InfusionRitual>, UnknownReceipBook
     }
 
     @Override
-    public boolean matches(InfusionRitual inv, Level world) {
+    public boolean matches(InfusionRitual.InfusionInput inv, Level world) {
         boolean valid = this.input.test(inv.getItem(0));
         if (!valid) return false;
         for (int i = 0; i < 8; i++) {
@@ -120,7 +120,7 @@ public class InfusionRecipe implements Recipe<InfusionRitual>, UnknownReceipBook
     }
 
     @Override
-    public @NotNull ItemStack assemble(InfusionRitual recipeInput, HolderLookup.Provider provider) {
+    public @NotNull ItemStack assemble(InfusionRitual.InfusionInput recipeInput, HolderLookup.Provider provider) {
         return output.copy();
     }
 
