@@ -57,7 +57,7 @@ public class HelixTreeFeature extends DefaultFeature {
         SDF rotated = new SDFRotation().setRotation(Axis.YP, (float) Math.PI).setSource(sdf);
         sdf = new SDFUnion().setSourceA(rotated).setSourceB(sdf);
 
-        Vector3f lastPoint = spline.getLast();
+        Vector3f lastPoint = spline.get(spline.size() - 1);
         List<Vector3f> spline2 = SplineHelper.makeSpline(0, 0, 0, 0, 20, 0, 5);
         SDF stem = SplineHelper.buildSDF(
                 spline2,
@@ -128,7 +128,7 @@ public class HelixTreeFeature extends DefaultFeature {
 
         Vector3f start = new Vector3f();
         Vector3f end = new Vector3f();
-        lastPoint = spline.getFirst();
+        lastPoint = spline.get(0);
         BlockState leaf = EndBlocks.HELIX_TREE_LEAVES.defaultBlockState();
         for (int i = 1; i < spline.size(); i++) {
             Vector3f point = spline.get(i);
