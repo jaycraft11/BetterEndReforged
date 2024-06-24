@@ -31,10 +31,10 @@
     "fabric-datagen": [
       "org.betterx.datagen.betterend.BetterEndDatagen"
     ],
-    "rei_client": [
+    "rei_client_off": [
       "org.betterx.betterend.integration.rei.REIPlugin"
     ],
-    "emi": [
+    "emi_off": [
       "org.betterx.betterend.integration.emi.EMIPlugin"
     ]
   },
@@ -50,11 +50,13 @@
       "1.21"
     ],
     "bclib": "21.0.x",
-    "wover": "21.0.x"
+    "wover": "21.0.x",
+    "wunderlib": "21.0.x"
   },
   "breaks": {
     "bclib": "<21.0.1",
-    "wover": "<21.0.2"
+    "wover": "<21.0.2",
+    "wunderlib": "<21.0.2"
   },
   "suggests": {
     "byg": ">=2.0.0",

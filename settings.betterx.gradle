@@ -4,7 +4,7 @@
 def allowLocalLibUse = true
 
 //When true, the local libraries is also used in commandline builds
-def allowLocalLibInConsoleMode = false
+def allowLocalLibInConsoleMode = true
 
 //The path were to look for the local libraries
 def BCLibPath = '../BCLib'
@@ -48,9 +48,9 @@ if (allowLocalLibUse && (isIDE || allowLocalLibInConsoleMode) && WoverFolder.exi
     project(':WorldWeaver').buildFileName = './build.composit.gradle'
 
     def WoverModuleFile = WoverFolder.toPath().resolve("module-include.gradle").toFile()
-    apply from : WoverModuleFile
+    apply from: WoverModuleFile
     gradle.ext.set("knownWoverModules", ext.knownWoverModules)
-    ext.knownWoverModules.each { module->
+    ext.knownWoverModules.each { module ->
         def fullName = ":WorldWeaver:${module}";
         def path = WoverFolder.toPath().resolve(module).toFile();
 
