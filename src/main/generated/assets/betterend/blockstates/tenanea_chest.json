@@ -1,7 +1,7 @@
 {
   "variants": {
     "": {
-      "model": "betterend:block/tenanea_chest"
+      "model": "betterend:block/tenanea_planks_particles"
     }
   }
 }
