@@ -449,85 +449,85 @@
   },
   "requirements": [
     [
+      "betterend:bulbis_gardens"
+    ],
+    [
+      "betterend:empty_aurora_cave"
+    ],
+    [
+      "betterend:empty_end_cave"
+    ],
+    [
+      "betterend:lush_aurora_cave"
+    ],
+    [
+      "betterend:crystal_mountains"
+    ],
+    [
+      "betterend:painted_mountains"
+    ],
+    [
+      "betterend:megalake"
+    ],
+    [
+      "betterend:shadow_forest"
+    ],
+    [
       "betterend:lush_smaragdant_cave"
     ],
     [
       "betterend:empty_smaragdant_cave"
     ],
     [
-      "betterend:empty_aurora_cave"
+      "betterend:jade_cave"
     ],
     [
       "betterend:megalake_grove"
     ],
     [
-      "betterend:lush_aurora_cave"
+      "betterend:blossoming_spires"
+    ],
+    [
+      "betterend:foggy_mushroomland"
+    ],
+    [
+      "betterend:dry_shrubland"
+    ],
+    [
+      "betterend:neon_oasis"
+    ],
+    [
+      "betterend:chorus_forest"
+    ],
+    [
+      "betterend:glowing_grasslands"
+    ],
+    [
+      "betterend:amber_land"
     ],
     [
       "betterend:dragon_graveyards"
     ],
     [
-      "betterend:blossoming_spires"
+      "betterend:umbra_valley"
+    ],
+    [
+      "betterend:nightshade_forest"
+    ],
+    [
+      "betterend:ice_starfield"
+    ],
+    [
+      "betterend:sulphur_springs"
+    ],
+    [
+      "betterend:umbrella_jungle"
     ],
     [
       "betterend:lantern_woods"
     ],
     [
       "betterend:dust_wastelands"
-    ],
-    [
-      "betterend:dry_shrubland"
-    ],
-    [
-      "betterend:chorus_forest"
-    ],
-    [
-      "betterend:jade_cave"
-    ],
-    [
-      "betterend:empty_end_cave"
-    ],
-    [
-      "betterend:crystal_mountains"
-    ],
-    [
-      "betterend:sulphur_springs"
-    ],
-    [
-      "betterend:neon_oasis"
-    ],
-    [
-      "betterend:glowing_grasslands"
-    ],
-    [
-      "betterend:umbrella_jungle"
-    ],
-    [
-      "betterend:nightshade_forest"
-    ],
-    [
-      "betterend:painted_mountains"
-    ],
-    [
-      "betterend:shadow_forest"
-    ],
-    [
-      "betterend:ice_starfield"
-    ],
-    [
-      "betterend:megalake"
-    ],
-    [
-      "betterend:foggy_mushroomland"
-    ],
-    [
-      "betterend:umbra_valley"
-    ],
-    [
-      "betterend:amber_land"
-    ],
-    [
-      "betterend:bulbis_gardens"
     ]
   ],
   "rewards": {

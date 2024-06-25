@@ -22,7 +22,7 @@ public class ItemTagProvider extends WoverTagProvider.ForItems {
     }
 
     @Override
-    protected void prepareTags(ItemTagBootstrapContext context) {
+    public void prepareTags(ItemTagBootstrapContext context) {
         EndItems.getModItems().forEach(item -> {
             FoodProperties food = item.components().get(DataComponents.FOOD);
             if (food != null) {
@@ -62,6 +62,5 @@ AETERNIUM > NETHERITE
         context.add(EndTags.ANVIL_IRON_TOOL, EndItems.IRON_HAMMER, EndItems.GOLDEN_HAMMER, EndBlocks.THALLASIUM.hammer);
 
         MaterialManager.stream().forEach(m -> m.registerItemTags(context));
-        org.betterx.datagen.bclib.worldgen.ItemTagProvider.processBlockItemCommon(context, modCore);
     }
 }

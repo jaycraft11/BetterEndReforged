@@ -10,15 +10,17 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.block.Block;
 
+import java.util.List;
+
 public class BYGBlockTagsProvider extends WoverTagProvider.ForBlocks {
     public BYGBlockTagsProvider(ModCore modCore) {
-        super(modCore);
+        super(BetterEnd.BYG, List.of(BetterEnd.BYG.namespace));
     }
 
     private static final ResourceKey<Block> IVIS_PHYLIUM = ResourceKey.create(Registries.BLOCK, BetterEnd.BYG.mk("ivis_phylium"));
 
     @Override
-    protected void prepareTags(TagBootstrapContext<Block> context) {
-        context.add(CommonBlockTags.END_STONES, IVIS_PHYLIUM);
+    public void prepareTags(TagBootstrapContext<Block> context) {
+        context.addOptional(CommonBlockTags.END_STONES, IVIS_PHYLIUM);
     }
 }

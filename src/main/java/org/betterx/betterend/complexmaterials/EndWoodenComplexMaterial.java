@@ -15,8 +15,9 @@ public class EndWoodenComplexMaterial extends WoodenComplexMaterial {
     private Block bark;
     private Block log;
 
-    public EndWoodenComplexMaterial(String name, MapColor woodColor, MapColor planksColor) {
+    public EndWoodenComplexMaterial(String name, MapColor woodColor, MapColor planksColor, Block furnitureCloth) {
         super(BetterEnd.C, name, name, woodColor, planksColor);
+        this.setFurnitureCloth(furnitureCloth);
     }
 
     public EndWoodenComplexMaterial init() {

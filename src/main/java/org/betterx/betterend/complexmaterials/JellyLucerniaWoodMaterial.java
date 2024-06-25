@@ -17,7 +17,7 @@ import java.util.function.Consumer;
 
 public class JellyLucerniaWoodMaterial extends EndWoodenComplexMaterial {
     public JellyLucerniaWoodMaterial() {
-        super("lucernia_jellyshroom", MapColor.COLOR_PURPLE, MapColor.COLOR_ORANGE);
+        super("lucernia_jellyshroom", MapColor.COLOR_PURPLE, MapColor.COLOR_ORANGE, null);
     }
 
     @Override

@@ -256,7 +256,8 @@ public class EndBlocks {
     public static final EndWoodenComplexMaterial MOSSY_GLOWSHROOM = new EndWoodenComplexMaterial(
             "mossy_glowshroom",
             MapColor.COLOR_GRAY,
-            MapColor.WOOD
+            MapColor.WOOD,
+            Blocks.GRAY_WOOL
     ).init();
 
     public static final Block PYTHADENDRON_SAPLING = registerBlock(
@@ -273,7 +274,8 @@ public class EndBlocks {
     public static final EndWoodenComplexMaterial PYTHADENDRON = new EndWoodenComplexMaterial(
             "pythadendron",
             MapColor.COLOR_MAGENTA,
-            MapColor.COLOR_PURPLE
+            MapColor.COLOR_PURPLE,
+            Blocks.BLACK_WOOL
     ).init();
 
     public static final Block END_LOTUS_SEED = registerBlock("end_lotus_seed", new EndLotusSeedBlock());
@@ -283,7 +285,8 @@ public class EndBlocks {
     public static final EndWoodenComplexMaterial END_LOTUS = new EndWoodenComplexMaterial(
             "end_lotus",
             MapColor.COLOR_LIGHT_BLUE,
-            MapColor.COLOR_CYAN
+            MapColor.COLOR_CYAN,
+            Blocks.LIGHT_BLUE_WOOL
     ).init();
 
     public static final Block LACUGROVE_SAPLING = registerBlock("lacugrove_sapling", new LacugroveSaplingBlock());
@@ -297,7 +300,8 @@ public class EndBlocks {
     public static final EndWoodenComplexMaterial LACUGROVE = new EndWoodenComplexMaterial(
             "lacugrove",
             MapColor.COLOR_BROWN,
-            MapColor.COLOR_YELLOW
+            MapColor.COLOR_YELLOW,
+            Blocks.CYAN_WOOL
     ).init();
 
     public static final Block DRAGON_TREE_SAPLING = registerBlock("dragon_tree_sapling", new DragonTreeSaplingBlock());
@@ -312,6 +316,7 @@ public class EndBlocks {
             "dragon_tree",
             MapColor.COLOR_BLACK,
             MapColor.COLOR_MAGENTA
+            , Blocks.BLACK_WOOL
     ).init();
 
     public static final Block TENANEA_SAPLING = registerBlock("tenanea_sapling", new TenaneaSaplingBlock());
@@ -330,7 +335,8 @@ public class EndBlocks {
     public static final EndWoodenComplexMaterial TENANEA = new EndWoodenComplexMaterial(
             "tenanea",
             MapColor.COLOR_BROWN,
-            MapColor.COLOR_PINK
+            MapColor.COLOR_PINK,
+            Blocks.PINK_WOOL
     ).init();
 
     public static final Block HELIX_TREE_SAPLING = registerBlock("helix_tree_sapling", new HelixTreeSaplingBlock());
@@ -338,7 +344,8 @@ public class EndBlocks {
     public static final EndWoodenComplexMaterial HELIX_TREE = new EndWoodenComplexMaterial(
             "helix_tree",
             MapColor.COLOR_GRAY,
-            MapColor.COLOR_ORANGE
+            MapColor.COLOR_ORANGE,
+            Blocks.GRAY_WOOL
     ).init();
 
     public static final Block UMBRELLA_TREE_SAPLING = registerBlock(
@@ -360,7 +367,8 @@ public class EndBlocks {
     public static final EndWoodenComplexMaterial UMBRELLA_TREE = new EndWoodenComplexMaterial(
             "umbrella_tree",
             MapColor.COLOR_BLUE,
-            MapColor.COLOR_GREEN
+            MapColor.COLOR_GREEN,
+            Blocks.MAGENTA_WOOL
     ).init();
 
     public static final Block JELLYSHROOM_CAP_PURPLE = registerBlock(
@@ -377,7 +385,8 @@ public class EndBlocks {
     public static final EndWoodenComplexMaterial JELLYSHROOM = new EndWoodenComplexMaterial(
             "jellyshroom",
             MapColor.COLOR_PURPLE,
-            MapColor.COLOR_LIGHT_BLUE
+            MapColor.COLOR_LIGHT_BLUE,
+            Blocks.PURPLE_WOOL
     ).init();
 
     public static final Block LUCERNIA_SAPLING = registerBlock("lucernia_sapling", new LucerniaSaplingBlock());
@@ -395,7 +404,8 @@ public class EndBlocks {
     public static final EndWoodenComplexMaterial LUCERNIA = new EndWoodenComplexMaterial(
             "lucernia",
             MapColor.COLOR_ORANGE,
-            MapColor.COLOR_ORANGE
+            MapColor.COLOR_ORANGE,
+            Blocks.WHITE_WOOL
     ).init();
 
     public static final EndWoodenComplexMaterial LUCERNIA_JELLY = new JellyLucerniaWoodMaterial().init();

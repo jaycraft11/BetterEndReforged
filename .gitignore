@@ -37,3 +37,4 @@ override/
 /src/main/generated/.cache/
 /CHANGES.md
 /modrinth.json
+/tools/

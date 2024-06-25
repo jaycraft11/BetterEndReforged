@@ -14,7 +14,7 @@ public class BiomeTagProvider extends WoverTagProvider.ForBiomes {
     }
 
     @Override
-    protected void prepareTags(TagBootstrapContext<Biome> context) {
+    public void prepareTags(TagBootstrapContext<Biome> context) {
         context.add(
                 EndStructures.ETERNAL_PORTAL.biomeTag(),
                 Biomes.END_BARRENS,

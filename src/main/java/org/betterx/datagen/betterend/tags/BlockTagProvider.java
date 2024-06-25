@@ -24,7 +24,7 @@ public class BlockTagProvider extends WoverTagProvider.ForBlocks {
     }
 
     @Override
-    protected void prepareTags(TagBootstrapContext<Block> context) {
+    public void prepareTags(TagBootstrapContext<Block> context) {
         addEndGround(context, EndBlocks.THALLASIUM.ore);
         addEndGround(context, EndBlocks.ENDSTONE_DUST);
         addEndGround(context, EndBlocks.AMBER_ORE);
@@ -72,7 +72,5 @@ public class BlockTagProvider extends WoverTagProvider.ForBlocks {
         for (Block charnia : charnias) {
             context.add(EndTags.BONEMEAL_SOURCE_WATER_GRASS, charnia);
         }
-
-        org.betterx.datagen.bclib.worldgen.BlockTagProvider.processCommonBlockTags(context, modCore);
     }
 }

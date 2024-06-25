@@ -16,7 +16,7 @@ public class NourishItemTagProvider extends WoverTagProvider.ForItems {
     }
 
     @Override
-    protected void prepareTags(ItemTagBootstrapContext context) {
+    public void prepareTags(ItemTagBootstrapContext context) {
         TagKey<Item> fats = TagManager.ITEMS.makeTag(BetterEnd.NOURISH, "fats");
         TagKey<Item> fruit = TagManager.ITEMS.makeTag(BetterEnd.NOURISH, "fruit");
         TagKey<Item> protein = TagManager.ITEMS.makeTag(BetterEnd.NOURISH, "protein");
