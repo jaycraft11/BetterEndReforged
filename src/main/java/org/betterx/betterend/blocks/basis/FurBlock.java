@@ -6,6 +6,8 @@ import org.betterx.bclib.blocks.BaseAttachedBlock;
 import org.betterx.bclib.client.render.BCLRenderLayer;
 import org.betterx.bclib.interfaces.RenderLayerProvider;
 import org.betterx.wover.block.api.BlockTagProvider;
+import org.betterx.wover.block.api.model.BlockModelProvider;
+import org.betterx.wover.block.api.model.WoverBlockModelGenerators;
 import org.betterx.wover.loot.api.BlockLootProvider;
 import org.betterx.wover.loot.api.LootLookupProvider;
 import org.betterx.wover.tag.api.event.context.TagBootstrapContext;
@@ -30,7 +32,7 @@ import com.google.common.collect.Maps;
 import java.util.EnumMap;
 import org.jetbrains.annotations.NotNull;
 
-public class FurBlock extends BaseAttachedBlock implements RenderLayerProvider, BehaviourShearablePlant, BlockTagProvider, BlockLootProvider {
+public class FurBlock extends BaseAttachedBlock implements RenderLayerProvider, BehaviourShearablePlant, BlockTagProvider, BlockLootProvider, BlockModelProvider {
     private static final EnumMap<Direction, VoxelShape> BOUNDING_SHAPES = Maps.newEnumMap(Direction.class);
     private final Block drop;
     private final int dropChance;
@@ -89,5 +91,11 @@ public class FurBlock extends BaseAttachedBlock implements RenderLayerProvider, 
     @Override
     public void registerBlockTags(ResourceLocation location, TagBootstrapContext<Block> context) {
         context.add(this, BlockTags.LEAVES);
+    }
+
+    @Override
+    public void provideBlockModels(WoverBlockModelGenerators generator) {
+        generator.createCubeModel(this);
+        generator.createFlatItem(this);
     }
 }

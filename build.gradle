@@ -171,6 +171,11 @@ jar {
     from "LICENSE.ASSETS"
 }
 
+//change duplicate strategy for processResources task
+tasks.processResources {
+    duplicatesStrategy = DuplicatesStrategy.WARN
+}
+
 // configure the maven publication
 publishing {
     publications {
