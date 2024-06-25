@@ -1,8 +1,8 @@
 {
   "parent": "minecraft:block/outer_stairs",
   "textures": {
-    "bottom": "betterend:block/umbralith",
-    "side": "betterend:block/umbralith",
-    "top": "betterend:block/umbralith"
+    "bottom": "betterend:block/umbralith_bottom",
+    "side": "betterend:block/umbralith_side",
+    "top": "betterend:block/umbralith_top"
   }
 }
