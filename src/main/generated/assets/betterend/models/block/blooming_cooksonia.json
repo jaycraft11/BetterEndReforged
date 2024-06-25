@@ -1,6 +1,6 @@
 {
-  "parent": "minecraft:block/cross",
+  "parent": "minecraft:block/cube_all",
   "textures": {
-    "cross": "betterend:block/blooming_cooksonia"
+    "all": "betterend:block/blooming_cooksonia"
   }
 }

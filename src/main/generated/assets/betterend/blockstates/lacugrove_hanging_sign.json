@@ -1,7 +1,7 @@
 {
   "variants": {
     "": {
-      "model": "betterend:block/lacugrove_hanging_sign"
+      "model": "betterend:block/lacugrove_planks_particles"
     }
   }
 }

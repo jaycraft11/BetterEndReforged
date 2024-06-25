@@ -1,7 +1,7 @@
 {
   "variants": {
     "": {
-      "model": "betterend:block/tenanea_hanging_sign"
+      "model": "betterend:block/tenanea_planks_particles"
     }
   }
 }

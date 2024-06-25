@@ -1,6 +1,6 @@
 {
-  "parent": "minecraft:block/cross",
+  "parent": "minecraft:block/cube_all",
   "textures": {
-    "cross": "betterend:block/purple_polypore"
+    "all": "betterend:block/purple_polypore"
   }
 }

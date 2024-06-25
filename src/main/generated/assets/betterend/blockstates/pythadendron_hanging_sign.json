@@ -1,7 +1,7 @@
 {
   "variants": {
     "": {
-      "model": "betterend:block/pythadendron_hanging_sign"
+      "model": "betterend:block/pythadendron_planks_particles"
     }
   }
 }
