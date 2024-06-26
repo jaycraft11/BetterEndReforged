@@ -15,9 +15,14 @@ import net.minecraft.data.models.blockstates.MultiVariantGenerator;
 import net.minecraft.data.models.blockstates.PropertyDispatch;
 import net.minecraft.data.models.blockstates.Variant;
 import net.minecraft.data.models.blockstates.VariantProperties;
+import net.minecraft.data.models.model.ModelTemplates;
 import net.minecraft.data.models.model.TextureMapping;
 import net.minecraft.data.models.model.TextureSlot;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 
+import java.util.ArrayList;
 import java.util.List;
 import org.jetbrains.annotations.NotNull;
 
@@ -35,8 +40,69 @@ public class EndModelProvider extends WoverModelProvider {
                 true,
                 ModelOverides.create()
                              .override(EndBlocks.TWISTED_VINE, createTwistedVineModel(generator))
-                             .ignore(EndBlocks.TUBE_WORM)
+                             .override(EndBlocks.AMBER_MOSS, createAmberMossModel(generator))
+                             .override(EndBlocks.AMBER_MOSS_PATH, createAmberMossPathModel(generator, EndBlocks.AMBER_MOSS))
         );
+    }
+
+    private static ModelOverides.@NotNull BlockModelProvider createAmberMossPathModel(
+            WoverBlockModelGenerators generator,
+            Block baseBlock
+    ) {
+        return block -> {
+            final var endStone = TextureMapping.getBlockTexture(Blocks.END_STONE);
+            final var baseTexture = TextureMapping.getBlockTexture(block, "_top");
+            final var models = List.of("_1", "_2", "_3").stream().map(suffix -> {
+                final var side = TextureMapping.getBlockTexture(baseBlock, "_side" + suffix);
+                final var mapping = new TextureMapping()
+                        .put(TextureSlot.BOTTOM, endStone)
+                        .put(TextureSlot.TOP, baseTexture)
+                        .put(TextureSlot.SIDE, side);
+                return EndModels.PATH.createWithSuffix(block, suffix, mapping, generator.modelOutput());
+            }).toList();
+
+            buildRotated(generator, block, models);
+        };
+    }
+
+    private static ModelOverides.@NotNull BlockModelProvider createAmberMossModel(WoverBlockModelGenerators generator) {
+        return block -> {
+            final var endStone = TextureMapping.getBlockTexture(Blocks.END_STONE);
+            final var baseTexture = TextureMapping.getBlockTexture(block, "_top");
+            final var models = List.of("_1", "_2", "_3").stream().map(suffix -> {
+                final var side = TextureMapping.getBlockTexture(block, "_side" + suffix);
+                final var mapping = new TextureMapping()
+                        .put(TextureSlot.DOWN, endStone)
+                        .put(TextureSlot.UP, baseTexture)
+                        .put(TextureSlot.PARTICLE, side)
+                        .put(TextureSlot.EAST, side)
+                        .put(TextureSlot.NORTH, side)
+                        .put(TextureSlot.SOUTH, side)
+                        .put(TextureSlot.WEST, side);
+                return ModelTemplates.CUBE.createWithSuffix(block, suffix, mapping, generator.modelOutput());
+            }).toList();
+
+            buildRotated(generator, block, models);
+        };
+    }
+
+    private static void buildRotated(WoverBlockModelGenerators generator, Block block, List<ResourceLocation> models) {
+        final ArrayList<Variant> variants = new ArrayList<>(models.size() * 4);
+        models.forEach(model -> {
+            variants.add(Variant.variant().with(VariantProperties.MODEL, model));
+            variants.add(Variant.variant()
+                                .with(VariantProperties.MODEL, model)
+                                .with(VariantProperties.Y_ROT, VariantProperties.Rotation.R90));
+            variants.add(Variant.variant()
+                                .with(VariantProperties.MODEL, model)
+                                .with(VariantProperties.Y_ROT, VariantProperties.Rotation.R180));
+            variants.add(Variant.variant()
+                                .with(VariantProperties.MODEL, model)
+                                .with(VariantProperties.Y_ROT, VariantProperties.Rotation.R270));
+        });
+
+        generator.acceptBlockState(MultiVariantGenerator.multiVariant(block, variants.toArray(new Variant[0])));
+        generator.delegateItemModel(block, models.get(0));
     }
 
     private static ModelOverides.@NotNull BlockModelProvider createTwistedVineModel(WoverBlockModelGenerators generator) {
