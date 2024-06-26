@@ -1,8 +1,10 @@
 package org.betterx.betterend.blocks;
 
 import org.betterx.bclib.blocks.BaseBlock;
-import org.betterx.wover.block.api.BlockProperties;
 import org.betterx.betterend.registry.EndBlocks;
+import org.betterx.wover.block.api.BlockProperties;
+import org.betterx.wover.block.api.model.BlockModelProvider;
+import org.betterx.wover.block.api.model.WoverBlockModelGenerators;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -15,7 +17,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 
-public class BlueVineLanternBlock extends BaseBlock.Wood {
+public class BlueVineLanternBlock extends BaseBlock.Wood implements BlockModelProvider {
     public static final BooleanProperty NATURAL = BlockProperties.NATURAL;
 
     public BlueVineLanternBlock() {
@@ -52,5 +54,10 @@ public class BlueVineLanternBlock extends BaseBlock.Wood {
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> stateManager) {
         stateManager.add(NATURAL);
+    }
+
+    @Override
+    public void provideBlockModels(WoverBlockModelGenerators generator) {
+        GlowingHymenophoreBlock.provideUnshadedCubeModel(generator, this);
     }
 }

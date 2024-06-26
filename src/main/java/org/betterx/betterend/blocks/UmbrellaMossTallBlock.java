@@ -2,11 +2,8 @@ package org.betterx.betterend.blocks;
 
 import org.betterx.bclib.behaviours.interfaces.BehaviourPlant;
 import org.betterx.bclib.blocks.BaseDoublePlantBlock;
-import org.betterx.betterend.BetterEnd;
 import org.betterx.betterend.interfaces.survives.SurvivesOnJungleMossOrMycelium;
 import org.betterx.betterend.registry.EndBlocks;
-import org.betterx.wover.block.api.model.BlockModelProvider;
-import org.betterx.wover.block.api.model.WoverBlockModelGenerators;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -15,7 +12,7 @@ import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 
-public class UmbrellaMossTallBlock extends BaseDoublePlantBlock implements BehaviourPlant, SurvivesOnJungleMossOrMycelium, BlockModelProvider {
+public class UmbrellaMossTallBlock extends BaseDoublePlantBlock implements BehaviourPlant, SurvivesOnJungleMossOrMycelium {
     public UmbrellaMossTallBlock() {
         super(12);
     }
@@ -35,11 +32,5 @@ public class UmbrellaMossTallBlock extends BaseDoublePlantBlock implements Behav
     @Override
     public boolean isTerrain(BlockState state) {
         return SurvivesOnJungleMossOrMycelium.super.isTerrain(state);
-    }
-
-    @Override
-    public void provideBlockModels(WoverBlockModelGenerators generator) {
-        generator.createCubeModel(this);
-        generator.createFlatItem(this, BetterEnd.C.mk("item/umbrella_moss_large"));
     }
 }

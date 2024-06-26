@@ -4,12 +4,9 @@ import org.betterx.bclib.behaviours.BehaviourBuilders;
 import org.betterx.bclib.behaviours.interfaces.BehaviourPlant;
 import org.betterx.bclib.blocks.BaseDoublePlantBlock;
 import org.betterx.bclib.util.BlocksHelper;
-import org.betterx.betterend.BetterEnd;
 import org.betterx.betterend.blocks.basis.EndPlantBlock;
 import org.betterx.betterend.interfaces.survives.SurvivesOnJungleMossOrMycelium;
 import org.betterx.betterend.registry.EndBlocks;
-import org.betterx.wover.block.api.model.BlockModelProvider;
-import org.betterx.wover.block.api.model.WoverBlockModelGenerators;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -22,7 +19,7 @@ import net.minecraft.world.level.material.MapColor;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 
-public class UmbrellaMossBlock extends EndPlantBlock implements BehaviourPlant, SurvivesOnJungleMossOrMycelium, BlockModelProvider {
+public class UmbrellaMossBlock extends EndPlantBlock implements BehaviourPlant, SurvivesOnJungleMossOrMycelium {
     public UmbrellaMossBlock() {
         super(BehaviourBuilders.createGrass(MapColor.COLOR_ORANGE).ignitedByLava().lightLevel((state) -> 11));
     }
@@ -53,11 +50,5 @@ public class UmbrellaMossBlock extends EndPlantBlock implements BehaviourPlant, 
     @Override
     public boolean isTerrain(BlockState state) {
         return SurvivesOnJungleMossOrMycelium.super.isTerrain(state);
-    }
-
-    @Override
-    public void provideBlockModels(WoverBlockModelGenerators generator) {
-        generator.createCubeModel(this);
-        generator.createFlatItem(this, BetterEnd.C.mk("item/umbrella_moss_small"));
     }
 }

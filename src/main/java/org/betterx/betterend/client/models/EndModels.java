@@ -16,6 +16,7 @@ public class EndModels {
     public static final ModelTemplate CROSS_NO_DISTORTION = new ModelTemplate(Optional.of(BetterEnd.C.mk("block/cross_no_distortion")), Optional.empty(), TextureSlot.TEXTURE);
     public static final ModelTemplate CROSS_NO_DISTORTION_INVERTED = new ModelTemplate(Optional.of(BetterEnd.C.mk("block/cross_no_distortion_inverted")), Optional.empty(), TextureSlot.TEXTURE);
     public static final ModelTemplate PATH = new ModelTemplate(Optional.of(BetterEnd.C.mk("block/path")), Optional.empty(), TextureSlot.TOP, TextureSlot.BOTTOM, TextureSlot.SIDE);
+    public static final ModelTemplate CUBE_NO_SHADE = new ModelTemplate(Optional.of(BetterEnd.C.mk("block/cube_noshade")), Optional.empty(), TextureSlot.TEXTURE);
 
     public static final ModelTemplate PEDESTAL_PILLAR = new ModelTemplate(Optional.of(BetterEnd.C.mk("block/pedestal_pillar")), Optional.empty(), PILLAR);
     public static final ModelTemplate PEDESTAL_TOP = new ModelTemplate(Optional.of(BetterEnd.C.mk("block/pedestal_top")), Optional.empty(), TextureSlot.TOP, BASE, PILLAR);

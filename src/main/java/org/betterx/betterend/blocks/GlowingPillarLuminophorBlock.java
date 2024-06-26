@@ -4,6 +4,8 @@ import org.betterx.bclib.behaviours.BehaviourBuilders;
 import org.betterx.bclib.blocks.BaseBlock;
 import org.betterx.bclib.interfaces.tools.AddMineableShears;
 import org.betterx.betterend.registry.EndBlocks;
+import org.betterx.wover.block.api.model.BlockModelProvider;
+import org.betterx.wover.block.api.model.WoverBlockModelGenerators;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -17,7 +19,7 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.material.MapColor;
 
-public class GlowingPillarLuminophorBlock extends BaseBlock implements AddMineableShears {
+public class GlowingPillarLuminophorBlock extends BaseBlock implements AddMineableShears, BlockModelProvider {
     public static final BooleanProperty NATURAL = EndBlockProperties.NATURAL;
 
     public GlowingPillarLuminophorBlock() {
@@ -55,5 +57,10 @@ public class GlowingPillarLuminophorBlock extends BaseBlock implements AddMineab
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> stateManager) {
         stateManager.add(NATURAL);
+    }
+
+    @Override
+    public void provideBlockModels(WoverBlockModelGenerators generator) {
+        GlowingHymenophoreBlock.provideUnshadedCubeModel(generator, this);
     }
 }

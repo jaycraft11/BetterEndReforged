@@ -5,7 +5,6 @@ import org.betterx.bclib.behaviours.interfaces.BehaviourPlant;
 import org.betterx.bclib.interfaces.SurvivesOnBlocks;
 import org.betterx.betterend.blocks.basis.EndPlantBlock;
 import org.betterx.wover.block.api.model.BlockModelProvider;
-import org.betterx.wover.block.api.model.WoverBlockModelGenerators;
 
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
@@ -34,9 +33,9 @@ public class TerrainPlantBlock extends EndPlantBlock implements SurvivesOnBlocks
         return SurvivesOnBlocks.super.isTerrain(state);
     }
 
-    @Override
-    public void provideBlockModels(WoverBlockModelGenerators generator) {
-        generator.createCubeModel(this);
-        generator.createFlatItem(this);
-    }
+//    @Override
+//    public void provideBlockModels(WoverBlockModelGenerators generator) {
+//        generator.createCubeModel(this);
+//        generator.createFlatItem(this);
+//    }
 }
