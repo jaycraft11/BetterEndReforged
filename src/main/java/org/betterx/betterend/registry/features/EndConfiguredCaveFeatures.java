@@ -27,6 +27,9 @@ public class EndConfiguredCaveFeatures {
     public static final ConfiguredFeatureKey<WithConfiguration<StalactiteFeature, StalactiteFeatureConfig>> END_STONE_STALAGMITE = ConfiguredFeatureManager.configuration(BetterEnd.C.mk("end_stone_stalagmite"), EndFeatures.STALACTITE_FEATURE);
     public static final ConfiguredFeatureKey<WithConfiguration<StalactiteFeature, StalactiteFeatureConfig>> END_STONE_STALACTITE_CAVEMOSS = ConfiguredFeatureManager.configuration(BetterEnd.C.mk("end_stone_stalactite_cavemoss"), EndFeatures.STALACTITE_FEATURE);
     public static final ConfiguredFeatureKey<WithConfiguration<StalactiteFeature, StalactiteFeatureConfig>> END_STONE_STALAGMITE_CAVEMOSS = ConfiguredFeatureManager.configuration(BetterEnd.C.mk("end_stone_stalagmite_cavemoss"), EndFeatures.STALACTITE_FEATURE);
+    public static final ConfiguredFeatureKey<WithConfiguration<StalactiteFeature, StalactiteFeatureConfig>> END_STONE_WITH_CAVEMOSS_STALACTITE = ConfiguredFeatureManager.configuration(BetterEnd.C.mk("end_stone_with_cavemoss_stalactite"), EndFeatures.STALACTITE_FEATURE);
+    public static final ConfiguredFeatureKey<WithConfiguration<StalactiteFeature, StalactiteFeatureConfig>> END_STONE_WITH_CAVEMOSS_STALAGMITE = ConfiguredFeatureManager.configuration(BetterEnd.C.mk("end_stone_with_cavemoss_stalagmite"), EndFeatures.STALACTITE_FEATURE);
+
     public static final ConfiguredFeatureKey<WithConfiguration<CavePumpkinFeature, NoneFeatureConfiguration>> CAVE_PUMPKIN = ConfiguredFeatureManager.configuration(BetterEnd.C.mk("cave_pumpkin"), EndFeatures.CAVE_PUMPKIN_FEATURE);
 
 }

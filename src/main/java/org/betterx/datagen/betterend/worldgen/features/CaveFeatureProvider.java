@@ -58,11 +58,11 @@ public class CaveFeatureProvider extends WoverFeatureProvider {
                 .configuration(new VineFeatureConfig(EndBlocks.MAGNULA, 8))
                 .register();
 
+
         EndConfiguredCaveFeatures.END_STONE_STALACTITE
                 .bootstrap(context)
                 .configuration(new StalactiteFeatureConfig(true, EndBlocks.END_STONE_STALACTITE, Blocks.END_STONE))
                 .register();
-
         EndConfiguredCaveFeatures.END_STONE_STALAGMITE
                 .bootstrap(context)
                 .configuration(new StalactiteFeatureConfig(false, EndBlocks.END_STONE_STALACTITE, Blocks.END_STONE))
@@ -74,6 +74,14 @@ public class CaveFeatureProvider extends WoverFeatureProvider {
         EndConfiguredCaveFeatures.END_STONE_STALAGMITE_CAVEMOSS
                 .bootstrap(context)
                 .configuration(new StalactiteFeatureConfig(false, EndBlocks.END_STONE_STALACTITE_CAVEMOSS, EndBlocks.CAVE_MOSS))
+                .register();
+        EndConfiguredCaveFeatures.END_STONE_WITH_CAVEMOSS_STALACTITE
+                .bootstrap(context)
+                .configuration(new StalactiteFeatureConfig(true, EndBlocks.END_STONE_STALACTITE, 5, EndBlocks.END_STONE_STALACTITE_CAVEMOSS, 2, Blocks.END_STONE))
+                .register();
+        EndConfiguredCaveFeatures.END_STONE_WITH_CAVEMOSS_STALAGMITE
+                .bootstrap(context)
+                .configuration(new StalactiteFeatureConfig(false, EndBlocks.END_STONE_STALACTITE, 5, EndBlocks.END_STONE_STALACTITE_CAVEMOSS, 1, Blocks.END_STONE))
                 .register();
 
         EndConfiguredCaveFeatures.CAVE_PUMPKIN.bootstrap(context).register();
