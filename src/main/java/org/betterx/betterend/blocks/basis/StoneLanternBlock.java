@@ -62,8 +62,8 @@ public class StoneLanternBlock extends EndLanternBlock implements CustomColorPro
                 .put(TextureSlot.SIDE, TextureMapping.getBlockTexture(this, "_side"))
                 .put(TextureSlot.BOTTOM, TextureMapping.getBlockTexture(this, "_bottom"));
 
-        final var floorModel = BCLModels.STONE_LANTERN_FLOOR_MODEL_TEMPLATE.createWithSuffix(this, "_floor", mapping, generator.modelOutput());
-        final var ceilModel = BCLModels.STONE_LANTERN_CEIL_MODEL_TEMPLATE.create(this, mapping, generator.modelOutput());
+        final var floorModel = BCLModels.STONE_LANTERN_FLOOR.createWithSuffix(this, "_floor", mapping, generator.modelOutput());
+        final var ceilModel = BCLModels.STONE_LANTERN_CEIL.create(this, mapping, generator.modelOutput());
 
         generator.acceptBlockState(MultiVariantGenerator
                 .multiVariant(this)

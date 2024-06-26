@@ -71,8 +71,8 @@ public class BulbVineLanternBlock extends EndLanternBlock implements RenderLayer
                 .put(BCLModels.GLOW, BetterEnd.C.mk("bulb_vine_lantern_bulb").withPrefix("block/"))
                 .put(BCLModels.METAL, BetterEnd.C.mk(getMetalTexture(id)).withPrefix("block/"));
 
-        final var floorModel = BCLModels.BULB_LANTERN_FLOOR_MODEL_TEMPLATE.createWithSuffix(this, "_floor", mapping, generator.modelOutput());
-        final var ceilModel = BCLModels.BULB_LANTERN_CEIL_MODEL_TEMPLATE.create(this, mapping, generator.modelOutput());
+        final var floorModel = BCLModels.BULB_LANTERN_FLOOR.createWithSuffix(this, "_floor", mapping, generator.modelOutput());
+        final var ceilModel = BCLModels.BULB_LANTERN_CEIL.create(this, mapping, generator.modelOutput());
 
         generator.acceptBlockState(MultiVariantGenerator
                 .multiVariant(this)
