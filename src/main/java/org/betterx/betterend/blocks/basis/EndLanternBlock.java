@@ -1,15 +1,12 @@
 package org.betterx.betterend.blocks.basis;
 
 import org.betterx.bclib.blocks.BaseBlockNotFull;
-import org.betterx.bclib.client.models.ModelsHelper;
-import org.betterx.bclib.interfaces.RuntimeBlockModelProvider;
 import org.betterx.wover.block.api.BlockProperties;
+import org.betterx.wover.block.api.model.BlockModelProvider;
+import org.betterx.wover.block.api.model.WoverBlockModelGenerators;
 
-import net.minecraft.client.resources.model.ModelResourceLocation;
-import net.minecraft.client.resources.model.UnbakedModel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
@@ -19,6 +16,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LiquidBlockContainer;
 import net.minecraft.world.level.block.SimpleWaterloggedBlock;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -27,24 +25,23 @@ import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
-
-import java.util.Map;
 import org.jetbrains.annotations.Nullable;
 
-@SuppressWarnings("deprecation")
-public class EndLanternBlock extends BaseBlockNotFull.Wood implements SimpleWaterloggedBlock, LiquidBlockContainer, RuntimeBlockModelProvider {
+public abstract class EndLanternBlock extends BaseBlockNotFull implements SimpleWaterloggedBlock, LiquidBlockContainer, BlockModelProvider {
     public static final BooleanProperty IS_FLOOR = BlockProperties.IS_FLOOR;
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 
     public EndLanternBlock(Block source) {
-        this(FabricBlockSettings.copyOf(source).lightLevel((bs) -> 15).noOcclusion());
+        this(BlockBehaviour.Properties.ofFullCopy(source).lightLevel((bs) -> 15).noOcclusion());
     }
 
     public EndLanternBlock(Properties settings) {
         super(settings.noOcclusion());
+        this.registerDefaultState(getStateDefinition()
+                .any()
+                .setValue(IS_FLOOR, true)
+                .setValue(WATERLOGGED, false)
+        );
     }
 
     @Override
@@ -136,15 +133,5 @@ public class EndLanternBlock extends BaseBlockNotFull.Wood implements SimpleWate
     }
 
     @Override
-    @Environment(EnvType.CLIENT)
-    public UnbakedModel getModelVariant(
-            ModelResourceLocation stateId,
-            BlockState blockState,
-            Map<ResourceLocation, UnbakedModel> modelCache
-    ) {
-        String floor = blockState.getValue(IS_FLOOR) ? "_floor" : "";
-        ModelResourceLocation modelId = new ModelResourceLocation(stateId.id().withPrefix("block/"), floor);
-        registerBlockModel(stateId, modelId, blockState, modelCache);
-        return ModelsHelper.createBlockSimple(modelId.id());
-    }
+    public abstract void provideBlockModels(WoverBlockModelGenerators generator);
 }

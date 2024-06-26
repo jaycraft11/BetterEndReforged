@@ -1,16 +1,21 @@
 package org.betterx.betterend.blocks;
 
 import org.betterx.bclib.behaviours.BehaviourBuilders;
-import org.betterx.bclib.behaviours.interfaces.BehaviourWood;
-import org.betterx.bclib.client.models.ModelsHelper;
+import org.betterx.bclib.behaviours.interfaces.BehaviourMetal;
+import org.betterx.bclib.client.models.BCLModels;
 import org.betterx.bclib.client.render.BCLRenderLayer;
 import org.betterx.bclib.interfaces.RenderLayerProvider;
-import org.betterx.bclib.interfaces.RuntimeBlockModelProvider;
+import org.betterx.betterend.BetterEnd;
 import org.betterx.betterend.blocks.basis.EndLanternBlock;
-import org.betterx.betterend.client.models.Patterns;
+import org.betterx.wover.block.api.model.WoverBlockModelGenerators;
 
-import net.minecraft.client.renderer.block.model.BlockModel;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.data.models.blockstates.MultiVariantGenerator;
+import net.minecraft.data.models.blockstates.PropertyDispatch;
+import net.minecraft.data.models.blockstates.Variant;
+import net.minecraft.data.models.blockstates.VariantProperties;
+import net.minecraft.data.models.model.TextureMapping;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Block;
@@ -20,16 +25,7 @@ import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
-
-import com.google.common.collect.Maps;
-
-import java.util.Map;
-import java.util.Optional;
-import org.jetbrains.annotations.Nullable;
-
-public class BulbVineLanternBlock extends EndLanternBlock implements RenderLayerProvider, RuntimeBlockModelProvider, BehaviourWood {
+public class BulbVineLanternBlock extends EndLanternBlock implements RenderLayerProvider, BehaviourMetal {
     private static final VoxelShape SHAPE_CEIL = Block.box(4, 4, 4, 12, 16, 12);
     private static final VoxelShape SHAPE_FLOOR = Block.box(4, 0, 4, 12, 12, 12);
 
@@ -56,21 +52,6 @@ public class BulbVineLanternBlock extends EndLanternBlock implements RenderLayer
         return BCLRenderLayer.CUTOUT;
     }
 
-    @Override
-    @Environment(EnvType.CLIENT)
-    public @Nullable BlockModel getBlockModel(ResourceLocation resourceLocation, BlockState blockState) {
-        Map<String, String> textures = Maps.newHashMap();
-        textures.put("%glow%", getGlowTexture());
-        textures.put("%metal%", getMetalTexture(resourceLocation));
-        Optional<String> pattern = blockState.getValue(IS_FLOOR)
-                ? Patterns.createJson(
-                Patterns.BLOCK_BULB_LANTERN_FLOOR,
-                textures
-        )
-                : Patterns.createJson(Patterns.BLOCK_BULB_LANTERN_CEIL, textures);
-        return ModelsHelper.fromPattern(pattern);
-    }
-
     protected String getMetalTexture(ResourceLocation blockId) {
         String name = blockId.getPath();
         name = name.substring(0, name.indexOf('_'));
@@ -81,4 +62,23 @@ public class BulbVineLanternBlock extends EndLanternBlock implements RenderLayer
         return "bulb_vine_lantern_bulb";
     }
 
+    @Override
+    public void provideBlockModels(WoverBlockModelGenerators generator) {
+        //get id of this block from registry
+        final var id = BuiltInRegistries.BLOCK.getKey(this);
+
+        final var mapping = new TextureMapping()
+                .put(BCLModels.GLOW, BetterEnd.C.mk("bulb_vine_lantern_bulb").withPrefix("block/"))
+                .put(BCLModels.METAL, BetterEnd.C.mk(getMetalTexture(id)).withPrefix("block/"));
+
+        final var floorModel = BCLModels.BULB_LANTERN_FLOOR_MODEL_TEMPLATE.createWithSuffix(this, "_floor", mapping, generator.modelOutput());
+        final var ceilModel = BCLModels.BULB_LANTERN_CEIL_MODEL_TEMPLATE.create(this, mapping, generator.modelOutput());
+
+        generator.acceptBlockState(MultiVariantGenerator
+                .multiVariant(this)
+                .with(PropertyDispatch
+                        .property(IS_FLOOR)
+                        .select(true, Variant.variant().with(VariantProperties.MODEL, floorModel))
+                        .select(false, Variant.variant().with(VariantProperties.MODEL, ceilModel))));
+    }
 }
