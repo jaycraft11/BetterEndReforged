@@ -1,7 +1,22 @@
 {
   "variants": {
-    "": {
-      "model": "betterend:block/infusion_pedestal"
+    "state=bottom": {
+      "model": "betterend:block/infusion_pedestal_bottom"
+    },
+    "state=column": {
+      "model": "betterend:block/infusion_pedestal_column"
+    },
+    "state=column_top": {
+      "model": "betterend:block/infusion_pedestal_column_top"
+    },
+    "state=default": {
+      "model": "betterend:block/infusion_pedestal_default"
+    },
+    "state=pedestal_top": {
+      "model": "betterend:block/infusion_pedestal_pedestal_top"
+    },
+    "state=pillar": {
+      "model": "betterend:block/infusion_pedestal_pillar"
     }
   }
 }
