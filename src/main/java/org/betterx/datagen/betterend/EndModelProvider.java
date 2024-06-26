@@ -54,6 +54,18 @@ public class EndModelProvider extends WoverModelProvider {
                                      .put(TextureSlot.BOTTOM, IntegrationCore.MINECRAFT.mk("block/purpur_block"))
                                      .put(EndModels.BASE, IntegrationCore.MINECRAFT.mk("block/purpur_block"))
                                      .put(EndModels.PILLAR, IntegrationCore.MINECRAFT.mk("block/purpur_pillar")), block))
+                             .override(EndBlocks.NEON_CACTUS_BLOCK_STAIRS, block -> {
+                                 final var id = TextureMapping.getBlockTexture(block);
+                                 final var texture = BetterEnd.C.mk("block/neon_cactus_block");
+                                 final var mapping = new TextureMapping()
+                                         .put(TextureSlot.TOP, texture.withSuffix("_top"))
+                                         .put(TextureSlot.BOTTOM, texture.withSuffix("_top"))
+                                         .put(TextureSlot.SIDE, texture.withSuffix("_side"));
+                                 final var stairs = EndModels.LIT_STAIRS.create(id, mapping, generator.modelOutput());
+                                 final var stairs_outer = EndModels.LIT_STAIRS_OUTER.create(id.withSuffix("_outer"), mapping, generator.modelOutput());
+                                 final var stairs_inner = EndModels.LIT_STAIRS_INNER.create(id.withSuffix("_inner"), mapping, generator.modelOutput());
+                                 generator.createStairsWithModels(block, stairs, stairs_outer, stairs_inner);
+                             })
                              .ignore(EndBlocks.CRYSTAL_GRASS)
                              .ignore(EndBlocks.SALTEAGO)
                              .ignore(EndBlocks.LAMELLARIUM)
@@ -92,7 +104,6 @@ public class EndModelProvider extends WoverModelProvider {
                              .ignore(EndBlocks.END_LOTUS_SEED)
                              .ignore(EndBlocks.END_LOTUS_LEAF)
                              .ignore(EndBlocks.CAVE_PUMPKIN)
-                             .ignore(EndBlocks.NEON_CACTUS_BLOCK_STAIRS)
                              .ignore(EndBlocks.NEON_CACTUS_BLOCK)
                              .ignore(EndBlocks.FILALUX)
                              .ignore(EndBlocks.CREEPING_MOSS)

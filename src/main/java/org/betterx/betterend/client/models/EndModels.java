@@ -29,4 +29,19 @@ public class EndModels {
 
     public static final ModelTemplate PETAL_COLORED = new ModelTemplate(Optional.of(BetterEnd.C.mk("block/tint_cube")), Optional.empty(), TextureSlot.TEXTURE);
 
+    public static final ModelTemplate LIT_STAIRS_INNER = new ModelTemplate(
+            Optional.of(BetterEnd.C.mk("block/lit_stairs_inner")),
+            Optional.empty(),
+            TextureSlot.BOTTOM, TextureSlot.TOP, TextureSlot.SIDE
+    );
+    public static final ModelTemplate LIT_STAIRS = new ModelTemplate(
+            Optional.of(BetterEnd.C.mk("block/lit_stairs")),
+            Optional.empty(),
+            TextureSlot.BOTTOM, TextureSlot.TOP, TextureSlot.SIDE
+    );
+    public static final ModelTemplate LIT_STAIRS_OUTER = new ModelTemplate(
+            Optional.of(BetterEnd.C.mk("block/lit_stairs_outer")),
+            Optional.empty(),
+            TextureSlot.BOTTOM, TextureSlot.TOP, TextureSlot.SIDE
+    );
 }
