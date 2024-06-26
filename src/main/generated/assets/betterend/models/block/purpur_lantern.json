@@ -1,9 +1,9 @@
 {
   "parent": "bclib:block/stone_lantern_ceil",
   "textures": {
-    "bottom": "minecraft:block/purpur_block_bottom",
+    "bottom": "betterend:block/purpur_lantern_bottom",
     "glass": "betterend:block/aurora_crystal",
-    "side": "minecraft:block/purpur_block_side",
-    "top": "minecraft:block/purpur_block_top"
+    "side": "betterend:block/purpur_lantern_side",
+    "top": "betterend:block/purpur_lantern_top"
   }
 }

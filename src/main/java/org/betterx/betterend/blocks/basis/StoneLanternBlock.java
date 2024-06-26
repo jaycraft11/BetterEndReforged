@@ -23,6 +23,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
+import org.jetbrains.annotations.NotNull;
+
 public class StoneLanternBlock extends EndLanternBlock implements CustomColorProvider, BehaviourStone {
     private static final VoxelShape SHAPE_CEIL = box(3, 1, 3, 13, 16, 13);
     private static final VoxelShape SHAPE_FLOOR = box(3, 0, 3, 13, 15, 13);
@@ -45,7 +47,7 @@ public class StoneLanternBlock extends EndLanternBlock implements CustomColorPro
 
     @Override
     @SuppressWarnings("deprecation")
-    public VoxelShape getShape(BlockState state, BlockGetter view, BlockPos pos, CollisionContext ePos) {
+    public @NotNull VoxelShape getShape(BlockState state, BlockGetter view, BlockPos pos, CollisionContext ePos) {
         return state.getValue(IS_FLOOR) ? SHAPE_FLOOR : SHAPE_CEIL;
     }
 
@@ -53,12 +55,12 @@ public class StoneLanternBlock extends EndLanternBlock implements CustomColorPro
     public void provideBlockModels(WoverBlockModelGenerators generator) {
         //get id of this block from registry
         final var id = BuiltInRegistries.BLOCK.getKey(this);
-
+        final boolean isVanilla = id.getNamespace().equals("minecraft");
         final var mapping = new TextureMapping()
                 .put(BCLModels.GLASS, TextureMapping.getBlockTexture(EndBlocks.AURORA_CRYSTAL))
-                .put(TextureSlot.TOP, TextureMapping.getBlockTexture(baseBlock, "_top"))
-                .put(TextureSlot.SIDE, TextureMapping.getBlockTexture(baseBlock, "_side"))
-                .put(TextureSlot.BOTTOM, TextureMapping.getBlockTexture(baseBlock, "_bottom"));
+                .put(TextureSlot.TOP, TextureMapping.getBlockTexture(this, "_top"))
+                .put(TextureSlot.SIDE, TextureMapping.getBlockTexture(this, "_side"))
+                .put(TextureSlot.BOTTOM, TextureMapping.getBlockTexture(this, "_bottom"));
 
         final var floorModel = BCLModels.STONE_LANTERN_FLOOR_MODEL_TEMPLATE.createWithSuffix(this, "_floor", mapping, generator.modelOutput());
         final var ceilModel = BCLModels.STONE_LANTERN_CEIL_MODEL_TEMPLATE.create(this, mapping, generator.modelOutput());
