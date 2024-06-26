@@ -175,6 +175,9 @@ jar {
 tasks.processResources {
     duplicatesStrategy = DuplicatesStrategy.WARN
 }
+tasks.sourcesJar {
+    duplicatesStrategy = DuplicatesStrategy.WARN
+}
 
 // configure the maven publication
 publishing {
