@@ -1,8 +1,8 @@
 {
   "parent": "minecraft:block/inner_stairs",
   "textures": {
-    "bottom": "betterend:block/sulphuric_rock_bottom",
-    "side": "betterend:block/sulphuric_rock_side",
-    "top": "betterend:block/sulphuric_rock_top"
+    "bottom": "betterend:block/sulphuric_rock",
+    "side": "betterend:block/sulphuric_rock",
+    "top": "betterend:block/sulphuric_rock"
   }
 }

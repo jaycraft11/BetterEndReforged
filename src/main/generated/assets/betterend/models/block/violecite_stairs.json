@@ -1,8 +1,8 @@
 {
   "parent": "minecraft:block/stairs",
   "textures": {
-    "bottom": "betterend:block/violecite_bottom",
-    "side": "betterend:block/violecite_side",
-    "top": "betterend:block/violecite_top"
+    "bottom": "betterend:block/violecite",
+    "side": "betterend:block/violecite",
+    "top": "betterend:block/violecite"
   }
 }

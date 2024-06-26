@@ -1,6 +1,9 @@
 {
-  "parent": "minecraft:block/cube_all",
+  "parent": "bclib:block/stone_lantern_ceil",
   "textures": {
-    "all": "betterend:block/end_stone_lantern"
+    "bottom": "minecraft:block/end_stone_bottom",
+    "glass": "betterend:block/aurora_crystal",
+    "side": "minecraft:block/end_stone_side",
+    "top": "minecraft:block/end_stone_top"
   }
 }

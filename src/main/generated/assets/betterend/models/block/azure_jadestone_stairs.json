@@ -1,8 +1,8 @@
 {
   "parent": "minecraft:block/stairs",
   "textures": {
-    "bottom": "betterend:block/azure_jadestone_bottom",
-    "side": "betterend:block/azure_jadestone_side",
-    "top": "betterend:block/azure_jadestone_top"
+    "bottom": "betterend:block/azure_jadestone",
+    "side": "betterend:block/azure_jadestone",
+    "top": "betterend:block/azure_jadestone"
   }
 }

@@ -1,6 +1,8 @@
 {
-  "parent": "minecraft:block/cube_all",
+  "parent": "bclib:block/path",
   "textures": {
-    "all": "betterend:block/sangnum_path"
+    "bottom": "minecraft:block/end_stone",
+    "side": "betterend:block/sangnum_side",
+    "top": "betterend:block/sangnum_path_top"
   }
 }

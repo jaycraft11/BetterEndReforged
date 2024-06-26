@@ -1,0 +1,9 @@
+{
+  "parent": "bclib:block/stone_lantern_floor",
+  "textures": {
+    "bottom": "betterend:block/sulphuric_rock_bottom",
+    "glass": "betterend:block/aurora_crystal",
+    "side": "betterend:block/sulphuric_rock_side",
+    "top": "betterend:block/sulphuric_rock_top"
+  }
+}
