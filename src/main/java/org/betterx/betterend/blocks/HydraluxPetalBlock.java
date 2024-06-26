@@ -10,6 +10,8 @@ import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.MapColor;
 
+import org.jetbrains.annotations.NotNull;
+
 public class HydraluxPetalBlock extends BaseBlock.Wood {
     public HydraluxPetalBlock() {
         this(
@@ -25,6 +27,12 @@ public class HydraluxPetalBlock extends BaseBlock.Wood {
     }
 
     @Override
-    public void fallOn(Level level, BlockState blockState, BlockPos blockPos, Entity entity, float f) {
+    public void fallOn(
+            @NotNull Level level,
+            @NotNull BlockState blockState,
+            @NotNull BlockPos blockPos,
+            @NotNull Entity entity,
+            float f
+    ) {
     }
 }

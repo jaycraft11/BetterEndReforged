@@ -2,11 +2,13 @@ package org.betterx.datagen.betterend;
 
 import org.betterx.bclib.blocks.BaseVineBlock;
 import org.betterx.betterend.BetterEnd;
+import org.betterx.betterend.blocks.basis.PedestalBlock;
 import org.betterx.betterend.client.models.EndModels;
 import org.betterx.betterend.registry.EndBlocks;
 import org.betterx.wover.block.api.BlockProperties;
 import org.betterx.wover.block.api.BlockRegistry;
 import org.betterx.wover.block.api.model.WoverBlockModelGenerators;
+import org.betterx.wover.core.api.IntegrationCore;
 import org.betterx.wover.core.api.ModCore;
 import org.betterx.wover.datagen.api.provider.WoverModelProvider;
 
@@ -42,6 +44,16 @@ public class EndModelProvider extends WoverModelProvider {
                              .override(EndBlocks.TWISTED_VINE, createTwistedVineModel(generator))
                              .override(EndBlocks.AMBER_MOSS, createAmberMossModel(generator))
                              .override(EndBlocks.AMBER_MOSS_PATH, createAmberMossPathModel(generator, EndBlocks.AMBER_MOSS))
+                             .override(EndBlocks.QUARTZ_PEDESTAL, block -> PedestalBlock.provideBlockModel(generator, new TextureMapping()
+                                     .put(TextureSlot.TOP, IntegrationCore.MINECRAFT.mk("block/quartz_pillar_top"))
+                                     .put(TextureSlot.BOTTOM, IntegrationCore.MINECRAFT.mk("block/quartz_block_bottom"))
+                                     .put(EndModels.BASE, IntegrationCore.MINECRAFT.mk("block/quartz_block_side"))
+                                     .put(EndModels.PILLAR, IntegrationCore.MINECRAFT.mk("block/quartz_pillar")), block))
+                             .override(EndBlocks.PURPUR_PEDESTAL, block -> PedestalBlock.provideBlockModel(generator, new TextureMapping()
+                                     .put(TextureSlot.TOP, IntegrationCore.MINECRAFT.mk("block/purpur_pillar_top"))
+                                     .put(TextureSlot.BOTTOM, IntegrationCore.MINECRAFT.mk("block/purpur_block"))
+                                     .put(EndModels.BASE, IntegrationCore.MINECRAFT.mk("block/purpur_block"))
+                                     .put(EndModels.PILLAR, IntegrationCore.MINECRAFT.mk("block/purpur_pillar")), block))
         );
     }
 

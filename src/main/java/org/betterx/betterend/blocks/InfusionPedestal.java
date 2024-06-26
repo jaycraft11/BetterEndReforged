@@ -3,9 +3,15 @@ package org.betterx.betterend.blocks;
 import org.betterx.bclib.behaviours.interfaces.BehaviourStone;
 import org.betterx.betterend.blocks.basis.PedestalBlock;
 import org.betterx.betterend.blocks.entities.InfusionPedestalEntity;
+import org.betterx.betterend.client.models.EndModels;
 import org.betterx.betterend.rituals.InfusionRitual;
+import org.betterx.wover.block.api.model.BlockModelProvider;
+import org.betterx.wover.block.api.model.WoverBlockModelGenerators;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.data.models.model.ModelTemplate;
+import net.minecraft.data.models.model.TextureMapping;
+import net.minecraft.data.models.model.TextureSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -19,10 +25,15 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+
+import java.util.Map;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 @SuppressWarnings("deprecation")
-public class InfusionPedestal extends PedestalBlock implements BehaviourStone {
+public class InfusionPedestal extends PedestalBlock implements BehaviourStone, BlockModelProvider {
     private static final VoxelShape SHAPE_DEFAULT;
     private static final VoxelShape SHAPE_PEDESTAL_TOP;
 
@@ -61,19 +72,18 @@ public class InfusionPedestal extends PedestalBlock implements BehaviourStone {
 
     @Override
     @Deprecated
-    public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
+    public @NotNull VoxelShape getShape(
+            BlockState state,
+            @NotNull BlockGetter world,
+            @NotNull BlockPos pos,
+            @NotNull CollisionContext context
+    ) {
         if (state.is(this)) {
-            switch (state.getValue(STATE)) {
-                case PEDESTAL_TOP: {
-                    return SHAPE_PEDESTAL_TOP;
-                }
-                case DEFAULT: {
-                    return SHAPE_DEFAULT;
-                }
-                default: {
-                    return super.getShape(state, world, pos, context);
-                }
-            }
+            return switch (state.getValue(STATE)) {
+                case PEDESTAL_TOP -> SHAPE_PEDESTAL_TOP;
+                case DEFAULT -> SHAPE_DEFAULT;
+                default -> super.getShape(state, world, pos, context);
+            };
         }
         return super.getShape(state, world, pos, context);
     }
@@ -81,11 +91,35 @@ public class InfusionPedestal extends PedestalBlock implements BehaviourStone {
     @Override
     @Nullable
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(
-            Level level,
-            BlockState blockState,
-            BlockEntityType<T> blockEntityType
+            @NotNull Level level,
+            @NotNull BlockState blockState,
+            @NotNull BlockEntityType<T> blockEntityType
     ) {
         return InfusionPedestalEntity::tickEntity;
+    }
+
+    private static final Map<EndBlockProperties.PedestalState, ModelTemplate> PEDESTAL_MODELS = Map.of(
+            EndBlockProperties.PedestalState.DEFAULT, EndModels.INFUSION_PEDESTAL_DEFAULT,
+            EndBlockProperties.PedestalState.PEDESTAL_TOP, EndModels.INFUSION_PEDESTAL_TOP,
+            EndBlockProperties.PedestalState.COLUMN_TOP, EndModels.PEDESTAL_COLUMN_TOP,
+            EndBlockProperties.PedestalState.COLUMN, EndModels.PEDESTAL_COLUMN,
+            EndBlockProperties.PedestalState.BOTTOM, EndModels.PEDESTAL_BOTTOM,
+            EndBlockProperties.PedestalState.PILLAR, EndModels.PEDESTAL_PILLAR
+    );
+
+    @Environment(EnvType.CLIENT)
+    protected TextureMapping createTextureMapping() {
+        final var parentTexture = TextureMapping.getBlockTexture(this);
+        return new TextureMapping()
+                .put(TextureSlot.TOP, parentTexture.withSuffix("_top"))
+                .put(TextureSlot.BOTTOM, parentTexture.withSuffix("_base"))
+                .put(EndModels.BASE, parentTexture.withSuffix("_base"))
+                .put(EndModels.PILLAR, parentTexture.withSuffix("_pillar"));
+    }
+
+    @Override
+    public void provideBlockModels(WoverBlockModelGenerators generator) {
+        provideBlockModel(generator, createTextureMapping(), this, PEDESTAL_MODELS);
     }
 
     static {

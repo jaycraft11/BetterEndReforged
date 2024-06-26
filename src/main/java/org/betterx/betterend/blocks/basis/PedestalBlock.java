@@ -1,27 +1,30 @@
 package org.betterx.betterend.blocks.basis;
 
 import org.betterx.bclib.blocks.BaseBlockNotFull;
-import org.betterx.bclib.client.models.ModelsHelper;
-import org.betterx.bclib.interfaces.RuntimeBlockModelProvider;
 import org.betterx.betterend.blocks.EndBlockProperties;
 import org.betterx.betterend.blocks.EndBlockProperties.PedestalState;
 import org.betterx.betterend.blocks.InfusionPedestal;
 import org.betterx.betterend.blocks.entities.InfusionPedestalEntity;
 import org.betterx.betterend.blocks.entities.PedestalBlockEntity;
-import org.betterx.betterend.client.models.Patterns;
+import org.betterx.betterend.client.models.EndModels;
 import org.betterx.betterend.registry.EndTags;
 import org.betterx.betterend.rituals.InfusionRitual;
 import org.betterx.wover.block.api.BlockProperties;
 import org.betterx.wover.block.api.BlockTagProvider;
+import org.betterx.wover.block.api.model.BlockModelProvider;
+import org.betterx.wover.block.api.model.WoverBlockModelGenerators;
 import org.betterx.wover.tag.api.event.context.TagBootstrapContext;
 
-import net.minecraft.client.renderer.block.model.BlockModel;
-import net.minecraft.client.resources.model.ModelResourceLocation;
-import net.minecraft.client.resources.model.UnbakedModel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.data.models.blockstates.MultiVariantGenerator;
+import net.minecraft.data.models.blockstates.PropertyDispatch;
+import net.minecraft.data.models.blockstates.Variant;
+import net.minecraft.data.models.blockstates.VariantProperties;
+import net.minecraft.data.models.model.ModelTemplate;
+import net.minecraft.data.models.model.TextureMapping;
+import net.minecraft.data.models.model.TextureSlot;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.InteractionHand;
@@ -51,17 +54,15 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 
 import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 
 import java.awt.*;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.function.ToIntFunction;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class PedestalBlock extends BaseBlockNotFull implements EntityBlock, BlockTagProvider, RuntimeBlockModelProvider {
+public class PedestalBlock extends BaseBlockNotFull implements EntityBlock, BlockTagProvider, BlockModelProvider {
     public final static EnumProperty<PedestalState> STATE = EndBlockProperties.PEDESTAL_STATE;
     public static final BooleanProperty HAS_ITEM = EndBlockProperties.HAS_ITEM;
     public static final BooleanProperty HAS_LIGHT = BlockProperties.HAS_LIGHT;
@@ -251,7 +252,7 @@ public class PedestalBlock extends BaseBlockNotFull implements EntityBlock, Bloc
     }
 
     @Override
-    public List<ItemStack> getDrops(BlockState state, LootParams.Builder builder) {
+    public @NotNull List<ItemStack> getDrops(@NotNull BlockState state, LootParams.@NotNull Builder builder) {
         List<ItemStack> drop = Lists.newArrayList(super.getDrops(state, builder));
         if (state.is(this)) {
             if (isPlaceable(state)) {
@@ -328,29 +329,21 @@ public class PedestalBlock extends BaseBlockNotFull implements EntityBlock, Bloc
     }
 
     @Override
-    @SuppressWarnings("deprecation")
-    public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
+    public @NotNull VoxelShape getShape(
+            BlockState state,
+            @NotNull BlockGetter world,
+            @NotNull BlockPos pos,
+            @NotNull CollisionContext context
+    ) {
         if (state.is(this)) {
-            switch (state.getValue(STATE)) {
-                case BOTTOM: {
-                    return SHAPE_BOTTOM;
-                }
-                case PEDESTAL_TOP: {
-                    return SHAPE_PEDESTAL_TOP;
-                }
-                case COLUMN_TOP: {
-                    return SHAPE_COLUMN_TOP;
-                }
-                case PILLAR: {
-                    return SHAPE_PILLAR;
-                }
-                case COLUMN: {
-                    return SHAPE_COLUMN;
-                }
-                default: {
-                    return SHAPE_DEFAULT;
-                }
-            }
+            return switch (state.getValue(STATE)) {
+                case BOTTOM -> SHAPE_BOTTOM;
+                case PEDESTAL_TOP -> SHAPE_PEDESTAL_TOP;
+                case COLUMN_TOP -> SHAPE_COLUMN_TOP;
+                case PILLAR -> SHAPE_PILLAR;
+                case COLUMN -> SHAPE_COLUMN;
+                default -> SHAPE_DEFAULT;
+            };
         }
         return super.getShape(state, world, pos, context);
     }
@@ -361,7 +354,7 @@ public class PedestalBlock extends BaseBlockNotFull implements EntityBlock, Bloc
     }
 
     @Override
-    public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
+    public BlockEntity newBlockEntity(@NotNull BlockPos blockPos, @NotNull BlockState blockState) {
         return new PedestalBlockEntity(blockPos, blockState);
     }
 
@@ -370,76 +363,66 @@ public class PedestalBlock extends BaseBlockNotFull implements EntityBlock, Bloc
     }
 
     @Override
-    @SuppressWarnings("deprecation")
     public boolean hasAnalogOutputSignal(BlockState state) {
         return state.getBlock() instanceof PedestalBlock;
     }
 
     @Override
-    @SuppressWarnings("deprecation")
-    public int getAnalogOutputSignal(BlockState state, Level world, BlockPos pos) {
+    public int getAnalogOutputSignal(BlockState state, @NotNull Level world, @NotNull BlockPos pos) {
         return state.getValue(HAS_ITEM) ? 15 : 0;
     }
 
-    @Override
-    @Environment(EnvType.CLIENT)
-    public BlockModel getItemModel(ResourceLocation blockId) {
-        return getBlockModel(blockId, defaultBlockState());
-    }
+    private static final Map<PedestalState, ModelTemplate> PEDESTAL_MODELS = Map.of(
+            PedestalState.DEFAULT, EndModels.PEDESTAL_DEFAULT,
+            PedestalState.PEDESTAL_TOP, EndModels.PEDESTAL_TOP,
+            PedestalState.COLUMN_TOP, EndModels.PEDESTAL_COLUMN_TOP,
+            PedestalState.COLUMN, EndModels.PEDESTAL_COLUMN,
+            PedestalState.BOTTOM, EndModels.PEDESTAL_BOTTOM,
+            PedestalState.PILLAR, EndModels.PEDESTAL_PILLAR
+    );
 
     @Override
-    @Environment(EnvType.CLIENT)
-    public @Nullable BlockModel getBlockModel(ResourceLocation resourceLocation, BlockState blockState) {
-        Map<String, String> textures = createTexturesMap();
-        PedestalState state = blockState.getValue(STATE);
-        Optional<String> pattern = Patterns.createJson(Patterns.BLOCK_PEDESTAL_DEFAULT, textures);
-        switch (state) {
-            case COLUMN_TOP:
-                pattern = Patterns.createJson(Patterns.BLOCK_PEDESTAL_COLUMN_TOP, textures);
-                break;
-            case COLUMN:
-                pattern = Patterns.createJson(Patterns.BLOKC_PEDESTAL_COLUMN, textures);
-                break;
-            case PEDESTAL_TOP:
-                pattern = Patterns.createJson(Patterns.BLOCK_PEDESTAL_TOP, textures);
-                break;
-            case BOTTOM:
-                pattern = Patterns.createJson(Patterns.BLOCK_PEDESTAL_BOTTOM, textures);
-                break;
-            case PILLAR:
-                pattern = Patterns.createJson(Patterns.BLOCK_PEDESTAL_PILLAR, textures);
-                break;
-            default:
-                break;
-        }
-        return ModelsHelper.fromPattern(pattern);
+    public void provideBlockModels(WoverBlockModelGenerators generator) {
+        provideBlockModel(generator, createTextureMapping(), this);
     }
-    
-    @Override
-    @Environment(EnvType.CLIENT)
-    public UnbakedModel getModelVariant(
-            ModelResourceLocation stateId,
-            BlockState blockState,
-            Map<ResourceLocation, UnbakedModel> modelCache
+
+    public static void provideBlockModel(
+            WoverBlockModelGenerators generator,
+            TextureMapping mapping,
+            Block pedestalBlock
     ) {
-        PedestalState state = blockState.getValue(STATE);
-        ModelResourceLocation modelId = new ModelResourceLocation(
-                stateId.id().withPrefix("block/"), "_" + state
-        );
-        registerBlockModel(stateId, modelId, blockState, modelCache);
-        return ModelsHelper.createBlockSimple(modelId.id());
+        provideBlockModel(generator, mapping, pedestalBlock, PEDESTAL_MODELS);
     }
 
-    protected Map<String, String> createTexturesMap() {
-        ResourceLocation blockId = BuiltInRegistries.BLOCK.getKey(parent);
-        String name = blockId.getPath();
-        Map<String, String> textures = Maps.newHashMap();
-        textures.put("%mod%", blockId.getNamespace());
-        textures.put("%top%", name + "_top");
-        textures.put("%base%", name + "_base");
-        textures.put("%pillar%", name + "_pillar");
-        textures.put("%bottom%", name + "_bottom");
-        return textures;
+    public static void provideBlockModel(
+            WoverBlockModelGenerators generator,
+            TextureMapping mapping,
+            Block pedestalBlock,
+            Map<PedestalState, ModelTemplate> pdestalModels
+    ) {
+        final ResourceLocation id = TextureMapping.getBlockTexture(pedestalBlock);
+        final var properties = PropertyDispatch.property(STATE);
+
+        for (var entry : pdestalModels.entrySet()) {
+            final String suffix = "_" + entry.getKey();
+            ResourceLocation model = entry
+                    .getValue()
+                    .createWithSuffix(pedestalBlock, suffix, mapping, generator.modelOutput());
+            properties.select(entry.getKey(), Variant.variant().with(VariantProperties.MODEL, model));
+        }
+
+        generator.acceptBlockState(MultiVariantGenerator.multiVariant(pedestalBlock).with(properties));
+        generator.delegateItemModel(pedestalBlock, id.withSuffix("_default"));
+    }
+
+    @Environment(EnvType.CLIENT)
+    protected TextureMapping createTextureMapping() {
+        final var parentTexture = TextureMapping.getBlockTexture(parent);
+        return new TextureMapping()
+                .put(TextureSlot.TOP, parentTexture.withSuffix("_top"))
+                .put(TextureSlot.BOTTOM, parentTexture.withSuffix("_bottom"))
+                .put(EndModels.BASE, parentTexture.withSuffix("_base"))
+                .put(EndModels.PILLAR, parentTexture.withSuffix("_pillar"));
     }
 
     static {

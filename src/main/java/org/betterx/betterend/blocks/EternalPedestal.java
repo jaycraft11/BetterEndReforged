@@ -4,13 +4,17 @@ import de.ambertation.wunderlib.math.Float3;
 import de.ambertation.wunderlib.ui.ColorHelper;
 import org.betterx.bclib.behaviours.interfaces.BehaviourStone;
 import org.betterx.bclib.interfaces.ClientLevelAccess;
+import org.betterx.betterend.BetterEnd;
 import org.betterx.betterend.blocks.basis.PedestalBlock;
 import org.betterx.betterend.blocks.entities.EternalPedestalEntity;
+import org.betterx.betterend.client.models.EndModels;
 import org.betterx.betterend.client.render.EternalCrystalRenderer;
 import org.betterx.betterend.client.render.PedestalItemRenderer;
 import org.betterx.betterend.registry.EndBlocks;
 import org.betterx.betterend.registry.EndPortals;
 import org.betterx.betterend.rituals.EternalRitual;
+import org.betterx.wover.block.api.model.BlockModelProvider;
+import org.betterx.wover.block.api.model.WoverBlockModelGenerators;
 
 import net.minecraft.client.particle.Particle;
 import net.minecraft.core.BlockPos;
@@ -18,6 +22,13 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.data.models.blockstates.MultiVariantGenerator;
+import net.minecraft.data.models.blockstates.PropertyDispatch;
+import net.minecraft.data.models.blockstates.Variant;
+import net.minecraft.data.models.blockstates.VariantProperties;
+import net.minecraft.data.models.model.ModelTemplate;
+import net.minecraft.data.models.model.TextureMapping;
+import net.minecraft.data.models.model.TextureSlot;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.player.Player;
@@ -40,9 +51,11 @@ import net.fabricmc.api.Environment;
 
 import com.google.common.collect.Lists;
 
+import java.util.ArrayList;
 import java.util.List;
+import org.jetbrains.annotations.NotNull;
 
-public class EternalPedestal extends PedestalBlock implements BehaviourStone {
+public class EternalPedestal extends PedestalBlock implements BehaviourStone, BlockModelProvider {
     public static final BooleanProperty ACTIVATED = EndBlockProperties.ACTIVE;
 
     public EternalPedestal() {
@@ -53,8 +66,7 @@ public class EternalPedestal extends PedestalBlock implements BehaviourStone {
     @Override
     public void checkRitual(Level sourceLevel, Player player, BlockPos pos) {
         BlockEntity blockEntity = sourceLevel.getBlockEntity(pos);
-        if (blockEntity instanceof EternalPedestalEntity) {
-            EternalPedestalEntity pedestal = (EternalPedestalEntity) blockEntity;
+        if (blockEntity instanceof EternalPedestalEntity pedestal) {
             BlockState updatedState = sourceLevel.getBlockState(pos);
             if (pedestal.isEmpty()) {
                 if (pedestal.hasRitual()) {
@@ -95,7 +107,7 @@ public class EternalPedestal extends PedestalBlock implements BehaviourStone {
 
     @Override
     @Deprecated
-    public BlockState updateShape(
+    public @NotNull BlockState updateShape(
             BlockState state,
             Direction direction,
             BlockState newState,
@@ -128,7 +140,7 @@ public class EternalPedestal extends PedestalBlock implements BehaviourStone {
     }
 
     @Override
-    public List<ItemStack> getDrops(BlockState state, LootParams.Builder builder) {
+    public @NotNull List<ItemStack> getDrops(BlockState state, LootParams.@NotNull Builder builder) {
         if (state.is(this)) {
             EndBlockProperties.PedestalState currentState = state.getValue(EndBlockProperties.PEDESTAL_STATE);
             if (currentState.equals(EndBlockProperties.PedestalState.BOTTOM) || currentState.equals(EndBlockProperties.PedestalState.PILLAR)) {
@@ -137,8 +149,7 @@ public class EternalPedestal extends PedestalBlock implements BehaviourStone {
         }
         List<ItemStack> drop = Lists.newArrayList();
         BlockEntity blockEntity = builder.getOptionalParameter(LootContextParams.BLOCK_ENTITY);
-        if (blockEntity instanceof EternalPedestalEntity) {
-            EternalPedestalEntity pedestal = (EternalPedestalEntity) blockEntity;
+        if (blockEntity instanceof EternalPedestalEntity pedestal) {
             if (!pedestal.isEmpty()) {
                 drop.add(pedestal.getItem(0));
             }
@@ -242,8 +253,109 @@ public class EternalPedestal extends PedestalBlock implements BehaviourStone {
 
     @Override
     @Environment(EnvType.CLIENT)
-    public void animateTick(BlockState blockState, Level level, BlockPos blockPos, RandomSource randomSource) {
+    public void animateTick(
+            @NotNull BlockState blockState,
+            @NotNull Level level,
+            @NotNull BlockPos blockPos,
+            @NotNull RandomSource randomSource
+    ) {
         super.animateTick(blockState, level, blockPos, randomSource);
         dispatchParticles(level, blockPos, randomSource);
+    }
+
+    private static List<Variant> createVariants(
+            WoverBlockModelGenerators generator,
+            TextureMapping mapping,
+            ResourceLocation modelLocation,
+            ModelTemplate template,
+            ResourceLocation textureLocation,
+            int count
+    ) {
+        final List<Variant> variants = new ArrayList<>(count);
+
+        for (int i = 0; i < count; i++) {
+            ResourceLocation topTexture = textureLocation.withSuffix("_" + (i + 1));
+            mapping.put(TextureSlot.TOP, topTexture);
+
+            variants.add(Variant
+                    .variant()
+                    .with(VariantProperties.MODEL, template.create(modelLocation.withSuffix("_" + (i + 1)), mapping, generator.modelOutput())));
+        }
+        return variants;
+    }
+
+    @Override
+    public void provideBlockModels(WoverBlockModelGenerators generator) {
+        final ResourceLocation id = TextureMapping.getBlockTexture(this);
+        final ResourceLocation baseTexture = BetterEnd.C.mk("block/flavolite_polished");
+        final ResourceLocation pillarTexture = BetterEnd.C.mk("block/flavolite_pillar_side");
+        final TextureMapping mapping = new TextureMapping()
+                .put(EndModels.BASE, baseTexture)
+                .put(TextureSlot.BOTTOM, baseTexture)
+                .put(EndModels.PILLAR, pillarTexture);
+
+        final ResourceLocation column = EndModels.PEDESTAL_COLUMN.create(id.withSuffix("_column"), mapping, generator.modelOutput());
+        final ResourceLocation top = EndModels.PEDESTAL_COLUMN_TOP.create(id.withSuffix("_column_top"), mapping, generator.modelOutput());
+        final ResourceLocation bottom = EndModels.PEDESTAL_BOTTOM.create(id.withSuffix("_bottom"), mapping, generator.modelOutput());
+        final ResourceLocation pillar = EndModels.PEDESTAL_PILLAR.create(id.withSuffix("_pillar"), mapping, generator.modelOutput());
+
+        final var properties = PropertyDispatch
+                .properties(STATE, ACTIVATED)
+                .select(EndBlockProperties.PedestalState.DEFAULT, false, createVariants(
+                        generator, mapping,
+                        id.withSuffix("_default"),
+                        EndModels.PEDESTAL_DEFAULT,
+                        BetterEnd.C.mk("block/flavolite_runed"),
+                        7
+                ))
+                .select(EndBlockProperties.PedestalState.DEFAULT, true, createVariants(
+                        generator, mapping,
+                        id.withSuffix("_default_active"),
+                        EndModels.PEDESTAL_DEFAULT,
+                        BetterEnd.C.mk("block/flavolite_runed_active"),
+                        7
+                ))
+                .select(EndBlockProperties.PedestalState.PEDESTAL_TOP, false, createVariants(
+                        generator, mapping,
+                        id.withSuffix("_top"),
+                        EndModels.PEDESTAL_TOP,
+                        BetterEnd.C.mk("block/flavolite_runed"),
+                        7
+                ))
+                .select(EndBlockProperties.PedestalState.PEDESTAL_TOP, true, createVariants(
+                        generator, mapping,
+                        id.withSuffix("_top_active"),
+                        EndModels.PEDESTAL_TOP,
+                        BetterEnd.C.mk("block/flavolite_runed_active"),
+                        7
+                ))
+                .select(EndBlockProperties.PedestalState.COLUMN, true,
+                        Variant.variant().with(VariantProperties.MODEL, column)
+                )
+                .select(EndBlockProperties.PedestalState.COLUMN, false,
+                        Variant.variant().with(VariantProperties.MODEL, column)
+                )
+                .select(EndBlockProperties.PedestalState.COLUMN_TOP, true,
+                        Variant.variant().with(VariantProperties.MODEL, top)
+                )
+                .select(EndBlockProperties.PedestalState.COLUMN_TOP, false,
+                        Variant.variant().with(VariantProperties.MODEL, top)
+                )
+                .select(EndBlockProperties.PedestalState.BOTTOM, true,
+                        Variant.variant().with(VariantProperties.MODEL, bottom)
+                )
+                .select(EndBlockProperties.PedestalState.BOTTOM, false,
+                        Variant.variant().with(VariantProperties.MODEL, bottom)
+                )
+                .select(EndBlockProperties.PedestalState.PILLAR, true,
+                        Variant.variant().with(VariantProperties.MODEL, pillar)
+                )
+                .select(EndBlockProperties.PedestalState.PILLAR, false,
+                        Variant.variant().with(VariantProperties.MODEL, pillar)
+                );
+        ;
+
+        generator.acceptBlockState(MultiVariantGenerator.multiVariant(this).with(properties));
+        generator.delegateItemModel(this, id.withSuffix("_default_1"));
     }
 }
