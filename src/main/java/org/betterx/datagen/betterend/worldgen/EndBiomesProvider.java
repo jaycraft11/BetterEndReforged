@@ -61,10 +61,10 @@ public class EndBiomesProvider extends WoverBiomeProvider {
         putBiome(EndBiomes.CHORUS_FOREST, new ChorusForestBiome(), CommonBiomeTags.IS_END_HIGHLAND);
         putBiome(EndBiomes.DUST_WASTELANDS, new DustWastelandsBiome(), CommonBiomeTags.IS_END_MIDLAND);
         putBiome(EndBiomes.NEON_OASIS, new NeonOasisBiome(), CommonBiomeTags.IS_END_LAND);
-        putBiome(EndBiomes.PAINTED_MOUNTAINS, new PaintedMountainsBiome(), CommonBiomeTags.IS_END_HIGHLAND);
+        putBiome(EndBiomes.PAINTED_MOUNTAINS, new PaintedMountainsBiome(), CommonBiomeTags.IS_END_LAND);
         putBiome(EndBiomes.MEGALAKE, new MegalakeBiome(), CommonBiomeTags.IS_END_LAND);
         putBiome(EndBiomes.MEGALAKE_GROVE, new MegalakeGroveBiome(), CommonBiomeTags.IS_END_LAND);
-        putBiome(EndBiomes.CRYSTAL_MOUNTAINS, new CrystalMountainsBiome(), CommonBiomeTags.IS_END_HIGHLAND);
+        putBiome(EndBiomes.CRYSTAL_MOUNTAINS, new CrystalMountainsBiome(), CommonBiomeTags.IS_END_LAND);
         putBiome(EndBiomes.SHADOW_FOREST, new ShadowForestBiome(), CommonBiomeTags.IS_END_LAND);
         putBiome(EndBiomes.AMBER_LAND, new AmberLandBiome(), CommonBiomeTags.IS_END_LAND);
         putBiome(EndBiomes.BLOSSOMING_SPIRES, new BlossomingSpiresBiome(), CommonBiomeTags.IS_END_LAND);
