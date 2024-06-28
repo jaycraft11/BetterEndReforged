@@ -188,7 +188,7 @@ public class EndModelProvider extends WoverModelProvider {
                              .override(EndBlocks.HELIX_TREE_LEAVES, generator::delegateItemModel)
                              .override(EndBlocks.MENGER_SPONGE, generator::delegateItemModel)
                              .override(EndBlocks.MENGER_SPONGE_WET, generator::delegateItemModel)
-                             .override(EndBlocks.VIOLECITE.brickWall, b -> generator.createWallItem(b, BetterEnd.C.mk("block/violecite_bricks_wall_side")))
+                             .override(EndBlocks.VIOLECITE.brickWall, b -> generator.delegateItemModel(b, BetterEnd.C.mk("block/violecite_bricks_wall_post")))
                              .ignore(EndBlocks.SMARAGDANT_SUBBLOCKS.brick_wall)
         );
     }
