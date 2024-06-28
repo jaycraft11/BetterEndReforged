@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:block/template_anvil",
-  "textures": {
-    "top": "betterend:block/thallasium_anvil_top"
-  }
-}

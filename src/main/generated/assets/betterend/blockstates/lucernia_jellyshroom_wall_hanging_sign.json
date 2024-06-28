@@ -1,7 +1,7 @@
 {
   "variants": {
     "": {
-      "model": "minecraft:block/air_particles"
+      "model": "betterend:block/lucernia_planks_particles"
     }
   }
 }

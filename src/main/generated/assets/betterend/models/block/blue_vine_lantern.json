@@ -1,6 +1,6 @@
 {
-  "parent": "minecraft:block/cube_all",
+  "parent": "betterend:block/cube_noshade",
   "textures": {
-    "all": "betterend:block/blue_vine_lantern"
+    "texture": "betterend:block/blue_vine_lantern"
   }
 }
