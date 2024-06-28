@@ -49,9 +49,9 @@ import java.util.EnumSet;
 import org.jetbrains.annotations.Nullable;
 
 public class EndSlimeEntity extends Slime {
-    private static final EntityDataAccessor<Byte> VARIANT = SynchedEntityData.defineId(
+    private static final EntityDataAccessor<Integer> VARIANT = SynchedEntityData.defineId(
             EndSlimeEntity.class,
-            EntityDataSerializers.BYTE
+            EntityDataSerializers.INT
     );
 
     public EndSlimeEntity(EntityType<EndSlimeEntity> entityType, Level world) {
@@ -114,20 +114,20 @@ public class EndSlimeEntity extends Slime {
     @Override
     protected void defineSynchedData(SynchedEntityData.Builder builder) {
         super.defineSynchedData(builder);
-        this.entityData.set(VARIANT, (byte) 0);
+        builder.define(VARIANT, 0);
     }
 
     @Override
     public void addAdditionalSaveData(CompoundTag tag) {
         super.addAdditionalSaveData(tag);
-        tag.putByte("Variant", (byte) getSlimeType());
+        tag.putInt("Variant", getSlimeType());
     }
 
     @Override
     public void readAdditionalSaveData(CompoundTag tag) {
         super.readAdditionalSaveData(tag);
         if (tag.contains("Variant")) {
-            this.entityData.set(VARIANT, tag.getByte("Variant"));
+            this.entityData.set(VARIANT, tag.getInt("Variant"));
         }
     }
 
@@ -192,11 +192,11 @@ public class EndSlimeEntity extends Slime {
     }
 
     public int getSlimeType() {
-        return this.entityData.get(VARIANT).intValue();
+        return this.entityData.get(VARIANT);
     }
 
     public void setSlimeType(int value) {
-        this.entityData.set(VARIANT, (byte) value);
+        this.entityData.set(VARIANT, value);
     }
 
     protected void setMossy() {
@@ -216,7 +216,7 @@ public class EndSlimeEntity extends Slime {
     }
 
     protected void setAmber() {
-        this.entityData.set(VARIANT, (byte) 3);
+        setSlimeType(3);
     }
 
     public boolean isAmber() {

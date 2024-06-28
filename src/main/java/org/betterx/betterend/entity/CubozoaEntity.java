@@ -33,13 +33,13 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class CubozoaEntity extends AbstractSchoolingFish {
-    private static final EntityDataAccessor<Byte> VARIANT = SynchedEntityData.defineId(
+    private static final EntityDataAccessor<Integer> VARIANT = SynchedEntityData.defineId(
             CubozoaEntity.class,
-            EntityDataSerializers.BYTE
+            EntityDataSerializers.INT
     );
-    private static final EntityDataAccessor<Byte> SCALE = SynchedEntityData.defineId(
+    private static final EntityDataAccessor<Integer> SCALE = SynchedEntityData.defineId(
             CubozoaEntity.class,
-            EntityDataSerializers.BYTE
+            EntityDataSerializers.INT
     );
 
     public CubozoaEntity(EntityType<CubozoaEntity> entityType, Level world) {
@@ -58,7 +58,7 @@ public class CubozoaEntity extends AbstractSchoolingFish {
 
         Holder<Biome> biome = world.getBiome(blockPosition());
         if (biome.is(EndBiomes.SULPHUR_SPRINGS.key)) {
-            this.entityData.set(VARIANT, (byte) 1);
+            this.entityData.set(VARIANT, 1);
         }
 
         this.refreshDimensions();
@@ -68,25 +68,25 @@ public class CubozoaEntity extends AbstractSchoolingFish {
     @Override
     protected void defineSynchedData(SynchedEntityData.Builder builder) {
         super.defineSynchedData(builder);
-        this.entityData.set(VARIANT, (byte) 0);
-        this.entityData.set(SCALE, (byte) this.getRandom().nextInt(16));
+        builder.define(VARIANT, 0);
+        builder.define(SCALE, this.getRandom().nextInt(16));
     }
 
     @Override
     public void addAdditionalSaveData(CompoundTag tag) {
         super.addAdditionalSaveData(tag);
-        tag.putByte("Variant", (byte) getVariant());
-        tag.putByte("Scale", getByteScale());
+        tag.putInt("Variant", (byte) getVariant());
+        tag.putInt("Scale", this.entityData.get(SCALE));
     }
 
     @Override
     public void readAdditionalSaveData(CompoundTag tag) {
         super.readAdditionalSaveData(tag);
         if (tag.contains("Variant")) {
-            this.entityData.set(VARIANT, tag.getByte("Variant"));
+            this.entityData.set(VARIANT, tag.getInt("Variant"));
         }
         if (tag.contains("Scale")) {
-            this.entityData.set(SCALE, tag.getByte("Scale"));
+            this.entityData.set(SCALE, tag.getInt("Scale"));
         }
     }
 
@@ -94,8 +94,8 @@ public class CubozoaEntity extends AbstractSchoolingFish {
     public void saveToBucketTag(ItemStack itemStack) {
         super.saveToBucketTag(itemStack);
         CustomData.update(DataComponents.BUCKET_ENTITY_DATA, itemStack, (tag) -> {
-            tag.putByte("Variant", entityData.get(VARIANT));
-            tag.putByte("Scale", entityData.get(SCALE));
+            tag.putInt("Variant", entityData.get(VARIANT));
+            tag.putInt("Scale", entityData.get(SCALE));
         });
     }
 
@@ -121,12 +121,8 @@ public class CubozoaEntity extends AbstractSchoolingFish {
         return (int) this.entityData.get(VARIANT);
     }
 
-    public byte getByteScale() {
-        return this.entityData.get(SCALE);
-    }
-
     public float getScale() {
-        return getByteScale() / 32F + 0.75F;
+        return this.entityData.get(SCALE) / 32F + 0.75F;
     }
 
     protected float getStandingEyeHeight(Pose pose, EntityDimensions dimensions) {
