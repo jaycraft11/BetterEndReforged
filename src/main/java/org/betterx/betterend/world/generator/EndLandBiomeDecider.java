@@ -1,6 +1,7 @@
 package org.betterx.betterend.world.generator;
 
 
+import org.betterx.betterend.registry.EndTags;
 import org.betterx.wover.generator.api.biomesource.WoverBiomeSource;
 import org.betterx.wover.generator.api.biomesource.end.BiomeDecider;
 import org.betterx.wover.generator.api.biomesource.end.WoverEndConfig;
@@ -46,7 +47,7 @@ public class EndLandBiomeDecider extends BiomeDecider {
         if (TerrainGenerator.isLand(quarterX, quarterZ, maxHeight)) {
             return suggestedType.equals(CommonBiomeTags.IS_END_CENTER)
                     ? suggestedType
-                    : CommonBiomeTags.IS_END_MIDLAND;
+                    : EndTags.IS_END_HIGH_OR_MIDLAND;
         } else {
             return suggestedType.equals(CommonBiomeTags.IS_END_CENTER)
                     ? CommonBiomeTags.IS_END_BARRENS

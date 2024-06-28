@@ -7,6 +7,7 @@ import com.google.gson.JsonObject;
 public class LayerOptions {
     public final float distance;
     public final float scale;
+    private final float rawCoverage;
     public final float coverage;
     public final float averageHeight;
     public final float heightVariation;
@@ -26,7 +27,8 @@ public class LayerOptions {
         this.scale = scale;
         this.averageHeight = averageHeight;
         this.heightVariation = heightVariation;
-        this.coverage = 0.5f;
+        this.rawCoverage = 0.5f;
+        this.coverage = clampCoverage(0.5f);
         this.hasCentralIsland = hasCentral;
 
         this.minY = this.averageHeight - this.heightVariation;
@@ -41,7 +43,8 @@ public class LayerOptions {
         this.scale = clampScale(config.get("scale").getAsFloat());
         this.averageHeight = clampAverageHeight(config.get("average_height").getAsFloat());
         this.heightVariation = clampVariation(config.get("height_variation").getAsFloat());
-        this.coverage = clampCoverage(config.get("coverage").getAsFloat());
+        this.rawCoverage = config.get("coverage").getAsFloat();
+        this.coverage = clampCoverage(this.rawCoverage);
         this.hasCentralIsland = config.get("contains_central_island").getAsBoolean();
 
         this.minY = this.averageHeight - this.heightVariation;
@@ -76,7 +79,7 @@ public class LayerOptions {
         obj.addProperty("scale", clampScale(this.scale));
         obj.addProperty("average_height", clampAverageHeight(this.averageHeight));
         obj.addProperty("height_variation", clampVariation(this.heightVariation));
-        obj.addProperty("coverage", clampCoverage(this.coverage));
+        obj.addProperty("coverage", this.rawCoverage);
         obj.addProperty("contains_central_island", this.hasCentralIsland);
         return obj;
     }

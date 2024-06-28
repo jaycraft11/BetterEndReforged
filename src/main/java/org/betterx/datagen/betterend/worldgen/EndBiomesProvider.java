@@ -75,7 +75,9 @@ public class EndBiomesProvider extends WoverBiomeProvider {
         putBiome(EndBiomes.DRY_SHRUBLAND, new DryShrublandBiome(), CommonBiomeTags.IS_END_LAND);
         putBiome(EndBiomes.LANTERN_WOODS, new LanternWoodsBiome(), CommonBiomeTags.IS_END_LAND);
         putBiome(EndBiomes.UMBRA_VALLEY, new UmbraValleyBiome(), CommonBiomeTags.IS_END_LAND);
+
         putBiome(EndBiomes.ICE_STARFIELD, new BiomeIceStarfield(), CommonBiomeTags.IS_SMALL_END_ISLAND);
+
         putBiome(EndBiomes.EMPTY_END_CAVE, new EmptyEndCaveBiome(EndBiomes.EMPTY_END_CAVE), EndTags.IS_END_CAVE);
         putBiome(EndBiomes.EMPTY_SMARAGDANT_CAVE, new EmptySmaragdantCaveBiome(EndBiomes.EMPTY_SMARAGDANT_CAVE), EndTags.IS_END_CAVE);
         putBiome(EndBiomes.LUSH_SMARAGDANT_CAVE, new LushSmaragdantCaveBiome(EndBiomes.LUSH_SMARAGDANT_CAVE), EndTags.IS_END_CAVE);
