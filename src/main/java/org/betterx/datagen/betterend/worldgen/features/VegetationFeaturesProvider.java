@@ -12,10 +12,14 @@ import org.betterx.wover.datagen.api.provider.multi.WoverFeatureProvider;
 import org.betterx.wover.feature.api.placed.PlacedConfiguredFeatureKey;
 import org.betterx.wover.feature.api.placed.PlacedFeatureKey;
 
+import net.minecraft.core.HolderSet;
 import net.minecraft.data.worldgen.BootstrapContext;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
+import net.minecraft.world.level.levelgen.feature.configurations.MultifaceGrowthConfiguration;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 
 import org.jetbrains.annotations.NotNull;
@@ -154,6 +158,15 @@ public class VegetationFeaturesProvider extends WoverFeatureProvider {
         registerVegetation(context, EndVegetationFeatures.FLAMMALIX, EndFeatures.SINGLE_PLANT_FEATURE, new SinglePlantFeatureConfig(EndBlocks.FLAMMALIX, 3, false, 7), 5);
         registerVegetation(context, EndVegetationFeatures.LANCELEAF, EndFeatures.LANCELEAF_FEATURE, ScatterFeatureConfig.lanceleaf(), 2);
         registerVegetation(context, EndVegetationFeatures.GLOW_PILLAR, EndFeatures.GLOW_PILLAR_FEATURE, ScatterFeatureConfig.glowPillar(), 1);
+
+        EndVegetationFeatures.CRYSTAL_MOSS_COVER.inlineConfiguration(context)
+                                                .withFeature(Feature.MULTIFACE_GROWTH)
+                                                .configuration(new MultifaceGrowthConfiguration(EndBlocks.CRYSTAL_MOSS_COVER, 20, true, true, true, 1.0f, HolderSet.direct(Block::builtInRegistryHolder, EndBlocks.CRYSTAL_MOSS, Blocks.END_STONE)))
+                                                .inlinePlace()
+                                                .countRange(16, 256)
+                                                .onEveryLayer(2)
+                                                .onlyInBiome()
+                                                .register();
     }
 
     private static <F extends Feature<FC>, FC extends FeatureConfiguration> void registerVegetation(

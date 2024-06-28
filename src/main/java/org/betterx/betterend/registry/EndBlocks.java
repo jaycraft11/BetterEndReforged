@@ -15,6 +15,7 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.MultifaceBlock;
 import net.minecraft.world.level.material.MapColor;
 
 import java.util.List;
@@ -486,7 +487,7 @@ public class EndBlocks {
     public static final Block FLAMMALIX = registerBlock("flammalix", new FlammalixBlock());
 
 
-    public static final Block CRYSTAL_MOSS_COVER = registerBlock(
+    public static final MultifaceBlock CRYSTAL_MOSS_COVER = registerBlock(
             "crystal_moss_cover",
             new CrystalMossCoverBlock(MapColor.COLOR_PINK)
     );
@@ -766,7 +767,7 @@ public class EndBlocks {
     }
 
     @SafeVarargs
-    public static Block registerBlock(String name, Block block, TagKey<Block>... tags) {
+    public static <T extends Block> T registerBlock(String name, T block, TagKey<Block>... tags) {
         return getBlockRegistry().register(name, block, tags);
     }
 

@@ -1,7 +1,6 @@
 package org.betterx.betterend.world.structures.piece;
 
 import org.betterx.bclib.util.MHelper;
-import org.betterx.betterend.blocks.CrystalMossCoverBlock;
 import org.betterx.betterend.registry.EndBlocks;
 import org.betterx.betterend.registry.EndStructures;
 import org.betterx.betterend.util.GlobalState;
@@ -10,7 +9,6 @@ import org.betterx.wover.tag.api.predefined.CommonBlockTags;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.Mth;
@@ -57,11 +55,60 @@ public class CrystalMountainPiece extends MountainPiece {
             ChunkPos chunkPos,
             BlockPos blockPos
     ) {
-        int sx = chunkPos.getMinBlockX();
-        int sz = chunkPos.getMinBlockZ();
         final MutableBlockPos pos = GlobalState.stateForThread().POS;
         ChunkAccess chunk = world.getChunk(chunkPos.x, chunkPos.z);
         Heightmap map = chunk.getOrCreateHeightmapUnprimed(Types.WORLD_SURFACE);
+
+        placeMountain(world, chunkPos, chunk, pos);
+
+        // Big crystals
+        int count = (map.getFirstAvailable(8, 8) - (center.getY() + 24)) / 7;
+        count = Mth.clamp(count, 0, 8);
+        for (int i = 0; i < count; i++) {
+            int radius = MHelper.randRange(2, 3, random);
+            float fill = MHelper.randRange(0F, 1F, random);
+            int x = MHelper.randRange(radius, 15 - radius, random);
+            int z = MHelper.randRange(radius, 15 - radius, random);
+            int y = map.getFirstAvailable(x, z);
+            if (y > 60) {
+                pos.set(x, y, z);
+                if (chunk.getBlockState(pos.below()).is(Blocks.END_STONE)) {
+                    int height = MHelper.floor(radius * MHelper.randRange(1.5F, 3F, random) + (y - 80) * 0.3F);
+                    crystal(chunk, pos, radius, height, fill, random);
+                }
+            }
+        }
+
+        // Small crystals
+        count = (map.getFirstAvailable(8, 8) - (center.getY() + 24)) / 2;
+        count = Mth.clamp(count, 4, 8);
+        for (int i = 0; i < count; i++) {
+            int radius = MHelper.randRange(1, 2, random);
+            float fill = random.nextBoolean() ? 0 : 1;
+            int x = MHelper.randRange(radius, 15 - radius, random);
+            int z = MHelper.randRange(radius, 15 - radius, random);
+            int y = map.getFirstAvailable(x, z);
+            if (y > 20) {
+                pos.set(x, y, z);
+                if (chunk.getBlockState(pos.below()).getBlock() == Blocks.END_STONE) {
+                    int height = MHelper.floor(radius * MHelper.randRange(1.5F, 3F, random) + (y - 80) * 0.3F);
+                    crystal(chunk, pos, radius, height, fill, random);
+                }
+            }
+        }
+
+
+    }
+
+    private void placeMountain(
+            WorldGenLevel world,
+            ChunkPos chunkPos,
+            ChunkAccess chunk,
+            MutableBlockPos pos
+    ) {
+        Heightmap map = chunk.getOrCreateHeightmapUnprimed(Types.WORLD_SURFACE);
+        int sx = chunkPos.getMinBlockX();
+        int sz = chunkPos.getMinBlockZ();
         Heightmap map2 = chunk.getOrCreateHeightmapUnprimed(Types.WORLD_SURFACE_WG);
         for (int x = 0; x < 16; x++) {
             int px = x + sx;
@@ -99,8 +146,9 @@ public class CrystalMountainPiece extends MountainPiece {
                             int cover = maxYI - 1;
 
                             final double noise = SplitNoiseCondition.DEFAULT.getNoise(px, pz);
-                            boolean needCover = noise > 0;
-                            boolean needSurroundCover = Math.abs(noise) < 0.2;
+                            boolean needCover = noise > -0.2;
+//                            boolean needSurroundCover = Math.abs(noise) < 0.2;
+//                            BlockPos mossPos;
                             for (int y = minY - 1; y < maxYI; y++) {
                                 pos.setY(y);
                                 if (needCover && y == cover) {
@@ -108,64 +156,28 @@ public class CrystalMountainPiece extends MountainPiece {
                                 } else {
                                     chunk.setBlockState(pos, Blocks.END_STONE.defaultBlockState(), false);
                                 }
-                                if (needSurroundCover && chunk.getBlockState(pos.above()).is(Blocks.AIR)) {
-                                    BlockState coverState = EndBlocks.CRYSTAL_MOSS_COVER
-                                            .defaultBlockState();
-                                    BlockPos above = pos.above();
-                                    boolean didChange = false;
-                                    for (Direction dir : Direction.values()) {
-                                        if (chunk.getBlockState(above.relative(dir)).is(CommonBlockTags.END_STONES)) {
-                                            coverState = coverState.setValue(
-                                                    CrystalMossCoverBlock.getFaceProperty(dir),
-                                                    true
-                                            );
-                                            didChange = true;
-                                        }
-                                    }
-                                    if (didChange) chunk.setBlockState(above, coverState, false);
-
-                                }
+//                                mossPos = pos.above();
+//                                if (needSurroundCover && chunk.getBlockState(mossPos).is(Blocks.AIR)) {
+//                                    BlockState coverState = EndBlocks.CRYSTAL_MOSS_COVER
+//                                            .defaultBlockState();
+//
+//                                    boolean didChange = false;
+//                                    for (Direction dir : Direction.values()) {
+//                                        if (!chunk.getBlockState(mossPos.relative(dir)).is(CommonBlockTags.END_STONES))
+//                                            continue;
+//
+//                                        coverState = coverState.setValue(
+//                                                CrystalMossCoverBlock.getFaceProperty(dir),
+//                                                true
+//                                        );
+//                                        didChange = true;
+//                                    }
+//                                    if (didChange) chunk.setBlockState(mossPos, coverState, false);
+//
+//                                }
                             }
                         }
                     }
-                }
-            }
-        }
-
-        map = chunk.getOrCreateHeightmapUnprimed(Types.WORLD_SURFACE);
-
-        // Big crystals
-        int count = (map.getFirstAvailable(8, 8) - (center.getY() + 24)) / 7;
-        count = Mth.clamp(count, 0, 8);
-        for (int i = 0; i < count; i++) {
-            int radius = MHelper.randRange(2, 3, random);
-            float fill = MHelper.randRange(0F, 1F, random);
-            int x = MHelper.randRange(radius, 15 - radius, random);
-            int z = MHelper.randRange(radius, 15 - radius, random);
-            int y = map.getFirstAvailable(x, z);
-            if (y > 60) {
-                pos.set(x, y, z);
-                if (chunk.getBlockState(pos.below()).is(Blocks.END_STONE)) {
-                    int height = MHelper.floor(radius * MHelper.randRange(1.5F, 3F, random) + (y - 80) * 0.3F);
-                    crystal(chunk, pos, radius, height, fill, random);
-                }
-            }
-        }
-
-        // Small crystals
-        count = (map.getFirstAvailable(8, 8) - (center.getY() + 24)) / 2;
-        count = Mth.clamp(count, 4, 8);
-        for (int i = 0; i < count; i++) {
-            int radius = MHelper.randRange(1, 2, random);
-            float fill = random.nextBoolean() ? 0 : 1;
-            int x = MHelper.randRange(radius, 15 - radius, random);
-            int z = MHelper.randRange(radius, 15 - radius, random);
-            int y = map.getFirstAvailable(x, z);
-            if (y > 20) {
-                pos.set(x, y, z);
-                if (chunk.getBlockState(pos.below()).getBlock() == Blocks.END_STONE) {
-                    int height = MHelper.floor(radius * MHelper.randRange(1.5F, 3F, random) + (y - 80) * 0.3F);
-                    crystal(chunk, pos, radius, height, fill, random);
                 }
             }
         }

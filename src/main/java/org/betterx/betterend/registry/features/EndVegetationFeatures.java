@@ -86,6 +86,7 @@ public class EndVegetationFeatures {
     public static final PlacedFeatureKey CREEPING_MOSS = createVegetationKey("creeping_moss");
     public static final PlacedFeatureKey CHORUS_GRASS = createVegetationKey("chorus_grass");
     public static final PlacedFeatureKey CRYSTAL_GRASS = createVegetationKey("crystal_grass");
+    public static final PlacedFeatureKey CRYSTAL_MOSS_COVER = createVegetationKey("crystal_moss_cover");
     public static final PlacedFeatureKey SHADOW_PLANT = createVegetationKey("shadow_plant");
     public static final PlacedFeatureKey MURKWEED = createVegetationKey("murkweed");
     public static final PlacedFeatureKey NEEDLEGRASS = createVegetationKey("needlegrass");
