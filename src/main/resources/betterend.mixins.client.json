@@ -7,11 +7,11 @@
     "AbstractSoundInstanceAccessor",
     "ArmorStandRendererMixin",
     "BiomeColorsMixin",
+    "BlockStateModelLoaderMixin",
     "CapeLayerMixin",
     "HumanoidMobRendererMixin",
     "ItemStackMixin",
     "MinecraftClientMixin",
-    "ModelLoaderMixin",
     "MusicTrackerMixin",
     "PlayerRendererMixin"
   ],
