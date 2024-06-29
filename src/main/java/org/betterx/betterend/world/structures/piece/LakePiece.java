@@ -73,7 +73,7 @@ public class LakePiece extends BasePiece {
         tag.putFloat("radius", radius);
         tag.putFloat("depth", depth);
         tag.putInt("seed", seed);
-        tag.putString("biome", biomeID.toString());
+        tag.putString("biome", biomeID.location().toString());
     }
 
     @Override
