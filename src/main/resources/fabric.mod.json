@@ -34,7 +34,7 @@
     "rei_client_off": [
       "org.betterx.betterend.integration.rei.REIPlugin"
     ],
-    "emi_off": [
+    "emi": [
       "org.betterx.betterend.integration.emi.EMIPlugin"
     ]
   },
