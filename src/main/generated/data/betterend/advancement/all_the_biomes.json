@@ -417,76 +417,76 @@
   },
   "requirements": [
     [
-      "betterend:glowing_grasslands"
-    ],
-    [
-      "betterend:chorus_forest"
-    ],
-    [
-      "betterend:jade_cave"
-    ],
-    [
-      "betterend:neon_oasis"
-    ],
-    [
-      "betterend:blossoming_spires"
-    ],
-    [
-      "betterend:umbrella_jungle"
-    ],
-    [
-      "betterend:dust_wastelands"
-    ],
-    [
-      "betterend:crystal_mountains"
-    ],
-    [
-      "betterend:megalake"
-    ],
-    [
-      "betterend:empty_smaragdant_cave"
-    ],
-    [
-      "betterend:shadow_forest"
-    ],
-    [
-      "betterend:megalake_grove"
-    ],
-    [
-      "betterend:painted_mountains"
-    ],
-    [
-      "betterend:lantern_woods"
-    ],
-    [
-      "betterend:ice_starfield"
-    ],
-    [
-      "betterend:dragon_graveyards"
-    ],
-    [
-      "betterend:sulphur_springs"
-    ],
-    [
-      "betterend:lush_smaragdant_cave"
+      "betterend:umbra_valley"
     ],
     [
       "betterend:lush_aurora_cave"
     ],
     [
-      "betterend:umbra_valley"
+      "betterend:ice_starfield"
     ],
     [
-      "betterend:foggy_mushroomland"
+      "betterend:neon_oasis"
     ],
     [
-      "betterend:amber_land"
+      "betterend:jade_cave"
+    ],
+    [
+      "betterend:dry_shrubland"
     ],
     [
       "betterend:empty_aurora_cave"
     ],
     [
-      "betterend:dry_shrubland"
+      "betterend:sulphur_springs"
+    ],
+    [
+      "betterend:lantern_woods"
+    ],
+    [
+      "betterend:dragon_graveyards"
+    ],
+    [
+      "betterend:glowing_grasslands"
+    ],
+    [
+      "betterend:blossoming_spires"
+    ],
+    [
+      "betterend:shadow_forest"
+    ],
+    [
+      "betterend:amber_land"
+    ],
+    [
+      "betterend:painted_mountains"
+    ],
+    [
+      "betterend:megalake"
+    ],
+    [
+      "betterend:crystal_mountains"
+    ],
+    [
+      "betterend:megalake_grove"
+    ],
+    [
+      "betterend:empty_smaragdant_cave"
+    ],
+    [
+      "betterend:lush_smaragdant_cave"
+    ],
+    [
+      "betterend:chorus_forest"
+    ],
+    [
+      "betterend:umbrella_jungle"
+    ],
+    [
+      "betterend:foggy_mushroomland"
+    ],
+    [
+      "betterend:dust_wastelands"
     ],
     [
       "betterend:empty_end_cave"
