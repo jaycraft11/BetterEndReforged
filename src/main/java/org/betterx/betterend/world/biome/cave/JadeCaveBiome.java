@@ -8,6 +8,7 @@ import org.betterx.betterend.world.biome.EndBiome;
 import org.betterx.betterend.world.biome.EndBiomeBuilder;
 import org.betterx.betterend.world.biome.EndBiomeKey;
 import org.betterx.wover.biome.api.BiomeKey;
+import org.betterx.wover.biome.api.data.BiomeGenerationDataContainer;
 
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
@@ -15,11 +16,9 @@ import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.KeyDispatchDataCodec;
 import net.minecraft.util.Mth;
-import net.minecraft.world.level.biome.Climate;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 
-import java.util.List;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -40,7 +39,7 @@ public class JadeCaveBiome extends EndCaveBiome.Config<JadeCaveBiome> {
         protected Biome(
                 float fogDensity,
                 @NotNull ResourceKey<net.minecraft.world.level.biome.Biome> biome,
-                @NotNull List<Climate.ParameterPoint> parameterPoints,
+                @NotNull BiomeGenerationDataContainer generatorData,
                 float terrainHeight,
                 float genChance,
                 int edgeSize,
@@ -53,7 +52,7 @@ public class JadeCaveBiome extends EndCaveBiome.Config<JadeCaveBiome> {
                 WeightedList<Holder<ConfiguredFeature<?, ?>>> ceilFeatures
         ) {
             super(
-                    fogDensity, biome, parameterPoints, terrainHeight,
+                    fogDensity, biome, generatorData, terrainHeight,
                     genChance, edgeSize, vertical,
                     edge, parent,
                     hasCaves, surface, floorFeatures, ceilFeatures
@@ -95,7 +94,7 @@ public class JadeCaveBiome extends EndCaveBiome.Config<JadeCaveBiome> {
     public @NotNull EndBiome instantiateBiome(
             float fogDensity,
             BiomeKey<?> key,
-            List<Climate.ParameterPoint> parameters,
+            @NotNull BiomeGenerationDataContainer generatorData,
             float terrainHeight,
             float genChance,
             int edgeSize,
@@ -106,7 +105,7 @@ public class JadeCaveBiome extends EndCaveBiome.Config<JadeCaveBiome> {
             SurfaceMaterialProvider surface
     ) {
         return new JadeCaveBiome.Biome(
-                fogDensity, key.key, parameters,
+                fogDensity, key.key, generatorData,
                 terrainHeight, genChance, edgeSize, vertical, edge, parent,
                 hasCave, surface, new WeightedList<>(), new WeightedList<>()
         );

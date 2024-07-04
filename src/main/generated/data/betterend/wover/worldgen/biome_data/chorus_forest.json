@@ -2,6 +2,9 @@
   "type": "betterend:biome",
   "biome": "betterend:chorus_forest",
   "fogDensity": 1.5,
+  "generation_data": {
+    "intended_placement": "c:is_end_highland"
+  },
   "has_caves": true,
   "surface": {
     "alt": {

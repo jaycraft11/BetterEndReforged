@@ -9,6 +9,7 @@ import org.betterx.betterend.world.biome.EndBiomeBuilder;
 import org.betterx.betterend.world.biome.EndBiomeKey;
 import org.betterx.betterend.world.features.terrain.caves.CaveChunkPopulatorFeatureConfig;
 import org.betterx.wover.biome.api.BiomeKey;
+import org.betterx.wover.biome.api.data.BiomeGenerationDataContainer;
 import org.betterx.wover.feature.api.placed.PlacedFeatureKey;
 import org.betterx.wover.feature.api.placed.PlacedFeatureManager;
 import org.betterx.wover.generator.api.biomesource.WoverBiomeData;
@@ -22,12 +23,10 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.KeyDispatchDataCodec;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.biome.Biome;
-import net.minecraft.world.level.biome.Climate;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 
-import java.util.List;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -35,7 +34,7 @@ public class EndCaveBiome extends EndBiome {
     public static final MapCodec<EndCaveBiome> CODEC = simpleCaveBiomeCodec(EndCaveBiome::new);
 
 
-    public static <T extends EndCaveBiome> MapCodec<T> simpleCaveBiomeCodec(final Function13<Float, ResourceKey<Biome>, List<Climate.ParameterPoint>, Float, Float, Integer, Boolean, ResourceKey<Biome>, ResourceKey<Biome>, Boolean, SurfaceMaterialProvider, WeightedList<Holder<ConfiguredFeature<?, ?>>>, WeightedList<Holder<ConfiguredFeature<?, ?>>>, T> factory) {
+    public static <T extends EndCaveBiome> MapCodec<T> simpleCaveBiomeCodec(final Function13<Float, ResourceKey<Biome>, BiomeGenerationDataContainer, Float, Float, Integer, Boolean, ResourceKey<Biome>, ResourceKey<Biome>, Boolean, SurfaceMaterialProvider, WeightedList<Holder<ConfiguredFeature<?, ?>>>, WeightedList<Holder<ConfiguredFeature<?, ?>>>, T> factory) {
         return codec(
                 Codec.BOOL.fieldOf("has_caves").orElse(true).forGetter(EndBiome::hasCaves),
                 SurfaceMaterialProvider.CODEC.fieldOf("surface")
@@ -62,7 +61,7 @@ public class EndCaveBiome extends EndBiome {
     protected EndCaveBiome(
             float fogDensity,
             @NotNull ResourceKey<Biome> biome,
-            @NotNull List<Climate.ParameterPoint> parameterPoints,
+            @NotNull BiomeGenerationDataContainer generatorData,
             float terrainHeight,
             float genChance,
             int edgeSize,
@@ -75,7 +74,7 @@ public class EndCaveBiome extends EndBiome {
             WeightedList<Holder<ConfiguredFeature<?, ?>>> ceilFeatures
     ) {
         super(
-                fogDensity, biome, parameterPoints, terrainHeight,
+                fogDensity, biome, generatorData, terrainHeight,
                 genChance, edgeSize, vertical,
                 edge, parent,
                 hasCaves,
@@ -121,7 +120,7 @@ public class EndCaveBiome extends EndBiome {
         public @NotNull EndBiome instantiateBiome(
                 float fogDensity,
                 BiomeKey<?> key,
-                List<Climate.ParameterPoint> parameters,
+                @NotNull BiomeGenerationDataContainer generatorData,
                 float terrainHeight,
                 float genChance,
                 int edgeSize,
@@ -132,7 +131,7 @@ public class EndCaveBiome extends EndBiome {
                 SurfaceMaterialProvider surface
         ) {
             return new EndCaveBiome(
-                    fogDensity, key.key, parameters,
+                    fogDensity, key.key, generatorData,
                     terrainHeight, genChance, edgeSize, vertical, edge, parent,
                     hasCave, surface, new WeightedList<>(), new WeightedList<>()
             );

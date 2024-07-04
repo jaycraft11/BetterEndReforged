@@ -8,16 +8,15 @@ import org.betterx.betterend.world.biome.EndBiomeBuilder;
 import org.betterx.betterend.world.biome.EndBiomeKey;
 import org.betterx.wover.biome.api.BiomeKey;
 import org.betterx.wover.biome.api.data.BiomeData;
+import org.betterx.wover.biome.api.data.BiomeGenerationDataContainer;
 
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.Holder;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.KeyDispatchDataCodec;
-import net.minecraft.world.level.biome.Climate;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 
-import java.util.List;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -40,7 +39,7 @@ public class EmptyEndCaveBiome extends EndCaveBiome.Config<EmptyEndCaveBiome> {
         protected Biome(
                 float fogDensity,
                 @NotNull ResourceKey<net.minecraft.world.level.biome.Biome> biome,
-                @NotNull List<Climate.ParameterPoint> parameterPoints,
+                @NotNull BiomeGenerationDataContainer generatorData,
                 float terrainHeight,
                 float genChance,
                 int edgeSize,
@@ -53,7 +52,7 @@ public class EmptyEndCaveBiome extends EndCaveBiome.Config<EmptyEndCaveBiome> {
                 WeightedList<Holder<ConfiguredFeature<?, ?>>> ceilFeatures
         ) {
             super(
-                    fogDensity, biome, parameterPoints, terrainHeight,
+                    fogDensity, biome, generatorData, terrainHeight,
                     genChance, edgeSize, vertical,
                     edge, parent,
                     hasCaves, surface, floorFeatures, ceilFeatures
@@ -85,7 +84,7 @@ public class EmptyEndCaveBiome extends EndCaveBiome.Config<EmptyEndCaveBiome> {
     public @NotNull EndBiome instantiateBiome(
             float fogDensity,
             BiomeKey<?> key,
-            List<Climate.ParameterPoint> parameters,
+            @NotNull BiomeGenerationDataContainer generatorData,
             float terrainHeight,
             float genChance,
             int edgeSize,
@@ -95,6 +94,6 @@ public class EmptyEndCaveBiome extends EndCaveBiome.Config<EmptyEndCaveBiome> {
             boolean hasCave,
             SurfaceMaterialProvider surface
     ) {
-        return new EmptyEndCaveBiome.Biome(fogDensity, key.key, parameters, terrainHeight, genChance, edgeSize, vertical, edge, parent, hasCave, surface, new WeightedList<>(), new WeightedList<>());
+        return new EmptyEndCaveBiome.Biome(fogDensity, key.key, generatorData, terrainHeight, genChance, edgeSize, vertical, edge, parent, hasCave, surface, new WeightedList<>(), new WeightedList<>());
     }
 }

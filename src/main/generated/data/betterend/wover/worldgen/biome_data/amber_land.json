@@ -2,6 +2,9 @@
   "type": "betterend:biome",
   "biome": "betterend:amber_land",
   "fogDensity": 2.0,
+  "generation_data": {
+    "intended_placement": "c:is_end_land"
+  },
   "has_caves": true,
   "surface": {
     "alt": {

@@ -8,6 +8,7 @@ import org.betterx.wover.biome.api.BiomeKey;
 import org.betterx.wover.biome.api.builder.BiomeBootstrapContext;
 import org.betterx.wover.biome.api.builder.BiomeBuilder;
 import org.betterx.wover.biome.api.data.BiomeData;
+import org.betterx.wover.biome.api.data.BiomeGenerationDataContainer;
 import org.betterx.wover.generator.api.biomesource.WoverBiomeBuilder;
 
 import net.minecraft.data.worldgen.BootstrapContext;
@@ -16,10 +17,8 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.biome.Biome;
-import net.minecraft.world.level.biome.Climate;
 import net.minecraft.world.level.levelgen.GenerationStep;
 
-import java.util.List;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -45,6 +44,7 @@ public class EndBiomeBuilder extends WoverBiomeBuilder.AbstractWoverBiomeBuilder
                 .temperature(BiomeBuilder.DEFAULT_END_TEMPERATURE)
                 .downfall(BiomeBuilder.DEFAULT_END_WETNESS)
                 .hasPrecipitation(false)
+                .intendedPlacement(biomeTag.length > 0 ? biomeTag[0] : null)
                 .tag(biomeTag);
     }
 
@@ -89,7 +89,7 @@ public class EndBiomeBuilder extends WoverBiomeBuilder.AbstractWoverBiomeBuilder
 
     @Override
     public void registerBiomeData(BootstrapContext<BiomeData> dataContext) {
-        final EndBiome biome = biomeFactory.instantiateBiome(fogDensity, key, parameters, terrainHeight, genChance, edgeSize, vertical, edge, parent, hasCave, surface);
+        final EndBiome biome = biomeFactory.instantiateBiome(fogDensity, key, new BiomeGenerationDataContainer(parameters, intendedPlacement), terrainHeight, genChance, edgeSize, vertical, edge, parent, hasCave, surface);
         biome.datagenSetup(dataContext);
         dataContext.register(key.dataKey, biome);
     }
@@ -100,7 +100,7 @@ public class EndBiomeBuilder extends WoverBiomeBuilder.AbstractWoverBiomeBuilder
         EndBiome instantiateBiome(
                 float fogDensity,
                 BiomeKey<?> key,
-                List<Climate.ParameterPoint> parameters,
+                @NotNull BiomeGenerationDataContainer generatorData,
                 float terrainHeight,
                 float genChance,
                 int edgeSize,
