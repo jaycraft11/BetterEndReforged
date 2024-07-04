@@ -3,7 +3,6 @@ package org.betterx.betterend.commands;
 import org.betterx.bclib.api.v2.poi.BCLPoiType;
 import org.betterx.bclib.util.BlocksHelper;
 import org.betterx.betterend.registry.EndPoiTypes;
-import org.betterx.worlds.together.world.event.WorldBootstrap;
 import org.betterx.wover.state.api.WorldState;
 
 import com.mojang.brigadier.Command;
@@ -189,12 +188,12 @@ public class CommandRegistry {
                 }
             };
             ResourceKey<Biome> a = biome.unwrapKey().orElseThrow();
-            if (WorldBootstrap.getLastRegistryAccess() != null) {
+            if (WorldState.allStageRegistryAccess() != null) {
                 Stopwatch stopwatch = Stopwatch.createStarted(Util.TICKER);
-                Holder<Biome> h = WorldBootstrap.getLastRegistryAccess()
-                                                .registryOrThrow(Registries.BIOME)
-                                                .getHolder(a)
-                                                .orElseThrow();
+                Holder<Biome> h = WorldState.allStageRegistryAccess()
+                                            .registryOrThrow(Registries.BIOME)
+                                            .getHolder(a)
+                                            .orElseThrow();
                 stopwatch.stop();
                 return LocateCommand.showLocateResult(
                         source,

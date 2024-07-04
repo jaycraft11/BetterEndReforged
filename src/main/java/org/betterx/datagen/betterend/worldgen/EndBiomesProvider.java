@@ -14,7 +14,6 @@ import org.betterx.betterend.world.biome.land.*;
 import org.betterx.betterend.world.features.BuildingListFeature;
 import org.betterx.betterend.world.features.BuildingListFeatureConfig;
 import org.betterx.betterend.world.features.NBTFeature;
-import org.betterx.worlds.together.world.event.WorldBootstrap;
 import org.betterx.wover.biome.api.builder.BiomeBootstrapContext;
 import org.betterx.wover.core.api.ModCore;
 import org.betterx.wover.datagen.api.provider.multi.WoverBiomeProvider;
@@ -23,6 +22,7 @@ import org.betterx.wover.feature.api.configured.ConfiguredFeatureManager;
 import org.betterx.wover.feature.api.configured.configurators.WithConfiguration;
 import org.betterx.wover.feature.api.placed.PlacedConfiguredFeatureKey;
 import org.betterx.wover.feature.api.placed.PlacedFeatureManager;
+import org.betterx.wover.state.api.WorldState;
 import org.betterx.wover.tag.api.predefined.CommonBiomeTags;
 
 import net.minecraft.core.Registry;
@@ -132,10 +132,9 @@ public class EndBiomesProvider extends WoverBiomeProvider {
     ) {
         ResourceLocation id = ResourceLocation.fromNamespaceAndPath(ns, nm + "_structures");
 
-        if (WorldBootstrap.getLastRegistryAccess() != null) {
-            Registry<PlacedFeature> features = WorldBootstrap
-                    .getLastRegistryAccess()
-                    .registryOrThrow(Registries.PLACED_FEATURE);
+        if (WorldState.allStageRegistryAccess() != null) {
+            Registry<PlacedFeature> features = WorldState.allStageRegistryAccess()
+                                                         .registryOrThrow(Registries.PLACED_FEATURE);
             if (features.containsKey(id)) {
                 BCLib.LOGGER.info("Feature for " + id + " was already build");
             }

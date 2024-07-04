@@ -11,7 +11,6 @@ import org.betterx.betterend.world.features.terrain.caves.CaveChunkPopulatorFeat
 import org.betterx.betterend.world.features.terrain.caves.RoundCaveFeature;
 import org.betterx.betterend.world.features.terrain.caves.TunelCaveFeature;
 import org.betterx.betterend.world.features.trees.*;
-import org.betterx.worlds.together.world.event.WorldBootstrap;
 import org.betterx.wover.feature.api.FeatureManager;
 import org.betterx.wover.state.api.WorldState;
 
@@ -98,7 +97,7 @@ public class EndFeatures {
 
         final Registry<Feature<?>> features;
         if (WorldState.registryAccess() != null) {
-            features = WorldBootstrap.getLastRegistryAccess().registryOrThrow(Registries.FEATURE);
+            features = WorldState.allStageRegistryAccess().registryOrThrow(Registries.FEATURE);
         } else {
             features = BuiltInRegistries.FEATURE;
         }
