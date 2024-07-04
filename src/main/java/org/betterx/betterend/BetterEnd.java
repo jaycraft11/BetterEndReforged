@@ -16,10 +16,10 @@ import org.betterx.betterend.util.BonemealPlants;
 import org.betterx.betterend.util.LootTableUtil;
 import org.betterx.betterend.world.generator.EndLandBiomeDecider;
 import org.betterx.betterend.world.generator.GeneratorOptions;
-import org.betterx.worlds.together.world.WorldConfig;
 import org.betterx.wover.core.api.Logger;
 import org.betterx.wover.core.api.ModCore;
 import org.betterx.wover.generator.api.biomesource.end.BiomeDecider;
+import org.betterx.wover.state.api.WorldConfig;
 
 import net.minecraft.resources.ResourceLocation;
 
@@ -44,7 +44,7 @@ public class BetterEnd implements ModInitializer {
 
     @Override
     public void onInitialize() {
-        WorldConfig.registerModCache(MOD_ID);
+        WorldConfig.registerMod(C);
 
         EndNumericProviders.register();
         EndPortals.loadPortals();
