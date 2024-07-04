@@ -13,9 +13,11 @@ import org.betterx.wover.tag.api.predefined.CommonBlockTags;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.block.Block;
 
+import java.util.Set;
+
 public class BlockTagProvider extends WoverTagProvider.ForBlocks {
     public BlockTagProvider(ModCore modCore) {
-        super(modCore);
+        super(modCore, Set.of(EndTags.INCORRECT_FOR_AETERNIUM_TOOL));
     }
 
 
