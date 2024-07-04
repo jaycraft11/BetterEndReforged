@@ -417,19 +417,25 @@
   },
   "requirements": [
     [
+      "betterend:chorus_forest"
+    ],
+    [
+      "betterend:empty_smaragdant_cave"
+    ],
+    [
+      "betterend:dragon_graveyards"
+    ],
+    [
+      "betterend:dust_wastelands"
+    ],
+    [
+      "betterend:shadow_forest"
+    ],
+    [
       "betterend:umbra_valley"
     ],
     [
-      "betterend:lush_aurora_cave"
-    ],
-    [
-      "betterend:ice_starfield"
-    ],
-    [
-      "betterend:neon_oasis"
-    ],
-    [
-      "betterend:jade_cave"
+      "betterend:amber_land"
     ],
     [
       "betterend:dry_shrubland"
@@ -441,55 +447,49 @@
       "betterend:sulphur_springs"
     ],
     [
-      "betterend:lantern_woods"
-    ],
-    [
-      "betterend:dragon_graveyards"
-    ],
-    [
       "betterend:glowing_grasslands"
     ],
     [
-      "betterend:blossoming_spires"
-    ],
-    [
-      "betterend:shadow_forest"
-    ],
-    [
-      "betterend:amber_land"
-    ],
-    [
-      "betterend:painted_mountains"
-    ],
-    [
-      "betterend:megalake"
-    ],
-    [
-      "betterend:crystal_mountains"
-    ],
-    [
-      "betterend:megalake_grove"
-    ],
-    [
-      "betterend:empty_smaragdant_cave"
-    ],
-    [
-      "betterend:lush_smaragdant_cave"
-    ],
-    [
-      "betterend:chorus_forest"
+      "betterend:lantern_woods"
     ],
     [
       "betterend:umbrella_jungle"
     ],
     [
-      "betterend:foggy_mushroomland"
+      "betterend:ice_starfield"
     ],
     [
-      "betterend:dust_wastelands"
+      "betterend:blossoming_spires"
+    ],
+    [
+      "betterend:megalake"
     ],
     [
       "betterend:empty_end_cave"
+    ],
+    [
+      "betterend:jade_cave"
+    ],
+    [
+      "betterend:crystal_mountains"
+    ],
+    [
+      "betterend:painted_mountains"
+    ],
+    [
+      "betterend:foggy_mushroomland"
+    ],
+    [
+      "betterend:megalake_grove"
+    ],
+    [
+      "betterend:neon_oasis"
+    ],
+    [
+      "betterend:lush_smaragdant_cave"
+    ],
+    [
+      "betterend:lush_aurora_cave"
     ]
   ],
   "rewards": {
