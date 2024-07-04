@@ -1,8 +1,10 @@
 package org.betterx.betterend.client;
 
+import org.betterx.bclib.integration.modmenu.ModMenu;
 import org.betterx.betterend.BetterEnd;
 import org.betterx.betterend.client.render.BetterEndSkyRenderer;
 import org.betterx.betterend.config.Configs;
+import org.betterx.betterend.config.screen.ConfigScreen;
 import org.betterx.betterend.events.ItemTooltipCallback;
 import org.betterx.betterend.interfaces.MultiModelItem;
 import org.betterx.betterend.item.CrystaliteArmor;
@@ -30,6 +32,9 @@ public class BetterEndClient implements ClientModInitializer {
         EndModelProviders.register();
         MultiModelItem.register();
         registerTooltips();
+
+
+        ModMenu.addModMenuScreen(BetterEnd.C.modId, ConfigScreen::new);
 
         ResourceLocation checkFlowerId = ResourceLocation.withDefaultNamespace("item/chorus_flower");
         ResourceLocation checkPlantId = ResourceLocation.withDefaultNamespace("item/chorus_plant");

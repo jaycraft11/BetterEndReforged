@@ -8,6 +8,7 @@ import org.betterx.betterend.mixin.common.NoiseInterpolatorAccessor;
 import org.betterx.betterend.noise.OpenSimplexNoise;
 import org.betterx.wover.biome.api.BiomeManager;
 import org.betterx.wover.block.api.BlockHelper;
+import org.betterx.wover.common.generator.api.biomesource.BiomeSourceWithConfig;
 import org.betterx.wover.generator.api.biomesource.WoverBiomeData;
 import org.betterx.wover.generator.api.biomesource.end.WoverEndConfig;
 import org.betterx.wover.generator.impl.biomesource.end.WoverEndBiomeSource;
@@ -51,9 +52,19 @@ public class TerrainGenerator {
     private static OpenSimplexNoise noise1;
     private static OpenSimplexNoise noise2;
     private static BiomeSource biomeSource;
+    public static WoverEndConfig config;
     private static Sampler sampler;
 
     public static void initNoise(long seed, BiomeSource biomeSource, Sampler sampler) {
+        if (biomeSource instanceof BiomeSourceWithConfig bcl) {
+            if (bcl.getBiomeSourceConfig() instanceof WoverEndConfig config)
+                TerrainGenerator.config = config;
+        }
+
+        if (config == null) {
+            throw new IllegalStateException("Biome source config is not set");
+        }
+
         RandomSource random = new LegacyRandomSource(seed);
         largeIslands = new IslandLayer(random.nextInt(), GeneratorOptions.bigOptions);
         mediumIslands = new IslandLayer(random.nextInt(), GeneratorOptions.mediumOptions);
@@ -63,6 +74,7 @@ public class TerrainGenerator {
         TERRAIN_BOOL_CACHE_MAP.clear();
         TerrainGenerator.biomeSource = biomeSource;
         TerrainGenerator.sampler = sampler;
+
     }
 
     public static void fillTerrainDensity(double[] buffer, int posX, int posZ, int scaleXZ, int scaleY, int maxHeight) {

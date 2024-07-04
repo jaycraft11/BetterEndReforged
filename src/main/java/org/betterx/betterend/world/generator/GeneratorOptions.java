@@ -23,10 +23,7 @@ public class GeneratorOptions {
     private static BlockPos spawn;
     private static boolean replacePortal;
     private static boolean replacePillars;
-    private static int islandDistChunk;
     private static boolean directSpikeHeight;
-    private static int circleRadius = 1000;
-    private static int circleRadiusSqr;
 
     public static void init() {
 //        Configs.GENERATOR_CONFIG.getAllValues().forEach(
@@ -56,9 +53,6 @@ public class GeneratorOptions {
         spawn = Configs.GENERATOR_CONFIG.spawn.get();
         replacePortal = Configs.GENERATOR_CONFIG.replacePortal.get();
         replacePillars = Configs.GENERATOR_CONFIG.replacePillars.get();
-        circleRadius = Configs.GENERATOR_CONFIG.circleRadius.get();
-        circleRadiusSqr = circleRadius * circleRadius;
-        islandDistChunk = (circleRadius >> 3); // Twice bigger than normal
     }
 
     public static int getBiomeSizeCaves() {
@@ -85,9 +79,6 @@ public class GeneratorOptions {
         return newGenerator;
     }
 
-    public static boolean hasCentralIsland() {
-        return generateCentralIsland;
-    }
 
     public static boolean generateObsidianPlatform() {
         return generateObsidianPlatform;
@@ -113,17 +104,6 @@ public class GeneratorOptions {
         return replacePillars;
     }
 
-    public static int getIslandDistBlock() {
-        return circleRadius;
-    }
-
-    public static int getIslandDistBlockSqr() {
-        return circleRadiusSqr;
-    }
-
-    public static int getIslandDistChunk() {
-        return islandDistChunk;
-    }
 
     public static void setDirectSpikeHeight() {
         directSpikeHeight = true;
@@ -134,4 +114,10 @@ public class GeneratorOptions {
         directSpikeHeight = false;
         return height;
     }
+
+    public static boolean hasCentralIsland() {
+        return generateCentralIsland;
+    }
+
+
 }

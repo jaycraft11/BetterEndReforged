@@ -1,6 +1,5 @@
 package org.betterx.betterend.registry;
 
-import org.betterx.bclib.api.v2.LifeCycleAPI;
 import org.betterx.betterend.BetterEnd;
 import org.betterx.betterend.world.biome.EndBiome;
 import org.betterx.betterend.world.biome.EndBiomeBuilder;
@@ -11,15 +10,21 @@ import org.betterx.betterend.world.biome.land.*;
 import org.betterx.betterend.world.generator.GeneratorOptions;
 import org.betterx.wover.biome.api.data.BiomeCodecRegistry;
 import org.betterx.wover.biome.api.data.BiomeDataRegistry;
+import org.betterx.wover.events.api.WorldLifecycle;
 import org.betterx.wover.generator.api.biomesource.WoverBiomePicker;
+import org.betterx.wover.generator.impl.biomesource.end.WoverEndBiomeSource;
 import org.betterx.wover.generator.impl.map.hex.HexBiomeMap;
 import org.betterx.wover.state.api.WorldState;
 
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.Biomes;
+import net.minecraft.world.level.dimension.LevelStem;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -68,10 +73,16 @@ public class EndBiomes {
         BiomeCodecRegistry.register(BetterEnd.C.mk("lush_aurora_cave_biome"), LushAuroraCaveBiome.KEY_CODEC);
         BiomeCodecRegistry.register(BetterEnd.C.mk("lush_smaragdant_cave_biome"), LushSmaragdantCaveBiome.KEY_CODEC);
 
-        LifeCycleAPI.onLevelLoad(EndBiomes::onWorldLoad);
+        WorldLifecycle.SERVER_LEVEL_READY.subscribe(EndBiomes::onServerLevelReady);
     }
 
-    private static void onWorldLoad(ServerLevel level, long seed, Registry<Biome> registry) {
+    private static void onServerLevelReady(
+            ServerLevel level,
+            ResourceKey<Level> levelResourceKey,
+            LevelStem levelStem,
+            long seed
+    ) {
+        final Registry<Biome> registry = WorldState.allStageRegistryAccess().registryOrThrow(Registries.BIOME);
         var dataRegistry = WorldState
                 .allStageRegistryAccess()
                 .registry(BiomeDataRegistry.BIOME_DATA_REGISTRY)
@@ -97,7 +108,15 @@ public class EndBiomes {
         }
 
         if (caveBiomeMap == null || lastSeed != seed) {
-            caveBiomeMap = new HexBiomeMap(seed, GeneratorOptions.getBiomeSizeCaves(), CAVE_BIOMES);
+            if (level.getChunkSource().getGenerator().getBiomeSource() instanceof WoverEndBiomeSource) {
+                WoverEndBiomeSource biomeSource = (WoverEndBiomeSource) level
+                        .getChunkSource()
+                        .getGenerator()
+                        .getBiomeSource();
+                caveBiomeMap = new HexBiomeMap(seed, GeneratorOptions.getBiomeSizeCaves(), CAVE_BIOMES);
+            } else {
+                caveBiomeMap = new HexBiomeMap(seed, GeneratorOptions.getBiomeSizeCaves(), CAVE_BIOMES);
+            }
             lastSeed = seed;
         }
     }

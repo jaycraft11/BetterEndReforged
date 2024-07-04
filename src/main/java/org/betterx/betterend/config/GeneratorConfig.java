@@ -26,11 +26,6 @@ public class GeneratorConfig extends ConfigFile {
             true
     ).setGroup(MainConfig.STRUCTURE_GROUP);
 
-    public final IntValue circleRadius = new IntValue(
-            MainConfig.STRUCTURE_GROUP.title(), "void_ring_size",
-            1000
-    ).setGroup(MainConfig.STRUCTURE_GROUP).min(16).max(8192);
-
     public final BooleanValue generateObsidianPlatform = new BooleanValue(
             MainConfig.STRUCTURE_GROUP.title(),
             "generate_obsidian_platform",
@@ -60,12 +55,6 @@ public class GeneratorConfig extends ConfigFile {
             "replace_pillars",
             true
     ).setGroup(MainConfig.STRUCTURE_GROUP).setDependency(hasPillars);
-
-    public final IntValue customSky = new IntValue(
-            MainConfig.STRUCTURE_GROUP.title(), "biome_size_caves",
-            32
-    ).setGroup(MainConfig.STRUCTURE_GROUP);
-
 
     public final IntValue biomeSizeCaves = new IntValue(
             MainConfig.STRUCTURE_GROUP.title(), "biome_size_caves",
@@ -112,7 +101,7 @@ public class GeneratorConfig extends ConfigFile {
             MainConfig.ENTITY_GROUP.title() + ".spawn",
             "has_spawn",
             false
-    ).setGroup(MainConfig.ENTITY_GROUP);
+    ).setGroup(MainConfig.ENTITY_GROUP).hideInUI();
 
     public final BlockPosValue spawn = new BlockPosValue(
             MainConfig.ENTITY_GROUP.title() + ".spawn",

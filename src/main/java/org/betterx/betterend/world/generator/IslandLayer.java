@@ -82,13 +82,13 @@ public class IslandLayer {
             }
         }
 
-        if (GeneratorOptions.hasCentralIsland() && Math.abs(ix) < GeneratorOptions.getIslandDistChunk() && Math.abs(iz) < GeneratorOptions
-                .getIslandDistChunk()) {
+
+        if (GeneratorOptions.hasCentralIsland() && Math.abs(ix) < TerrainGenerator.config.centerBiomesSize && Math.abs(iz) < TerrainGenerator.config.centerBiomesSize) {
             int count = positions.size();
             for (int n = 0; n < count; n++) {
                 BlockPos pos = positions.get(n);
                 long d = (long) pos.getX() * (long) pos.getX() + (long) pos.getZ() * (long) pos.getZ();
-                if (d < GeneratorOptions.getIslandDistBlockSqr()) {
+                if (d < TerrainGenerator.config.innerVoidRadiusSquared) {
                     positions.remove(n);
                     count--;
                     n--;
