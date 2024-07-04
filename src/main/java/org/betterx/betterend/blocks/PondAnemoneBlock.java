@@ -65,6 +65,7 @@ public class PondAnemoneBlock extends EndUnderwaterPlantBlock implements Behavio
     }
 
     @Override
+    @Environment(EnvType.CLIENT)
     public void provideBlockModels(WoverBlockModelGenerators generator) {
         generator.createCubeModel(this);
         generator.createFlatItem(this);

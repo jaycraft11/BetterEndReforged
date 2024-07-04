@@ -15,6 +15,9 @@ import net.minecraft.data.models.model.TextureSlot;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+
 public class HydraluxPetalColoredBlock extends HydraluxPetalBlock implements CustomColorProvider, BlockModelProvider {
     public HydraluxPetalColoredBlock(BlockBehaviour.Properties settings) {
         super(settings);
@@ -41,6 +44,7 @@ public class HydraluxPetalColoredBlock extends HydraluxPetalBlock implements Cus
     private static ResourceLocation PETAL_MODEL;
 
     @Override
+    @Environment(EnvType.CLIENT)
     public void provideBlockModels(WoverBlockModelGenerators generator) {
         final var modelLocation = BetterEnd.C.mk("block/hydralux_petal_block_colored");
         final var mapping = new TextureMapping().put(TextureSlot.TEXTURE, BetterEnd.C.mk("block/hydralux_petal_block_colored"));

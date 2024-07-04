@@ -15,6 +15,9 @@ import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+
 public class TwistedUmbrellaMossTallBlock extends BaseDoublePlantBlock implements BehaviourPlant, SurvivesOnJungleMossOrMycelium, BlockModelProvider {
     public TwistedUmbrellaMossTallBlock() {
         super(12);
@@ -38,6 +41,7 @@ public class TwistedUmbrellaMossTallBlock extends BaseDoublePlantBlock implement
     }
 
     @Override
+    @Environment(EnvType.CLIENT)
     public void provideBlockModels(WoverBlockModelGenerators generator) {
         generator.createCubeModel(this);
         generator.createFlatItem(this, BetterEnd.C.mk("item/twisted_umbrella_moss_large"));

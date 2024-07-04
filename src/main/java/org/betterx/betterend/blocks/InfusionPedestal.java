@@ -118,6 +118,7 @@ public class InfusionPedestal extends PedestalBlock implements BehaviourStone, B
     }
 
     @Override
+    @Environment(EnvType.CLIENT)
     public void provideBlockModels(WoverBlockModelGenerators generator) {
         provideBlockModel(generator, createTextureMapping(), this, PEDESTAL_MODELS);
     }

@@ -25,6 +25,9 @@ import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+
 import org.jetbrains.annotations.Nullable;
 
 public abstract class EndLanternBlock extends BaseBlockNotFull implements SimpleWaterloggedBlock, LiquidBlockContainer, BlockModelProvider {
@@ -133,5 +136,6 @@ public abstract class EndLanternBlock extends BaseBlockNotFull implements Simple
     }
 
     @Override
+    @Environment(EnvType.CLIENT)
     public abstract void provideBlockModels(WoverBlockModelGenerators generator);
 }

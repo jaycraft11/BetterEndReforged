@@ -285,6 +285,7 @@ public class EternalPedestal extends PedestalBlock implements BehaviourStone, Bl
     }
 
     @Override
+    @Environment(EnvType.CLIENT)
     public void provideBlockModels(WoverBlockModelGenerators generator) {
         final ResourceLocation id = TextureMapping.getBlockTexture(this);
         final ResourceLocation baseTexture = BetterEnd.C.mk("block/flavolite_polished");

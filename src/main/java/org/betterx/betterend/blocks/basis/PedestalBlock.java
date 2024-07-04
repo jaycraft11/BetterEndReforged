@@ -382,10 +382,12 @@ public class PedestalBlock extends BaseBlockNotFull implements EntityBlock, Bloc
     );
 
     @Override
+    @Environment(EnvType.CLIENT)
     public void provideBlockModels(WoverBlockModelGenerators generator) {
         provideBlockModel(generator, createTextureMapping(), this);
     }
 
+    @Environment(EnvType.CLIENT)
     public static void provideBlockModel(
             WoverBlockModelGenerators generator,
             TextureMapping mapping,
@@ -394,6 +396,7 @@ public class PedestalBlock extends BaseBlockNotFull implements EntityBlock, Bloc
         provideBlockModel(generator, mapping, pedestalBlock, PEDESTAL_MODELS);
     }
 
+    @Environment(EnvType.CLIENT)
     public static void provideBlockModel(
             WoverBlockModelGenerators generator,
             TextureMapping mapping,

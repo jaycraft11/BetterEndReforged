@@ -11,6 +11,9 @@ import net.minecraft.data.models.model.TextureMapping;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+
 public class GlowingHymenophoreBlock extends BaseBlock.Wood implements AddMineableAxe, BlockModelProvider {
     public GlowingHymenophoreBlock() {
         super(Properties.of()
@@ -20,6 +23,7 @@ public class GlowingHymenophoreBlock extends BaseBlock.Wood implements AddMineab
     }
 
     @Override
+    @Environment(EnvType.CLIENT)
     public void provideBlockModels(WoverBlockModelGenerators generator) {
         provideUnshadedCubeModel(generator, this);
     }
