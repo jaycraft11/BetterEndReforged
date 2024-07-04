@@ -4,7 +4,6 @@ import org.betterx.bclib.blocks.BaseVineBlock;
 import org.betterx.betterend.BetterEnd;
 import org.betterx.betterend.blocks.basis.PedestalBlock;
 import org.betterx.betterend.client.models.EndModels;
-import org.betterx.betterend.integration.byg.BYGBlocks;
 import org.betterx.betterend.registry.EndBlocks;
 import org.betterx.wover.block.api.BlockProperties;
 import org.betterx.wover.block.api.BlockRegistry;
@@ -173,7 +172,7 @@ public class EndModelProvider extends WoverModelProvider {
                              .ignore(EndBlocks.DENSE_VINE)
                              .override(EndBlocks.GLOWING_PILLAR_LEAVES, generator::createFlatItem)
                              .override(EndBlocks.GLOWING_PILLAR_ROOTS, generator::createFlatItem)
-                             .ignore(BYGBlocks.IVIS_MOSS).ignore(BYGBlocks.IVIS_VINE).ignore(BYGBlocks.NIGHTSHADE_MOSS)
+                             //.ignore(BYGBlocks.IVIS_MOSS).ignore(BYGBlocks.IVIS_VINE).ignore(BYGBlocks.NIGHTSHADE_MOSS)
                              .override(EndBlocks.JUNGLE_GRASS, generator::createFlatItem)
                              .ignore(EndBlocks.JUNGLE_VINE)
                              .ignore(EndBlocks.POND_ANEMONE)
