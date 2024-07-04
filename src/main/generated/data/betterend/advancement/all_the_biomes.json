@@ -417,13 +417,40 @@
   },
   "requirements": [
     [
+      "betterend:glowing_grasslands"
+    ],
+    [
+      "betterend:chorus_forest"
+    ],
+    [
+      "betterend:jade_cave"
+    ],
+    [
+      "betterend:neon_oasis"
+    ],
+    [
+      "betterend:blossoming_spires"
+    ],
+    [
+      "betterend:umbrella_jungle"
+    ],
+    [
+      "betterend:dust_wastelands"
+    ],
+    [
+      "betterend:crystal_mountains"
+    ],
+    [
       "betterend:megalake"
     ],
     [
-      "betterend:amber_land"
+      "betterend:empty_smaragdant_cave"
     ],
     [
-      "betterend:empty_end_cave"
+      "betterend:shadow_forest"
+    ],
+    [
+      "betterend:megalake_grove"
     ],
     [
       "betterend:painted_mountains"
@@ -432,64 +459,37 @@
       "betterend:lantern_woods"
     ],
     [
-      "betterend:sulphur_springs"
-    ],
-    [
-      "betterend:umbrella_jungle"
-    ],
-    [
-      "betterend:chorus_forest"
-    ],
-    [
-      "betterend:empty_smaragdant_cave"
-    ],
-    [
-      "betterend:megalake_grove"
-    ],
-    [
-      "betterend:glowing_grasslands"
-    ],
-    [
-      "betterend:jade_cave"
-    ],
-    [
-      "betterend:dry_shrubland"
-    ],
-    [
-      "betterend:dust_wastelands"
-    ],
-    [
-      "betterend:lush_aurora_cave"
-    ],
-    [
-      "betterend:neon_oasis"
-    ],
-    [
       "betterend:ice_starfield"
-    ],
-    [
-      "betterend:crystal_mountains"
-    ],
-    [
-      "betterend:foggy_mushroomland"
     ],
     [
       "betterend:dragon_graveyards"
     ],
     [
-      "betterend:shadow_forest"
-    ],
-    [
-      "betterend:blossoming_spires"
-    ],
-    [
-      "betterend:umbra_valley"
+      "betterend:sulphur_springs"
     ],
     [
       "betterend:lush_smaragdant_cave"
     ],
     [
+      "betterend:lush_aurora_cave"
+    ],
+    [
+      "betterend:umbra_valley"
+    ],
+    [
+      "betterend:foggy_mushroomland"
+    ],
+    [
+      "betterend:amber_land"
+    ],
+    [
       "betterend:empty_aurora_cave"
+    ],
+    [
+      "betterend:dry_shrubland"
+    ],
+    [
+      "betterend:empty_end_cave"
     ]
   ],
   "rewards": {
