@@ -44,7 +44,7 @@ public abstract class MusicTrackerMixin {
 
     @Inject(method = "tick", at = @At("HEAD"), cancellable = true)
     public void be_onTick(CallbackInfo info) {
-        if (Configs.CLENT_CONFIG.blendBiomeMusic.get()) {
+        if (Configs.CLIENT_CONFIG.blendBiomeMusic.get()) {
             Music musicSound = minecraft.getSituationalMusic();
             if (be_checkNullSound(musicSound) && volume > 0 && be_shouldChangeSound(musicSound) && be_isCorrectBiome()) {
                 if (volume > 0) {

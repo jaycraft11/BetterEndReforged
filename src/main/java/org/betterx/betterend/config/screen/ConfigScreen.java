@@ -13,7 +13,7 @@ public class ConfigScreen extends de.ambertation.wunderlib.ui.vanilla.ConfigScre
     public static final ResourceLocation BE_LOGO_LOCATION = BetterEnd.C.id("icon.png");
 
     public ConfigScreen(Screen parent) {
-        super(parent, BE_LOGO_LOCATION, Component.translatable("be_config"), List.of(Configs.CLENT_CONFIG, Configs.GENERATOR_CONFIG));
+        super(parent, BE_LOGO_LOCATION, Component.translatable("be_config"), List.of(Configs.CLIENT_CONFIG, Configs.GENERATOR_CONFIG));
     }
 
     @Override
