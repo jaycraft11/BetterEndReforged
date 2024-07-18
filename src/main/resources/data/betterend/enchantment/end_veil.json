@@ -4,6 +4,18 @@
     "translate": "enchantment.betterend.end_veil"
   },
   "effects": {
+    "minecraft:tick": [
+      {
+        "effect": {
+          "type": "minecraft:apply_mob_effect",
+          "min_duration": 1.0,
+          "max_duration": 1.5,
+          "min_amplifier": 1.0,
+          "max_amplifier": 1.0,
+          "to_apply": "betterend:end_veil"
+        }
+      }
+    ]
   },
   "max_cost": {
     "base": 41,
