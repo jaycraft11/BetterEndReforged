@@ -41,13 +41,13 @@ public class EndFishEntity extends AbstractSchoolingFish {
     public static final int VARIANTS_NORMAL = 5;
     public static final int VARIANTS_SULPHUR = 3;
     public static final int VARIANTS = VARIANTS_NORMAL + VARIANTS_SULPHUR;
-    private static final EntityDataAccessor<Byte> VARIANT = SynchedEntityData.defineId(
+    private static final EntityDataAccessor<Integer> VARIANT = SynchedEntityData.defineId(
             EndFishEntity.class,
-            EntityDataSerializers.BYTE
+            EntityDataSerializers.INT
     );
-    private static final EntityDataAccessor<Byte> SCALE = SynchedEntityData.defineId(
+    private static final EntityDataAccessor<Integer> SCALE = SynchedEntityData.defineId(
             EndFishEntity.class,
-            EntityDataSerializers.BYTE
+            EntityDataSerializers.INT
     );
 
     public EndFishEntity(EntityType<EndFishEntity> entityType, Level world) {
@@ -65,7 +65,7 @@ public class EndFishEntity extends AbstractSchoolingFish {
 
         Holder<Biome> biome = world.getBiome(blockPosition());
         if (biome.is(EndBiomes.SULPHUR_SPRINGS.key)) {
-            this.entityData.set(VARIANT, (byte) (random.nextInt(VARIANTS_SULPHUR) + VARIANTS_NORMAL));
+            this.entityData.set(VARIANT, (random.nextInt(VARIANTS_SULPHUR) + VARIANTS_NORMAL));
         }
 
         this.refreshDimensions();
@@ -75,25 +75,25 @@ public class EndFishEntity extends AbstractSchoolingFish {
     @Override
     protected void defineSynchedData(SynchedEntityData.Builder builder) {
         super.defineSynchedData(builder);
-        this.entityData.set(VARIANT, (byte) this.getRandom().nextInt(VARIANTS_NORMAL));
-        this.entityData.set(SCALE, (byte) this.getRandom().nextInt(16));
+        builder.define(VARIANT, this.getRandom().nextInt(VARIANTS_NORMAL));
+        builder.define(SCALE,  this.getRandom().nextInt(16));
     }
 
     @Override
     public void addAdditionalSaveData(CompoundTag tag) {
         super.addAdditionalSaveData(tag);
-        tag.putByte("Variant", (byte) getVariant());
-        tag.putByte("Scale", getByteScale());
+        tag.putInt("Variant", getVariant());
+        tag.putInt("Scale", this.entityData.get(SCALE));
     }
 
     @Override
     public void readAdditionalSaveData(CompoundTag tag) {
         super.readAdditionalSaveData(tag);
         if (tag.contains("Variant")) {
-            this.entityData.set(VARIANT, tag.getByte("Variant"));
+            this.entityData.set(VARIANT, tag.getInt("Variant"));
         }
         if (tag.contains("Scale")) {
-            this.entityData.set(SCALE, tag.getByte("Scale"));
+            this.entityData.set(SCALE, tag.getInt("Scale"));
         }
     }
 
@@ -101,8 +101,8 @@ public class EndFishEntity extends AbstractSchoolingFish {
     public void saveToBucketTag(ItemStack itemStack) {
         super.saveToBucketTag(itemStack);
         CustomData.update(DataComponents.BUCKET_ENTITY_DATA, itemStack, (tag) -> {
-            tag.putByte("variant", entityData.get(VARIANT));
-            tag.putByte("scale", entityData.get(SCALE));
+            tag.putInt("variant", entityData.get(VARIANT));
+            tag.putInt("scale", entityData.get(SCALE));
         });
     }
 
@@ -159,12 +159,8 @@ public class EndFishEntity extends AbstractSchoolingFish {
         return (int) this.entityData.get(VARIANT);
     }
 
-    public byte getByteScale() {
-        return this.entityData.get(SCALE);
-    }
-
     public float getScale() {
-        return getByteScale() / 32F + 0.75F;
+        return this.entityData.get(SCALE) / 32F + 0.75F;
     }
 
     @Override

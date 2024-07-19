@@ -32,8 +32,8 @@ public class EndEntities {
     public static final BCLEntityWrapper<EndSlimeEntity> END_SLIME = register(
             "end_slime",
             MobCategory.MONSTER,
-            2F,
-            2F,
+            0.5F,
+            0.5F,
             EndSlimeEntity::new,
             EndSlimeEntity.createMobAttributes(),
             false,
