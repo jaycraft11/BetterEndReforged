@@ -7,6 +7,7 @@ import org.betterx.bclib.util.ItemUtil;
 import org.betterx.betterend.BetterEnd;
 import org.betterx.betterend.rituals.InfusionRitual;
 import org.betterx.wover.enchantment.api.EnchantmentUtils;
+import org.betterx.wover.item.api.ItemStackHelper;
 import org.betterx.wover.recipe.api.BaseRecipeBuilder;
 import org.betterx.wover.recipe.api.BaseUnlockableRecipeBuilder;
 
@@ -57,7 +58,7 @@ public class InfusionRecipe implements Recipe<InfusionRitual.InfusionInput>, Unk
 
     private InfusionRecipe(Ingredient input, ItemStack output, Ingredient[] catalysts, int time, String group) {
         this.input = input;
-        this.output = output;
+        this.output = ItemStackHelper.callItemStackSetupIfPossible(output);
         this.catalysts = catalysts;
         this.time = time;
         this.group = group;
