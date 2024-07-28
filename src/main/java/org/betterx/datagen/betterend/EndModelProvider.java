@@ -65,6 +65,14 @@ public class EndModelProvider extends WoverModelProvider {
                                  final var stairs_outer = EndModels.LIT_STAIRS_OUTER.create(id.withSuffix("_outer"), mapping, generator.modelOutput());
                                  final var stairs_inner = EndModels.LIT_STAIRS_INNER.create(id.withSuffix("_inner"), mapping, generator.modelOutput());
                                  generator.createStairsWithModels(block, stairs, stairs_outer, stairs_inner);
+                             }).override(EndBlocks.NEON_CACTUS_BLOCK_SLAB, block -> {
+                                 final var id = TextureMapping.getBlockTexture(block);
+                                 final var texture = TextureMapping.getBlockTexture(EndBlocks.NEON_CACTUS_BLOCK);
+                                 final var mapping = new TextureMapping()
+                                         .put(TextureSlot.TOP, texture.withSuffix("_top"))
+                                         .put(TextureSlot.BOTTOM, texture.withSuffix("_top"))
+                                         .put(TextureSlot.SIDE, texture.withSuffix("_side"));
+                                 generator.createSlab(block, EndBlocks.NEON_CACTUS_BLOCK, mapping);
                              })
                              .ignore(EndBlocks.CRYSTAL_GRASS)
                              .ignore(EndBlocks.CYAN_MOSS)
@@ -81,6 +89,36 @@ public class EndModelProvider extends WoverModelProvider {
                              .ignore(EndBlocks.SMARAGDANT_SUBBLOCKS.stairs)
                              .ignore(EndBlocks.SMARAGDANT_SUBBLOCKS.wall)
                              .ignore(EndBlocks.SMARAGDANT_SUBBLOCKS.brick_stairs)
+                             .ignore(EndBlocks.SMARAGDANT_SUBBLOCKS.brick_wall)
+                             .override(EndBlocks.SMARAGDANT_CRYSTAL, block -> {
+                                 final var texture = BetterEnd.C.mk("block/smaragdant_crystal");
+                                 final var mapping = new TextureMapping()
+                                         .put(TextureSlot.END, texture.withSuffix("_top"))
+                                         .put(TextureSlot.SIDE, texture.withSuffix("_side"));
+                                 generator.createRotatedPillar(block, mapping);
+                             })
+                             .override(EndBlocks.BUDDING_SMARAGDANT_CRYSTAL, block -> {
+                                 final var texture = BetterEnd.C.mk("block/budding_smaragdant_crystal");
+                                 final var mapping = new TextureMapping()
+                                         .put(TextureSlot.END, texture.withSuffix("_top"))
+                                         .put(TextureSlot.SIDE, texture.withSuffix("_side"));
+                                 generator.createRotatedPillar(block, mapping);
+                             })
+                             .override(EndBlocks.SMARAGDANT_SUBBLOCKS.slab, block -> {
+                                 final var texture = BetterEnd.C.mk("block/smaragdant_crystal");
+                                 final var mapping = new TextureMapping()
+                                         .put(TextureSlot.TOP, texture.withSuffix("_top"))
+                                         .put(TextureSlot.BOTTOM, texture.withSuffix("_top"))
+                                         .put(TextureSlot.SIDE, texture.withSuffix("_side"));
+                                 generator.createSlab(block, EndBlocks.SMARAGDANT_CRYSTAL, mapping);
+                             })
+                             .override(EndBlocks.SMARAGDANT_SUBBLOCKS.pillar, block -> {
+                                 final var texture = BetterEnd.C.mk("block/smaragdant_crystal_pillar");
+                                 final var mapping = new TextureMapping()
+                                         .put(TextureSlot.END, texture.withSuffix("_top"))
+                                         .put(TextureSlot.SIDE, texture.withSuffix("_side"));
+                                 generator.createRotatedPillar(block, mapping);
+                             })
                              .ignore(EndBlocks.GOLD_CHANDELIER)
                              .ignore(EndBlocks.IRON_CHANDELIER)
                              .ignore(EndBlocks.LUCERNIA_OUTER_LEAVES)
@@ -93,7 +131,6 @@ public class EndModelProvider extends WoverModelProvider {
                              .ignore(EndBlocks.END_LOTUS_SEED)
                              .ignore(EndBlocks.END_LOTUS_LEAF)
                              .override(EndBlocks.CAVE_PUMPKIN, generator::delegateItemModel)
-                             .ignore(EndBlocks.NEON_CACTUS_BLOCK)
                              .ignore(EndBlocks.FILALUX)
                              .ignore(EndBlocks.CREEPING_MOSS)
                              .ignore(EndBlocks.RESPAWN_OBELISK)
@@ -116,7 +153,6 @@ public class EndModelProvider extends WoverModelProvider {
                              .ignore(EndBlocks.TUBE_WORM)
                              .ignore(EndBlocks.AMBER_ROOT)
                              .ignore(EndBlocks.PURPLE_POLYPORE)
-                             .ignore(EndBlocks.NEON_CACTUS)
                              .ignore(EndBlocks.AURANT_POLYPORE)
                              .ignore(EndBlocks.NEEDLEGRASS)
                              .ignore(EndBlocks.VIOLECITE.flowerPot)
@@ -188,7 +224,11 @@ public class EndModelProvider extends WoverModelProvider {
                              .override(EndBlocks.MENGER_SPONGE, generator::delegateItemModel)
                              .override(EndBlocks.MENGER_SPONGE_WET, generator::delegateItemModel)
                              .override(EndBlocks.VIOLECITE.brickWall, b -> generator.delegateItemModel(b, BetterEnd.C.mk("block/violecite_bricks_wall_post")))
-                             .ignore(EndBlocks.SMARAGDANT_SUBBLOCKS.brick_wall)
+                             .override(EndBlocks.DRAGON_TREE.getBark(), generator::delegateItemModel)
+                             .override(EndBlocks.DRAGON_TREE.getLog(), generator::delegateItemModel)
+                             .override(EndBlocks.NEON_CACTUS, b -> generator.delegateItemModel(b, BetterEnd.C.mk("block/neon_cactus_small")))
+                             .ignore(EndBlocks.AMARANITA_STEM)
+                             .ignore(EndBlocks.MOSSY_DRAGON_BONE)
         );
     }
 

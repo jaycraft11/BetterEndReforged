@@ -16,10 +16,22 @@ public class LitPillarBlock extends BaseRotatedPillarBlock {
         super(settings);
     }
 
-    @Override
     @Environment(EnvType.CLIENT)
     protected Optional<String> createBlockPattern(ResourceLocation blockId) {
         String name = blockId.getPath();
         return Optional.of(PATTERN.replace("name", name));
     }
+
+//    @Environment(EnvType.CLIENT)
+//    @Override
+//    public void provideBlockModels(WoverBlockModelGenerators generator) {
+//        var res = TextureMapping.getBlockTexture(this);
+//        var side = ResourceLocation.fromNamespaceAndPath(res.getNamespace(), res
+//                .getPath()
+//                .replace("_bark", "_log_side"));
+//        generator.createRotatedPillar(this, new TextureMapping()
+//                .put(TextureSlot.SIDE, side)
+//                .put(TextureSlot.END, res.withSuffix("_top")));
+//
+//    }
 }
