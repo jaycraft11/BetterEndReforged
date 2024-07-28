@@ -55,7 +55,7 @@
   },
   "breaks": {
     "bclib": "<21.0.10",
-    "wover": "<21.0.10",
+    "wover": "<21.0.11",
     "wunderlib": "<21.0.3"
   },
   "suggests": {
