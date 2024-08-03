@@ -1,6 +1,6 @@
 {
   "values": [
-    "#c:is_end_highland",
-    "#c:is_end_midland"
+    "#wover:is_end/highland",
+    "#wover:is_end/midland"
   ]
 }

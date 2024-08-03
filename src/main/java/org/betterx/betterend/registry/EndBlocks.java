@@ -10,6 +10,7 @@ import org.betterx.betterend.item.material.EndArmorTier;
 import org.betterx.betterend.item.material.EndToolMaterial;
 import org.betterx.wover.block.api.BlockRegistry;
 import org.betterx.wover.tag.api.predefined.CommonBlockTags;
+import org.betterx.wover.tag.api.predefined.CommonPoiTags;
 
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
@@ -745,7 +746,8 @@ public class EndBlocks {
     // Blocks With Entity //
     public static final Block END_STONE_FURNACE = registerBlock(
             "end_stone_furnace",
-            new BaseFurnaceBlock.Stone(Blocks.END_STONE)
+            new BaseFurnaceBlock.Stone(Blocks.END_STONE),
+            CommonPoiTags.ARMORER_WORKSTATION
     );
     public static final Block END_STONE_SMELTER = registerBlock("end_stone_smelter", new EndStoneSmelter());
     public static final Block ETERNAL_PEDESTAL = registerBlock("eternal_pedestal", new EternalPedestal());

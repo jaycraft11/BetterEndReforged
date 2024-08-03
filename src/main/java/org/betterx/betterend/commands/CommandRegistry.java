@@ -1,8 +1,8 @@
 package org.betterx.betterend.commands;
 
-import org.betterx.bclib.api.v2.poi.BCLPoiType;
 import org.betterx.bclib.util.BlocksHelper;
 import org.betterx.betterend.registry.EndPoiTypes;
+import org.betterx.wover.poi.api.WoverPoiType;
 import org.betterx.wover.state.api.WorldState;
 
 import com.mojang.brigadier.Command;
@@ -74,7 +74,10 @@ public class CommandRegistry {
     }
 
 
-    private static int find_poi(CommandContext<CommandSourceStack> ctx, BCLPoiType poi) throws CommandSyntaxException {
+    private static int find_poi(
+            CommandContext<CommandSourceStack> ctx,
+            WoverPoiType poi
+    ) throws CommandSyntaxException {
         final CommandSourceStack source = ctx.getSource();
         final ServerPlayer player = source.getPlayerOrException();
         Vec3 pos = source.getPosition();
