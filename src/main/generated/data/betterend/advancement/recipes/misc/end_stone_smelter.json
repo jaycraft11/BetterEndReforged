@@ -11,11 +11,11 @@
       },
       "trigger": "minecraft:inventory_changed"
     },
-    "has_tag_c_furnaces": {
+    "has_tag_wover_furnaces": {
       "conditions": {
         "items": [
           {
-            "items": "#c:furnaces"
+            "items": "#wover:furnaces"
           }
         ]
       },
@@ -41,8 +41,8 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_tag_c_furnaces",
       "has_thallasium_ingot",
+      "has_tag_wover_furnaces",
       "has_end_stone_bricks"
     ]
   ],

@@ -31,11 +31,11 @@
       },
       "trigger": "minecraft:inventory_changed"
     },
-    "has_tag_c_water_bottles": {
+    "has_tag_wover_water_bottles": {
       "conditions": {
         "items": [
           {
-            "items": "#c:water_bottles"
+            "items": "#wover:water_bottles"
           }
         ]
       },
@@ -54,7 +54,7 @@
       "has_sugar",
       "has_shadow_berry_cooked",
       "has_gelatine",
-      "has_tag_c_water_bottles"
+      "has_tag_wover_water_bottles"
     ]
   ],
   "rewards": {

@@ -3,7 +3,7 @@
   "biome": "betterend:foggy_mushroomland",
   "fogDensity": 3.0,
   "generation_data": {
-    "intended_placement": "c:is_end_land"
+    "intended_placement": "wover:is_end/land"
   },
   "has_caves": true,
   "surface": {

@@ -3,7 +3,7 @@
   "biome": "betterend:dry_shrubland",
   "fogDensity": 1.2,
   "generation_data": {
-    "intended_placement": "c:is_end_land"
+    "intended_placement": "wover:is_end/land"
   },
   "has_caves": true,
   "surface": {

@@ -3,7 +3,7 @@
   "biome": "betterend:sulphur_springs",
   "fogDensity": 1.5,
   "generation_data": {
-    "intended_placement": "c:is_end_land"
+    "intended_placement": "wover:is_end/land"
   },
   "has_caves": false,
   "surface": {

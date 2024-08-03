@@ -29,15 +29,15 @@
         "predicates": [
           {
             "type": "wover:has_tag",
-            "biome_tag": "c:is_end_barrens"
+            "biome_tag": "wover:is_end/barrens"
           },
           {
             "type": "wover:has_tag",
-            "biome_tag": "c:is_end_midland"
+            "biome_tag": "wover:is_end/midland"
           },
           {
             "type": "wover:has_tag",
-            "biome_tag": "c:is_end_highland"
+            "biome_tag": "wover:is_end/highland"
           }
         ]
       }

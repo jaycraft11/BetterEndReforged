@@ -31,11 +31,11 @@
       },
       "trigger": "minecraft:inventory_changed"
     },
-    "has_tag_c_water_bottles": {
+    "has_tag_wover_water_bottles": {
       "conditions": {
         "items": [
           {
-            "items": "#c:water_bottles"
+            "items": "#wover:water_bottles"
           }
         ]
       },
@@ -53,8 +53,8 @@
       "has_the_recipe",
       "has_sugar",
       "has_gelatine",
-      "has_blossom_berry",
-      "has_tag_c_water_bottles"
+      "has_tag_wover_water_bottles",
+      "has_blossom_berry"
     ]
   ],
   "rewards": {
