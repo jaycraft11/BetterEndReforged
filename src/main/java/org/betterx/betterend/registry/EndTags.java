@@ -13,7 +13,7 @@ public class EndTags {
     // https://fabricmc.net/wiki/tutorial:tags
 
     public static final TagKey<Biome> IS_END_CAVE = TagManager.BIOMES.makeTag(BetterEnd.C, "is_end_cave");
-    public static final TagKey<Biome> IS_END_HIGH_OR_MIDLAND = TagManager.BIOMES.makeCommonTag("is_end_high_or_midland");
+    public static final TagKey<Biome> IS_END_HIGH_OR_MIDLAND = TagManager.BIOMES.makeTag(BetterEnd.C, "is_end/high_or_midland");
 
     // Block Tags
     public static final TagKey<Block> PEDESTALS = TagManager.BLOCKS.makeTag(BetterEnd.C, "pedestal");
