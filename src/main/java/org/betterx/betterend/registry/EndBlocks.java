@@ -764,6 +764,11 @@ public class EndBlocks {
             MapColor.SAND
     ).init();
 
+    public static final Block END_STONE_SLAB = registerBlock("end_stone_slab", new BaseSlabBlock.Stone(Blocks.END_STONE));
+    public static final Block END_STONE_STAIR = registerBlock("end_stone_stairs", new BaseStairsBlock.Stone(Blocks.END_STONE));
+    public static final Block END_STONE_WALLS = registerBlock("end_stone_wall", new BaseWallBlock.Stone(Blocks.END_STONE));
+
+
     public static List<Block> getModBlocks() {
         return getBlockRegistry().allBlocks().toList();
     }
