@@ -4,12 +4,12 @@
 def allowLocalLibUse = true
 
 //When true, the local libraries is also used in commandline builds
-def allowLocalLibInConsoleMode = true
+def allowLocalLibInConsoleMode = false
 
 //The path were to look for the local libraries
 def BCLibPath = '../BCLib'
 def WoverPath = '../WorldWeaver'
-def WunderLibPath = '../WorldWeaver/WunderLib'
+def WunderLibPath = '../WunderLib'
 
 
 // #### Logic ####
@@ -35,9 +35,9 @@ if (allowLocalLibUse && (isIDE || allowLocalLibInConsoleMode) && BCLibFolder.exi
 if (allowLocalLibUse && (isIDE || allowLocalLibInConsoleMode) && WunderLibFolder.exists()) {
     println "!! Using local WunderLib from '${WunderLibFolder}'"
 
-    include ':WunderLib'
-    project(":WunderLib").projectDir = WunderLibFolder
-    project(':WunderLib').buildFileName = './wunderlib-composit.gradle'
+    include ':wunderlib'
+    project(":wunderlib").projectDir = WunderLibFolder
+    project(':wunderlib').buildFileName = './wunderlib-composit.gradle'
 }
 
 if (allowLocalLibUse && (isIDE || allowLocalLibInConsoleMode) && WoverFolder.exists()) {
