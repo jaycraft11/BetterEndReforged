@@ -14,7 +14,6 @@ public class DoublePlantFeature extends ScatterFeature<DoublePlantFeatureConfig>
 
     public DoublePlantFeature() {
         super(DoublePlantFeatureConfig.CODEC);
-
     }
 
     @Override
@@ -42,7 +41,7 @@ public class DoublePlantFeature extends ScatterFeature<DoublePlantFeatureConfig>
             RandomSource random,
             BlockPos blockPos
     ) {
-        if (plant.getBlock() instanceof BaseDoublePlantBlock) {
+        if (plant.getBlock() instanceof BaseDoublePlantBlock dpb) {
             int rot = random.nextInt(4);
             BlockState state = plant.setValue(BaseDoublePlantBlock.ROTATION, rot);
             BlocksHelper.setWithoutUpdate(world, blockPos, state);

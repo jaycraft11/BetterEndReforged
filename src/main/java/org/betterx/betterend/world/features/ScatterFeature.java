@@ -72,22 +72,25 @@ public abstract class ScatterFeature<FC extends ScatterFeatureConfig> extends Fe
 
         float r = MHelper.randRange(cfg.radius * 0.5F, cfg.radius, random);
         int count = MHelper.floor(r * r * MHelper.randRange(1.5F, 3F, random));
-        for (int i = 0; i < count; i++) {
-            float pr = r * (float) Math.sqrt(random.nextFloat());
-            float theta = random.nextFloat() * MHelper.PI2;
-            float x = pr * (float) Math.cos(theta);
-            float z = pr * (float) Math.sin(theta);
+        synchronized (this) {
+            for (int i = 0; i < count; i++) {
+                float pr = r * (float) Math.sqrt(random.nextFloat());
+                float theta = random.nextFloat() * MHelper.PI2;
+                float x = pr * (float) Math.cos(theta);
+                float z = pr * (float) Math.sin(theta);
 
-            POS.set(center.getX() + x, center.getY() + getYOffset(), center.getZ() + z);
-            if (getGroundPlant(cfg, world, POS) && canGenerate(
-                    cfg,
-                    world,
-                    random,
-                    center,
-                    POS,
-                    r
-            ) && (getChance() < 2 || random.nextInt(getChance()) == 0)) {
-                generate(cfg, world, random, POS);
+                POS.set(center.getX() + x, center.getY() + getYOffset(), center.getZ() + z);
+
+                if (getGroundPlant(cfg, world, POS) && canGenerate(
+                        cfg,
+                        world,
+                        random,
+                        center,
+                        POS,
+                        r
+                ) && (getChance() < 2 || random.nextInt(getChance()) == 0)) {
+                    generate(cfg, world, random, POS);
+                }
             }
         }
 
