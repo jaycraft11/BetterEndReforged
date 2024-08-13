@@ -119,8 +119,8 @@ public class EndModelProvider extends WoverModelProvider {
                                          .put(TextureSlot.SIDE, texture.withSuffix("_side"));
                                  generator.createRotatedPillar(block, mapping);
                              })
-                             .ignore(EndBlocks.GOLD_CHANDELIER)
-                             .ignore(EndBlocks.IRON_CHANDELIER)
+//                             .ignore(EndBlocks.GOLD_CHANDELIER)
+//                             .ignore(EndBlocks.IRON_CHANDELIER)
                              .ignore(EndBlocks.LUCERNIA_OUTER_LEAVES)
                              .ignore(EndBlocks.SULPHUR_CRYSTAL)
                              .override(EndBlocks.MOSSY_OBSIDIAN, generator::delegateItemModel)
@@ -165,8 +165,8 @@ public class EndModelProvider extends WoverModelProvider {
                              .ignore(EndBlocks.ENDSTONE_FLOWER_POT)
                              .ignore(EndBlocks.SMARAGDANT_CRYSTAL_SHARD)
                              .override(EndBlocks.END_LOTUS_STEM, generator::delegateItemModel)
-                             .ignore(EndBlocks.THALLASIUM.chandelier)
-                             .ignore(EndBlocks.TERMINITE.chandelier)
+//                             .ignore(EndBlocks.THALLASIUM.chandelier)
+//                             .ignore(EndBlocks.TERMINITE.chandelier)
                              .ignore(EndBlocks.RUTISCUS)
                              .ignore(EndBlocks.MURKWEED)
                              .ignore(EndBlocks.LANCELEAF_SEED)

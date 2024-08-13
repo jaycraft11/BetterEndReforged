@@ -11,6 +11,9 @@ public class EndModels {
     public static final TextureSlot ROOTS = TextureSlot.create("roots");
     public static final TextureSlot BASE = TextureSlot.create("base");
     public static final TextureSlot PILLAR = TextureSlot.create("pillar");
+    public static final TextureSlot FLOOR = TextureSlot.create("floor");
+    public static final TextureSlot CEIL = TextureSlot.create("ceil");
+    public static final TextureSlot WALL = TextureSlot.create("wall");
 
     public static final ModelTemplate TWISTED_VINE = new ModelTemplate(Optional.of(BetterEnd.C.mk("block/twisted_vine")), Optional.empty(), TextureSlot.TEXTURE, ROOTS);
     public static final ModelTemplate CROSS_NO_DISTORTION = new ModelTemplate(Optional.of(BetterEnd.C.mk("block/cross_no_distortion")), Optional.empty(), TextureSlot.TEXTURE);
@@ -44,5 +47,20 @@ public class EndModels {
             Optional.of(BetterEnd.C.mk("block/lit_stairs_outer")),
             Optional.empty(),
             TextureSlot.BOTTOM, TextureSlot.TOP, TextureSlot.SIDE
+    );
+    public static final ModelTemplate CHANDELIER_FLOOR = new ModelTemplate(
+            Optional.of(BetterEnd.C.mk("block/chandelier_floor")),
+            Optional.empty(),
+            FLOOR
+    );
+    public static final ModelTemplate CHANDELIER_WALL = new ModelTemplate(
+            Optional.of(BetterEnd.C.mk("block/chandelier_wall")),
+            Optional.empty(),
+            WALL
+    );
+    public static final ModelTemplate CHANDELIER_CEIL = new ModelTemplate(
+            Optional.of(BetterEnd.C.mk("block/chandelier_ceil")),
+            Optional.empty(),
+            CEIL, FLOOR
     );
 }
