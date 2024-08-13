@@ -156,15 +156,15 @@ public class EndStoneSmelterBlockEntity extends BaseContainerBlockEntity impleme
         if ((slot == EndStoneSmelterMenu.INGREDIENT_SLOT_A || slot == EndStoneSmelterMenu.INGREDIENT_SLOT_B) && !stackValid) {
             smeltTimeTotal = getSmeltTime();
             smeltTime = 0;
-            setLitState(false);
+//            setLitState(false);
             setChanged();
         }
-        if (slot == EndStoneSmelterMenu.FUEL_SLOT && !stackValid) {
-            burnTime = 0;
-            fuelTime = 0;
-            setLitState(false);
-            setChanged();
-        }
+//        if (slot == EndStoneSmelterMenu.FUEL_SLOT && !stackValid) {
+//            burnTime = 0;
+//            fuelTime = 0;
+//            setLitState(false);
+//            setChanged();
+//        }
     }
 
     protected int getSmeltTime() {
@@ -285,10 +285,12 @@ public class EndStoneSmelterBlockEntity extends BaseContainerBlockEntity impleme
                     blockEntity.inventory.get(EndStoneSmelterMenu.INGREDIENT_SLOT_B)
             );
 
-            if (burning && fuel.isEmpty() || (input.first().isEmpty() && input.second().isEmpty())) {
-                blockEntity.burnTime = 0;
-                burning = false;
-            }
+//            if (blockEntity.fuelTime == 0 && burning && fuel.isEmpty() || (input.first().isEmpty() && input
+//                    .second()
+//                    .isEmpty())) {
+//                blockEntity.burnTime = 0;
+//                burning = false;
+//            }
 
             if (!burning && (fuel.isEmpty() || (input.first().isEmpty() && input.second().isEmpty()))
             ) {
