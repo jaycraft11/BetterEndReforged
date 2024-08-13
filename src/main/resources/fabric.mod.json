@@ -56,7 +56,7 @@
         "wunderlib": "21.0.x"
     },
     "breaks": {
-        "bclib": "<21.0.11",
+        "bclib": "<21.0.13",
         "wover": "<21.0.13",
         "wunderlib": "<21.0.8"
     },
