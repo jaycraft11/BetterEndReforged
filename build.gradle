@@ -31,7 +31,7 @@ loom {
         }
     }
 
-    if (local_wover || local_wunderlib) {
+    if (local_wover || local_wunderlib || local_wunderlib) {
         enableTransitiveAccessWideners = true
     }
 }
@@ -104,10 +104,10 @@ dependencies {
 
     println "Using local WorldWeaver: ${local_wover}"
     if (local_wover) {
-        implementation project(path: ":WorldWeaver", configuration: 'dev')
+        implementation project(path: ":WorldWeaver", configuration: 'localDev')
 
         gradle.knownWoverModules.each {
-            implementation project(path: ":WorldWeaver:$it", configuration: 'dev')
+            implementation project(path: ":WorldWeaver:$it", configuration: 'localDev')
         }
     } else if (local_bclib) {
         modImplementation "org.betterx:worldweaver:${project.wover_version}"
@@ -125,17 +125,6 @@ repositories {
     maven { url 'https://maven.ambertation.de/releases' }
     flatDir {
         dirs 'override'
-    }
-}
-
-def useApi(String dep) {
-    dependencies.modImplementation(dep) {
-        exclude group: 'net.fabricmc.fabric-api'
-        exclude group: 'net.fabricmc'
-        if (!dep.contains("me.shedaniel")) {
-            exclude group: 'me.shedaniel.cloth'
-            exclude group: 'me.shedaniel'
-        }
     }
 }
 
@@ -178,6 +167,19 @@ tasks.processResources {
 }
 tasks.sourcesJar {
     duplicatesStrategy = DuplicatesStrategy.WARN
+}
+
+configurations {
+    dev {
+        transitive true
+        canBeConsumed true
+        canBeResolved true
+        extendsFrom api
+    }
+}
+
+artifacts {
+    dev jar
 }
 
 apply from: "helper.gradle"
