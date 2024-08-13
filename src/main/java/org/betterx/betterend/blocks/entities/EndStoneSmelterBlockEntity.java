@@ -136,6 +136,13 @@ public class EndStoneSmelterBlockEntity extends BaseContainerBlockEntity impleme
         return ContainerHelper.takeItem(inventory, slot);
     }
 
+    private void setLitState(boolean lit) {
+        if (level == null || this.worldPosition == null || this.getBlockState() == null) return;
+        this.level.setBlock(this.worldPosition, this.getBlockState().setValue(EndStoneSmelter.LIT, lit), 3);
+        this.setBlockState(this.getBlockState().setValue(EndStoneSmelter.LIT, lit));
+
+    }
+
     @Override
     public void setItem(int slot, ItemStack stack) {
         ItemStack itemStack = inventory.get(slot);
@@ -149,6 +156,13 @@ public class EndStoneSmelterBlockEntity extends BaseContainerBlockEntity impleme
         if ((slot == EndStoneSmelterMenu.INGREDIENT_SLOT_A || slot == EndStoneSmelterMenu.INGREDIENT_SLOT_B) && !stackValid) {
             smeltTimeTotal = getSmeltTime();
             smeltTime = 0;
+            setLitState(false);
+            setChanged();
+        }
+        if (slot == EndStoneSmelterMenu.FUEL_SLOT && !stackValid) {
+            burnTime = 0;
+            fuelTime = 0;
+            setLitState(false);
             setChanged();
         }
     }
@@ -271,6 +285,11 @@ public class EndStoneSmelterBlockEntity extends BaseContainerBlockEntity impleme
                     blockEntity.inventory.get(EndStoneSmelterMenu.INGREDIENT_SLOT_B)
             );
 
+            if (burning && fuel.isEmpty() || (input.first().isEmpty() && input.second().isEmpty())) {
+                blockEntity.burnTime = 0;
+                burning = false;
+            }
+
             if (!burning && (fuel.isEmpty() || (input.first().isEmpty() && input.second().isEmpty()))
             ) {
                 if (blockEntity.smeltTime > 0) {
@@ -320,7 +339,7 @@ public class EndStoneSmelterBlockEntity extends BaseContainerBlockEntity impleme
             }
             burning = blockEntity.isBurning();
             if (initialBurning != burning) {
-                tickLevel.setBlock(tickPos, tickState.setValue(EndStoneSmelter.LIT, burning), 3);
+                blockEntity.setLitState(burning);
                 blockEntity.setChanged();
             }
         }

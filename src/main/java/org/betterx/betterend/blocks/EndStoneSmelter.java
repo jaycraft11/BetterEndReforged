@@ -12,7 +12,6 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -55,21 +54,19 @@ public class EndStoneSmelter extends BaseBlockWithEntity.Stone implements Alloyi
         registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(LIT, false));
     }
 
-    @SuppressWarnings("deprecation")
-    public InteractionResult use(
-            BlockState state,
-            Level world,
-            BlockPos pos,
+    @Override
+    protected InteractionResult useWithoutItem(
+            BlockState blockState,
+            Level level,
+            BlockPos blockPos,
             Player player,
-            InteractionHand hand,
-            BlockHitResult hit
+            BlockHitResult blockHitResult
     ) {
-        if (world.isClientSide) {
+        if (level.isClientSide) {
             return InteractionResult.SUCCESS;
-        } else {
-            this.openScreen(world, pos, player);
-            return InteractionResult.CONSUME;
         }
+        this.openScreen(level, blockPos, player);
+        return InteractionResult.CONSUME;
     }
 
     private void openScreen(Level world, BlockPos pos, Player player) {
