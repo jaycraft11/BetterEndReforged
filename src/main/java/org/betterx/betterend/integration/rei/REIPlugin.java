@@ -97,8 +97,8 @@ public class REIPlugin implements REIClientPlugin {
         registry.addWorkstations(ALLOYING, endStoneSmelter);
         registry.addWorkstations(INFUSION, infusionRitual);
         registry.addWorkstations(SMITHING, anvilsArray);
-        registry.removePlusButton(ALLOYING_FUEL);
-        registry.removePlusButton(SMITHING);
+//        registry.removePlusButton(ALLOYING_FUEL);
+//        registry.removePlusButton(SMITHING);
 
         registry.addWorkstations(BuiltinPlugin.SMELTING, ITEM_FURNACESArray);
         registry.addWorkstations(BuiltinPlugin.FUEL, ITEM_FURNACESArray);
