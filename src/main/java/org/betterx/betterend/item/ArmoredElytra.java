@@ -6,9 +6,12 @@ import org.betterx.betterend.interfaces.BetterEndElytra;
 import org.betterx.betterend.interfaces.MultiModelItem;
 import org.betterx.wover.complex.api.equipment.ArmorSlot;
 import org.betterx.wover.complex.api.equipment.ArmorTier;
+import org.betterx.wover.item.api.ItemTagProvider;
+import org.betterx.wover.tag.api.event.context.ItemTagBootstrapContext;
 
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.ElytraItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -17,7 +20,7 @@ import net.minecraft.world.item.Rarity;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 
-public class ArmoredElytra extends BaseArmorItem implements MultiModelItem, BetterEndElytra {
+public class ArmoredElytra extends BaseArmorItem implements MultiModelItem, BetterEndElytra, ItemTagProvider {
     private final ResourceLocation wingTexture;
     private final Item repairItem;
     private final double movementFactor;
@@ -116,5 +119,10 @@ public class ArmoredElytra extends BaseArmorItem implements MultiModelItem, Bett
                 ResourceLocation.withDefaultNamespace("broken"),
                 (itemStack, clientLevel, livingEntity, id) -> ElytraItem.isFlyEnabled(itemStack) ? 0.0F : 1.0F
         );
+    }
+
+    @Override
+    public void registerItemTags(ResourceLocation location, ItemTagBootstrapContext context) {
+        context.add(this, ItemTags.DURABILITY_ENCHANTABLE, ItemTags.EQUIPPABLE_ENCHANTABLE);
     }
 }
