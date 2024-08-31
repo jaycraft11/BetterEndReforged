@@ -12,7 +12,7 @@ import net.minecraft.world.item.Item;
 
 public class NourishItemTagProvider extends WoverTagProvider.ForItems {
     public NourishItemTagProvider(ModCore modCore) {
-        super(modCore);
+        super(BetterEnd.NOURISH);
     }
 
     @Override
