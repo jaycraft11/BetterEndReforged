@@ -25,7 +25,7 @@ public class ItemTagProvider extends WoverTagProvider.ForItems {
         super(modCore);
     }
 
-    public static final TagKey<Item> CAPE_SLOT = TagManager.ITEMS.makeTag(BetterEnd.TRINKETS_CORE, "chest/slot");
+    public static final TagKey<Item> CAPE_SLOT = TagManager.ITEMS.makeTag(BetterEnd.TRINKETS_CORE, "chest/cape");
 
     @Override
     public void prepareTags(ItemTagBootstrapContext context) {
