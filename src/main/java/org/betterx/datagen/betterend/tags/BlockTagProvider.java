@@ -20,7 +20,6 @@ public class BlockTagProvider extends WoverTagProvider.ForBlocks {
         super(modCore, Set.of(EndTags.INCORRECT_FOR_AETERNIUM_TOOL));
     }
 
-
     private static void addEndGround(TagBootstrapContext<Block> context, Block bl) {
         context.add(CommonBlockTags.END_STONES, bl);
     }
