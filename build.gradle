@@ -188,7 +188,7 @@ artifacts {
     dev jar
 }
 
-// apply from: "helper.gradle"
+apply from: "helper.gradle"
 
 allprojects {
     // Allow 400 errors.
