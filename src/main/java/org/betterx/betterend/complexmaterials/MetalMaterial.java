@@ -215,21 +215,38 @@ public class MetalMaterial implements MaterialManager.Material {
         forgedPlate = EndItems.registerEndItem(name + "_forged_plate");
         helmet = EndItems.registerEndItem(
                 name + "_helmet",
-                new EndArmorItem(armor, ArmorSlot.HELMET_SLOT, itemSettings)
+                new EndArmorItem(
+                        armor,
+                        ArmorSlot.HELMET_SLOT,
+                        EndArmorItem.createDefaultEndArmorSettings(ArmorSlot.HELMET_SLOT, armor))
         );
         chestplate = EndItems.registerEndItem(
                 name + "_chestplate",
-                new EndArmorItem(armor, ArmorSlot.CHESTPLATE_SLOT, itemSettings)
+                new EndArmorItem(
+                        armor,
+                        ArmorSlot.CHESTPLATE_SLOT,
+                        EndArmorItem.createDefaultEndArmorSettings(ArmorSlot.CHESTPLATE_SLOT, armor))
         );
         leggings = EndItems.registerEndItem(
                 name + "_leggings",
-                new EndArmorItem(armor, ArmorSlot.LEGGINGS_SLOT, itemSettings)
+                new EndArmorItem(
+                        armor,
+                        ArmorSlot.LEGGINGS_SLOT,
+                        EndArmorItem.createDefaultEndArmorSettings(ArmorSlot.LEGGINGS_SLOT, armor))
         );
-        boots = EndItems.registerEndItem(name + "_boots", new EndArmorItem(armor, ArmorSlot.BOOTS_SLOT, itemSettings));
+        boots = EndItems.registerEndItem(
+                name + "_boots",
+                new EndArmorItem(
+                        armor,
+                        ArmorSlot.BOOTS_SLOT,
+                        EndArmorItem.createDefaultEndArmorSettings(ArmorSlot.BOOTS_SLOT, armor)));
 
         anvilBlock = EndBlocks.registerBlock(
                 name + "_anvil",
-                new EndAnvilBlock(this, block.defaultMapColor(), anvilLevel)
+                new EndAnvilBlock(
+                        this,
+                        block.defaultMapColor(),
+                        anvilLevel)
         );
 
         MaterialManager.register(this);

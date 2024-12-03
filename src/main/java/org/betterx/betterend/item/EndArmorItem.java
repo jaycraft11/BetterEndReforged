@@ -15,6 +15,8 @@ import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
 
+import java.util.Arrays;
+
 public class EndArmorItem extends ArmorItem implements ItemModelProvider {
     public static final ResourceLocation BASE_BLINDNESS_RESISTANCE = BetterEnd.C.mk("base_blindness_resistance");
     public static final ResourceLocation BASE_KNOCKBACK_RESISTANCE = BetterEnd.C.mk("base_knockback_resistance");
@@ -36,10 +38,10 @@ public class EndArmorItem extends ArmorItem implements ItemModelProvider {
             ArmorTier tier
     ) {
         return startAttributeBuilder(slot, tier,
-                EndArmorTier.CRYSTALITE.armorMaterial
+                tier.armorMaterial
                         .value()
                         .getDefense(slot.armorType),
-                EndArmorTier.CRYSTALITE.armorMaterial
+                tier.armorMaterial
                         .value()
                         .toughness(),
                 0.0f
@@ -58,24 +60,20 @@ public class EndArmorItem extends ArmorItem implements ItemModelProvider {
                 .add(
                         Attributes.ARMOR,
                         new AttributeModifier(
-                                ARMOR_BOOST,
-                                EndArmorTier.CRYSTALITE.armorMaterial
-                                        .value()
-                                        .getDefense(Type.CHESTPLATE) / 1.25f,
+                                ARMOR_BOOST.withSuffix(slot.name),
+                                defense,
                                 AttributeModifier.Operation.ADD_VALUE
                         ),
-                        EquipmentSlotGroup.CHEST
+                        EquipmentSlotGroup.bySlot(slot.armorType.getSlot())
                 )
                 .add(
                         Attributes.ARMOR_TOUGHNESS,
                         new AttributeModifier(
-                                TOUGHNESS_BOOST,
-                                EndArmorTier.CRYSTALITE.armorMaterial
-                                        .value()
-                                        .toughness() / 1.25f,
+                                TOUGHNESS_BOOST.withSuffix(slot.name),
+                                toughness,
                                 AttributeModifier.Operation.ADD_VALUE
                         ),
-                        EquipmentSlotGroup.CHEST
+                        EquipmentSlotGroup.bySlot(slot.armorType.getSlot())
                 );
 
         if (knockbackResistance > 0.0f) {
@@ -86,7 +84,7 @@ public class EndArmorItem extends ArmorItem implements ItemModelProvider {
                             knockbackResistance,
                             AttributeModifier.Operation.ADD_VALUE
                     ),
-                    EquipmentSlotGroup.MAINHAND
+                    EquipmentSlotGroup.bySlot(slot.armorType.getSlot())
             );
         }
 
