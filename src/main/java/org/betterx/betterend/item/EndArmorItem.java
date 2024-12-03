@@ -60,7 +60,7 @@ public class EndArmorItem extends ArmorItem implements ItemModelProvider {
                 .add(
                         Attributes.ARMOR,
                         new AttributeModifier(
-                                ARMOR_BOOST.withSuffix(slot.name),
+                                ARMOR_BOOST.withSuffix("_"+slot.name),
                                 defense,
                                 AttributeModifier.Operation.ADD_VALUE
                         ),
@@ -69,7 +69,7 @@ public class EndArmorItem extends ArmorItem implements ItemModelProvider {
                 .add(
                         Attributes.ARMOR_TOUGHNESS,
                         new AttributeModifier(
-                                TOUGHNESS_BOOST.withSuffix(slot.name),
+                                TOUGHNESS_BOOST.withSuffix("_"+slot.name),
                                 toughness,
                                 AttributeModifier.Operation.ADD_VALUE
                         ),

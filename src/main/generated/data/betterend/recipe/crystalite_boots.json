@@ -30,14 +30,14 @@
           {
             "type": "minecraft:generic.armor",
             "amount": 3.0,
-            "id": "betterend:armor_boostboots",
+            "id": "betterend:armor_boost_boots",
             "operation": "add_value",
             "slot": "feet"
           },
           {
             "type": "minecraft:generic.armor_toughness",
             "amount": 1.2000000476837158,
-            "id": "betterend:toughness_boostboots",
+            "id": "betterend:toughness_boost_boots",
             "operation": "add_value",
             "slot": "feet"
           }
