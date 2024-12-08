@@ -1,5 +1,7 @@
 package org.betterx.betterend.blocks;
 
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.level.storage.loot.LootTable;
 import org.betterx.bclib.behaviours.BehaviourBuilders;
 import org.betterx.bclib.behaviours.interfaces.BehaviourLeaves;
 import org.betterx.bclib.blocks.BaseBlock;
@@ -9,6 +11,7 @@ import org.betterx.bclib.util.MHelper;
 import org.betterx.betterend.noise.OpenSimplexNoise;
 import org.betterx.ui.ColorUtil;
 import org.betterx.wover.block.api.BlockTagProvider;
+import org.betterx.wover.loot.api.LootLookupProvider;
 import org.betterx.wover.tag.api.event.context.TagBootstrapContext;
 
 import net.minecraft.client.color.block.BlockColor;
@@ -23,6 +26,9 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.material.MapColor;
+import org.jetbrains.annotations.NotNull;
+
+import static org.betterx.betterend.registry.EndBlocks.HELIX_TREE_SAPLING;
 
 public class HelixTreeLeavesBlock extends BaseBlock implements BehaviourLeaves, CustomColorProvider, AddMineableShears, BlockTagProvider {
     public static final IntegerProperty COLOR = EndBlockProperties.COLOR;
@@ -66,5 +72,11 @@ public class HelixTreeLeavesBlock extends BaseBlock implements BehaviourLeaves, 
     @Override
     public void registerBlockTags(ResourceLocation location, TagBootstrapContext<Block> context) {
         context.add(this, BlockTags.LEAVES);
+    }
+
+    @Override
+    public LootTable.Builder registerBlockLoot(@NotNull ResourceLocation location, @NotNull LootLookupProvider provider, @NotNull ResourceKey<LootTable> tableKey)
+    {
+        return provider.dropLeaves(this, HELIX_TREE_SAPLING);
     }
 }
